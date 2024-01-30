@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Job Finder</string>
+    <string name="app_name">Jobs Finder</string>
 
     // splash screen
     <string name="splash_title">Find your dream job here</string>
