@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".UI.SplashScreen.SplashActivity">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -105,7 +104,5 @@
                 android:textSize="20sp"/>
         </LinearLayout>
     </RelativeLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
