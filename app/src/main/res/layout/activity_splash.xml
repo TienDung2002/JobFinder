@@ -25,7 +25,7 @@
             android:layout_gravity="center|top"
             android:layout_marginTop="40sp"
             android:layout_marginBottom="20dp"
-            android:src="@drawable/Logo" />
+            android:src="@drawable/app_icon" />
 
         <TextView
             android:layout_width="wrap_content"
