@@ -2,9 +2,13 @@
     <string name="app_name">Jobs Finder</string>
 
     // splash screen
-    <string name="splash_title">Find your dream job here</string>
+    <string name="splash_title1">Find your</string>
+    <string name="splash_title2">dream job</string>
+    <string name="splash_title3">here!</string>
+    <string name="splash_subtitle">Login as:</string>
+    <string name="splash_recruiter">Recruiter</string>
+    <string name="splash_jobseeker">Job seeker</string>
 
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

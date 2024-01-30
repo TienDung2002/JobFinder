@@ -3,6 +3,13 @@
     <string name="app_name">Jobs Finder</string>
 
     // splash screen
-    <string name="splash_title">Tìm công việc mơ ước của bạn</string>
+    <string name="splash_title1">Tìm kiếm</string>
+    <string name="splash_title2">công việc mơ ước</string>
+    <string name="splash_title3">của bạn!</string>
+    <string name="splash_subtitle">Đăng nhập với tư cách:</string>
+    <string name="splash_recruiter">Nhà tuyển dụng</string>
+    <string name="splash_jobseeker">Tìm công việc</string>
+
+
 
 </resources>
