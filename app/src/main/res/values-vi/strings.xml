@@ -10,6 +10,19 @@
     <string name="splash_recruiter">Nhà tuyển dụng</string>
     <string name="splash_jobseeker">Tìm công việc</string>
 
+    <!--Login frag-->
+    <string name="login_btn">Đăng nhập</string>
+    <string name="welcome">Chào mừng trở lại!</string>
+    <string name="hintUsername">Email</string>
+    <string name="hintPassword">Mật khẩu</string>
+    <string name="create_acc">Chưa có tài khoản?</string>
+    <string name="forgot_pass">Quên mật khẩu?</string>
+    <string name="error_invalid_email">Email trống hoặc không hợp lệ</string>
+    <string name="error_pass">Mật khẩu trống hoặc không chính xác</string>
+    <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
 
+
+    <!-- Signup-->
+    <string name="signup_btn">Đăng ký</string>
 
 </resources>

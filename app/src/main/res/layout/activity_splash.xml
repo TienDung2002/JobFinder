@@ -9,8 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="20dp">
 
         <LinearLayout
             android:id="@+id/contentLayoutTop"
@@ -90,7 +89,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/splash_recruiter"
                 android:textColor="@color/white"
-                android:textSize="20sp"/>
+                android:textSize="17sp"/>
 
             <Button
                 android:id="@+id/loginasSeeker"
@@ -101,8 +100,17 @@
                 android:background="@drawable/splash_btn2"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:text="@string/splash_jobseeker"
-                android:textSize="20sp"/>
+                android:textSize="17sp"/>
         </LinearLayout>
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

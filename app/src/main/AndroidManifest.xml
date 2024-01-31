@@ -17,23 +17,41 @@
         android:theme="@style/Theme.JobFinder"
         tools:targetApi="31">
         <activity
+            android:name=".UI.Signup.SeekerSignupActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.Signup.RecruiterSignupActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.Login.LoginActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
             android:name=".UI.Wallet.WalletActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.UsersProfile.UserDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.Notifications.NotificationsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.Jobs.JobsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.JobPosts.JobpostsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".Adapter.adapterdefault"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.Home.HomeActivity"
             android:exported="false"

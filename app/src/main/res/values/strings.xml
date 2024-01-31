@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Jobs Finder</string>
 
-    // splash screen
+<!--    splash screen-->
     <string name="splash_title1">Find your</string>
     <string name="splash_title2">dream job</string>
     <string name="splash_title3">here!</string>
     <string name="splash_subtitle">Login as:</string>
     <string name="splash_recruiter">Recruiter</string>
     <string name="splash_jobseeker">Job seeker</string>
+
+<!--    Login-->
+    <string name="login_btn">Login</string>
+    <string name="welcome">Welcome back!</string>
+    <string name="hintUsername">Email</string>
+    <string name="hintPassword">Password</string>
+    <string name="create_acc">Don\'t have an account?</string>
+    <string name="forgot_pass">Forgot password?</string>
+    <string name="error_invalid_email">Empty or invalid email</string>
+    <string name="error_pass">Password empty or incorrect</string>
+    <string name="error_email_pass">Please check the fields again</string>
+
+<!--    Signup-->
+    <string name="signup_btn">Signup</string>
 
 
 </resources>
