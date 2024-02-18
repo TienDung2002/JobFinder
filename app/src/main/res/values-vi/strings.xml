@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Jobs Finder</string>
 
-    // splash screen
+<!--    splash screen-->
     <string name="splash_title1">Tìm kiếm</string>
     <string name="splash_title2">công việc mơ ước</string>
     <string name="splash_title3">của bạn!</string>
@@ -10,7 +10,7 @@
     <string name="splash_recruiter">Nhà tuyển dụng</string>
     <string name="splash_jobseeker">Tìm công việc</string>
 
-    <!--Login frag-->
+<!--    Login-->
     <string name="login_btn">Đăng nhập</string>
     <string name="welcome">Chào mừng trở lại!</string>
     <string name="hintUsername">Email</string>
@@ -22,7 +22,37 @@
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
 
 
-    <!-- Signup-->
+<!--    Signup-->
     <string name="signup_btn">Đăng ký</string>
+    <string name="hintrePassword">Nhập lại mật khẩu</string>
+    <string name="return_login">Đã có tài khoản?</string>
+
+    <!--    Nhà tuyển dụng-->
+    <string name="signup_title_rec">Trở thành nhà tuyển dụng</string>
+    <string name="rec_name">Tên nhà tuyển dụng</string>
+    <string name="rec_address">Địa chỉ</string>
+    <string name="rec_taxcode">Mã số thuế</string>
+    <string name="rec_hotline">Hotline</string>
+    <string name="rec_foundationDay">Ngày thành lập</string>
+
+    <string name="rec_typeOfBusiness">Loại hình kinh doanh</string>
+    <string name="rec_TOB_private">Tư nhân</string>
+    <string name="rec_TOB_state">Doanh nghiệp nhà nước</string>
+    <string name="rec_TOB_partnership">Doanh nghiệp hợp doanh</string>
+    <string name="rec_TOB_shareholding">Doanh nghiệp cổ phần</string>
+    <string name="rec_TOB_liability">Doanh nghiệp TNHH</string>
+
+    <string name="rec_sectors">Lĩnh vực kinh doanh</string>
+    <string name="rec__sec_ECommerce">Thương mại điện tử</string>
+    <string name="rec_sec_realestate">Bất động sản</string>
+    <string name="rec_sec_manufacturing">Sản xuất</string>
+    <string name="rec_sec_FandB">F&amp;B</string>
+    <string name="rec_sec_finance">Dịch vụ tài chính</string>
+    <string name="rec_sec_tourism">Du lịch</string>
+    <string name="rec_sec_other">Dịch vụ khác</string>
+
+
+    <!--    Người tìm việc-->
+    <string name="signup_title_seek">Tìm công việc bạn muốn</string>
 
 </resources>

@@ -4,15 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
-import com.example.jobfinder.General.PreventDoubleClick
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
-import timber.log.Timber
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding

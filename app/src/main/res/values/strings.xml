@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Jobs Finder</string>
 
-<!--    splash screen-->
+    <!--    splash screen-->
     <string name="splash_title1">Find your</string>
     <string name="splash_title2">dream job</string>
     <string name="splash_title3">here!</string>
@@ -9,7 +9,7 @@
     <string name="splash_recruiter">Recruiter</string>
     <string name="splash_jobseeker">Job seeker</string>
 
-<!--    Login-->
+    <!--    Login-->
     <string name="login_btn">Login</string>
     <string name="welcome">Welcome back!</string>
     <string name="hintUsername">Email</string>
@@ -20,8 +20,38 @@
     <string name="error_pass">Password empty or incorrect</string>
     <string name="error_email_pass">Please check the fields again</string>
 
-<!--    Signup-->
+    <!--    Signup-->
     <string name="signup_btn">Signup</string>
+    <string name="hintrePassword">Re-enter password</string>
+    <string name="return_login">Already have an account?</string>
+
+    <!--    Nhà tuyển dụng-->
+    <string name="signup_title_rec">Becoming recruiter</string>
+    <string name="rec_name">Full name</string>
+    <string name="rec_address">Address</string>
+    <string name="rec_taxcode">Tax code</string>
+    <string name="rec_hotline">Hotline</string>
+    <string name="rec_foundationDay">Foundation day</string>
+
+    <string name="rec_typeOfBusiness">Type of business</string>
+    <string name="rec_TOB_private">Private enterprise</string>
+    <string name="rec_TOB_state">State-owned enterprise</string>
+    <string name="rec_TOB_partnership">Partnership enterprise</string>
+    <string name="rec_TOB_shareholding">Shareholding enterprise</string>
+    <string name="rec_TOB_liability">Limited liability</string>
+
+    <string name="rec_sectors">Business Sectors</string>
+    <string name="rec__sec_ECommerce">E-commerce</string>
+    <string name="rec_sec_realestate">Real Estate</string>
+    <string name="rec_sec_manufacturing">Manufacturing</string>
+    <string name="rec_sec_FandB">F&amp;B</string>
+    <string name="rec_sec_finance">Financial Business</string>
+    <string name="rec_sec_tourism">Tourism </string>
+    <string name="rec_sec_other">Other services</string>
+
+
+    <!--    Người tìm việc-->
+    <string name="signup_title_seek">Find your dream jobs</string>
 
 
 </resources>
