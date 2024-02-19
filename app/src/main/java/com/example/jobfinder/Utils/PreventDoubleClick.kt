@@ -1,4 +1,4 @@
-package com.example.jobfinder.Util
+package com.example.jobfinder.Utils
 
 import android.os.SystemClock
 

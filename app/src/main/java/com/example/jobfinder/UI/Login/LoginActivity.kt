@@ -7,8 +7,8 @@ import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.UI.Signup.RecruiterSignupActivity
-import com.example.jobfinder.Util.PasswordToggleState
-import com.example.jobfinder.Util.VerifyField
+import com.example.jobfinder.Utils.PasswordToggleState
+import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {

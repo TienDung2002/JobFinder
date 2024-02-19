@@ -1,8 +1,9 @@
-package com.example.jobfinder.Util
+package com.example.jobfinder.Utils
 import android.text.method.PasswordTransformationMethod
 import androidx.core.util.PatternsCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+
 
 data class PasswordToggleState(var isPassVisible: Boolean)
 
