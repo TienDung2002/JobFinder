@@ -28,7 +28,8 @@
     <string name="return_login">Đã có tài khoản?</string>
 
     <!--    Nhà tuyển dụng-->
-    <string name="signup_title_rec">Trở thành nhà tuyển dụng</string>
+    <string name="signup_title_rec1">Đăng ký trở thành</string>
+    <string name="signup_title_rec2">nhà tuyển dụng</string>
     <string name="rec_name">Tên nhà tuyển dụng</string>
     <string name="rec_address">Địa chỉ</string>
     <string name="rec_taxcode">Mã số thuế</string>
@@ -53,6 +54,6 @@
 
 
     <!--    Người tìm việc-->
-    <string name="signup_title_seek">Tìm công việc bạn muốn</string>
+    <string name="signup_title_seek">Tìm kiếm công việc mơ ước</string>
 
 </resources>

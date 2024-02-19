@@ -8,19 +8,29 @@ import android.util.Patterns
 import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
+import com.example.jobfinder.UI.Signup.RecruiterSignupActivity
+import com.example.jobfinder.Util.PasswordToggleState
+import com.example.jobfinder.Util.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
-    private var isPassVisible = false
+    private var isPassVisible = PasswordToggleState(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        changeIconShowPassword()
+        // gọi hàm đổi icon và ẩn hiện password
+        VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
+
+        // Mở signup
+        binding.openSignupActi.setOnClickListener{
+            val intent = Intent(this, RecruiterSignupActivity::class.java)
+            startActivity(intent)
+        }
 
         // Login
         binding.btnLogin.setOnClickListener {
@@ -29,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
             val passField = binding.userPassLogin
             val passInput = binding.userPassLogin.text.toString()
 
-            if (emailInput.isEmpty() || !isValidEmail(emailInput)) {
+            if (emailInput.isEmpty() || !VerifyField.isValidEmail(emailInput)) {
                 emailField.error = getString(R.string.error_invalid_email)
             } else {
                 emailField.error = null
@@ -41,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
                 passField.error = null
             }
 
-            if ((emailInput.isNotEmpty() && isValidEmail(emailInput)) && passInput.isNotEmpty()) {
+            if ((emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)) && passInput.isNotEmpty()) {
                 // Chuyển đến màn home
 //                if (PreventDoubleClick.checkClick()) {
                     val intent = Intent(this, HomeActivity::class.java)
@@ -52,27 +62,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.error_email_pass), Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    // thay đổi icon mỗi lần click ẩn hiện password
-    private fun changeIconShowPassword(){
-        binding.passwordTextInputLayout.setEndIconOnClickListener{
-            isPassVisible = !isPassVisible
-            togglePasswordVisible(binding.userPassLogin)
-        }
-    }
-
-    // logic ẩn hiện password
-    private fun togglePasswordVisible(editText: TextInputEditText) {
-        if (isPassVisible) editText.transformationMethod = null // transformationMethod = null thì xem dc text
-        else editText.transformationMethod = PasswordTransformationMethod.getInstance()
-        editText.text?.let { editText.setSelection(it.length) } //di chuyển con trỏ về cuối text
-    }
-
-    // kiểm tra input đúng định dạng email
-    fun isValidEmail(email: String): Boolean {
-        val pattern = Patterns.EMAIL_ADDRESS
-        return pattern.matcher(email).matches()
     }
 
 }
