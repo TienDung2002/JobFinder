@@ -37,6 +37,15 @@
                 android:textColor="@color/primary_color1"
                 android:textSize="34sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:text="@string/note_signup"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/grey"
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <ScrollView
@@ -44,9 +53,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageSection"
-            android:scrollbars="none"
             android:layout_marginTop="-15dp"
             android:layout_marginBottom="40dp"
+            android:scrollbars="none"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -133,7 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/transparent_background"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:paddingStart="50dp"
                         android:paddingTop="16dp"
@@ -151,78 +160,71 @@
                         android:paddingRight="5dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/taxnumbersInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:hint="@string/rec_taxcode"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:startIconDrawable="@drawable/ic_taxcode24px">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/taxnumbersInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:hint="@string/rec_taxcode"
-                        app:boxStrokeColor="@color/black"
-                        app:boxStrokeErrorColor="@color/black"
-                        app:startIconDrawable="@drawable/ic_taxcode24px">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rec_taxnumbers"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingStart="50dp"
+                        android:paddingTop="16dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/rec_taxnumbers"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/transparent_background"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:paddingStart="50dp"
-                            android:paddingTop="16dp"
-                            android:paddingEnd="20dp"
-                            android:paddingBottom="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="16sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/black"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/BirthdayTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/rec_foundationDay"
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:endIconMode="custom"
+                    app:startIconDrawable="@drawable/ic_foundation24px"
+                    app:endIconDrawable="@drawable/ic_calendar24px">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/BirthdayTextInputLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="0.5"
-                        android:hint="@string/rec_foundationDay"
-                        android:paddingStart="10dp"
-                        app:boxStrokeColor="@color/black"
-                        app:boxStrokeErrorColor="@color/black"
-                        app:endIconDrawable="@drawable/ic_calendar24px"
-                        app:endIconMode="custom">
+                    <EditText
+                        android:id="@+id/foundationDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/transparent_background"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:onClick="showDatePickerDialog"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="10dp"
+                        android:paddingStart="50dp"
+                        android:paddingEnd="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
 
-                        <EditText
-                            android:id="@+id/foundationDay"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/transparent_background"
-                            android:focusable="false"
-                            android:inputType="none"
-                            android:maxLines="1"
-                            android:onClick="showDatePickerDialog"
-                            android:paddingTop="16dp"
-                            android:paddingBottom="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="17sp" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/black"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/typeBusiInputLayout"
@@ -244,7 +246,7 @@
                         android:maxLines="1"
                         android:paddingStart="50dp"
                         android:paddingTop="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingBottom="10dp"
                         android:popupBackground="@color/white"
                         android:textColor="@color/black"
@@ -279,7 +281,7 @@
                         android:maxLines="1"
                         android:paddingStart="50dp"
                         android:paddingTop="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingBottom="10dp"
                         android:popupBackground="@color/white"
                         android:textColor="@color/black"
@@ -411,19 +413,17 @@
                     android:id="@+id/btnLogin"
                     android:layout_width="280dp"
                     android:layout_height="60dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp"
                     android:alpha="0.9"
                     android:background="@drawable/splash_btn1"
                     android:foreground="?android:attr/selectableItemBackground"
+                    android:gravity="center"
                     android:text="@string/signup_btn"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:layout_marginTop="40dp"
-                    android:layout_gravity="center_horizontal"/>
+                    android:textSize="18sp" />
             </LinearLayout>
         </ScrollView>
-
-
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -441,6 +441,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/returnbackLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

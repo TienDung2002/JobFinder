@@ -28,6 +28,7 @@
     <!--    Nhà tuyển dụng-->
     <string name="signup_title_rec1">Register to becoming</string>
     <string name="signup_title_rec2">a recruiter</string>
+    <string name="note_signup">(Scrolldown and complete all the fields below)</string>
     <string name="rec_name">Full name</string>
     <string name="rec_address">Address</string>
     <string name="rec_taxcode">Tax code</string>

@@ -30,6 +30,7 @@
     <!--    Nhà tuyển dụng-->
     <string name="signup_title_rec1">Đăng ký trở thành</string>
     <string name="signup_title_rec2">nhà tuyển dụng</string>
+    <string name="note_signup">(Cuộn xuống và hoàn thành các trường dưới đây)</string>
     <string name="rec_name">Tên nhà tuyển dụng</string>
     <string name="rec_address">Địa chỉ</string>
     <string name="rec_taxcode">Mã số thuế</string>

@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.ForgetPass
+package com.example.jobfinder.UI.Signup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

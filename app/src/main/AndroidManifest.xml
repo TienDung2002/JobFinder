@@ -17,7 +17,7 @@
         android:theme="@style/Theme.JobFinder"
         tools:targetApi="31">
         <activity
-            android:name=".UI.ForgetPass.ForgetPassActivity"
+            android:name=".UI.Signup.ForgetPassActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity

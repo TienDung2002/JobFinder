@@ -3,8 +3,6 @@ package com.example.jobfinder.UI.Login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.method.PasswordTransformationMethod
-import android.util.Patterns
 import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
@@ -12,7 +10,6 @@ import com.example.jobfinder.UI.Signup.RecruiterSignupActivity
 import com.example.jobfinder.Util.PasswordToggleState
 import com.example.jobfinder.Util.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
-import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
