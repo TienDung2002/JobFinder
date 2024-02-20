@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.Signup
+package com.example.jobfinder.UI.Register
 
 import android.app.Activity
 import android.content.Intent
@@ -10,17 +10,17 @@ import com.example.jobfinder.Utils.Calendar
 import com.example.jobfinder.Utils.CalendarToggleState
 import com.example.jobfinder.Utils.PasswordToggleState
 import com.example.jobfinder.Utils.VerifyField
-import com.example.jobfinder.databinding.ActivityRecruiterSignupBinding
+import com.example.jobfinder.databinding.ActivityRecruiterRegisterBinding
 
-class RecruiterSignupActivity : AppCompatActivity() {
-    lateinit var binding: ActivityRecruiterSignupBinding
+class RecruiterRegisterActivity : AppCompatActivity() {
+    lateinit var binding: ActivityRecruiterRegisterBinding
     private var isPassVisible = PasswordToggleState(false)
     private var isCalendarVisible = CalendarToggleState(false)
     private lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRecruiterSignupBinding.inflate(layoutInflater)
+        binding = ActivityRecruiterRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // mở icon, show password và ngược lại

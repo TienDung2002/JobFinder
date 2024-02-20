@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Signup.RecruiterSignupActivity">
+    tools:context=".UI.Register.RecruiterRegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_horizontal"
-                android:text="@string/signup_title_rec1"
+                android:text="@string/register_title_rec1"
                 android:textColor="@color/primary_color1"
                 android:textSize="34sp"
                 android:textStyle="bold" />
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_horizontal"
-                android:text="@string/signup_title_rec2"
+                android:text="@string/register_title_rec2"
                 android:textColor="@color/primary_color1"
                 android:textSize="34sp"
                 android:textStyle="bold" />
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|center_horizontal"
-                android:text="@string/note_signup"
+                android:text="@string/note_register"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/grey"
                 android:textSize="14sp"/>
@@ -430,7 +430,7 @@
                     android:background="@drawable/splash_btn1"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
-                    android:text="@string/signup_btn"
+                    android:text="@string/register_btn"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
             </LinearLayout>

@@ -20,15 +20,14 @@
     <string name="error_pass">Password empty or incorrect</string>
     <string name="error_email_pass">Please check the fields again</string>
 
-    <!--    Signup-->
-    <string name="signup_btn">Signup</string>
+    <!--    register-->
+    <string name="register_btn">register</string>
     <string name="hintrePassword">Re-enter password</string>
     <string name="return_login">Already have an account?</string>
-
     <!--    Nhà tuyển dụng-->
-    <string name="signup_title_rec1">Register to becoming</string>
-    <string name="signup_title_rec2">a recruiter</string>
-    <string name="note_signup">(Scrolldown and complete all the fields below)</string>
+    <string name="register_title_rec1">Register to becoming</string>
+    <string name="register_title_rec2">a recruiter</string>
+    <string name="note_register">(Scrolldown and complete all the fields below)</string>
     <string name="rec_name">Full name</string>
     <string name="rec_address">Address</string>
     <string name="rec_taxcode">Tax code</string>
@@ -53,7 +52,7 @@
 
 
     <!--    Người tìm việc-->
-    <string name="signup_title_seek">Find your dream jobs</string>
+    <string name="register_title_seek">Find your dream jobs</string>
 
 
 </resources>

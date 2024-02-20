@@ -22,15 +22,15 @@
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
 
 
-<!--    Signup-->
-    <string name="signup_btn">Đăng ký</string>
+<!--    register-->
+    <string name="register_btn">Đăng ký</string>
     <string name="hintrePassword">Nhập lại mật khẩu</string>
     <string name="return_login">Đã có tài khoản?</string>
 
     <!--    Nhà tuyển dụng-->
-    <string name="signup_title_rec1">Đăng ký trở thành</string>
-    <string name="signup_title_rec2">nhà tuyển dụng</string>
-    <string name="note_signup">(Cuộn xuống và hoàn thành các trường dưới đây)</string>
+    <string name="register_title_rec1">Đăng ký trở thành</string>
+    <string name="register_title_rec2">nhà tuyển dụng</string>
+    <string name="note_register">(Cuộn xuống và hoàn thành các trường dưới đây)</string>
     <string name="rec_name">Tên nhà tuyển dụng</string>
     <string name="rec_address">Địa chỉ</string>
     <string name="rec_taxcode">Mã số thuế</string>
@@ -55,6 +55,6 @@
 
 
     <!--    Người tìm việc-->
-    <string name="signup_title_seek">Tìm kiếm công việc mơ ước</string>
+    <string name="register_title_seek">Tìm kiếm công việc mơ ước</string>
 
 </resources>

@@ -17,15 +17,15 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".UI.Signup.ForgetPassActivity"
+            android:name=".UI.Login.ForgetPassActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".UI.Signup.SeekerSignupActivity"
+            android:name=".UI.Register.SeekerRegisterActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".UI.Signup.RecruiterSignupActivity"
+            android:name=".UI.Register.RecruiterRegisterActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity

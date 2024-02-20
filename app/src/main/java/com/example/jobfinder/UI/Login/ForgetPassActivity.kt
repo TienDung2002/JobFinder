@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.Signup
+package com.example.jobfinder.UI.Login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
