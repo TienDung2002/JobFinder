@@ -33,14 +33,12 @@
     <string name="rec_taxcode">Tax code</string>
     <string name="rec_hotline">Hotline</string>
     <string name="rec_foundationDay">Foundation day</string>
-
     <string name="rec_typeOfBusiness">Type of business</string>
     <string name="rec_TOB_private">Private enterprise</string>
     <string name="rec_TOB_state">State-owned enterprise</string>
     <string name="rec_TOB_partnership">Partnership enterprise</string>
     <string name="rec_TOB_shareholding">Shareholding enterprise</string>
     <string name="rec_TOB_liability">Limited liability</string>
-
     <string name="rec_sectors">Business Sectors</string>
     <string name="rec__sec_ECommerce">E-commerce</string>
     <string name="rec_sec_realestate">Real Estate</string>
@@ -49,8 +47,6 @@
     <string name="rec_sec_finance">Financial Business</string>
     <string name="rec_sec_tourism">Tourism </string>
     <string name="rec_sec_other">Other services</string>
-
-
     <!--    Người tìm việc-->
     <string name="register_title_seek">Find your dream jobs</string>
 

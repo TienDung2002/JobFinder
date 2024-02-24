@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Jobs Finder</string>
 
-<!--    splash screen-->
+<!--    Splash screen-->
     <string name="splash_title1">Tìm kiếm</string>
     <string name="splash_title2">công việc mơ ước</string>
     <string name="splash_title3">của bạn!</string>
@@ -22,11 +22,10 @@
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
 
 
-<!--    register-->
+<!--    Register-->
     <string name="register_btn">Đăng ký</string>
     <string name="hintrePassword">Nhập lại mật khẩu</string>
     <string name="return_login">Đã có tài khoản?</string>
-
     <!--    Nhà tuyển dụng-->
     <string name="register_title_rec1">Đăng ký trở thành</string>
     <string name="register_title_rec2">nhà tuyển dụng</string>
@@ -36,14 +35,12 @@
     <string name="rec_taxcode">Mã số thuế</string>
     <string name="rec_hotline">Hotline</string>
     <string name="rec_foundationDay">Ngày thành lập</string>
-
     <string name="rec_typeOfBusiness">Loại hình kinh doanh</string>
     <string name="rec_TOB_private">Tư nhân</string>
     <string name="rec_TOB_state">Doanh nghiệp nhà nước</string>
     <string name="rec_TOB_partnership">Doanh nghiệp hợp doanh</string>
     <string name="rec_TOB_shareholding">Doanh nghiệp cổ phần</string>
     <string name="rec_TOB_liability">Doanh nghiệp TNHH</string>
-
     <string name="rec_sectors">Lĩnh vực kinh doanh</string>
     <string name="rec__sec_ECommerce">Thương mại điện tử</string>
     <string name="rec_sec_realestate">Bất động sản</string>
@@ -52,8 +49,6 @@
     <string name="rec_sec_finance">Dịch vụ tài chính</string>
     <string name="rec_sec_tourism">Du lịch</string>
     <string name="rec_sec_other">Dịch vụ khác</string>
-
-
     <!--    Người tìm việc-->
     <string name="register_title_seek">Tìm kiếm công việc mơ ước</string>
 
