@@ -15,8 +15,8 @@ import com.example.jobfinder.databinding.ActivityRecruiterRegisterBinding
 class RecruiterRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecruiterRegisterBinding
     private var isPassVisible = PasswordToggleState(false)
-    private var isCalendarVisible = CalendarToggleState(false)
-    private lateinit var fragmentManager: FragmentManager
+//    private var isCalendarVisible = CalendarToggleState(false)
+//    private lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +26,13 @@ class RecruiterRegisterActivity : AppCompatActivity() {
         // mở icon, show password và ngược lại
         VerifyField.changeIconShowPassword(binding.passwordInputLayout, isPassVisible, binding.password)
 
-        // chọn ngày thành lập
-        fragmentManager = supportFragmentManager
-        binding.foundationDay.setOnClickListener{
-            val title = getString(R.string.rec_foundationDay)
-            val showTextPlace = binding.foundationDay
-            Calendar.showDatePickerDialog(getActivityFragmentManager(), isCalendarVisible, title, showTextPlace)
-        }
+//        // chọn ngày thành lập
+//        fragmentManager = supportFragmentManager
+//        binding.foundationDay.setOnClickListener{
+//            val title = getString(R.string.rec_foundationDay)
+//            val showTextPlace = binding.foundationDay
+//            Calendar.showDatePickerDialog(getActivityFragmentManager(), isCalendarVisible, title, showTextPlace)
+//        }
 
         // từ recruiter trở về login
         binding.returnbackLogin.setOnClickListener{
@@ -43,7 +43,7 @@ class RecruiterRegisterActivity : AppCompatActivity() {
     }
 
     // Phương thức để trả về FragmentManager của Activity
-    private fun getActivityFragmentManager(): FragmentManager {
-        return supportFragmentManager
-    }
+//    private fun getActivityFragmentManager(): FragmentManager {
+//        return supportFragmentManager
+//    }
 }

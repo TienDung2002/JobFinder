@@ -50,6 +50,11 @@
     <string name="rec_sec_tourism">Du lịch</string>
     <string name="rec_sec_other">Dịch vụ khác</string>
     <!--    Người tìm việc-->
-    <string name="register_title_seek">Tìm kiếm công việc mơ ước</string>
+    <string name="register_title_seek1">Tìm kiếm</string>
+    <string name="register_title_seek2">công việc mơ ước</string>
+    <string name="seek_age">Tuổi</string>
+    <string name="seek_phone">Số điện thoại</string>
+
+
 
 </resources>
