@@ -24,6 +24,12 @@
     <string name="register_btn">register</string>
     <string name="hintrePassword">Re-enter password</string>
     <string name="return_login">Already have an account?</string>
+    <string name="error_invalid_name">Name is blank</string>
+    <string name="error_invalid_hotline">Hotline is blank</string>
+    <string name="error_invalid_addr">Address is blank</string>
+    <string name="error_invalid_reEnterPass">Re-enter password is blank or does match</string>
+    <string name="register_success">Register success!</string>
+
     <!--    Nhà tuyển dụng-->
     <string name="register_title_rec1">Register to becoming</string>
     <string name="register_title_rec2">a recruiter</string>
@@ -52,5 +58,8 @@
     <string name="register_title_seek2">dream jobs</string>
     <string name="seek_age">Age</string>
     <string name="seek_phone">Phone numbers</string>
+
+
+
 
 </resources>

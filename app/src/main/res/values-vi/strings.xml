@@ -21,11 +21,16 @@
     <string name="error_pass">Mật khẩu trống hoặc không chính xác</string>
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
 
-
 <!--    Register-->
     <string name="register_btn">Đăng ký</string>
     <string name="hintrePassword">Nhập lại mật khẩu</string>
     <string name="return_login">Đã có tài khoản?</string>
+    <string name="error_invalid_name">Tên trống</string>
+    <string name="error_invalid_hotline">Hotline trống</string>
+    <string name="error_invalid_addr">Địa chỉ trống</string>
+    <string name="error_invalid_reEnterPass">Nhập lại mật khẩu trống hoặc không khớp</string>
+    <string name="register_success">Đăng ký thành công!</string>
+
     <!--    Nhà tuyển dụng-->
     <string name="register_title_rec1">Đăng ký trở thành</string>
     <string name="register_title_rec2">nhà tuyển dụng</string>

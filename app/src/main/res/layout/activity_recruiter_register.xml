@@ -165,7 +165,7 @@
 
                 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/userTextInputLayout"
+                    android:id="@+id/emailInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hintUsername"
@@ -175,7 +175,7 @@
                     app:startIconDrawable="@drawable/ic_email24px">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_email_login"
+                        android:id="@+id/rec_email"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/transparent_background"
@@ -281,7 +281,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/btnRegister"
                     android:layout_width="280dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"

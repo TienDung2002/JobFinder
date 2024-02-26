@@ -172,7 +172,7 @@
                 android:layout_marginStart="5dp"
                 android:textColor="@color/click_link"
                 android:textSize="16sp"
-                android:text="@string/signup_btn"/>
+                android:text="@string/register_btn"/>
         </LinearLayout>
 
     </RelativeLayout>
