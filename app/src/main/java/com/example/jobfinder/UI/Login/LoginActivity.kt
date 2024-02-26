@@ -24,9 +24,10 @@ class LoginActivity : AppCompatActivity() {
         // gọi hàm đổi icon và ẩn hiện password
         VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
 
-        // Mở signup
-        binding.openSignupActi.setOnClickListener{
-            val userType = intent.getIntExtra("user_type", 0)
+        // Mở register
+        binding.openRegisterActi.setOnClickListener{
+            val userType = intent.getIntExtra("user_type", -1)
+
             if (userType == 0) {
                 val intent = Intent(this, SeekerRegisterActivity::class.java)
                 startActivity(intent)
@@ -38,34 +39,24 @@ class LoginActivity : AppCompatActivity() {
 
         // Login
         binding.btnLogin.setOnClickListener {
-            val emailField = binding.userEmailLogin
             val emailInput = binding.userEmailLogin.text.toString()
-            val passField = binding.userPassLogin
             val passInput = binding.userPassLogin.text.toString()
 
-            if (emailInput.isEmpty() || !VerifyField.isValidEmail(emailInput)) {
-                emailField.error = getString(R.string.error_invalid_email)
-            } else {
-                emailField.error = null
-            }
+            val isEmailValid = emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)
+            val isPassValid = passInput.isNotEmpty()
 
-            if (passInput.isEmpty()) {
-                passField.error = getString(R.string.error_pass)
-            } else {
-                passField.error = null
-            }
+            binding.userEmailLogin.error = if (isEmailValid) null else getString(R.string.error_invalid_email)
+            binding.userPassLogin.error = if (isPassValid) null else getString(R.string.error_pass)
 
-            if ((emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)) && passInput.isNotEmpty()) {
-                // Chuyển đến màn home
-//                if (PreventDoubleClick.checkClick()) {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
-//                }
+            if (isEmailValid && isPassValid) {
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, getString(R.string.error_email_pass), Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
 }

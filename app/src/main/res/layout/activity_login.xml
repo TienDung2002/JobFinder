@@ -166,7 +166,7 @@
                 android:text="@string/create_acc"/>
 
             <TextView
-                android:id="@+id/openSignupActi"
+                android:id="@+id/openRegisterActi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
