@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.UI.Register.RecruiterRegisterActivity
+import com.example.jobfinder.UI.Register.SeekerRegisterActivity
 import com.example.jobfinder.Utils.PasswordToggleState
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
@@ -25,8 +26,14 @@ class LoginActivity : AppCompatActivity() {
 
         // Mở signup
         binding.openSignupActi.setOnClickListener{
-            val intent = Intent(this, RecruiterRegisterActivity::class.java)
-            startActivity(intent)
+            val userType = intent.getIntExtra("user_type", 0)
+            if (userType == 0) {
+                val intent = Intent(this, SeekerRegisterActivity::class.java)
+                startActivity(intent)
+            } else if (userType == 1) {
+                val intent = Intent(this, RecruiterRegisterActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         // Login

@@ -15,15 +15,15 @@ class SplashActivity : AppCompatActivity() {
 
         // mở login role tuyển dụng
         binding.loginasRecruiter.setOnClickListener{
-//            openFragment(LoginFragment())
             val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra("user_type", 1)
             startActivity(intent)
         }
 
         // mở login role người tìm việc
         binding.loginasSeeker.setOnClickListener{
-//            openFragment(LoginFragment())
             val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra("user_type", 0)
             startActivity(intent)
         }
     }
