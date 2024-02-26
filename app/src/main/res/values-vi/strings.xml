@@ -23,10 +23,13 @@
 
 <!--    Register-->
     <string name="register_btn">Đăng ký</string>
+    <string name="return_login_seek">Bắt đầu tìm việc</string>
+    <string name="return_login_rec">Bắt đầu tuyển dụng</string>
     <string name="hintrePassword">Nhập lại mật khẩu</string>
     <string name="return_login">Đã có tài khoản?</string>
     <string name="error_invalid_name">Tên trống</string>
-    <string name="error_invalid_hotline">Hotline trống</string>
+    <string name="error_invalid_hotline">Hotline trống hoặc có độ dài không hợp lệ (=10)</string>
+    <string name="error_invalid_phone">SĐT trống hoặc có độ dài không hợp lệ (=10)</string>
     <string name="error_invalid_addr">Địa chỉ trống</string>
     <string name="error_invalid_reEnterPass">Nhập lại mật khẩu trống hoặc không khớp</string>
     <string name="register_success">Đăng ký thành công!</string>

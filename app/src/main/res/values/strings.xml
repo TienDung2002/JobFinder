@@ -11,6 +11,7 @@
 
     <!--    Login-->
     <string name="login_btn">Login</string>
+
     <string name="welcome">Welcome back!</string>
     <string name="hintUsername">Email</string>
     <string name="hintPassword">Password</string>
@@ -22,10 +23,13 @@
 
     <!--    register-->
     <string name="register_btn">register</string>
+    <string name="return_login_seek">Start looking for work</string>
+    <string name="return_login_rec">Start recruiting</string>
     <string name="hintrePassword">Re-enter password</string>
     <string name="return_login">Already have an account?</string>
     <string name="error_invalid_name">Name is blank</string>
-    <string name="error_invalid_hotline">Hotline is blank</string>
+    <string name="error_invalid_hotline">Hotline is empty or has an invalid length (=10)</string>
+    <string name="error_invalid_phone">Phone is empty or has an invalid length (=10)</string>
     <string name="error_invalid_addr">Address is blank</string>
     <string name="error_invalid_reEnterPass">Re-enter password is blank or does match</string>
     <string name="register_success">Register success!</string>
@@ -58,7 +62,6 @@
     <string name="register_title_seek2">dream jobs</string>
     <string name="seek_age">Age</string>
     <string name="seek_phone">Phone numbers</string>
-
 
 
 

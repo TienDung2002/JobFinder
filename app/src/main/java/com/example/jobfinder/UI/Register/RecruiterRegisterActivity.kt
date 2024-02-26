@@ -16,7 +16,7 @@ import com.example.jobfinder.databinding.ActivityRecruiterRegisterBinding
 
 class RecruiterRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecruiterRegisterBinding
-    private var isPassVisible = PasswordToggleState(false)
+//    private var isPassVisible = PasswordToggleState(false)
 //    private var isCalendarVisible = CalendarToggleState(false)
 //    private lateinit var fragmentManager: FragmentManager
 
@@ -26,7 +26,7 @@ class RecruiterRegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // mở icon, show password và ngược lại
-        VerifyField.changeIconShowPassword(binding.passwordInputLayout, isPassVisible, binding.password)
+//        VerifyField.changeIconShowPassword(binding.passwordInputLayout, isPassVisible, binding.password)
 
 //        // chọn ngày thành lập
 //        fragmentManager = supportFragmentManager
@@ -46,9 +46,9 @@ class RecruiterRegisterActivity : AppCompatActivity() {
             val repassInput = binding.reEnterPass.text.toString()
 
             val isValidName = nameInput.isNotEmpty()
-            val isValidHotline = hotlineInput.isNotEmpty()
+            val isValidHotline = VerifyField.isValidPhoneNumber(hotlineInput)
             val isValidAddress = addressInput.isNotEmpty()
-            val isValidEmail = emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)
+            val isValidEmail = VerifyField.isValidEmail(emailInput)
             val isValidPassword = passInput.isNotEmpty()
             val isValidRePassword = repassInput.isNotEmpty() && repassInput == passInput
 

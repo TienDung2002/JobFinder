@@ -29,6 +29,12 @@ object VerifyField {
 
     // check email hợp lệ
     fun isValidEmail(email: String): Boolean {
-        return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches()
+        return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty()
     }
+
+    // check độ dài số điện thoại
+    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        return phoneNumber.isNotEmpty() && phoneNumber.length == 10
+    }
+
 }
