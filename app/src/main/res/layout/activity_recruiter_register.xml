@@ -130,39 +130,7 @@
                         android:paddingRight="5dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/AgeInputLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/rec_hotline"
-                    app:boxStrokeColor="@color/black"
-                    app:boxStrokeErrorColor="@color/black"
-                    android:layout_marginTop="10dp"
-                    app:startIconDrawable="@drawable/ic_hotline24px">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/seek_age"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/transparent_background"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:paddingStart="50dp"
-                        android:paddingTop="16dp"
-                        android:paddingEnd="20dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <!-- gạch dưới -->
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
+                
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/userTextInputLayout"
                     android:layout_width="match_parent"
