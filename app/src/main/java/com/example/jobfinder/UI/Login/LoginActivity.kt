@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.ForgotPassword.ForgotPassActivity
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.UI.Register.RecruiterRegisterActivity
 import com.example.jobfinder.UI.Register.SeekerRegisterActivity
 import com.example.jobfinder.Utils.PasswordToggleState
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
+import com.google.android.material.textfield.TextInputEditText
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
@@ -67,10 +69,31 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, getString(R.string.error_email_pass), Toast.LENGTH_SHORT).show()
+                checkToAutoFocus(isEmailValid, isPassValid)
             }
         }
 
+
+        // Quên mật khẩu
+        binding.moveToForgotBtn.setOnClickListener{
+            val intent = Intent(this, ForgotPassActivity::class.java)
+            startActivity(intent)
+        }
     }
 
+    private fun checkToAutoFocus(vararg isValidFields: Boolean) {
+        val invalidFields = mutableListOf<TextInputEditText>()
+        for ((index, isValid) in isValidFields.withIndex()) {
+            if (!isValid) {
+                when (index) {
+                    0 -> invalidFields.add(binding.userEmailLogin)
+                    1 -> invalidFields.add(binding.userPassLogin)
+                }
+            }
+        }
+
+        if (invalidFields.isNotEmpty()) {
+            invalidFields.first().requestFocus()
+        }
+    }
 }

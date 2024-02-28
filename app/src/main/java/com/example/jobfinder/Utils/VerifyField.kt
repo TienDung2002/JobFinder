@@ -33,7 +33,7 @@ object VerifyField {
     }
 
     // check độ dài số điện thoại
-    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+     fun isValidPhoneNumber(phoneNumber: String): Boolean {
         return phoneNumber.isNotEmpty() && phoneNumber.length == 10
     }
 

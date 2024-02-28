@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.ForgotPassword.ForgotPassFragment">
+
+    <LinearLayout
+        android:id="@+id/wrapsection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:text="@string/forgot_pass"
+            android:textColor="@color/primary_color1"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/FP_subTitle1"
+            android:textColor="@color/grey"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:text="@string/FP_subTitle1.1"
+            android:textColor="@color/grey"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/ic_forgotfrag"
+            android:layout_gravity="center|top"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/userTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintUsername"
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeErrorColor="@color/black"
+            app:startIconDrawable="@drawable/ic_email24px">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/transparent_background"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="50dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="14dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <!-- gạch dưới -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" /> <!-- View dummy để tạo khoảng trống -->
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp"
+            android:alpha="0.9"
+            android:background="@drawable/splash_btn1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="@string/FP_resetPassBtn"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_gravity="bottom|center_horizontal"/>
+    </LinearLayout>
+
+</FrameLayout>

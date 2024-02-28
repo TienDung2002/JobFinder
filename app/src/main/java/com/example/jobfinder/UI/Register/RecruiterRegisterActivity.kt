@@ -13,6 +13,7 @@ import com.example.jobfinder.Utils.CalendarToggleState
 import com.example.jobfinder.Utils.PasswordToggleState
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityRecruiterRegisterBinding
+import com.google.android.material.textfield.TextInputEditText
 
 class RecruiterRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecruiterRegisterBinding
@@ -65,7 +66,7 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(this, getString(R.string.error_email_pass), Toast.LENGTH_SHORT).show()
+                checkToAutoFocus(isValidName, isValidHotline, isValidAddress, isValidEmail, isValidPassword, isValidRePassword)
             }
         }
 
@@ -77,8 +78,24 @@ class RecruiterRegisterActivity : AppCompatActivity() {
         }
     }
 
-    // Phương thức để trả về FragmentManager của Activity
-//    private fun getActivityFragmentManager(): FragmentManager {
-//        return supportFragmentManager
-//    }
+    // Check các trường sai và auto focus vào trường đầu tiên bị sai
+    private fun checkToAutoFocus(vararg isValidFields: Boolean) {
+        val invalidFields = mutableListOf<TextInputEditText>()
+        for ((index, isValid) in isValidFields.withIndex()) {
+            if (!isValid) {
+                when (index) {
+                    0 -> invalidFields.add(binding.recName)
+                    1 -> invalidFields.add(binding.recHotline)
+                    2 -> invalidFields.add(binding.recAddress)
+                    3 -> invalidFields.add(binding.recEmail)
+                    4 -> invalidFields.add(binding.password)
+                    5 -> invalidFields.add(binding.reEnterPass)
+                }
+            }
+        }
+
+        if (invalidFields.isNotEmpty()) {
+            invalidFields.first().requestFocus()
+        }
+    }
 }

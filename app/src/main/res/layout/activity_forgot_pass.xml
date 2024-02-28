@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.ForgotPassword.ForgotPassActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <FrameLayout
+            android:id="@+id/fragment_FrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="620dp">
+        </FrameLayout>
+
+<!--        <Button-->
+<!--            android:id="@+id/btnReset"-->
+<!--            android:layout_width="280dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:alpha="0.9"-->
+<!--            android:background="@drawable/splash_btn1"-->
+<!--            android:foreground="?android:attr/selectableItemBackground"-->
+<!--            android:text="@string/FP_resetPassBtn"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="18sp"-->
+<!--            android:layout_below="@+id/fragment_FrameLayout"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_centerHorizontal="true"/>-->
+
+        <Button
+            android:id="@+id/returnLoginBtn"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:alpha="0.9"
+            android:background="@drawable/splash_btn2"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="@string/FP_backToLoginBtn"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_below="@+id/fragment_FrameLayout"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
