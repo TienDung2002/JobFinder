@@ -60,8 +60,8 @@
     <string name="rec_sec_tourism">Tourism </string>
     <string name="rec_sec_other">Other services</string>
     <!--    Người tìm việc-->
-    <string name="register_title_seek1">Find your</string>
-    <string name="register_title_seek2">dream jobs</string>
+    <string name="register_title_seek1">Prepare to find</string>
+    <string name="register_title_seek2">your dream jobs</string>
     <string name="seek_age">Age</string>
     <string name="seek_phone">Phone numbers</string>
 
