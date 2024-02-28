@@ -12,7 +12,10 @@
 
 <!--    Login-->
     <string name="login_btn">Đăng nhập</string>
-    <string name="welcome">Chào mừng trở lại!</string>
+    <string name="welcome_rec1">Chào mừng trở lại</string>
+    <string name="welcome_rec2">nhà tuyển dụng!</string>
+    <string name="welcome_seek1">Trở lại chuyến</string>
+    <string name="welcome_seek2">hành trình của bạn!</string>
     <string name="hintUsername">Email</string>
     <string name="hintPassword">Mật khẩu</string>
     <string name="create_acc">Chưa có tài khoản?</string>

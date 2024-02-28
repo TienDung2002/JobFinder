@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="20dp">
 
             <ImageView
                 android:id="@+id/image"
@@ -27,11 +27,22 @@
                 android:layout_gravity="center|top"/>
 
             <TextView
+                android:id="@+id/title_login1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:text="@string/welcome"
+                android:text="@string/welcome_rec1"
+                android:textColor="@color/primary_color1"
+                android:textSize="34sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/title_login2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/welcome_rec2"
                 android:textColor="@color/primary_color1"
                 android:textSize="34sp"
                 android:textStyle="bold"/>
@@ -139,7 +150,7 @@
             android:id="@+id/btnLogin"
             android:layout_width="280dp"
             android:layout_height="60dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:alpha="0.9"
             android:background="@drawable/splash_btn1"
             android:foreground="?android:attr/selectableItemBackground"

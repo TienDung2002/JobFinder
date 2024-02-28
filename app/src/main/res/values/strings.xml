@@ -11,8 +11,10 @@
 
     <!--    Login-->
     <string name="login_btn">Login</string>
-
-    <string name="welcome">Welcome back!</string>
+    <string name="welcome_rec1">Glad to see</string>
+    <string name="welcome_rec2">you back recruiter!</string>
+    <string name="welcome_seek1">Welcome back </string>
+    <string name="welcome_seek2">to your journey!</string>
     <string name="hintUsername">Email</string>
     <string name="hintPassword">Password</string>
     <string name="create_acc">Don\'t have an account?</string>
@@ -22,7 +24,7 @@
     <string name="error_email_pass">Please check the fields again</string>
 
     <!--    register-->
-    <string name="register_btn">register</string>
+    <string name="register_btn">Register</string>
     <string name="return_login_seek">Start looking for work</string>
     <string name="return_login_rec">Start recruiting</string>
     <string name="hintrePassword">Re-enter password</string>

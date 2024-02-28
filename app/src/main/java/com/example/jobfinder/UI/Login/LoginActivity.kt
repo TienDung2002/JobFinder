@@ -21,13 +21,17 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         // gọi hàm đổi icon và ẩn hiện password
         VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
 
+
+        // Lấy role từ bên splashscreen
+        val userType = intent.getIntExtra("user_type", -1)
+
+
         // Mở register
         binding.openRegisterActi.setOnClickListener{
-            val userType = intent.getIntExtra("user_type", -1)
-
             if (userType == 0) {
                 val intent = Intent(this, SeekerRegisterActivity::class.java)
                 startActivity(intent)
@@ -37,11 +41,21 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Login
+
+        // Hiển thị tiêu đề dựa vào role đã chọn
+        if (userType == 0) {
+            binding.titleLogin1.setText(R.string.welcome_seek1)
+            binding.titleLogin2.setText(R.string.welcome_seek2)
+        } else {
+            binding.titleLogin1.setText(R.string.welcome_rec1)
+            binding.titleLogin2.setText(R.string.welcome_rec2)
+        }
+
+
+        // Xác nhận để Login
         binding.btnLogin.setOnClickListener {
             val emailInput = binding.userEmailLogin.text.toString()
             val passInput = binding.userPassLogin.text.toString()
-
             val isEmailValid = emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)
             val isPassValid = passInput.isNotEmpty()
 
