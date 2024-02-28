@@ -11,6 +11,7 @@ import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.Utils.Calendar
 import com.example.jobfinder.Utils.CalendarToggleState
 import com.example.jobfinder.Utils.PasswordToggleState
+import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityRecruiterRegisterBinding
 import com.google.android.material.textfield.TextInputEditText
@@ -39,34 +40,36 @@ class RecruiterRegisterActivity : AppCompatActivity() {
 
         // Đăng ký
         binding.btnRegister.setOnClickListener{
-            val nameInput = binding.recName.text.toString()
-            val hotlineInput = binding.recHotline.text.toString()
-            val addressInput = binding.recAddress.text.toString()
-            val emailInput = binding.recEmail.text.toString()
-            val passInput = binding.password.text.toString()
-            val repassInput = binding.reEnterPass.text.toString()
+            if (PreventDoubleClick.checkClick()) {
+                val nameInput = binding.recName.text.toString()
+                val hotlineInput = binding.recHotline.text.toString()
+                val addressInput = binding.recAddress.text.toString()
+                val emailInput = binding.recEmail.text.toString()
+                val passInput = binding.password.text.toString()
+                val repassInput = binding.reEnterPass.text.toString()
 
-            val isValidName = nameInput.isNotEmpty()
-            val isValidHotline = VerifyField.isValidPhoneNumber(hotlineInput)
-            val isValidAddress = addressInput.isNotEmpty()
-            val isValidEmail = VerifyField.isValidEmail(emailInput)
-            val isValidPassword = passInput.isNotEmpty()
-            val isValidRePassword = repassInput.isNotEmpty() && repassInput == passInput
+                val isValidName = nameInput.isNotEmpty()
+                val isValidHotline = VerifyField.isValidPhoneNumber(hotlineInput)
+                val isValidAddress = addressInput.isNotEmpty()
+                val isValidEmail = VerifyField.isValidEmail(emailInput)
+                val isValidPassword = passInput.isNotEmpty()
+                val isValidRePassword = repassInput.isNotEmpty() && repassInput == passInput
 
-            binding.recName.error = if (isValidName) null else getString(R.string.error_invalid_name)
-            binding.recHotline.error = if (isValidHotline) null else getString(R.string.error_invalid_hotline)
-            binding.recAddress.error = if (isValidAddress) null else getString(R.string.error_invalid_addr)
-            binding.recEmail.error = if (isValidEmail) null else getString(R.string.error_invalid_email)
-            binding.password.error = if (isValidPassword) null else getString(R.string.error_pass)
-            binding.reEnterPass.error = if (isValidRePassword) null else getString(R.string.error_invalid_reEnterPass)
+                binding.recName.error = if (isValidName) null else getString(R.string.error_invalid_name)
+                binding.recHotline.error = if (isValidHotline) null else getString(R.string.error_invalid_hotline)
+                binding.recAddress.error = if (isValidAddress) null else getString(R.string.error_invalid_addr)
+                binding.recEmail.error = if (isValidEmail) null else getString(R.string.error_invalid_email)
+                binding.password.error = if (isValidPassword) null else getString(R.string.error_pass)
+                binding.reEnterPass.error = if (isValidRePassword) null else getString(R.string.error_invalid_reEnterPass)
 
-            if (isValidName && isValidHotline && isValidAddress && isValidEmail && isValidPassword && isValidRePassword) {
-                val resultIntent = Intent()
-                setResult(Activity.RESULT_OK, resultIntent)
-                Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
-                finish()
-            } else {
-                checkToAutoFocus(isValidName, isValidHotline, isValidAddress, isValidEmail, isValidPassword, isValidRePassword)
+                if (isValidName && isValidHotline && isValidAddress && isValidEmail && isValidPassword && isValidRePassword) {
+                    val resultIntent = Intent()
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    checkToAutoFocus(isValidName, isValidHotline, isValidAddress, isValidEmail, isValidPassword, isValidRePassword)
+                }
             }
         }
 
