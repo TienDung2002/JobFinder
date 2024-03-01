@@ -2,22 +2,22 @@ package com.example.jobfinder.UI.Register
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
-import com.example.jobfinder.Utils.Calendar
-import com.example.jobfinder.Utils.CalendarToggleState
-import com.example.jobfinder.Utils.PasswordToggleState
 import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityRecruiterRegisterBinding
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+
 
 class RecruiterRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecruiterRegisterBinding
+    private lateinit var fAuth: FirebaseAuth
 //    private var isPassVisible = PasswordToggleState(false)
 //    private var isCalendarVisible = CalendarToggleState(false)
 //    private lateinit var fragmentManager: FragmentManager
@@ -26,7 +26,6 @@ class RecruiterRegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRecruiterRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         // mở icon, show password và ngược lại
 //        VerifyField.changeIconShowPassword(binding.passwordInputLayout, isPassVisible, binding.password)
 
@@ -52,7 +51,7 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                 val isValidHotline = VerifyField.isValidPhoneNumber(hotlineInput)
                 val isValidAddress = addressInput.isNotEmpty()
                 val isValidEmail = VerifyField.isValidEmail(emailInput)
-                val isValidPassword = passInput.isNotEmpty()
+                val isValidPassword = passInput.isNotEmpty() && passInput.length >=6
                 val isValidRePassword = repassInput.isNotEmpty() && repassInput == passInput
 
                 binding.recName.error = if (isValidName) null else getString(R.string.error_invalid_name)
@@ -63,10 +62,23 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                 binding.reEnterPass.error = if (isValidRePassword) null else getString(R.string.error_invalid_reEnterPass)
 
                 if (isValidName && isValidHotline && isValidAddress && isValidEmail && isValidPassword && isValidRePassword) {
-                    val resultIntent = Intent()
-                    setResult(Activity.RESULT_OK, resultIntent)
-                    Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
-                    finish()
+                    fAuth.createUserWithEmailAndPassword(emailInput,passInput).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
+                            val uid = fAuth.currentUser?.uid
+                            if (uid != null) {
+                                FirebaseDatabase.getInstance().reference.child("UserRole").child(uid).setValue("Normal User")
+                            }
+                            var intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Đăng ký thất bại..",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 } else {
                     checkToAutoFocus(isValidName, isValidHotline, isValidAddress, isValidEmail, isValidPassword, isValidRePassword)
                 }

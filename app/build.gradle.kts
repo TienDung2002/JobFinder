@@ -45,11 +45,13 @@ android {
 }
 
 dependencies {
+
     val retrofitVersion = "2.9.0";
     val lifecycleVersion = "2.7.0";
     val glideVersion = "4.16.0";
     val coroutinesVersion = "1.7.1";
     val nav_version = "2.7.6";
+    val firebase_ver = "8.0.2";
 
     // default
     implementation("androidx.core:core-ktx:1.12.0")
@@ -62,6 +64,18 @@ dependencies {
 
     // google service firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    // FirebaseUI for Firebase Realtime Database
+    implementation ("com.firebaseui:firebase-ui-database:$firebase_ver")
+    implementation("com.google.firebase:firebase-database:20.3.1")
+    // FirebaseUI for Cloud Firestore
+    implementation ("com.firebaseui:firebase-ui-firestore:$firebase_ver")
+    // FirebaseUI for Firebase Auth
+    implementation ("com.firebaseui:firebase-ui-auth:$firebase_ver")
+    // FirebaseUI for Cloud Storage
+    implementation ("com.firebaseui:firebase-ui-storage:$firebase_ver")
+
+
 
     // Retrofit2
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
