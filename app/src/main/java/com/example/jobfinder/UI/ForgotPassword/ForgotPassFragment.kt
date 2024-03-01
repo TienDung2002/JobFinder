@@ -31,6 +31,10 @@ class ForgotPassFragment : Fragment() {
 
             if (isValidEmail) {
                 binding.emailInput.error = null
+                binding.forgotTitle.setText(R.string.FP_Title2)
+                binding.subTitle1.setText(R.string.FP_subTitle2)
+                binding.image.setImageResource(R.drawable.ic_checkemail)
+                binding.subTitle2.setText(emailInput)
                 sendEmailResetPass()
                 Toast.makeText(requireContext(), getString(R.string.FP_toast), Toast.LENGTH_SHORT).show()
             } else {

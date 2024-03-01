@@ -71,10 +71,6 @@
     <string name="FP_subTitle1">To reset your password, you need your email</string>
     <string name="FP_subTitle1.1">that can be authenticated</string>
     <string name="FP_subTitle2">We have sent the reset password to the email address</string>
-    <string name="FP_subTitle3">Your password has been updated, please change your password regularly to avoid this happening</string>
-    <string name="FP_emailVerified">example@gmail.com</string>
-    <string name="FP_subTitle4">You have not received the email?</string>
-    <string name="FP_resendBtn">Resent</string>
     <string name="FP_resetPassBtn">Reset password</string>
     <string name="FP_backToLoginBtn">Back to Login</string>
     <string name="FP_toast">The link has been sent</string>
