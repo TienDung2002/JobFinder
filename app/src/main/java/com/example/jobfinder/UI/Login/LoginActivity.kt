@@ -1,9 +1,10 @@
 package com.example.jobfinder.UI.Login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.ForgotPassword.ForgotPassActivity
 import com.example.jobfinder.UI.Home.HomeActivity
@@ -14,15 +15,20 @@ import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     private var isPassVisible = PasswordToggleState(false)
+    private lateinit var fAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //firebase
+        fAuth = FirebaseAuth.getInstance()
 
 
         // gọi hàm đổi icon và ẩn hiện password
@@ -69,9 +75,22 @@ class LoginActivity : AppCompatActivity() {
                 binding.userPassLogin.error = if (isPassValid) null else getString(R.string.error_pass)
 
                 if (isEmailValid && isPassValid) {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    fAuth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener {
+                        if(it.isSuccessful){
+                            Log.d("Test", "Dung gay")
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }.addOnFailureListener {
+                        Log.d("Test", "Dung gay 2")
+                        Toast.makeText(
+                            applicationContext,
+                            "sign in fail..",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 } else {
                     checkToAutoFocus(isEmailValid, isPassValid)
                 }
