@@ -40,7 +40,7 @@
     <string name="register_title_rec1">Register to becoming</string>
     <string name="register_title_rec2">a recruiter</string>
     <string name="note_register">(Scrolldown and complete all the fields below)</string>
-    <string name="rec_name">Full name</string>
+    <string name="rec_name">Recruiter name</string>
     <string name="rec_address">Address</string>
     <string name="rec_taxcode">Tax code</string>
     <string name="rec_hotline">Hotline</string>
@@ -64,8 +64,10 @@
     <string name="register_title_seek2">your dream jobs</string>
     <string name="seek_age">Age</string>
     <string name="seek_phone">Phone numbers</string>
+    <string name="seek_name">User name</string>
 
-<!--    Forgot password-->
+
+    <!--    Forgot password-->
     <string name="FP_Title1">Check your email</string>
     <string name="FP_Title2">Successfully</string>
     <string name="FP_subTitle1">To reset your password, you need your email</string>

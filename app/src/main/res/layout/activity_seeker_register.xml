@@ -68,7 +68,7 @@
                     android:id="@+id/NameInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/rec_name"
+                    android:hint="@string/seek_name"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     android:layout_marginTop="10dp"
