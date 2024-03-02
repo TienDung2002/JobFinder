@@ -1,9 +1,11 @@
 package com.example.jobfinder.UI.Login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.ForgotPassword.ForgotPassActivity
 import com.example.jobfinder.UI.Home.HomeActivity
@@ -14,15 +16,22 @@ import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.values
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     private var isPassVisible = PasswordToggleState(false)
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //firebase
+        auth = FirebaseAuth.getInstance()
 
 
         // gọi hàm đổi icon và ẩn hiện password
@@ -69,9 +78,26 @@ class LoginActivity : AppCompatActivity() {
                 binding.userPassLogin.error = if (isPassValid) null else getString(R.string.error_pass)
 
                 if (isEmailValid && isPassValid) {
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    auth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener {
+                        if(it.isSuccessful){
+                            val uid = auth.currentUser?.uid
+                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
+                                val data: idAndRole? = it.getValue(idAndRole::class.java)
+                                if (data != null) {
+                                    checkRole(data.role.toString())
+                                }
+                            }.addOnFailureListener{
+                                Log.e("sadddd", "Error getting data", it)
+                            }
+                        }
+                    }.addOnFailureListener {
+                        Toast.makeText(
+                            applicationContext,
+                            "sign in fail..",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
                 } else {
                     checkToAutoFocus(isEmailValid, isPassValid)
                 }
@@ -101,6 +127,19 @@ class LoginActivity : AppCompatActivity() {
 
         if (invalidFields.isNotEmpty()) {
             invalidFields.first().requestFocus()
+        }
+    }
+
+    private fun checkRole(role: String){
+        if(role=="NUser"){
+            Log.e("sadddd", "NUser role")
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }
+        if(role=="BUser"){
+            Log.e("sadddd", "BUser role")
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
 }

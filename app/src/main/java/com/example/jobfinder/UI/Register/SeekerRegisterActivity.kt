@@ -5,20 +5,27 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.jobfinder.Datas.Model.NUserInfo
+import com.example.jobfinder.Datas.Model.UserBasicInfoModel
+import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
-import com.example.jobfinder.Utils.PasswordToggleState
+import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivitySeekerRegisterBinding
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class SeekerRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivitySeekerRegisterBinding
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeekerRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        auth = FirebaseAuth.getInstance()
 
         // Đăng ký
         binding.btnRegister.setOnClickListener{
@@ -45,10 +52,22 @@ class SeekerRegisterActivity : AppCompatActivity() {
                 binding.reEnterPass.error = if (isValidRePassword) null else getString(R.string.error_invalid_reEnterPass)
 
                 if (isValidName && isValidPhone && isValidAddress && isValidEmail && isValidPassword && isValidRePassword) {
-                    val resultIntent = Intent()
-                    setResult(Activity.RESULT_OK, resultIntent)
-                    Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
-                    finish()
+                    auth.createUserWithEmailAndPassword(emailInput,passInput).addOnCompleteListener(this) { task->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
+                            val uid = auth.currentUser?.uid
+                            val userBasicInfo = UserBasicInfoModel(uid, nameInput, emailInput, phoneInput,addressInput)
+                            val nUserInfo = NUserInfo(0)
+                            val userRole = idAndRole(uid, "NUser")
+                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).setValue(userRole)
+                            FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).setValue(userBasicInfo)
+                            FirebaseDatabase.getInstance().getReference("NUserInfo").child(uid.toString()).setValue(nUserInfo)
+                            startActivity(Intent(this, HomeActivity::class.java))
+                            finish()
+                        } else {
+                            Toast.makeText(this, "register fail..", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 } else {
                     checkToAutoFocus(isValidName, isValidPhone, isValidAddress, isValidEmail, isValidPassword, isValidRePassword)
                 }

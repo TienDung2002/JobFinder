@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.jobfinder.Datas.Model.BUserInfo
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.Utils.PreventDoubleClick
@@ -13,22 +14,25 @@ import com.example.jobfinder.databinding.ActivityRecruiterRegisterBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.example.jobfinder.Datas.Model.UserBasicInfoModel
+import com.example.jobfinder.Datas.Model.idAndRole
 
 
 class RecruiterRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecruiterRegisterBinding
-    private lateinit var fAuth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 //    private var isPassVisible = PasswordToggleState(false)
 //    private var isCalendarVisible = CalendarToggleState(false)
-//    private lateinit var fragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecruiterRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // mở icon, show password và ngược lại
-//        VerifyField.changeIconShowPassword(binding.passwordInputLayout, isPassVisible, binding.password)
 
+
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
+        
 //        // chọn ngày thành lập
 //        fragmentManager = supportFragmentManager
 //        binding.foundationDay.setOnClickListener{
@@ -40,6 +44,7 @@ class RecruiterRegisterActivity : AppCompatActivity() {
         // Đăng ký
         binding.btnRegister.setOnClickListener{
             if (PreventDoubleClick.checkClick()) {
+
                 val nameInput = binding.recName.text.toString()
                 val hotlineInput = binding.recHotline.text.toString()
                 val addressInput = binding.recAddress.text.toString()
@@ -62,21 +67,20 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                 binding.reEnterPass.error = if (isValidRePassword) null else getString(R.string.error_invalid_reEnterPass)
 
                 if (isValidName && isValidHotline && isValidAddress && isValidEmail && isValidPassword && isValidRePassword) {
-                    fAuth.createUserWithEmailAndPassword(emailInput,passInput).addOnCompleteListener { task ->
+                    auth.createUserWithEmailAndPassword(emailInput,passInput).addOnCompleteListener(this) { task->
                         if (task.isSuccessful) {
                             Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
-                            val uid = fAuth.currentUser?.uid
-                            if (uid != null) {
-                                FirebaseDatabase.getInstance().reference.child("UserRole").child(uid).setValue("Normal User")
-                            }
-                            var intent = Intent(this, HomeActivity::class.java)
-                            startActivity(intent)
+                            val uid = auth.currentUser?.uid
+                            val userBasicInfo = UserBasicInfoModel(uid, nameInput, emailInput, hotlineInput,addressInput)
+                            val bUserInfo= BUserInfo(uid,"", "")
+                            val userRole= idAndRole(uid, "BUser")
+                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).setValue(userRole)
+                            FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).setValue(userBasicInfo)
+                            FirebaseDatabase.getInstance().getReference("BUserInfo").child(uid.toString()).setValue(bUserInfo)
+                            startActivity(Intent(this, HomeActivity::class.java))
+                            finish()
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Đăng ký thất bại..",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "register fail..", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
