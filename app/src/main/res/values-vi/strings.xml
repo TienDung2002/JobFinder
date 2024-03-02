@@ -23,6 +23,8 @@
     <string name="error_invalid_email">Email trống hoặc không hợp lệ</string>
     <string name="error_pass">Mật khẩu trống hoặc không chính xác</string>
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
+    <string name="login_failed">Đăng nhập thất bại…Có lỗi ở Firebase</string>
+
 
 <!--    Register-->
     <string name="register_btn">Đăng ký</string>
@@ -36,6 +38,8 @@
     <string name="error_invalid_addr">Địa chỉ trống</string>
     <string name="error_invalid_reEnterPass">Nhập lại mật khẩu trống hoặc không khớp</string>
     <string name="register_success">Đăng ký thành công!</string>
+    <string name="register_failed">Đăng ký thất bại!</string>
+
 
     <!--    Nhà tuyển dụng-->
     <string name="register_title_rec1">Đăng ký trở thành</string>

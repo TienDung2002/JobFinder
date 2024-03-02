@@ -87,17 +87,12 @@ class LoginActivity : AppCompatActivity() {
                                     checkRole(data.role.toString())
                                 }
                             }.addOnFailureListener{
-                                Log.e("sadddd", "Error getting data", it)
+                                Log.e("Login button", "Something wrong while getting data", it)
                             }
                         }
                     }.addOnFailureListener {
-                        Toast.makeText(
-                            applicationContext,
-                            "sign in fail..",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                     }
-
                 } else {
                     checkToAutoFocus(isEmailValid, isPassValid)
                 }
@@ -124,20 +119,19 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
         if (invalidFields.isNotEmpty()) {
             invalidFields.first().requestFocus()
         }
     }
 
     private fun checkRole(role: String){
-        if(role=="NUser"){
-            Log.e("sadddd", "NUser role")
+        if (role == "NUser"){
+            Log.e("Role error", "NUser role")
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
-        if(role=="BUser"){
-            Log.e("sadddd", "BUser role")
+        if (role == "BUser"){
+            Log.e("Role error", "BUser role")
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }

@@ -22,6 +22,7 @@
     <string name="error_invalid_email">Empty or invalid email</string>
     <string name="error_pass">Password empty or incorrect</string>
     <string name="error_email_pass">Please check the fields again</string>
+    <string name="login_failed">Login failed…Firebase error</string>
 
     <!--    register-->
     <string name="register_btn">Register</string>
@@ -35,6 +36,8 @@
     <string name="error_invalid_addr">Address is blank</string>
     <string name="error_invalid_reEnterPass">Re-enter password is blank or does match</string>
     <string name="register_success">Register success!</string>
+    <string name="register_failed">Register failed!</string>
+
 
     <!--    Nhà tuyển dụng-->
     <string name="register_title_rec1">Register to becoming</string>

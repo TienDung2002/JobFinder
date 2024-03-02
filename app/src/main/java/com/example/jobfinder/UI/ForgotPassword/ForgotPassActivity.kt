@@ -32,10 +32,5 @@ class ForgotPassActivity : AppCompatActivity() {
         }
 
 
-        // nút reset password
-//        binding.btnReset.setOnClickListener {
-//
-//        }
-
     }
 }

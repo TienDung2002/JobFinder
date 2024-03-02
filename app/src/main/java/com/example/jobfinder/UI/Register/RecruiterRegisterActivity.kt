@@ -77,9 +77,10 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                             FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).setValue(userBasicInfo)
                             FirebaseDatabase.getInstance().getReference("BUserInfo").child(uid.toString()).setValue(bUserInfo)
                             startActivity(Intent(this, HomeActivity::class.java))
+                            Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
                             finish()
                         } else {
-                            Toast.makeText(this, "register fail..", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, getString(R.string.register_failed), Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
