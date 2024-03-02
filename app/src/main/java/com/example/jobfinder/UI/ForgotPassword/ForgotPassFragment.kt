@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentForgotPassBinding
+import com.google.firebase.auth.FirebaseAuth
 
 
 class ForgotPassFragment : Fragment() {
     private lateinit var binding: FragmentForgotPassBinding
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,7 +33,7 @@ class ForgotPassFragment : Fragment() {
 
             if (isValidEmail) {
                 binding.emailInput.error = null
-                sendEmailResetPass()
+                sendEmailResetPass(emailInput)
                 Toast.makeText(requireContext(), getString(R.string.FP_toast), Toast.LENGTH_SHORT).show()
             } else {
                 binding.emailInput.error = getString(R.string.error_invalid_email)
@@ -44,7 +46,8 @@ class ForgotPassFragment : Fragment() {
         return binding.root
     }
 
-    private fun sendEmailResetPass(){
-
+    private fun sendEmailResetPass(email: String){
+        auth = FirebaseAuth.getInstance()
+        auth.sendPasswordResetEmail(email)
     }
 }
