@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.example.jobfinder.Datas.Model.UserBasicInfoModel
+import com.example.jobfinder.Datas.Model.idAndRole
 
 
 class RecruiterRegisterActivity : AppCompatActivity() {
@@ -75,7 +76,8 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                             val uid = auth.currentUser?.uid
                             val userBasicInfo = UserBasicInfoModel(uid, nameInput, emailInput, hotlineInput,addressInput)
                             val bUserInfo= BUserInfo(uid,"", "")
-                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).setValue("BUser")
+                            val userRole= idAndRole(uid, "BUser")
+                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).setValue(userRole)
                             FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).setValue(userBasicInfo)
                             FirebaseDatabase.getInstance().getReference("BUserInfo").child(uid.toString()).setValue(bUserInfo)
                             startActivity(Intent(this, HomeActivity::class.java))
