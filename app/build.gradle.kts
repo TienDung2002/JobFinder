@@ -49,8 +49,8 @@ dependencies {
     val retrofitVersion = "2.9.0";
     val lifecycleVersion = "2.7.0";
     val glideVersion = "4.16.0";
-    val coroutinesVersion = "1.7.1";
-    val nav_version = "2.7.6";
+    val coroutinesVersion = "1.7.3";
+    val nav_version = "2.7.7";
     val firebase_ver = "8.0.2";
 
     // default
@@ -77,16 +77,16 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
-// Also add the dependency for the Google Play services library and specify its version
+    // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
 
     // Retrofit2
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.11.0")
+//    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+//    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+//    implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
+//    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+//    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.11.0")
 
     // Android lifecycle
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -100,24 +100,24 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     // store local user data
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
-    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+//    implementation("androidx.datastore:datastore-preferences:1.0.0")
+//    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+//    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     //Rxjava
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+//    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
 
     // kotlin coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
     // use Glide for retrieving image from a remote source/URL
-    implementation("com.github.bumptech.glide:glide:$glideVersion")
-    ksp("androidx.room:room-compiler:2.6.1")
+//    implementation("com.github.bumptech.glide:glide:$glideVersion")
+//    ksp("androidx.room:room-compiler:2.6.1")
 
     // dot indicator
     implementation("com.tbuonomo:dotsindicator:4.2")
 
     // Timber log
-    implementation("com.jakewharton.timber:timber:4.7.1")
+//    implementation("com.jakewharton.timber:timber:4.7.1")
 }

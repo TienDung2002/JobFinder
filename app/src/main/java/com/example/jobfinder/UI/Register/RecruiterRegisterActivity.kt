@@ -29,10 +29,9 @@ class RecruiterRegisterActivity : AppCompatActivity() {
         binding = ActivityRecruiterRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
-        
+
 //        // chọn ngày thành lập
 //        fragmentManager = supportFragmentManager
 //        binding.foundationDay.setOnClickListener{
