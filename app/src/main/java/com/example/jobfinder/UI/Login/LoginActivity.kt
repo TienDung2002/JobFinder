@@ -81,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener {
                         if(it.isSuccessful){
                             val uid = auth.currentUser?.uid
-                            val userRoleDatasnapshot=FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
+                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
                                 val data: idAndRole? = it.getValue(idAndRole::class.java)
                                 if (data != null) {
                                     checkRole(data.role.toString())

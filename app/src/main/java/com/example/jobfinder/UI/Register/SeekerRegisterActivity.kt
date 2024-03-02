@@ -57,8 +57,8 @@ class SeekerRegisterActivity : AppCompatActivity() {
                             Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
                             val uid = auth.currentUser?.uid
                             val userBasicInfo = UserBasicInfoModel(uid, nameInput, emailInput, phoneInput,addressInput)
-                            val nUserInfo= NUserInfo(0)
-                            val userRole= idAndRole(uid, "NUser")
+                            val nUserInfo = NUserInfo(0)
+                            val userRole = idAndRole(uid, "NUser")
                             FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).setValue(userRole)
                             FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).setValue(userBasicInfo)
                             FirebaseDatabase.getInstance().getReference("NUserInfo").child(uid.toString()).setValue(nUserInfo)
