@@ -45,7 +45,7 @@ android {
 }
 
 dependencies {
-
+    implementation("androidx.activity:activity:1.8.0")
     val retrofitVersion = "2.9.0";
     val lifecycleVersion = "2.7.0";
     val glideVersion = "4.16.0";
@@ -80,6 +80,8 @@ dependencies {
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
+    // animation
+    implementation("androidx.compose.animation:animation-core-android:1.6.2")
 
     // Retrofit2
 //    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
