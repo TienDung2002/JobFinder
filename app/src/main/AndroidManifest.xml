@@ -17,8 +17,15 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".UI.SplashScreen.FirstStart"
-            android:exported="false" />
+            android:name=".UI.SplashScreen.Splashscreen"
+            android:exported="true"
+            android:theme="@style/FullScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".UI.ForgotPassword.ForgotPassActivity"
             android:exported="false"
@@ -64,15 +71,9 @@
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".UI.SplashScreen.SplashActivity"
-            android:exported="true"
-            android:theme="@style/FullScreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".UI.SplashScreen.SelectRoleActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
     </application>
 
 </manifest>

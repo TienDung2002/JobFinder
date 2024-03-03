@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
 
 
-        // Lấy role từ bên splashscreen
+        // Lấy role từ bên select role
         val userType = intent.getIntExtra("user_type", -1)
 
 

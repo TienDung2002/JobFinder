@@ -121,4 +121,8 @@ dependencies {
 
     // Timber log
 //    implementation("com.jakewharton.timber:timber:4.7.1")
+
+    // splash screen animation
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
 }
