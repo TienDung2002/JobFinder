@@ -43,11 +43,10 @@ class RecruiterRegisterActivity : AppCompatActivity() {
         // Đăng ký
         binding.btnRegister.setOnClickListener{
             if (PreventDoubleClick.checkClick()) {
-
                 val nameInput = binding.recName.text.toString()
                 val hotlineInput = binding.recHotline.text.toString()
                 val addressInput = binding.recAddress.text.toString()
-                val emailInput = binding.recEmail.text.toString()
+                val emailInput = binding.recEmail.text.toString().trim()
                 val passInput = binding.password.text.toString()
                 val repassInput = binding.reEnterPass.text.toString()
 

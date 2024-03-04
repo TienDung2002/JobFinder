@@ -33,7 +33,7 @@ class SeekerRegisterActivity : AppCompatActivity() {
                 val nameInput = binding.seekName.text.toString()
                 val phoneInput = binding.seekPhonenums.text.toString()
                 val addressInput = binding.seekAddress.text.toString()
-                val emailInput = binding.seekEmail.text.toString()
+                val emailInput = binding.seekEmail.text.toString().trim()
                 val passInput = binding.password.text.toString()
                 val repassInput = binding.reEnterPass.text.toString()
 
