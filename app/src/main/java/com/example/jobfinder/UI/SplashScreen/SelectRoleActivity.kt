@@ -18,14 +18,14 @@ class SelectRoleActivity : AppCompatActivity() {
         // mở login role tuyển dụng
         binding.loginasRecruiter.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
-            intent.putExtra("user_type", 1)
+            intent.putExtra("user_type", "BUser")
             startActivity(intent)
         }
 
         // mở login role người tìm việc
         binding.loginasSeeker.setOnClickListener{
             val intent = Intent(this, LoginActivity::class.java)
-            intent.putExtra("user_type", 0)
+            intent.putExtra("user_type", "NUser")
             startActivity(intent)
         }
     }
