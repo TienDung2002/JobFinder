@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.Login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     private var isPassVisible = PasswordToggleState(false)
     private lateinit var auth: FirebaseAuth
+    private val LOGIN_REQUEST_CODE = 100 // Đặt một mã request
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,6 +124,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
     private fun checkToAutoFocus(vararg isValidFields: Boolean) {
         val invalidFields = mutableListOf<TextInputEditText>()
         for ((index, isValid) in isValidFields.withIndex()) {
@@ -137,12 +140,26 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
     private fun checkRole(role: String, userType: String){
         if (role == userType){
+            val resultIntent = Intent()
+            setResult(Activity.RESULT_OK, resultIntent)
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }else {
             Toast.makeText(applicationContext, getString(R.string.wrong_role), Toast.LENGTH_SHORT).show()
         }
     }
+
+
+    // Xử lý kết quả từ Homeactivity
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            // Đăng nhập thành công, kết thúc cả SelectRoleActivity và LoginActivity
+            finish()
+        }
+    }
+
 }

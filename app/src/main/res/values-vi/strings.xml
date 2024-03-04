@@ -84,4 +84,6 @@
     <string name="FP_toast">Liên kết đặt lại mật khẩu đã được gửi</string>
 
 
+    <!--    Home-->
+    <string name="backpress_ask">Nhấn thêm lần nữa để thoát</string>
 </resources>
