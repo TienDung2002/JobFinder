@@ -41,8 +41,8 @@ class SeekerRegisterActivity : AppCompatActivity() {
                 val isValidPhone = VerifyField.isValidPhoneNumber(phoneInput)
                 val isValidAddress = addressInput.isNotEmpty()
                 val isValidEmail = VerifyField.isValidEmail(emailInput)
-                val isValidPassword = passInput.isNotEmpty()
-                val isValidRePassword = repassInput.isNotEmpty() && repassInput == passInput
+                val isValidPassword = VerifyField.isValidPassword(passInput)
+                val isValidRePassword = VerifyField.isValidPassword(repassInput) && repassInput == passInput
 
                 binding.seekName.error = if (isValidName) null else getString(R.string.error_invalid_name)
                 binding.seekPhonenums.error = if (isValidPhone) null else getString(R.string.error_invalid_phone)

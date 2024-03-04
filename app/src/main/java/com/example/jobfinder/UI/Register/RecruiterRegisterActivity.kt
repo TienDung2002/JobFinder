@@ -54,8 +54,8 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                 val isValidHotline = VerifyField.isValidPhoneNumber(hotlineInput)
                 val isValidAddress = addressInput.isNotEmpty()
                 val isValidEmail = VerifyField.isValidEmail(emailInput)
-                val isValidPassword = passInput.isNotEmpty() && passInput.length >=6
-                val isValidRePassword = repassInput.isNotEmpty() && repassInput == passInput
+                val isValidPassword = VerifyField.isValidPassword(passInput)
+                val isValidRePassword = VerifyField.isValidPassword(repassInput) && repassInput == passInput
 
                 binding.recName.error = if (isValidName) null else getString(R.string.error_invalid_name)
                 binding.recHotline.error = if (isValidHotline) null else getString(R.string.error_invalid_hotline)

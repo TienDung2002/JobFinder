@@ -3,6 +3,7 @@ package com.example.jobfinder.UI.Login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.idAndRole
@@ -68,13 +69,23 @@ class LoginActivity : AppCompatActivity() {
 
         // Xác nhận để Login
         binding.btnLogin.setOnClickListener {
+            // chạy animation loading
+            binding.animationView.visibility = View.VISIBLE
+
             val emailInput = binding.userEmailLogin.text.toString().trim()
             val passInput = binding.userPassLogin.text.toString()
             val isEmailValid = emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)
-            val isPassValid = passInput.isNotEmpty()
+            val isPassValid = VerifyField.isValidPassword(passInput)
 
-            binding.userEmailLogin.error = if (isEmailValid) null else getString(R.string.error_invalid_email)
-            binding.userPassLogin.error = if (isPassValid) null else getString(R.string.error_pass)
+            binding.userEmailLogin.error = if (isEmailValid) null else {
+                binding.animationView.visibility = View.GONE
+                getString(R.string.error_invalid_email)
+            }
+
+            binding.userPassLogin.error = if (isPassValid) null else {
+                binding.animationView.visibility = View.GONE
+                getString(R.string.error_pass)
+            }
 
             if (isEmailValid && isPassValid) {
                 auth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener {
@@ -85,12 +96,16 @@ class LoginActivity : AppCompatActivity() {
                             if (data != null) {
                                 checkRole(data.role.toString(), userType.toString())
                             }
+                            // ẩn loading khi đăng nhập hoàn tất
+                            binding.animationView.visibility = View.GONE
                         }.addOnFailureListener{
                             Log.e("Login button", "Something wrong while getting data", it)
                         }
                     }
                 }.addOnFailureListener {
                     Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                    binding.animationView.visibility = View.GONE
+                    checkToAutoFocus(isEmailValid, isPassValid)
                 }
             } else {
                 checkToAutoFocus(isEmailValid, isPassValid)

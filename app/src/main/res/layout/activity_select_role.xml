@@ -28,11 +28,13 @@
                     android:layout_width="260dp"
                     android:layout_height="260dp"
                     android:layout_marginTop="40sp"
+                    app:layout_constraintVertical_bias="0.2"
                     android:src="@drawable/app_icon_bg" />
 
                 <ImageView
                     android:layout_width="260dp"
                     android:layout_height="260dp"
+                    app:layout_constraintVertical_bias="0.2"
                     android:src="@drawable/app_icon_ct"
                     android:layout_gravity="center|top"
                     android:layout_alignTop="@id/icon_bg"
@@ -72,6 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.8"
             android:orientation="vertical">
 
             <!--            <Space-->

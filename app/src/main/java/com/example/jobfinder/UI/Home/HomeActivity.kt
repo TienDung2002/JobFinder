@@ -30,10 +30,10 @@ class HomeActivity : AppCompatActivity() {
                 binding.animationView.visibility = View.GONE
             }
         }
-//        binding.webView.loadUrl("https://www.youtube.com/")
-        val handler = Handler()
-        handler.postDelayed({
-            binding.webView.loadUrl("https://www.youtube.com/")
-        }, 2000) // Đợi 2000ms (2 giây) trước khi load URL
+        binding.webView.loadUrl("https://www.youtube.com/")
+//        val handler = Handler()
+//        handler.postDelayed({
+//            binding.webView.loadUrl("https://www.youtube.com/")
+//        }, 2000) // Đợi 2000ms (2 giây) trước khi load URL
     }
 }

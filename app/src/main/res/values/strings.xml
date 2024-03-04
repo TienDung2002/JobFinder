@@ -22,7 +22,7 @@
     <string name="error_invalid_email">Empty or invalid email</string>
     <string name="error_pass">Password is blank or incorrect (at least 6 characters)</string>
     <string name="error_email_pass">Please check the fields again</string>
-    <string name="login_failed">Login failed…Firebase error</string>
+    <string name="login_failed">Login failed…Please check again</string>
     <string name="wrong_role">Login with wrong role!</string>
 
     <!--    register-->
