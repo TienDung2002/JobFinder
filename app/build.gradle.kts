@@ -51,6 +51,8 @@ dependencies {
     val coroutinesVersion = "1.7.3";
     val nav_version = "2.7.7";
     val firebase_ver = "8.0.2";
+    val lottieVersion = "3.4.0"
+
 
     // default
     implementation("androidx.core:core-ktx:1.12.0")
@@ -78,9 +80,6 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:21.0.0")
-
-    // animation
-    implementation("androidx.compose.animation:animation-core-android:1.6.2")
 
     // Retrofit2
 //    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
@@ -124,5 +123,9 @@ dependencies {
 
     // splash screen animation
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.compose.animation:animation-core-android:1.6.2")
+
+    // loading lib from LottieFile
+    implementation("com.airbnb.android:lottie:$lottieVersion")
 
 }

@@ -68,34 +68,32 @@ class LoginActivity : AppCompatActivity() {
 
         // Xác nhận để Login
         binding.btnLogin.setOnClickListener {
-            if (PreventDoubleClick.checkClick()) {
-                val emailInput = binding.userEmailLogin.text.toString()
-                val passInput = binding.userPassLogin.text.toString()
-                val isEmailValid = emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)
-                val isPassValid = passInput.isNotEmpty()
+            val emailInput = binding.userEmailLogin.text.toString()
+            val passInput = binding.userPassLogin.text.toString()
+            val isEmailValid = emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)
+            val isPassValid = passInput.isNotEmpty()
 
-                binding.userEmailLogin.error = if (isEmailValid) null else getString(R.string.error_invalid_email)
-                binding.userPassLogin.error = if (isPassValid) null else getString(R.string.error_pass)
+            binding.userEmailLogin.error = if (isEmailValid) null else getString(R.string.error_invalid_email)
+            binding.userPassLogin.error = if (isPassValid) null else getString(R.string.error_pass)
 
-                if (isEmailValid && isPassValid) {
-                    auth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            val uid = auth.currentUser?.uid
-                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
-                                val data: idAndRole? = it.getValue(idAndRole::class.java)
-                                if (data != null) {
-                                    checkRole(data.role.toString())
-                                }
-                            }.addOnFailureListener{
-                                Log.e("Login button", "Something wrong while getting data", it)
+            if (isEmailValid && isPassValid) {
+                auth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener {
+                    if(it.isSuccessful){
+                        val uid = auth.currentUser?.uid
+                        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
+                            val data: idAndRole? = it.getValue(idAndRole::class.java)
+                            if (data != null) {
+                                checkRole(data.role.toString())
                             }
+                        }.addOnFailureListener{
+                            Log.e("Login button", "Something wrong while getting data", it)
                         }
-                    }.addOnFailureListener {
-                        Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                     }
-                } else {
-                    checkToAutoFocus(isEmailValid, isPassValid)
+                }.addOnFailureListener {
+                    Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                checkToAutoFocus(isEmailValid, isPassValid)
             }
         }
 
