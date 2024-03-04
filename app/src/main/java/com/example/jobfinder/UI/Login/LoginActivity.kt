@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Xác nhận để Login
         binding.btnLogin.setOnClickListener {
-            val emailInput = binding.userEmailLogin.text.toString()
+            val emailInput = binding.userEmailLogin.text.toString().trim()
             val passInput = binding.userPassLogin.text.toString()
             val isEmailValid = emailInput.isNotEmpty() && VerifyField.isValidEmail(emailInput)
             val isPassValid = passInput.isNotEmpty()
@@ -127,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }else {
-            Toast.makeText(applicationContext, "Wrong role login", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.wrong_role), Toast.LENGTH_SHORT).show()
         }
     }
 }
