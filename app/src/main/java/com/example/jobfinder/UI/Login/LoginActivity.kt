@@ -39,16 +39,16 @@ class LoginActivity : AppCompatActivity() {
 
 
         // Lấy role từ bên select role
-        val userType = intent.getIntExtra("user_type", -1)
+        val userType = intent.getStringExtra("user_type")
 
 
         // Mở register
         binding.openRegisterActi.setOnClickListener{
             if (PreventDoubleClick.checkClick()) {
-                if (userType == 0) {
+                if (userType == "NUser") {
                     val intent = Intent(this, SeekerRegisterActivity::class.java)
                     startActivity(intent)
-                } else if (userType == 1) {
+                } else if (userType == "BUser") {
                     val intent = Intent(this, RecruiterRegisterActivity::class.java)
                     startActivity(intent)
                 }
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         // Hiển thị tiêu đề dựa vào role đã chọn
-        if (userType == 0) {
+        if (userType == "NUser") {
             binding.titleLogin1.setText(R.string.welcome_seek1)
             binding.titleLogin2.setText(R.string.welcome_seek2)
         } else {
@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
                         FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
                             val data: idAndRole? = it.getValue(idAndRole::class.java)
                             if (data != null) {
-                                checkRole(data.role.toString())
+                                checkRole(data.role.toString(), userType.toString())
                             }
                         }.addOnFailureListener{
                             Log.e("Login button", "Something wrong while getting data", it)
@@ -122,16 +122,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkRole(role: String){
-        if (role == "NUser"){
-            Log.e("Role error", "NUser role")
+    private fun checkRole(role: String, userType: String){
+        if (role == userType){
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
-        }
-        if (role == "BUser"){
-            Log.e("Role error", "BUser role")
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+        }else {
+            Toast.makeText(applicationContext, "Wrong role login", Toast.LENGTH_SHORT).show()
         }
     }
 }
