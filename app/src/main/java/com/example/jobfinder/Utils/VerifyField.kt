@@ -37,6 +37,7 @@ object VerifyField {
         return phoneNumber.isNotEmpty() && phoneNumber.length == 10
     }
 
+    // check pass hợp lệ
     fun isValidPassword(password: String): Boolean {
         return password.isNotEmpty() && password.length >= 6
     }
