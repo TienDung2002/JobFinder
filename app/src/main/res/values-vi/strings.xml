@@ -86,4 +86,7 @@
 
     <!--    Home-->
     <string name="backpress_ask">Nhấn thêm lần nữa để thoát</string>
+
+    <!--    Notification-->
+    <string name="notification_title">Thông báo</string>
 </resources>

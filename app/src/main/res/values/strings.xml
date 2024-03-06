@@ -85,4 +85,6 @@
 <!--    Home-->
     <string name="backpress_ask">Press back again to exit</string>
 
+<!--    Notification-->
+    <string name="notification_title">Notification</string>
 </resources>

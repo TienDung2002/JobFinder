@@ -11,6 +11,7 @@ import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.ForgotPassword.ForgotPassActivity
 import com.example.jobfinder.UI.Home.HomeActivity
+import com.example.jobfinder.UI.Notifications.NotificationsActivity
 import com.example.jobfinder.UI.Register.RecruiterRegisterActivity
 import com.example.jobfinder.UI.Register.SeekerRegisterActivity
 import com.example.jobfinder.Utils.PasswordToggleState
@@ -145,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
         if (role == userType){
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, NotificationsActivity::class.java))
             finish()
         }else {
             Toast.makeText(applicationContext, getString(R.string.wrong_role), Toast.LENGTH_SHORT).show()
