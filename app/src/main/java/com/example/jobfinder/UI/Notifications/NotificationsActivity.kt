@@ -12,7 +12,7 @@ class NotificationsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notifications)
         val notificationList = listOf(
-            NotificationsRowModel("Thông báo 1", "Nội dung thông báo 1", "10 phút trước", "Xóa"),
+            NotificationsRowModel("Thông báo 1", "Applications for Google companies have entered for company review", "10 phút trước", "Xóa"),
             NotificationsRowModel("Thông báo 2", "Nội dung thông báo 2", "20 phút trước", "Xóa"),
             NotificationsRowModel("Thông báo 3", "Nội dung thông báo 3", "30 phút trước", "Xóa"),
             NotificationsRowModel("Thông báo 4", "Nội dung thông báo 4", "40 phút trước", "Xóa"),

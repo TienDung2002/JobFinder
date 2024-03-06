@@ -1,78 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp">
-        <LinearLayout android:id="@+id/linearRowlogogoogle"
-            android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp">
+
+        <LinearLayout
+            android:id="@+id/linearRowlogogoogle"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:background="@drawable/notification_background"
-            android:layout_marginBottom="5dp">
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
             <ImageButton
-                android:background="@drawable/app_icon_bg"
                 android:id="@+id/btnLogo"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="26.35dp"
-                android:layout_width="40dp"
+                android:background="@drawable/app_icon_bg"
                 android:paddingHorizontal="7dp"
                 android:paddingVertical="9.22dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/app_icon" tools:ignore="ContentDescription"/>
-            <LinearLayout android:gravity="start"
+                android:src="@drawable/app_icon"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
                 android:id="@+id/linearColumnapplicationsen"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="22.4dp"
-                android:layout_marginEnd="21dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="22.4dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="21dp"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="0.86"
-                android:layout_width="0dp" android:orientation="vertical">
-                <TextView android:ellipsize="end"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <TextView
                     android:id="@+id/txtApplicationsen"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    tools:text="Aplication sent"
-                    android:textSize="14sp"
-                    android:textFontWeight="700"
-                    android:textColor="#150b3d"/>
-                <TextView android:id="@+id/txtApplicationsfo"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="5.27dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#150b3d"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="Aplication sent" />
+
+                <TextView
+                    android:id="@+id/txtApplicationsfo"
                     android:layout_width="match_parent"
-                    android:textSize="12sp"
-                    android:textFontWeight="400"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5.27dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="#514a6b"
-                    tools:text="Applications for Google companies have entered for company review"/>
-                <LinearLayout android:id="@+id/linearRowduration"
+                    android:textFontWeight="400"
+                    android:textSize="12sp"
+                    tools:text="Applications for Google companies have entered for company review" />
+
+                <LinearLayout
+                    android:id="@+id/linearRowduration"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15.81dp"
-                    android:layout_width="match_parent" android:orientation="horizontal">
-                    <TextView android:ellipsize="end"
+                    android:orientation="horizontal">
+
+                    <TextView
                         android:id="@+id/txtDuration"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2.64dp"
                         android:layout_weight="0.68"
-                        android:layout_width="0dp" android:singleLine="true"
-                        tools:text="25 minutes ago"
-                        android:textSize="11sp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:textColor="#a9a5b8"
-                        />
-                    <TextView android:ellipsize="end"
+                        android:textSize="11sp"
+                        tools:text="25 minutes ago" />
+
+                    <TextView
                         android:id="@+id/txtDelete"
-                        android:textColor="#ff4b4b"
-                        android:textSize="12sp"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="1.32dp"
                         android:layout_marginStart="124dp"
+                        android:layout_marginBottom="1.32dp"
                         android:layout_weight="0.32"
-                        android:layout_width="0dp" android:singleLine="true"
-                        tools:text="Delete"/>
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/delete_notification_btn"
+                        android:textSize="12sp"
+                        tools:text="Delete" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
