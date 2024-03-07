@@ -92,4 +92,8 @@
     <string name="ic_wallet">Ví</string>
     <string name="ic_profile">Hồ sơ</string>
 
+
+    <!--    Notification-->
+    <string name="notification_title">Thông báo</string>
+    
 </resources>
