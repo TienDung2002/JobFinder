@@ -95,5 +95,8 @@
 
     <!--    Notification-->
     <string name="notification_title">Thông báo</string>
-
+    <string name="no_noti">Chưa có thông báo</string>
+    <!--    Button-->
+    <string name="delete">Xóa</string>
+>>>>>>> Stashed changes
 </resources>

@@ -72,16 +72,19 @@
                         android:textSize="11sp"
                         android:textColor="#a9a5b8"
                         />
-                    <TextView android:ellipsize="end"
+                    <TextView
+                        android:ellipsize="end"
                         android:id="@+id/txtDelete"
+                        android:background="@drawable/delete_btn"
                         android:textColor="#ff4b4b"
                         android:textSize="12sp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="1.32dp"
-                        android:layout_marginStart="124dp"
                         android:layout_weight="0.32"
-                        android:layout_width="0dp" android:singleLine="true"
-                        tools:text="Delete"/>
+                        android:layout_width="0dp"
+                        android:singleLine="true"
+                        android:layout_marginStart="124dp"
+                        android:text="@string/delete"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
