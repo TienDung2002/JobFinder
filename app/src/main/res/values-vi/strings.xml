@@ -55,6 +55,11 @@
     <string name="seek_age">Tuổi</string>
     <string name="seek_phone">Số điện thoại</string>
 
+    <!--    Trang cá nhân-->
+    <string name="username">Tên người dùng</string>
+    <string name="decoy_username">Oriz</string>
+
+
 
 
 

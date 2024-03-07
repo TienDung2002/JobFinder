@@ -53,4 +53,8 @@
     <string name="seek_age">Age</string>
     <string name="seek_phone">Phone numbers</string>
 
+    <!--    Profile-->
+    <string name="username">Username</string>
+    <string name="decoy_username">Oriz</string>
+
 </resources>
