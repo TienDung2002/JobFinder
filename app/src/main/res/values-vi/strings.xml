@@ -12,20 +12,37 @@
 
 <!--    Login-->
     <string name="login_btn">Đăng nhập</string>
-    <string name="welcome">Chào mừng trở lại!</string>
+    <string name="welcome_rec1">Chào mừng trở lại</string>
+    <string name="welcome_rec2">nhà tuyển dụng!</string>
+    <string name="welcome_seek1">Trở lại chuyến</string>
+    <string name="welcome_seek2">hành trình của bạn!</string>
     <string name="hintUsername">Email</string>
     <string name="hintPassword">Mật khẩu</string>
     <string name="create_acc">Chưa có tài khoản?</string>
     <string name="forgot_pass">Quên mật khẩu?</string>
     <string name="error_invalid_email">Email trống hoặc không hợp lệ</string>
-    <string name="error_pass">Mật khẩu trống hoặc không chính xác</string>
+    <string name="error_pass">Mật khẩu trống hoặc không chính xác (tối thiểu 6 kí tự)</string>
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
+    <string name="login_failed">Đăng nhập thất bại…Vui lòng kiểm tra lại</string>
+    <string name="wrong_role">Đăng nhập sai vai trò!</string>
+
 
 
 <!--    Register-->
     <string name="register_btn">Đăng ký</string>
+    <string name="return_login_seek">Bắt đầu tìm việc</string>
+    <string name="return_login_rec">Bắt đầu tuyển dụng</string>
     <string name="hintrePassword">Nhập lại mật khẩu</string>
     <string name="return_login">Đã có tài khoản?</string>
+    <string name="error_invalid_name">Tên trống</string>
+    <string name="error_invalid_hotline">Hotline trống hoặc có độ dài không hợp lệ (=10)</string>
+    <string name="error_invalid_phone">SĐT trống hoặc có độ dài không hợp lệ (=10)</string>
+    <string name="error_invalid_addr">Địa chỉ trống</string>
+    <string name="error_invalid_reEnterPass">Nhập lại mật khẩu trống hoặc không khớp</string>
+    <string name="register_success">Đăng ký thành công!</string>
+    <string name="register_failed">Đăng ký thất bại!</string>
+
+
     <!--    Nhà tuyển dụng-->
     <string name="register_title_rec1">Đăng ký trở thành</string>
     <string name="register_title_rec2">nhà tuyển dụng</string>
@@ -50,10 +67,21 @@
     <string name="rec_sec_tourism">Du lịch</string>
     <string name="rec_sec_other">Dịch vụ khác</string>
     <!--    Người tìm việc-->
-    <string name="register_title_seek1">Tìm kiếm</string>
+    <string name="register_title_seek1">Sẵn sàng tìm kiếm</string>
     <string name="register_title_seek2">công việc mơ ước</string>
     <string name="seek_age">Tuổi</string>
     <string name="seek_phone">Số điện thoại</string>
+    <string name="seek_name">Tên nhà người dùng</string>
+
+    <!--    Forgot password-->
+    <string name="FP_Title1">Kiểm tra email của bạn</string>
+    <string name="FP_Title2">Thành công!</string>
+    <string name="FP_subTitle1">Để đặt lại mật khẩu, bạn cần có email</string>
+    <string name="FP_subTitle1.1">có thể truy cập và xác thực được</string>
+    <string name="FP_subTitle2">Chúng tôi đã gửi liên kết để đặt lại mật khẩu tới email</string>
+    <string name="FP_resetPassBtn">Đặt lại mật khẩu</string>
+    <string name="FP_backToLoginBtn">Trở lại đăng nhập</string>
+    <string name="FP_toast">Liên kết đặt lại mật khẩu đã được gửi</string>
 
     <!--    Trang cá nhân-->
     <string name="username">Tên người dùng</string>
@@ -61,6 +89,6 @@
 
 
 
-
-
+    <!--    Home-->
+    <string name="backpress_ask">Nhấn thêm lần nữa để thoát</string>
 </resources>

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.SplashScreen.SplashActivity">
+    android:id="@+id/motionLayout"
+    tools:context=".UI.SplashScreen.SelectRoleActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,21 +16,31 @@
             android:id="@+id/contentLayoutTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.005">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="280dp"
-                android:layout_height="280dp"
-                android:layout_gravity="center|top"
-                android:layout_marginTop="60sp"
-                android:layout_marginBottom="50dp"
-                android:src="@drawable/app_icon" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|top">
+
+                <ImageView
+                    android:id="@+id/icon_bg"
+                    android:layout_width="260dp"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="40sp"
+                    app:layout_constraintVertical_bias="0.2"
+                    android:src="@drawable/app_icon_bg" />
+
+                <ImageView
+                    android:layout_width="260dp"
+                    android:layout_height="260dp"
+                    app:layout_constraintVertical_bias="0.2"
+                    android:src="@drawable/app_icon_ct"
+                    android:layout_gravity="center|top"
+                    android:layout_alignTop="@id/icon_bg"
+                    android:layout_alignStart="@id/icon_bg" />
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -37,6 +48,7 @@
                 android:text="@string/splash_title1"
                 android:textColor="@color/primary_color1"
                 android:textSize="38sp"
+                android:layout_marginTop="45dp"
                 android:textStyle="bold|italic" />
 
             <TextView
@@ -54,23 +66,22 @@
                 android:textColor="@color/primary_color1"
                 android:textSize="38sp"
                 android:textStyle="bold|italic" />
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/contentLayoutBottom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/contentLayoutTop"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.8"
             android:orientation="vertical">
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_gravity="fill_vertical" />
+            <!--            <Space-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="0dp"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:layout_gravity="fill_vertical" />-->
 
             <TextView
                 android:id="@+id/subtitle"
@@ -103,14 +114,5 @@
                 android:textSize="17sp"/>
         </LinearLayout>
     </RelativeLayout>
-
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

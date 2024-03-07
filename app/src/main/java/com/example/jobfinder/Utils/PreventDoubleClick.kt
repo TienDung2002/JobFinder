@@ -15,4 +15,5 @@ object PreventDoubleClick {
         }
         return false
     }
+
 }

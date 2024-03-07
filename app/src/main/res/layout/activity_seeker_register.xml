@@ -68,14 +68,14 @@
                     android:id="@+id/NameInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/rec_name"
+                    android:hint="@string/seek_name"
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     android:layout_marginTop="10dp"
                     app:startIconDrawable="@drawable/ic_name24px">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rec_name"
+                        android:id="@+id/seekName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/transparent_background"
@@ -98,7 +98,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/AgeInputLayout"
+                    android:id="@+id/PhoneInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/seek_phone"
@@ -108,11 +108,11 @@
                     app:startIconDrawable="@drawable/ic_hotline24px">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/seek_age"
+                        android:id="@+id/seek_phonenums"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/transparent_background"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:paddingStart="50dp"
                         android:paddingTop="16dp"
@@ -141,7 +141,7 @@
                     app:startIconDrawable="@drawable/ic_address24px">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/rec_address"
+                        android:id="@+id/seekAddress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/transparent_background"
@@ -174,7 +174,7 @@
                     app:startIconDrawable="@drawable/ic_email24px">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/user_email_login"
+                        android:id="@+id/seekEmail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/transparent_background"
@@ -280,7 +280,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/btnRegister"
                     android:layout_width="280dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
@@ -315,7 +315,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/login_btn"
+                android:text="@string/return_login_seek"
                 android:textColor="@color/click_link"
                 android:textSize="16sp" />
         </LinearLayout>

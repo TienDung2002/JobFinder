@@ -11,24 +11,40 @@
 
     <!--    Login-->
     <string name="login_btn">Login</string>
-    <string name="welcome">Welcome back!</string>
+    <string name="welcome_rec1">Glad to see</string>
+    <string name="welcome_rec2">you back recruiter!</string>
+    <string name="welcome_seek1">Welcome back </string>
+    <string name="welcome_seek2">to your journey!</string>
     <string name="hintUsername">Email</string>
     <string name="hintPassword">Password</string>
     <string name="create_acc">Don\'t have an account?</string>
     <string name="forgot_pass">Forgot password?</string>
     <string name="error_invalid_email">Empty or invalid email</string>
-    <string name="error_pass">Password empty or incorrect</string>
+    <string name="error_pass">Password is blank or incorrect (at least 6 characters)</string>
     <string name="error_email_pass">Please check the fields again</string>
+    <string name="login_failed">Login failed…Please check again</string>
+    <string name="wrong_role">Login with wrong role!</string>
 
     <!--    register-->
-    <string name="register_btn">register</string>
+    <string name="register_btn">Register</string>
+    <string name="return_login_seek">Start looking for work</string>
+    <string name="return_login_rec">Start recruiting</string>
     <string name="hintrePassword">Re-enter password</string>
     <string name="return_login">Already have an account?</string>
+    <string name="error_invalid_name">Name is blank</string>
+    <string name="error_invalid_hotline">Hotline is empty or has an invalid length (=10)</string>
+    <string name="error_invalid_phone">Phone is empty or has an invalid length (=10)</string>
+    <string name="error_invalid_addr">Address is blank</string>
+    <string name="error_invalid_reEnterPass">Re-enter password is blank or does match</string>
+    <string name="register_success">Register success!</string>
+    <string name="register_failed">Register failed!</string>
+
+
     <!--    Nhà tuyển dụng-->
     <string name="register_title_rec1">Register to becoming</string>
     <string name="register_title_rec2">a recruiter</string>
     <string name="note_register">(Scrolldown and complete all the fields below)</string>
-    <string name="rec_name">Full name</string>
+    <string name="rec_name">Recruiter name</string>
     <string name="rec_address">Address</string>
     <string name="rec_taxcode">Tax code</string>
     <string name="rec_hotline">Hotline</string>
@@ -48,10 +64,26 @@
     <string name="rec_sec_tourism">Tourism </string>
     <string name="rec_sec_other">Other services</string>
     <!--    Người tìm việc-->
-    <string name="register_title_seek1">Find your</string>
-    <string name="register_title_seek2">dream jobs</string>
+    <string name="register_title_seek1">Prepare to find</string>
+    <string name="register_title_seek2">your dream jobs</string>
     <string name="seek_age">Age</string>
     <string name="seek_phone">Phone numbers</string>
+    <string name="seek_name">User name</string>
+
+
+    <!--    Forgot password-->
+    <string name="FP_Title1">Check your email</string>
+    <string name="FP_Title2">Successfully</string>
+    <string name="FP_subTitle1">To reset your password, you need your email</string>
+    <string name="FP_subTitle1.1">that can be authenticated</string>
+    <string name="FP_subTitle2">We have sent the reset password to the email address</string>
+    <string name="FP_resetPassBtn">Reset password</string>
+    <string name="FP_backToLoginBtn">Back to Login</string>
+    <string name="FP_toast">The link has been sent</string>
+
+
+<!--    Home-->
+    <string name="backpress_ask">Press back again to exit</string>
 
     <!--    Profile-->
     <string name="username">Username</string>
