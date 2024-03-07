@@ -146,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
         if (role == userType){
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
-            startActivity(Intent(this, NotificationsActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }else {
             Toast.makeText(applicationContext, getString(R.string.wrong_role), Toast.LENGTH_SHORT).show()

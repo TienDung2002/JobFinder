@@ -1,5 +1,4 @@
 package com.example.jobfinder.UI.Home
-
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
