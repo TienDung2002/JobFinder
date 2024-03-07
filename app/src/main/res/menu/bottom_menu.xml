@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:title="@string/ic_home"
+        android:icon="@drawable/ic_menu_home50px"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
+    <item
+        android:id="@+id/job"
+        android:title="@string/ic_job"
+        android:icon="@drawable/ic_menu_job50px"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
+    <item
+        android:id="@+id/notify"
+        android:title="@string/ic_notify"
+        android:icon="@drawable/ic_menu_notify50px"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
+    <item
+        android:id="@+id/wallet"
+        android:title="@string/ic_wallet"
+        android:icon="@drawable/ic_menu_wallet50px"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
+    <item
+        android:id="@+id/profile"
+        android:title="@string/ic_profile"
+        android:icon="@drawable/ic_menu_profile50px"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
+</menu>

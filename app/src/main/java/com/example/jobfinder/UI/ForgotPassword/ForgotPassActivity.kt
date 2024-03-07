@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityForgotPassBinding
 
 class ForgotPassActivity : AppCompatActivity() {
@@ -16,12 +17,14 @@ class ForgotPassActivity : AppCompatActivity() {
 
 
         // thêm fragment vào activity
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        val fragment = ForgotPassFragment()
-        transaction.add(R.id.fragment_FrameLayout, fragment)
-//        transaction.replace(R.id.fragment_FrameLayout, fragment)
-        transaction.commit()
+        FragmentHelper.replaceFragment(supportFragmentManager, binding.fragmentFrameLayout, ForgotPassFragment())
+
+
+//        val transaction = fragmentManager.beginTransaction()
+//        val fragment = ForgotPassFragment()
+//        transaction.add(R.id.fragment_FrameLayout, fragment)
+////        transaction.replace(R.id.fragment_FrameLayout, fragment)
+//        transaction.commit()
 
 
         // nút quay lại Login

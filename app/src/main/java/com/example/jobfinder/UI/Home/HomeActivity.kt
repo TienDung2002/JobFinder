@@ -2,16 +2,17 @@ package com.example.jobfinder.UI.Home
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Toast
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Jobs.JobsActivity
+import com.example.jobfinder.UI.Notifications.NotificationsActivity
+import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
+import com.example.jobfinder.UI.Wallet.WalletActivity
+import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -23,47 +24,52 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // ngay đầu add frag vào home luôn
+        FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, TestFragment())
+
 
         // trả về result về login để đóng activity
         val resultIntent = Intent()
         setResult(Activity.RESULT_OK, resultIntent)
 
 
+        // Menu
+        binding.bottomNavView.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.home -> FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, TestFragment())
+                R.id.job  -> { startActivity(Intent(this, JobsActivity::class.java)) }
+                R.id.notify -> { startActivity(Intent(this, NotificationsActivity::class.java)) }
+                R.id.wallet -> { startActivity(Intent(this, WalletActivity::class.java)) }
+                R.id.profile -> { startActivity(Intent(this, UserDetailActivity::class.java)) }
 
-        binding.webView.settings.javaScriptEnabled = true
-        binding.webView.webViewClient = object : WebViewClient() {
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                binding.animationView.visibility = View.VISIBLE
+                else -> {
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                }
             }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                binding.animationView.visibility = View.GONE
-            }
+            true
         }
-        binding.webView.loadUrl("https://www.youtube.com/")
-//        val handler = Handler()
-//        handler.postDelayed({
-//            binding.webView.loadUrl("https://www.youtube.com/")
-//        }, 2000) // Đợi 2000ms (2 giây) trước khi load URL
+
+
+
     }
 
-    
+
+
+
+
+
     override fun onResume() {
         super.onResume()
         backPressedCount = 0 // Reset lại backPressedCount khi activity resume
     }
 
-    // Bấm 2 lần để hỏi, lần thứ 3 sẽ thoát ứng dụng
+    // Bấm 1 lần để hỏi, lần thứ 2 sẽ thoát ứng dụng
     override fun onBackPressed() {
-        if (backPressedCount == 2) {
+        if (backPressedCount >= 1) {
             super.onBackPressed() // đóng activity
         } else {
-            if (backPressedCount == 1) {
-                Toast.makeText(this, getString(R.string.backpress_ask), Toast.LENGTH_SHORT).show()
-            }
             backPressedCount++
+            Toast.makeText(this, getString(R.string.backpress_ask), Toast.LENGTH_SHORT).show()
             Handler(Looper.getMainLooper()).postDelayed({
                 backPressedCount = 0
             }, 2000) // Reset backPressedCount sau 2 giây

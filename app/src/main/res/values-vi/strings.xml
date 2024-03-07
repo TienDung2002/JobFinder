@@ -85,5 +85,11 @@
 
 
     <!--    Home-->
-    <string name="backpress_ask">Nhấn thêm lần nữa để thoát</string>
+    <string name="backpress_ask">Chạm thêm lần nữa để thoát</string>
+    <string name="ic_home">Trang chủ</string>
+    <string name="ic_job">Công việc</string>
+    <string name="ic_notify">Thông báo</string>
+    <string name="ic_wallet">Ví</string>
+    <string name="ic_profile">Hồ sơ</string>
+
 </resources>

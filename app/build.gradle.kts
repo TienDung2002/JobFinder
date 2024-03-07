@@ -116,7 +116,7 @@ dependencies {
 //    ksp("androidx.room:room-compiler:2.6.1")
 
     // dot indicator
-    implementation("com.tbuonomo:dotsindicator:4.2")
+//    implementation("com.tbuonomo:dotsindicator:4.2")
 
     // Timber log
 //    implementation("com.jakewharton.timber:timber:4.7.1")
