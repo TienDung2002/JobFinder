@@ -75,7 +75,7 @@
                     <TextView
                         android:ellipsize="end"
                         android:id="@+id/txtDelete"
-                        android:background="@drawable/delete_btn"
+                        android:background="@color/white"
                         android:textColor="#ff4b4b"
                         android:textSize="12sp"
                         android:layout_height="wrap_content"

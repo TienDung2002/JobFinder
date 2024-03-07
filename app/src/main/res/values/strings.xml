@@ -89,8 +89,6 @@
     <string name="ic_notify">Notification</string>
     <string name="ic_wallet">Wallet</string>
     <string name="ic_profile">Profile</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 <!--    Notification-->
     <string name="notification_title">Notification</string>
