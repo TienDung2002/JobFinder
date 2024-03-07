@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="notification_background">
-        <item name="android:background">@drawable/notification_background</item>
-    </style>
-
     <style name="txtTitle">
         <item name="android:textSize">20dp</item>
         <item name="android:textColor">#150b3d</item>

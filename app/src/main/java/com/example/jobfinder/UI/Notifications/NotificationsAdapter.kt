@@ -19,9 +19,6 @@ class NotificationsAdapter(
 
   override fun onBindViewHolder(holder: RowNotificationsVH, position: Int) {
     val notificationsRowModel = list[position]
-    val layoutParams = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
-    layoutParams.bottomMargin = 20
-    holder.itemView.layoutParams = layoutParams
     holder.bind(notificationsRowModel)
   }
 
