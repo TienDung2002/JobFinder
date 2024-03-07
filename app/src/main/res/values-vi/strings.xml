@@ -91,6 +91,7 @@
     <string name="ic_notify">Thông báo</string>
     <string name="ic_wallet">Ví</string>
     <string name="ic_profile">Hồ sơ</string>
+    <string name="hello_blank_fragment">Chào fragment trống</string>
 
 
     <!--    Notification-->
