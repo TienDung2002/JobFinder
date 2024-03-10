@@ -25,7 +25,7 @@ class NotificationsActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerNotifications)
         val noNotiLayout: ConstraintLayout = findViewById(R.id.no_noti)
-        val adapter = NotificationsAdapter(notificationList, noNotiLayout)
+        val adapter = NotificationsAdapter(notificationList, this, noNotiLayout)
         recyclerView.adapter = adapter
 
         recyclerView.layoutManager = LinearLayoutManager(this)

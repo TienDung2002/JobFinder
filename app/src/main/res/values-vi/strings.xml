@@ -95,7 +95,10 @@
 
     <!--    Notification-->
     <string name="notification_title">Thông báo</string>
-    <string name="no_noti">Chưa có thông báo</string>
+    <string name="no_noti">Không có thông báo</string>
+    <string name="from">Người gửi:</string>
+    <string name="Username">Tên doanh nghiệp</string>
+    <string name="close_btn">Đóng</string>
     <!--    Button-->
     <string name="delete">Xóa</string>
 >>>>>>> Stashed changes

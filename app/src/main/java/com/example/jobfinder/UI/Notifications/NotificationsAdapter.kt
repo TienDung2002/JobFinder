@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.Notifications
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.example.jobfinder.databinding.RowNotificationsBinding
 
 class NotificationsAdapter(
   var list: MutableList<NotificationsRowModel>,
+  private val context: Context,
   private val noNotiLayout: ConstraintLayout
 ) : RecyclerView.Adapter<NotificationsAdapter.RowNotificationsVH>() {
   private var clickListener: OnItemClickListener? = null
@@ -25,7 +27,16 @@ class NotificationsAdapter(
   override fun onBindViewHolder(holder: RowNotificationsVH, position: Int) {
     val notificationsRowModel = list[position]
     holder.bind(notificationsRowModel)
+
+    holder.itemView.setOnClickListener {
+      selectedNotification = notificationsRowModel
+      val dialog = NotificationDetailDialog(context, selectedNotification)
+      dialog.show()
+    }
+
   }
+
+  private var selectedNotification: NotificationsRowModel? = null
 
   override fun getItemCount(): Int = list.size
 
@@ -44,6 +55,7 @@ class NotificationsAdapter(
       checkEmptyAdapter()
     }
   }
+
 
   private fun checkEmptyAdapter() {
     if (list.isEmpty()) {
