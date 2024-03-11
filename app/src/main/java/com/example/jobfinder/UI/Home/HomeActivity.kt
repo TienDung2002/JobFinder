@@ -37,42 +37,19 @@ class HomeActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, resultIntent)
 
 
-        // Menu
-        binding.bottomNavView.setOnItemSelectedListener {
-            when(it.itemId) {
-                R.id.home -> FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, TestFragment())
-                R.id.job  -> { startActivity(Intent(this, JobsActivity::class.java)) }
-//                R.id.notify -> { startActivity(Intent(this, NotificationsActivity::class.java)) }
-                R.id.notify -> FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, NotificationsFragment())
-                R.id.wallet -> { startActivity(Intent(this, WalletActivity::class.java)) }
-//                R.id.profile -> { startActivity(Intent(this, UserDetailActivity::class.java)) }
-
-                // test logout ở đây
-                R.id.logout -> {
-                    auth.signOut()
-                    startActivity(Intent(this, SelectRoleActivity::class.java))
-                    Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
-
-                }
-
-
-                else -> {
-                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-                }
-            }
-            true
+        // thanh Navigation
+        binding.bottomNavView.setOnItemSelectedListener { menuItem ->
+            handleNavigation(menuItem.itemId)
         }
 
     }
 
 
 
-
-
-
     override fun onResume() {
         super.onResume()
         backPressedCount = 0 // Reset lại backPressedCount khi activity resume
+        updateNavigationBar()
     }
 
     // Bấm 1 lần để hỏi, lần thứ 2 sẽ thoát ứng dụng
@@ -88,4 +65,49 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+
+    // Xử lí các bottom Navigation
+    private fun handleNavigation(itemId: Int): Boolean {
+        when(itemId) {
+            R.id.home -> {
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, TestFragment())
+                return true
+            }
+            R.id.job  -> {
+                startActivity(Intent(this, JobsActivity::class.java))
+                return true
+            }
+            R.id.notify -> {
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, NotificationsFragment())
+                return true
+            }
+            R.id.wallet -> {
+                startActivity(Intent(this, WalletActivity::class.java))
+                return true
+            }
+//            R.id.profile -> {
+//                startActivity(Intent(this, UserDetailActivity::class.java))
+//                return true
+//            }
+            R.id.logout -> {
+                auth.signOut()
+                startActivity(Intent(this, SelectRoleActivity::class.java))
+                Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            else -> {
+                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                return false
+            }
+        }
+    }
+
+    // Kiểm tra fragment hiện tại và cập nhật icon trên thanh điều hướng dưới cùng (navbar) tương ứng
+    private fun updateNavigationBar() {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.HomeFrameLayout)
+        when (currentFragment) {
+            is TestFragment -> binding.bottomNavView.selectedItemId = R.id.home
+            is NotificationsFragment -> binding.bottomNavView.selectedItemId = R.id.notify
+        }
+    }
 }
