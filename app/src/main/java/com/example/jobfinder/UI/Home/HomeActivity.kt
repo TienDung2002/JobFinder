@@ -9,12 +9,15 @@ import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Jobs.JobsActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
+import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityHomeBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeBinding
     private var backPressedCount = 0
 
@@ -22,6 +25,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //firebase
+        auth = FirebaseAuth.getInstance()
 
         // ngay đầu add frag vào home luôn
         FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, TestFragment())
@@ -44,7 +49,10 @@ class HomeActivity : AppCompatActivity() {
 
                 // test logout ở đây
                 R.id.logout -> {
+                    auth.signOut()
+                    startActivity(Intent(this, SelectRoleActivity::class.java))
                     Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
+
                 }
 
 
