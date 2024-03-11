@@ -40,7 +40,13 @@ class HomeActivity : AppCompatActivity() {
 //                R.id.notify -> { startActivity(Intent(this, NotificationsActivity::class.java)) }
                 R.id.notify -> FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, NotificationsFragment())
                 R.id.wallet -> { startActivity(Intent(this, WalletActivity::class.java)) }
-                R.id.profile -> { startActivity(Intent(this, UserDetailActivity::class.java)) }
+//                R.id.profile -> { startActivity(Intent(this, UserDetailActivity::class.java)) }
+
+                // test logout ở đây
+                R.id.logout -> {
+                    Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
+                }
+
 
                 else -> {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
@@ -48,8 +54,6 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
-
 
     }
 
