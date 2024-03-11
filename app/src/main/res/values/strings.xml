@@ -90,13 +90,14 @@
     <string name="ic_wallet">Wallet</string>
     <string name="ic_profile">Profile</string>
 
-<!--    Notification-->
+    <!--    Notification-->
     <string name="notification_title">Notification</string>
     <string name="no_noti">No notification</string>
     <string name="from">From:</string>
     <string name="Username">BUser name</string>
     <string name="close_btn">Close</string>
-<!--    Button-->
+    <!--    Button-->
     <string name="delete">Delete</string>
+
 
 </resources>

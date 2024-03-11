@@ -8,7 +8,7 @@ import android.os.Looper
 import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Jobs.JobsActivity
-import com.example.jobfinder.UI.Notifications.NotificationsActivity
+import com.example.jobfinder.UI.Notifications.NotificationsFragment
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.Utils.FragmentHelper
@@ -37,7 +37,8 @@ class HomeActivity : AppCompatActivity() {
             when(it.itemId) {
                 R.id.home -> FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, TestFragment())
                 R.id.job  -> { startActivity(Intent(this, JobsActivity::class.java)) }
-                R.id.notify -> { startActivity(Intent(this, NotificationsActivity::class.java)) }
+//                R.id.notify -> { startActivity(Intent(this, NotificationsActivity::class.java)) }
+                R.id.notify -> FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, NotificationsFragment())
                 R.id.wallet -> { startActivity(Intent(this, WalletActivity::class.java)) }
                 R.id.profile -> { startActivity(Intent(this, UserDetailActivity::class.java)) }
 
