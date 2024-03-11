@@ -24,7 +24,7 @@ class TestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-//        binding = FragmentTestBinding.inflate(inflater, container, false)
+        binding = FragmentTestBinding.inflate(inflater, container, false)
 //
 //        binding.webView.settings.javaScriptEnabled = true
 //        binding.webView.webViewClient = object : WebViewClient() {
