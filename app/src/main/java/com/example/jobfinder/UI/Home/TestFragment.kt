@@ -24,21 +24,21 @@ class TestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentTestBinding.inflate(inflater, container, false)
-
-        binding.webView.settings.javaScriptEnabled = true
-        binding.webView.webViewClient = object : WebViewClient() {
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                binding.animationView.visibility = View.VISIBLE
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                binding.animationView.visibility = View.GONE
-            }
-        }
-        binding.webView.loadUrl("https://www.youtube.com/")
+//        binding = FragmentTestBinding.inflate(inflater, container, false)
+//
+//        binding.webView.settings.javaScriptEnabled = true
+//        binding.webView.webViewClient = object : WebViewClient() {
+//            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+//                super.onPageStarted(view, url, favicon)
+//                binding.animationView.visibility = View.VISIBLE
+//            }
+//
+//            override fun onPageFinished(view: WebView?, url: String?) {
+//                super.onPageFinished(view, url)
+//                binding.animationView.visibility = View.GONE
+//            }
+//        }
+//        binding.webView.loadUrl("https://www.youtube.com/")
 //        val handler = Handler()
 //        handler.postDelayed({
 //            binding.webView.loadUrl("https://www.youtube.com/")

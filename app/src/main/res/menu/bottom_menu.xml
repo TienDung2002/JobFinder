@@ -25,10 +25,15 @@
         android:icon="@drawable/ic_menu_wallet50px"
         android:foreground="?android:attr/selectableItemBackground"/>
 
-    <item
-        android:id="@+id/profile"
-        android:title="@string/ic_profile"
-        android:icon="@drawable/ic_menu_profile50px"
-        android:foreground="?android:attr/selectableItemBackground"/>
+<!--    <item-->
+<!--        android:id="@+id/profile"-->
+<!--        android:title="@string/ic_profile"-->
+<!--        android:icon="@drawable/ic_menu_profile50px"-->
+<!--        android:foreground="?android:attr/selectableItemBackground"/>-->
 
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/ic_logout50px"
+        android:foreground="?android:attr/selectableItemBackground"/>
 </menu>
