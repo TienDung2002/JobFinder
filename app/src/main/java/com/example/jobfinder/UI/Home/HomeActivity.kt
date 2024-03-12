@@ -68,6 +68,9 @@ class HomeActivity : AppCompatActivity() {
 
     // Xử lí các bottom Navigation
     private fun handleNavigation(itemId: Int): Boolean {
+        if (isCurrentFragment(itemId)) {
+            return true // Không cần reload lại fragment nếu đã ở trong fragment mục tiêu
+        }
         when(itemId) {
             R.id.home -> {
                 FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, TestFragment())
@@ -108,6 +111,16 @@ class HomeActivity : AppCompatActivity() {
         when (currentFragment) {
             is TestFragment -> binding.bottomNavView.selectedItemId = R.id.home
             is NotificationsFragment -> binding.bottomNavView.selectedItemId = R.id.notify
+        }
+    }
+
+    // tránh reload lại khi đang hiển thị fragment mà nhấn nav lần nữa trùng fragment đó
+    private fun isCurrentFragment(itemId: Int): Boolean {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.HomeFrameLayout)
+        return when (itemId) {
+            R.id.home -> currentFragment is TestFragment
+            R.id.notify -> currentFragment is NotificationsFragment
+            else -> false
         }
     }
 }

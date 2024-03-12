@@ -25,7 +25,7 @@ class TestFragment : Fragment() {
     ): View {
 
         binding = FragmentTestBinding.inflate(inflater, container, false)
-//
+
 //        binding.webView.settings.javaScriptEnabled = true
 //        binding.webView.webViewClient = object : WebViewClient() {
 //            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
