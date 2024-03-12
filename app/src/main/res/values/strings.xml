@@ -101,10 +101,12 @@
     <string name="wallet_title">Wallet</string>
     <string name="add_wallet">Add Wallet</string>
     <string name="wallet_history">History</string>
+    <string name="bank_name">Bank</string>
+    <string name="wallet_amount">Amount</string>
+    <string name="card_number">Card number</string>
+    <string name="choose_color">Choose color</string>
+    <string name="exp_date">Expired date</string>
     <!--    Button-->
     <string name="delete">Delete</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 
 </resources>

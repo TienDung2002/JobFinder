@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.fragment.app.Fragment
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.FragmentHelper.replaceFragment
 import com.example.jobfinder.databinding.ActivityWalletBinding
 
 class WalletActivity : AppCompatActivity() {
@@ -31,6 +33,11 @@ class WalletActivity : AppCompatActivity() {
             isExpanded = !isExpanded
             updateFABVisibility()
 
+        }
+
+        binding.addWalletFtBtn.setOnClickListener {
+            // Thay thế WalletFragment bằng AddWalletFragment
+            replaceFragment(AddWalletFragment())
         }
 
         val walletFragment = WalletFragment()
@@ -85,6 +92,12 @@ class WalletActivity : AppCompatActivity() {
             binding.walletHistoryFtTxt.isClickable = true
             binding.addWalletFtTxt.isClickable = true
         }
+    }
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.wallet_activity_framelayout, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
 }

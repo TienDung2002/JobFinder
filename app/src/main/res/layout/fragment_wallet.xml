@@ -6,7 +6,8 @@
         android:id="@+id/linearNotifications"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical" style="@style/groupStylegray_50">
+        android:orientation="vertical"
+        style="@style/groupStylegray_50">
 
             <RelativeLayout
                 android:layout_width="match_parent"

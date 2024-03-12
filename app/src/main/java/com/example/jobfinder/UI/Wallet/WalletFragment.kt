@@ -41,5 +41,4 @@ class WalletFragment : Fragment() {
         binding.recyclerWalletList.adapter = walletAdapter
     }
 
-
 }

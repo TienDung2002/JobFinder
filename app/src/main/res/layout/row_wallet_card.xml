@@ -45,7 +45,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="BIDV"
+                    android:text="@string/bank_name"
                     android:textColor="@color/grey"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -57,7 +57,7 @@
                     android:layout_marginTop="18dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="$45.678"
+                    android:text="@string/wallet_amount"
                     android:textColor="@color/white"
                     android:textSize="26sp"
                     android:textStyle="bold" />
@@ -69,11 +69,10 @@
                     android:layout_marginTop="26dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="0123456789"
+                    android:text="@string/card_number"
                     android:textColor="#ffef5f"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    tools:text="0123456789" />
+                    android:textStyle="bold" />
             </LinearLayout>
         </FrameLayout>
 
