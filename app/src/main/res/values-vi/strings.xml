@@ -86,6 +86,24 @@
     <!--    Trang cá nhân-->
     <string name="username">Tên người dùng</string>
     <string name="decoy_username">Oriz</string>
+    <string name="profile_setting">Cài đặt</string>
+    <string name="profile_account">Tài Khoản</string>
+    <string name="profile_logout">Đăng xuất</string>
+
+    <!-- Edit Profile -->
+    <string name="edit_profile">chỉnh sửa hồ sơ</string>
+    <string name="edit_profile_img">Nhấn để tải lên hình ảnh mới</string>
+    <string name="edit_profile_name">Tên hồ sơ</string>
+    <string name="edit_profile_email">Email</string>
+    <string name="edit_profile_phonenum">Số điện thoại</string>
+    <string name="edit_profile_age">Tuổi</string>
+
+
+
+
+
+
+
 
 
 
