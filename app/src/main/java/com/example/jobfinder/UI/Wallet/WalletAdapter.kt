@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.databinding.RowWalletCardBinding
+import kotlin.random.Random
 
 class WalletAdapter(private val walletList: List<WalletRowModel>) : RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
@@ -28,6 +29,7 @@ class WalletAdapter(private val walletList: List<WalletRowModel>) : RecyclerView
                 txtWalletBankName.text = wallet.bankName
                 walletAmount.text = wallet.amount
                 walletId.text = wallet.cardNumber
+                imageMainWalletImage.setImageResource(randomMaskGroup())
                 rowWallet.setBackgroundResource(getGradientDrawable(wallet.cardColor))
             }
         }
@@ -39,5 +41,16 @@ class WalletAdapter(private val walletList: List<WalletRowModel>) : RecyclerView
                 else -> R.drawable.wallet_blue_bg
             }
         }
+
+        private fun randomMaskGroup(): Int {
+            val num = Random.nextInt(1, 4)
+            return when (num) {
+                1-> R.drawable.img_mask_group
+                2-> R.drawable.img_mask_group_white_a700
+                3-> R.drawable.img_mask_group_white_a700_170x319
+                else -> {R.drawable.img_mask_group}
+            }
+        }
+
     }
 }
