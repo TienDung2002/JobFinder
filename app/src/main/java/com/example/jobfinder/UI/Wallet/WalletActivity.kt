@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.Wallet
 
+import WalletFragment
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,11 @@ class WalletActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWalletBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val walletFragment = WalletFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.wallet_activity_framelayout, walletFragment)
+            .commit()
 
 
         // back bằng nút trên màn hình

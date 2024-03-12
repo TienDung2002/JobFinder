@@ -44,8 +44,6 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-
-
     override fun onResume() {
         super.onResume()
         backPressedCount = 0 // Reset lại backPressedCount khi activity resume
@@ -64,7 +62,6 @@ class HomeActivity : AppCompatActivity() {
             }, 2000) // Reset backPressedCount sau 2 giây
         }
     }
-
 
     // Xử lí các bottom Navigation
     private fun handleNavigation(itemId: Int): Boolean {

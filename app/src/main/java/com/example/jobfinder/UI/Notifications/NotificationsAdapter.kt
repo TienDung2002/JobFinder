@@ -98,9 +98,9 @@ class NotificationsAdapter(
 
     fun bind(item: NotificationsRowModel) {
       binding.apply {
-        txtApplicationsen.text = item.txtApplicationsen
-        txtApplicationsfo.text = item.txtApplicationsfo
-        txtDuration.text = item.txtDuration
+        txtApplicationsen.text = item.from
+        txtApplicationsfo.text = item.detail
+        txtDuration.text = item.duration
       }
     }
   }

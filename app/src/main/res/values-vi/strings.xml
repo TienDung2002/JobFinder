@@ -99,6 +99,11 @@
     <string name="from">Người gửi:</string>
     <string name="Username">Tên doanh nghiệp</string>
     <string name="close_btn">Đóng</string>
+
+    <!--    Wallet-->
+    <string name="wallet_title">Ví</string>
+    <string name="add_wallet">Thêm thẻ</string>
+    <string name="wallet_history">Lịch sử</string>
     <!--    Button-->
     <string name="delete">Xóa</string>
 
