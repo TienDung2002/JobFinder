@@ -55,7 +55,9 @@ class HomeActivity : AppCompatActivity() {
     // Bấm 1 lần để hỏi, lần thứ 2 sẽ thoát ứng dụng
     override fun onBackPressed() {
         if (backPressedCount >= 1) {
+            setResult(Activity.RESULT_CANCELED)
             super.onBackPressed() // đóng activity
+            finish()
         } else {
             backPressedCount++
             Toast.makeText(this, getString(R.string.backpress_ask), Toast.LENGTH_SHORT).show()
@@ -91,7 +93,7 @@ class HomeActivity : AppCompatActivity() {
             R.id.logout -> {
                 auth.signOut()
                 finish()
-                startActivity(Intent(this, SelectRoleActivity::class.java))
+//                startActivity(Intent(this, SelectRoleActivity::class.java))
                 Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
                 return true
             }
