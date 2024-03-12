@@ -8,8 +8,8 @@
         android:foreground="?android:attr/selectableItemBackground"/>
 
     <item
-        android:id="@+id/job"
-        android:title="@string/ic_job"
+        android:id="@+id/managermentJob"
+        android:title="@string/ic_jobManagement"
         android:icon="@drawable/ic_menu_job50px"
         android:foreground="?android:attr/selectableItemBackground"/>
 
@@ -20,16 +20,10 @@
         android:foreground="?android:attr/selectableItemBackground"/>
 
     <item
-        android:id="@+id/wallet"
-        android:title="@string/ic_wallet"
-        android:icon="@drawable/ic_menu_wallet50px"
+        android:id="@+id/profile"
+        android:title="@string/ic_profile"
+        android:icon="@drawable/ic_menu_profile50px"
         android:foreground="?android:attr/selectableItemBackground"/>
-
-<!--    <item-->
-<!--        android:id="@+id/profile"-->
-<!--        android:title="@string/ic_profile"-->
-<!--        android:icon="@drawable/ic_menu_profile50px"-->
-<!--        android:foreground="?android:attr/selectableItemBackground"/>-->
 
     <item
         android:id="@+id/logout"

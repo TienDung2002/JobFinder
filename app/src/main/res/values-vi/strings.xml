@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Jobs Finder</string>
 
-<!--    Splash screen-->
+    <!--    Splash screen-->
     <string name="splash_title1">Tìm kiếm</string>
     <string name="splash_title2">công việc mơ ước</string>
     <string name="splash_title3">của bạn!</string>
@@ -10,7 +10,7 @@
     <string name="splash_recruiter">Nhà tuyển dụng</string>
     <string name="splash_jobseeker">Tìm công việc</string>
 
-<!--    Login-->
+    <!--    Login-->
     <string name="login_btn">Đăng nhập</string>
     <string name="welcome_rec1">Chào mừng trở lại</string>
     <string name="welcome_rec2">nhà tuyển dụng!</string>
@@ -27,8 +27,7 @@
     <string name="wrong_role">Đăng nhập sai vai trò!</string>
 
 
-
-<!--    Register-->
+    <!--    Register-->
     <string name="register_btn">Đăng ký</string>
     <string name="return_login_seek">Bắt đầu tìm việc</string>
     <string name="return_login_rec">Bắt đầu tuyển dụng</string>
@@ -87,10 +86,16 @@
     <!--    Home-->
     <string name="backpress_ask">Chạm thêm lần nữa để thoát</string>
     <string name="ic_home">Trang chủ</string>
-    <string name="ic_job">Công việc</string>
+    <string name="ic_jobManagement">Quản lý</string>
     <string name="ic_notify">Thông báo</string>
-    <string name="ic_wallet">Ví</string>
     <string name="ic_profile">Hồ sơ</string>
+    <!--    Nuser-->
+    <string name="grid_findNewJob">Công việc mới</string>
+    <string name="grid_wallet">Ví</string>
+    <string name="grid_job_applied">Công việc ứng tuyển</string>
+    <string name="grid_job_checkin">Điểm danh</string>
+    <string name="grid_reports">Báo cáo</string>
+    <!--    Buser-->
 
 
     <!--    Notification-->
