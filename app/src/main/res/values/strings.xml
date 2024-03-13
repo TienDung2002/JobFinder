@@ -103,8 +103,28 @@
     <string name="from">From:</string>
     <string name="Username">BUser name</string>
     <string name="close_btn">Close</string>
+
+    <!--    Wallet-->
+    <string name="wallet_title">Wallet</string>
+    <string name="add_wallet">Add Wallet</string>
+    <string name="wallet_history">History</string>
+    <string name="bank_name">Bank</string>
+    <string name="wallet_amount">Amount</string>
+    <string name="card_number">Card number</string>
+    <string name="choose_color">Choose color</string>
+    <string name="exp_date">Expired date</string>
+    <string name="no_card">No card in wallet</string>
+    <string name="error_invalid_bank">Bank is blank</string>
+    <string name="error_invalid_exp_date">Expired date is blank</string>
+    <string name="error_invalid_card_num">Card number has at least 10 character</string>
+    <string name="add_card_success">Add card success</string>
+    <string name="add_card_fail">Fail to add card</string>
+    <string name="delete_card_success">Deleted</string>
+    <string name="add_cash_success">Add cash success</string>
     <!--    Button-->
     <string name="delete">Delete</string>
-
+    <string name="cancel">Cancel</string>
+    <string name="add_cash">Add cash</string>
+    <string name="add_card">Add card</string>
 
 </resources>

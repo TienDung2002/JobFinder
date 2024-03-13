@@ -10,7 +10,6 @@ import com.example.jobfinder.R
 import com.example.jobfinder.UI.Jobs.JobsActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
-import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityHomeBinding
@@ -44,8 +43,6 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-
-
     override fun onResume() {
         super.onResume()
         backPressedCount = 0 // Reset lại backPressedCount khi activity resume
@@ -66,7 +63,6 @@ class HomeActivity : AppCompatActivity() {
             }, 2000) // Reset backPressedCount sau 2 giây
         }
     }
-
 
     // Xử lí các bottom Navigation
     private fun handleNavigation(itemId: Int): Boolean {

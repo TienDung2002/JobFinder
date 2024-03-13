@@ -104,7 +104,28 @@
     <string name="from">Người gửi:</string>
     <string name="Username">Tên doanh nghiệp</string>
     <string name="close_btn">Đóng</string>
+
+    <!--    Wallet-->
+    <string name="wallet_title">Ví</string>
+    <string name="add_wallet">Thêm thẻ</string>
+    <string name="wallet_history">Lịch sử</string>
+    <string name="bank_name">Ngân hàng</string>
+    <string name="wallet_amount">Số dư</string>
+    <string name="card_number">Số thẻ</string>
+    <string name="choose_color">Chọn màu</string>
+    <string name="exp_date">Ngày hết hạn</string>
+    <string name="no_card">Không có thẻ trong ví</string>
+    <string name="error_invalid_bank">Không có ngân hàng</string>
+    <string name="error_invalid_exp_date">Không có ngày hết hạn</string>
+    <string name="error_invalid_card_num">Số thẻ có ít nhất 10 kí tự</string>
+    <string name="add_card_success">Thêm thẻ thành công</string>
+    <string name="add_card_fail">Thêm thẻ thất bại</string>
+    <string name="delete_card_success">Đã xóa thẻ</string>
+    <string name="add_cash_success">Nạp tiền thành công</string>
     <!--    Button-->
     <string name="delete">Xóa</string>
+    <string name="cancel">Hủy</string>
+    <string name="add_cash">Nạp tiền</string>
+    <string name="add_card">Thêm thẻ</string>
 
 </resources>
