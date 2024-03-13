@@ -106,7 +106,7 @@
     <string name="wallet_history">Lịch sử</string>
     <string name="bank_name">Ngân hàng</string>
     <string name="wallet_amount">Số dư</string>
-    <string name="card_number">Số tài khoản</string>
+    <string name="card_number">Số thẻ</string>
     <string name="choose_color">Chọn màu</string>
     <string name="exp_date">Ngày hết hạn</string>
     <!--    Button-->

@@ -18,6 +18,7 @@ class WalletActivity : AppCompatActivity() {
     private var isExpanded = true
     private lateinit var fadeInAnimation: Animation
     private lateinit var fadeOutAnimation: Animation
+    private var backCheck = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWalletBinding.inflate(layoutInflater)
@@ -38,19 +39,25 @@ class WalletActivity : AppCompatActivity() {
         binding.addWalletFtBtn.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
             replaceFragment(AddWalletFragment())
+            backCheck = true
         }
-
-        val walletFragment = WalletFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.wallet_activity_framelayout, walletFragment)
-            .commit()
-
+        binding.addWalletFtTxt.setOnClickListener {
+            // Thay thế WalletFragment bằng AddWalletFragment
+            replaceFragment(AddWalletFragment())
+            backCheck = true
+        }
+        replaceFragment(WalletFragment())
 
         // back bằng nút trên màn hình
         binding.backButton.setOnClickListener{
-            val resultIntent = Intent()
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
+            if(backCheck){
+                replaceFragment(WalletFragment())
+                backCheck= false
+            }else {
+                val resultIntent = Intent()
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
+            }
         }
     }
 
