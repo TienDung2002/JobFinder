@@ -33,17 +33,18 @@ class WalletActivity : AppCompatActivity() {
             // Đảo ngược trạng thái mở rộng và cập nhật giao diện
             isExpanded = !isExpanded
             updateFABVisibility()
-
         }
 
         binding.addWalletFtBtn.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
             replaceFragment(AddWalletFragment())
+            binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
         binding.addWalletFtTxt.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
             replaceFragment(AddWalletFragment())
+            binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
         replaceFragment(WalletFragment())
@@ -52,6 +53,7 @@ class WalletActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener{
             if(backCheck){
                 replaceFragment(WalletFragment())
+                binding.walletTitle.setText(R.string.wallet_title)
                 backCheck= false
             }else {
                 val resultIntent = Intent()
@@ -105,6 +107,10 @@ class WalletActivity : AppCompatActivity() {
             .replace(R.id.wallet_activity_framelayout, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    fun onWalletAddedSuccessfully() {
+        binding.walletTitle.setText(R.string.wallet_title)
     }
 
 }
