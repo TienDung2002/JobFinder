@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/wallet_activity_framelayout">
-
         </FrameLayout>
 
         <LinearLayout
@@ -143,5 +142,15 @@
             android:contentDescription="action Button" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:elevation="10dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:layout_centerInParent="true"
+        app:lottie_rawRes="@raw/loading" />
 
 </RelativeLayout>

@@ -1,3 +1,4 @@
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,22 @@ class WalletFragment : Fragment() {
     private lateinit var binding: FragmentWalletBinding
     private lateinit var walletAdapter: WalletAdapter
     private lateinit var auth: FirebaseAuth
+    private lateinit var dataLoadListener: DataLoadListener
+
+    // onAttach được gọi đầu tiên khi kết nối Fragment với Activity chứa nó
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dataLoadListener = context as? DataLoadListener ?: throw RuntimeException("$context must implement DataLoadListener")
+    }
+
+
+    // interface này cho phép WalletFragment gừi thông diệp cho WalletActivity khi load xong data
+    interface DataLoadListener {
+        fun onDataLoaded()
+        fun onDataLoadedEmpty(isListEmpty: Boolean)
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,6 +40,7 @@ class WalletFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -30,7 +48,9 @@ class WalletFragment : Fragment() {
         val uid = auth.currentUser?.uid
         val walletList = mutableListOf<WalletRowModel>()
 
-        FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).get()
+        FirebaseDatabase.getInstance()
+            .getReference("Wallet")
+            .child(uid.toString()).get()
             .addOnSuccessListener { dataSnapshot ->
                 for (cardSnapshot in dataSnapshot.children) {
                     // Truy cập trực tiếp các thuộc tính của WalletRowModel từ cardSnapshot
@@ -44,17 +64,31 @@ class WalletFragment : Fragment() {
                     // Tạo một đối tượng WalletRowModel từ các thuộc tính lấy được
                     val wallet = WalletRowModel(cardId, bankName, amount, cardNumber, expDate, cardColor)
                     walletList.add(wallet)
+
+                    // gửi sự kiện qua dataLoadListener => thông qua interface ở bên trên => kích hoạt onDataLoaded() trong WalletActivity
+                    dataLoadListener.onDataLoaded()
                 }
 
                 // Khởi tạo adapter và thiết lập RecyclerView
                 walletAdapter = WalletAdapter(walletList, requireContext(), binding.noWalletCard)
                 binding.recyclerWalletList.layoutManager = LinearLayoutManager(requireContext())
                 binding.recyclerWalletList.adapter = walletAdapter
+                // Gọi sự kiện đối với list empty tương tự như khi adapter có data
+                dataLoadListener.onDataLoadedEmpty(walletList.isEmpty())
             }
             .addOnFailureListener { exception ->
                 Log.e("Wallet data", "Error getting data from Firebase", exception)
             }
 
     }
+
+
+    fun updateNoWalletCardVisibility(visibility: Int) {
+        binding.noWalletCard.visibility = visibility
+    }
+
+//    fun setDataLoadListener(listener: DataLoadListener) {
+//        dataLoadListener = listener
+//    }
 
 }

@@ -13,10 +13,15 @@ object FragmentHelper {
         fragmentTransaction.commit()
     }
 
-    fun replaceFragmentWithBackStack(fragmentManager: FragmentManager, frame: FrameLayout, fragment: Fragment) {
+    fun replaceFragmentCallBack(fragmentManager: FragmentManager, frame: FrameLayout, fragment: Fragment, onFragmentAddedListener: OnFragmentAddedListener?) {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(frame.id, fragment)
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
+
+        // Kiểm tra và gọi callback nếu nó được cung cấp
+        onFragmentAddedListener?.invoke()
     }
 }
+
+// Khai báo một typealias để định nghĩa một hàm callback khi fragment được thêm vào thành công (phần wallet)
+typealias OnFragmentAddedListener = () -> Unit

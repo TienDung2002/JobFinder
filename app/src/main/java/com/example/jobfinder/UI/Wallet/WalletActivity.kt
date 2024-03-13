@@ -8,18 +8,18 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.fragment.app.Fragment
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.Home.HomeFragment
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
 
-class WalletActivity : AppCompatActivity() {
+class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private lateinit var binding: ActivityWalletBinding
     private var isExpanded = true
     private lateinit var fadeInAnimation: Animation
     private lateinit var fadeOutAnimation: Animation
     private var backCheck = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWalletBinding.inflate(layoutInflater)
@@ -30,15 +30,34 @@ class WalletActivity : AppCompatActivity() {
         fadeOutAnimation= AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
         fadeOutAnimation.duration = 500
 
+
         binding.mainFtBtn.setOnClickListener {
             // Đảo ngược trạng thái mở rộng và cập nhật giao diện
             isExpanded = !isExpanded
             updateFABVisibility()
         }
 
+
         // add fragment mặc định khi mới mở
         FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
 
+//        FragmentHelper.replaceFragmentCallBack(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment()) {
+//            val walletFragment = supportFragmentManager.findFragmentById(R.id.wallet_activity_framelayout) as? WalletFragment
+//            walletFragment?.setDataLoadListener(object : WalletFragment.DataLoadListener {
+//                override fun onDataLoaded() {
+//                    // Không cần làm gì khi dữ liệu đã được tải xong từ WalletFragment
+//                }
+//
+//                override fun onDataLoadedEmpty(isListEmpty: Boolean) {
+//                    // Kiểm tra nếu danh sách rỗng, hiển thị noWalletCard
+//                    if (isListEmpty) {
+//                        binding.noWalletCard.visibility = View.VISIBLE
+//                    } else {
+//                        binding.noWalletCard.visibility = View.GONE
+//                    }
+//                }
+//            })
+//        }
 
         binding.addWalletFtBtn.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
@@ -46,13 +65,14 @@ class WalletActivity : AppCompatActivity() {
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
+
+
         binding.addWalletFtTxt.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
             FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
-
 
 
         // back bằng nút trên màn hình
@@ -67,6 +87,23 @@ class WalletActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+
+    // Xử lý khi dữ liệu đã tải xong bên WalletFragment (nếu adapter không rỗng)
+    override fun onDataLoaded() {
+        binding.animationView.visibility = View.GONE
+    }
+
+    // Kiểm tra nếu adapter rỗng, ẩn animationView, hiện noWalletCard
+    override fun onDataLoadedEmpty(isListEmpty: Boolean) {
+        val walletFragment = supportFragmentManager.findFragmentById(R.id.wallet_activity_framelayout) as? WalletFragment
+        if (isListEmpty) {
+            walletFragment?.updateNoWalletCardVisibility(View.VISIBLE)
+        } else {
+            walletFragment?.updateNoWalletCardVisibility(View.GONE)
+        }
+        binding.animationView.visibility = View.GONE
     }
 
 

@@ -12,6 +12,7 @@
         style="@style/groupStylegray_50"
         android:gravity="center_horizontal"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp">
 
 <!--card preview-->
@@ -94,7 +95,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/wallet_color_choosing"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -233,8 +235,7 @@
                 android:textSize="20sp"
                 android:background="@drawable/wallet_btn_shape"
                 android:padding="15dp"
-                android:id="@+id/add_card_btn"
-                />
+                android:id="@+id/add_card_btn" />
 
         </LinearLayout>
 
