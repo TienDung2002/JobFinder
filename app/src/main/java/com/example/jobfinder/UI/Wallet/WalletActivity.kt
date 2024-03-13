@@ -5,12 +5,9 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
@@ -33,34 +30,14 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
         fadeOutAnimation= AnimationUtils.loadAnimation(this, android.R.anim.fade_out)
         fadeOutAnimation.duration = 500
 
-
         binding.mainFtBtn.setOnClickListener {
             // Đảo ngược trạng thái mở rộng và cập nhật giao diện
             isExpanded = !isExpanded
             updateFABVisibility()
         }
 
-
         // add fragment mặc định khi mới mở
         FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
-
-//        FragmentHelper.replaceFragmentCallBack(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment()) {
-//            val walletFragment = supportFragmentManager.findFragmentById(R.id.wallet_activity_framelayout) as? WalletFragment
-//            walletFragment?.setDataLoadListener(object : WalletFragment.DataLoadListener {
-//                override fun onDataLoaded() {
-//                    // Không cần làm gì khi dữ liệu đã được tải xong từ WalletFragment
-//                }
-//
-//                override fun onDataLoadedEmpty(isListEmpty: Boolean) {
-//                    // Kiểm tra nếu danh sách rỗng, hiển thị noWalletCard
-//                    if (isListEmpty) {
-//                        binding.noWalletCard.visibility = View.VISIBLE
-//                    } else {
-//                        binding.noWalletCard.visibility = View.GONE
-//                    }
-//                }
-//            })
-//        }
 
         binding.addWalletFtBtn.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
@@ -77,7 +54,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             backCheck = true
         }
 
-
         // back bằng nút trên màn hình
         binding.backButton.setOnClickListener{
             if(backCheck){
@@ -91,7 +67,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             }
         }
     }
-
 
     // Xử lý khi dữ liệu đã tải xong bên WalletFragment (nếu adapter không rỗng)
     override fun onDataLoaded() {
@@ -108,7 +83,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
         }
         binding.animationView.visibility = View.GONE
     }
-
 
     private fun updateFABVisibility() {
         if (isExpanded) {
@@ -139,5 +113,4 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             binding.addWalletFtTxt.isClickable = true
         }
     }
-    
 }

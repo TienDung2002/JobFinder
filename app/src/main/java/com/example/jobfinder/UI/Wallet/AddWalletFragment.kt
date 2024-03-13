@@ -1,6 +1,5 @@
 package com.example.jobfinder.UI.Wallet
 
-import WalletFragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +27,6 @@ class AddWalletFragment : Fragment() {
         binding = FragmentAddWalletBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
