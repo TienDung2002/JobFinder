@@ -1,6 +1,7 @@
 package com.example.jobfinder.UI.Wallet
 
 import WalletFragment
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.R
-import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentAddWalletBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +28,7 @@ class AddWalletFragment : Fragment() {
         binding = FragmentAddWalletBinding.inflate(inflater, container, false)
         return binding.root
     }
-    
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,18 +58,9 @@ class AddWalletFragment : Fragment() {
                 FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).child(cardId.toString()).setValue(newWalletRow).addOnCompleteListener() {
                     if(it.isSuccessful){
                         Toast.makeText(context, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
-
-//                        val walletFragment = WalletFragment()
-                        val activity = requireActivity() as WalletActivity
-                        activity.onWalletAddedSuccessfully()
-//                        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-//                        transaction.replace(R.id.wallet_activity_framelayout, walletFragment)
-//                        transaction.disallowAddToBackStack()
-//                        transaction.commit()
-
-                        // Quay trở lại WalletActivity sau khi thêm thẻ thành công
-                        activity.goBackToWalletFragment()
-
+                        val intent = Intent(activity, WalletActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
                     }else {
                         Toast.makeText(context, getString(R.string.add_card_fail), Toast.LENGTH_SHORT).show()
                     }

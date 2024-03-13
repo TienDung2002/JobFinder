@@ -70,7 +70,6 @@ class WalletActivity : AppCompatActivity() {
     }
 
 
-
     private fun updateFABVisibility() {
         if (isExpanded) {
             binding.walletHistoryFtTxt.startAnimation(fadeOutAnimation)
@@ -98,23 +97,6 @@ class WalletActivity : AppCompatActivity() {
             binding.addWalletFtBtn.isClickable = true
             binding.walletHistoryFtTxt.isClickable = true
             binding.addWalletFtTxt.isClickable = true
-        }
-    }
-
-
-    fun onWalletAddedSuccessfully() {
-        binding.walletTitle.setText(R.string.wallet_title)
-    }
-
-
-    fun goBackToWalletFragment() {
-        val fragmentManager = supportFragmentManager
-        val fragment = fragmentManager.findFragmentById(R.id.wallet_activity_framelayout)
-
-        // Kiểm tra xem AddWalletFragment có đang được hiển thị không
-        if (fragment is AddWalletFragment) {
-            // Đóng AddWalletFragment và hiển thị lại WalletFragment
-            fragmentManager.popBackStack()
         }
     }
 

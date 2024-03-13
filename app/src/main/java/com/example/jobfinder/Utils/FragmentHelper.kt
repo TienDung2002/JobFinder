@@ -12,4 +12,11 @@ object FragmentHelper {
         fragmentTransaction.replace(frame.id, fragment)
         fragmentTransaction.commit()
     }
+
+    fun replaceFragmentWithBackStack(fragmentManager: FragmentManager, frame: FrameLayout, fragment: Fragment) {
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(frame.id, fragment)
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
+    }
 }
