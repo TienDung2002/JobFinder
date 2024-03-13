@@ -5,9 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
@@ -136,5 +139,5 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             binding.addWalletFtTxt.isClickable = true
         }
     }
-
+    
 }

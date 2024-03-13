@@ -109,4 +109,5 @@ class AddWalletFragment : Fragment() {
             invalidFields.first().requestFocus()
         }
     }
+
 }
