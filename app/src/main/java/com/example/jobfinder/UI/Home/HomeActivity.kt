@@ -9,8 +9,7 @@ import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Jobs.JobsActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
-import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
-import com.example.jobfinder.UI.Wallet.WalletActivity
+import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityHomeBinding
 import com.google.firebase.auth.FirebaseAuth

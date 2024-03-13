@@ -21,8 +21,7 @@
             android:layout_height="40dp"
             android:background="@drawable/transparent_background"
             android:drawableStart="@drawable/ic_back24px"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginStart="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="15dp"
-            android:layout_marginBottom="160dp">
+            android:layout_marginBottom="150dp">
 
             <TextView
                 android:layout_width="wrap_content"

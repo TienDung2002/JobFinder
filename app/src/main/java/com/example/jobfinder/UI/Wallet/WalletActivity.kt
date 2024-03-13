@@ -10,7 +10,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import com.example.jobfinder.R
-import com.example.jobfinder.Utils.FragmentHelper.replaceFragment
+import com.example.jobfinder.UI.Home.HomeFragment
+import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
 
 class WalletActivity : AppCompatActivity() {
@@ -35,24 +36,29 @@ class WalletActivity : AppCompatActivity() {
             updateFABVisibility()
         }
 
+        // add fragment mặc định khi mới mở
+        FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
+
+
         binding.addWalletFtBtn.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
-            replaceFragment(AddWalletFragment())
+            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
         binding.addWalletFtTxt.setOnClickListener {
             // Thay thế WalletFragment bằng AddWalletFragment
-            replaceFragment(AddWalletFragment())
+            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
-        replaceFragment(WalletFragment())
+
+
 
         // back bằng nút trên màn hình
         binding.backButton.setOnClickListener{
             if(backCheck){
-                replaceFragment(WalletFragment())
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
                 binding.walletTitle.setText(R.string.wallet_title)
                 backCheck= false
             }else {
@@ -64,14 +70,6 @@ class WalletActivity : AppCompatActivity() {
     }
 
 
-    // back bằng nút hoặc vuốt trên thiết bị
-    override fun onBackPressed() {
-        super.onBackPressed()
-        // Khởi tạo Intent để quay lại HomeActivity
-        val resultIntent = Intent()
-        setResult(Activity.RESULT_OK, resultIntent)
-        finish()
-    }
 
     private fun updateFABVisibility() {
         if (isExpanded) {
@@ -102,15 +100,22 @@ class WalletActivity : AppCompatActivity() {
             binding.addWalletFtTxt.isClickable = true
         }
     }
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.wallet_activity_framelayout, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
+
 
     fun onWalletAddedSuccessfully() {
         binding.walletTitle.setText(R.string.wallet_title)
+    }
+
+
+    fun goBackToWalletFragment() {
+        val fragmentManager = supportFragmentManager
+        val fragment = fragmentManager.findFragmentById(R.id.wallet_activity_framelayout)
+
+        // Kiểm tra xem AddWalletFragment có đang được hiển thị không
+        if (fragment is AddWalletFragment) {
+            // Đóng AddWalletFragment và hiển thị lại WalletFragment
+            fragmentManager.popBackStack()
+        }
     }
 
 }

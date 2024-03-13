@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="grey">#EEEEEE</color>
+    <color name="grey_hint_ForgotPass">#8C8C8C</color>
     <color name="white">#FFFFFF</color>
 
     <color name="primary_color1">#130160</color>

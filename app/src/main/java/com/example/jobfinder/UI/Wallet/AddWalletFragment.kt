@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentAddWalletBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -19,13 +20,15 @@ class AddWalletFragment : Fragment() {
     private lateinit var binding: FragmentAddWalletBinding
     private var pickedColor = "blue"
     private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAddWalletBinding.inflate(inflater, container, false)
         return binding.root
     }
+    
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,20 +52,24 @@ class AddWalletFragment : Fragment() {
 
             if(isValidBank && isValidCardNumber &&isValidExpDate){
                 val cardColor = pickedColor
-
                 val uid = auth.currentUser?.uid
                 val cardId= FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).push().key
                 val newWalletRow = WalletRowModel(cardId,bankName, "0.0", cardNumber, expDate, cardColor)
                 FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).child(cardId.toString()).setValue(newWalletRow).addOnCompleteListener() {
                     if(it.isSuccessful){
                         Toast.makeText(context, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
-                        val walletFragment = WalletFragment()
+
+//                        val walletFragment = WalletFragment()
                         val activity = requireActivity() as WalletActivity
                         activity.onWalletAddedSuccessfully()
-                        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                        transaction.replace(R.id.wallet_activity_framelayout, walletFragment)
-                        transaction.addToBackStack(null)
-                        transaction.commit()
+//                        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+//                        transaction.replace(R.id.wallet_activity_framelayout, walletFragment)
+//                        transaction.disallowAddToBackStack()
+//                        transaction.commit()
+
+                        // Quay trở lại WalletActivity sau khi thêm thẻ thành công
+                        activity.goBackToWalletFragment()
+
                     }else {
                         Toast.makeText(context, getString(R.string.add_card_fail), Toast.LENGTH_SHORT).show()
                     }
