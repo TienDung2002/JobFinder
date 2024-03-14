@@ -154,6 +154,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 "red" -> R.drawable.wallet_red_bg
                 "green" -> R.drawable.wallet_green_bg
                 "blue" -> R.drawable.wallet_blue_bg
+                "pink"-> R.drawable.wallet_pink_bg
                 else -> R.drawable.wallet_blue_bg
             }
         }

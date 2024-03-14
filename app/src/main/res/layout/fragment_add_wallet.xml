@@ -111,7 +111,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="4"
                 android:gravity="end"
                 android:orientation="horizontal">
 
@@ -139,6 +139,14 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginBottom="1dp"
                     android:background="@drawable/wallet_green_bg" />
+
+                <View
+                    android:id="@+id/choose_color_pink"
+                    android:layout_width="41dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="1dp"
+                    android:background="@drawable/wallet_pink_bg" />
 
             </LinearLayout>
 
@@ -208,17 +216,47 @@
                 android:text="@string/exp_date"
                 android:textSize="22sp"
                 android:textColor="@color/black"/>
-            <EditText
-                android:padding="14dp"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/exp_date"
-                android:textColorHint="#6b6b6b"
-                android:textSize="20sp"
-                android:maxLines="1"
-                android:inputType="text"
-                android:background="@drawable/edittext_outline"
-                android:id="@+id/add_wallet_exp_date_edit_txt"/>
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp">
+                    <TextView
+                        android:id="@+id/txt_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/year"
+                        android:textSize="20sp"
+                        android:background="@drawable/edittext_outline"
+                        android:padding="14dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp">
+                    <TextView
+                        android:id="@+id/txt_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/month"
+                        android:textSize="20sp"
+                        android:background="@drawable/edittext_outline"
+                        android:padding="14dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 <!--        button-->

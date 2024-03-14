@@ -88,13 +88,13 @@
     <string name="ic_jobManagement">Management</string>
     <string name="ic_notify">Notification</string>
     <string name="ic_profile">Profile</string>
-<!--    Nuser-->
+    <!--    Nuser-->
     <string name="grid_findNewJob">Find new jobs</string>
     <string name="grid_wallet">Wallet</string>
     <string name="grid_job_applied">Jobs applied</string>
     <string name="grid_job_checkin">Jobs check in</string>
     <string name="grid_reports">Reports</string>
-<!--    Buser-->
+    <!--    Buser-->
 
 
     <!--    Notification-->
@@ -116,11 +116,15 @@
     <string name="no_card">No card in wallet</string>
     <string name="error_invalid_bank">Bank is blank</string>
     <string name="error_invalid_exp_date">Expired date is blank</string>
-    <string name="error_invalid_card_num">Card number has at least 10 character</string>
+    <string name="error_invalid_card_num">Card number has at least 10 characters and maximum 16 characters</string>
     <string name="add_card_success">Add card success</string>
     <string name="add_card_fail">Fail to add card</string>
     <string name="delete_card_success">Deleted</string>
     <string name="add_cash_success">Add cash success</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="no_choose_year">Year is blank</string>
+    <string name="no_choose_month">Month is blank</string>
     <!--    Button-->
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
