@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Jobs.JobsActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
+import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityHomeBinding
@@ -88,7 +89,7 @@ class HomeActivity : AppCompatActivity() {
             R.id.logout -> {
                 auth.signOut()
                 finish()
-//                startActivity(Intent(this, SelectRoleActivity::class.java))
+                startActivity(Intent(this, SelectRoleActivity::class.java))
                 Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
                 return true
             }

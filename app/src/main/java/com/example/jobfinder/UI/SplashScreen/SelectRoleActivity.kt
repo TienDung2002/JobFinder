@@ -23,13 +23,13 @@ class SelectRoleActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         if (auth.getCurrentUser() != null) {
             startActivity(Intent(applicationContext, HomeActivity::class.java))
+            finish()
         }
 
         // mở login role tuyển dụng
         binding.loginasRecruiter.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("user_type", "BUser")
-//            startActivity(intent)
             startActivityForResult(intent, LOGIN_REQUEST_CODE) // Mở LoginActivity với mã request
 
         }
@@ -38,7 +38,6 @@ class SelectRoleActivity : AppCompatActivity() {
         binding.loginasSeeker.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("user_type", "NUser")
-//            startActivity(intent)
             startActivityForResult(intent, LOGIN_REQUEST_CODE) // Mở LoginActivity với mã request
         }
 
