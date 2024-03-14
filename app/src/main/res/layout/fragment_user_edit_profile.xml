@@ -259,7 +259,26 @@
 
                     </RelativeLayout>
                 </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
 
+                    >
+
+                    <Button
+                        android:id="@+id/edit_profile_save"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_profile_save"
+                        android:textColor="@color/black"
+                        android:background="@drawable/btn_wrapper"
+                        android:textSize="20sp"
+
+                        />
+
+                </RelativeLayout>
             </LinearLayout>
 
         </ScrollView>
