@@ -42,4 +42,12 @@ object VerifyField {
         return password.isNotEmpty() && password.length >= 6
     }
 
+    fun isValidCardNumber(cardNum: String): Boolean{
+        return cardNum.isNotEmpty() && cardNum.length >=10 &&cardNum.length<= 16
+    }
+
+    fun isEmpty(string: String): Boolean{
+        return  string.isNotEmpty() && string.length >=1
+    }
+
 }

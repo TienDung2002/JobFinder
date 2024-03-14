@@ -1,9 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.Wallet.WalletActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/activity_wallet_top_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_gravity="center"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/transparent_background"
+            android:drawableStart="@drawable/ic_back24px"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wallet_title"
+            android:text="@string/wallet_title"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/activity_wallet_top_nav">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/wallet_activity_framelayout">
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="150dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/wallet_history"
+                android:background="@drawable/floating_btn_textbox_bg"
+                android:padding="5dp"
+                android:id="@+id/wallet_history_ft_txt"
+                android:textColor="@color/black"
+                android:backgroundTint="@null"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:visibility="invisible"
+                android:textAppearance="?android:textAppearanceSmall"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/history"
+                android:id="@+id/wallet_history_ft_btn"
+                android:elevation="0dp"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                app:pressedTranslationZ="12dp"
+                app:itemTextColor="@color/black"
+                app:itemIconTint="@color/black"
+                app:tint="@android:color/black"
+                android:backgroundTint="@color/primary_color3"
+                android:visibility="invisible"
+                app:shapeAppearance="@null"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="90dp"
+            android:layout_gravity="bottom|end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_wallet"
+                android:background="@drawable/floating_btn_textbox_bg"
+                android:padding="5dp"
+                android:id="@+id/add_wallet_ft_txt"
+                android:textColor="@color/black"
+                android:backgroundTint="@null"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:visibility="invisible"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_card"
+                android:id="@+id/add_wallet_ft_btn"
+                android:elevation="0dp"
+                app:elevation="0dp"
+                app:fabSize="mini"
+                app:pressedTranslationZ="12dp"
+                app:itemTextColor="@color/black"
+                app:itemIconTint="@color/black"
+                app:tint="@android:color/black"
+                android:backgroundTint="@color/primary_color3"
+                app:shapeAppearance="@null"
+                android:visibility="invisible">
+
+
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_ft_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/primary_color2"
+            android:src="@drawable/wallet_floating_btn_option"
+            app:fabSize="normal"
+            app:shapeAppearance="@null"
+            app:tint="@android:color/black"
+            android:contentDescription="action Button" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:elevation="10dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:layout_centerInParent="true"
+        app:lottie_rawRes="@raw/loading" />
+
+</RelativeLayout>

@@ -84,6 +84,56 @@
 
     <!--    Home-->
     <string name="backpress_ask">Press back again to exit</string>
+    <string name="ic_home">Home</string>
+    <string name="ic_jobManagement">Management</string>
+    <string name="ic_notify">Notification</string>
+    <string name="ic_profile">Profile</string>
+    <!--    Nuser-->
+    <string name="grid_findNewJob">Find new jobs</string>
+    <string name="grid_wallet">Wallet</string>
+    <string name="grid_job_applied">Jobs applied</string>
+    <string name="grid_job_checkin">Jobs check in</string>
+    <string name="grid_reports">Reports</string>
+    <!--    Buser-->
+    <string name="grid_recruit">Recruit</string>
+    <string name="grid_recruit_posted">Recruit posted</string>
+
+    
+
+    <!--    Notification-->
+    <string name="notification_title">Notification</string>
+    <string name="no_noti">No notification</string>
+    <string name="from">From:</string>
+    <string name="Username">BUser name</string>
+    <string name="close_btn">Close</string>
+
+    <!--    Wallet-->
+    <string name="wallet_title">Wallet</string>
+    <string name="add_wallet">Add Wallet</string>
+    <string name="wallet_history">History</string>
+    <string name="bank_name">Bank</string>
+    <string name="wallet_amount">Amount</string>
+    <string name="card_number">Card number</string>
+    <string name="choose_color">Choose color</string>
+    <string name="exp_date">Expired date</string>
+    <string name="no_card">No card in wallet</string>
+    <string name="error_invalid_bank">Bank is blank</string>
+    <string name="error_invalid_exp_date">Expired date is blank</string>
+    <string name="error_invalid_card_num">Card number has at least 10 characters and maximum 16 characters</string>
+    <string name="add_card_success">Add card success</string>
+    <string name="add_card_fail">Fail to add card</string>
+    <string name="delete_card_success">Deleted</string>
+    <string name="add_cash_success">Add cash success</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="no_choose_year">Year is blank</string>
+    <string name="no_choose_month">Month is blank</string>
+    <!--    Button-->
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_cash">Add cash</string>
+    <string name="add_card">Add card</string>
+
 
     <!--    Profile-->
     <string name="username">Username</string>

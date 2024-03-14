@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity:activity:1.8.0")
     val retrofitVersion = "2.9.0";
     val lifecycleVersion = "2.7.0";
     val glideVersion = "4.16.0";
@@ -116,7 +117,7 @@ dependencies {
 //    ksp("androidx.room:room-compiler:2.6.1")
 
     // dot indicator
-    implementation("com.tbuonomo:dotsindicator:4.2")
+//    implementation("com.tbuonomo:dotsindicator:4.2")
 
     // Timber log
 //    implementation("com.jakewharton.timber:timber:4.7.1")

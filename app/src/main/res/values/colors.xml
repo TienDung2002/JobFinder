@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="grey">#858585</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#EEEEEE</color>
+    <color name="grey_hint_ForgotPass">#8C8C8C</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="primary_color1">#130160</color>
     <color name="primary_color2">#FCA34D</color>
     <color name="primary_color3">#FFD6AD</color>
+    <color name="primary_color4">#3FB7D5</color>
+    <color name="home_bg">#8BD3ECF1</color>
+
     <color name="click_link">#0872F6</color>
     <color name="profile_backfround">#F6F6F6</color>
+    <color name="delete_notification_btn">#ff4b4b</color>
+
 
 
 

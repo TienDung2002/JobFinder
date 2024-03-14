@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Jobs Finder</string>
 
-<!--    Splash screen-->
+    <!--    Splash screen-->
     <string name="splash_title1">Tìm kiếm</string>
     <string name="splash_title2">công việc mơ ước</string>
     <string name="splash_title3">của bạn!</string>
@@ -10,7 +10,7 @@
     <string name="splash_recruiter">Nhà tuyển dụng</string>
     <string name="splash_jobseeker">Tìm công việc</string>
 
-<!--    Login-->
+    <!--    Login-->
     <string name="login_btn">Đăng nhập</string>
     <string name="welcome_rec1">Chào mừng trở lại</string>
     <string name="welcome_rec2">nhà tuyển dụng!</string>
@@ -27,8 +27,7 @@
     <string name="wrong_role">Đăng nhập sai vai trò!</string>
 
 
-
-<!--    Register-->
+    <!--    Register-->
     <string name="register_btn">Đăng ký</string>
     <string name="return_login_seek">Bắt đầu tìm việc</string>
     <string name="return_login_rec">Bắt đầu tuyển dụng</string>
@@ -110,5 +109,54 @@
 
 
     <!--    Home-->
-    <string name="backpress_ask">Nhấn thêm lần nữa để thoát</string>
+    <string name="backpress_ask">Chạm thêm lần nữa để thoát</string>
+    <string name="ic_home">Trang chủ</string>
+    <string name="ic_jobManagement">Quản lý</string>
+    <string name="ic_notify">Thông báo</string>
+    <string name="ic_profile">Hồ sơ</string>
+    <!--    Nuser-->
+    <string name="grid_findNewJob">Công việc mới</string>
+    <string name="grid_wallet">Ví</string>
+    <string name="grid_job_applied">Công việc ứng tuyển</string>
+    <string name="grid_job_checkin">Điểm danh</string>
+    <string name="grid_reports">Báo cáo</string>
+    <!--    Buser-->
+    <string name="grid_recruit">Tuyển dụng</string>
+    <string name="grid_recruit_posted">Bài đã đăng</string>
+
+
+    <!--    Notification-->
+    <string name="notification_title">Thông báo</string>
+    <string name="no_noti">Không có thông báo</string>
+    <string name="from">Người gửi:</string>
+    <string name="Username">Tên doanh nghiệp</string>
+    <string name="close_btn">Đóng</string>
+
+    <!--    Wallet-->
+    <string name="wallet_title">Ví</string>
+    <string name="add_wallet">Thêm thẻ</string>
+    <string name="wallet_history">Lịch sử</string>
+    <string name="bank_name">Ngân hàng</string>
+    <string name="wallet_amount">Số dư</string>
+    <string name="card_number">Số thẻ</string>
+    <string name="choose_color">Chọn màu</string>
+    <string name="exp_date">Ngày hết hạn</string>
+    <string name="no_card">Không có thẻ trong ví</string>
+    <string name="error_invalid_bank">Không có ngân hàng</string>
+    <string name="error_invalid_exp_date">Không có ngày hết hạn</string>
+    <string name="error_invalid_card_num">Số thẻ có ít nhất 10 kí tự và tối đa 16 kí tự</string>
+    <string name="add_card_success">Thêm thẻ thành công</string>
+    <string name="add_card_fail">Thêm thẻ thất bại</string>
+    <string name="delete_card_success">Đã xóa thẻ</string>
+    <string name="add_cash_success">Nạp tiền thành công</string>
+    <string name="year">Năm</string>
+    <string name="month">Tháng</string>
+    <string name="no_choose_year">Chưa chọn năm</string>
+    <string name="no_choose_month">Chưa chọn tháng</string>
+    <!--    Button-->
+    <string name="delete">Xóa</string>
+    <string name="cancel">Hủy</string>
+    <string name="add_cash">Nạp tiền</string>
+    <string name="add_card">Thêm thẻ</string>
+
 </resources>

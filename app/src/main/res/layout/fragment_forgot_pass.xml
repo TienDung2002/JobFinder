@@ -29,7 +29,7 @@
             android:layout_gravity="center|center_horizontal"
             android:layout_marginTop="10dp"
             android:text="@string/FP_subTitle1"
-            android:textColor="@color/grey"
+            android:textColor="@color/grey_hint_ForgotPass"
             android:textSize="14sp"/>
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal"
             android:text="@string/FP_subTitle1.1"
-            android:textColor="@color/grey"
+            android:textColor="@color/grey_hint_ForgotPass"
             android:textSize="14sp"/>
 
         <ImageView

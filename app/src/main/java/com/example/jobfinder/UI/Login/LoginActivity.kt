@@ -20,7 +20,6 @@ import com.example.jobfinder.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.values
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
