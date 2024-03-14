@@ -119,11 +119,15 @@
     <string name="no_card">Không có thẻ trong ví</string>
     <string name="error_invalid_bank">Không có ngân hàng</string>
     <string name="error_invalid_exp_date">Không có ngày hết hạn</string>
-    <string name="error_invalid_card_num">Số thẻ có ít nhất 10 kí tự</string>
+    <string name="error_invalid_card_num">Số thẻ có ít nhất 10 kí tự và tối đa 16 kí tự</string>
     <string name="add_card_success">Thêm thẻ thành công</string>
     <string name="add_card_fail">Thêm thẻ thất bại</string>
     <string name="delete_card_success">Đã xóa thẻ</string>
     <string name="add_cash_success">Nạp tiền thành công</string>
+    <string name="year">Năm</string>
+    <string name="month">Tháng</string>
+    <string name="no_choose_year">Chưa chọn năm</string>
+    <string name="no_choose_month">Chưa chọn tháng</string>
     <!--    Button-->
     <string name="delete">Xóa</string>
     <string name="cancel">Hủy</string>

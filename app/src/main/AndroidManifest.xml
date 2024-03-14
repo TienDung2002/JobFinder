@@ -17,6 +17,9 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
+            android:name=".UI.Wallet.wallet_history_activity"
+            android:exported="false" />
+        <activity
             android:name=".UI.SplashScreen.Splashscreen"
             android:exported="true"
             android:theme="@style/FullScreenTheme">
@@ -73,7 +76,7 @@
         <activity
             android:name=".UI.SplashScreen.SelectRoleActivity"
             android:exported="false"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
     </application>
 
 </manifest>

@@ -10,7 +10,6 @@ import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.databinding.FragmentWalletBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.getValue
 
 class WalletFragment : Fragment() {
     private lateinit var binding: FragmentWalletBinding
@@ -31,7 +30,6 @@ class WalletFragment : Fragment() {
         fun onDataLoadedEmpty(isListEmpty: Boolean)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +37,6 @@ class WalletFragment : Fragment() {
         binding = FragmentWalletBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,7 +78,6 @@ class WalletFragment : Fragment() {
             }
 
     }
-
 
     fun updateNoWalletCardVisibility(visibility: Int) {
         binding.noWalletCard.visibility = visibility

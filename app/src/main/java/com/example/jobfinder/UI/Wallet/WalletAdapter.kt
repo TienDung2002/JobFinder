@@ -54,23 +54,6 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             }
         }
 
-        fun removeWallet(position: Int) {
-            if (position in 0 until walletList.size) {
-                val removedWallet = walletList[position]
-
-                walletList.removeAt(position)
-                // Thông báo cho RecyclerView biết rằng có một mục đã bị xóa
-                notifyItemRemoved(position)
-                // Cập nhật lại các vị trí của các mục sau mục bị xóa
-                notifyItemRangeChanged(position, walletList.size - position)
-
-                // Kiểm tra xem RecyclerView có rỗng không và hiển thị layout không có thẻ nếu cần
-                checkEmptyAdapter()
-
-                // Xóa thẻ từ danh sách thành công
-            }
-        }
-
         private fun checkEmptyAdapter() {
             if (walletList.isEmpty()) {
                 // Ẩn RecyclerView và hiển thị layout không có thẻ
@@ -166,12 +149,12 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             bind(wallet)
         }
 
-
         private fun getGradientDrawable(cardColor: String?): Int {
             return when (cardColor) {
                 "red" -> R.drawable.wallet_red_bg
                 "green" -> R.drawable.wallet_green_bg
                 "blue" -> R.drawable.wallet_blue_bg
+                "pink"-> R.drawable.wallet_pink_bg
                 else -> R.drawable.wallet_blue_bg
             }
         }
@@ -185,6 +168,6 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 else -> {R.drawable.img_mask_group}
             }
         }
-
+        
     }
 }

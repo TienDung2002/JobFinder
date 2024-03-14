@@ -136,8 +136,6 @@
             android:src="@drawable/wallet_floating_btn_option"
             app:fabSize="normal"
             app:shapeAppearance="@null"
-            app:itemTextColor="@color/black"
-            app:itemIconTint="@color/black"
             app:tint="@android:color/black"
             android:contentDescription="action Button" />
 

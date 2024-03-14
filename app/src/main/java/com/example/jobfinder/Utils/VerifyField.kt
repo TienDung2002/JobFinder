@@ -43,7 +43,7 @@ object VerifyField {
     }
 
     fun isValidCardNumber(cardNum: String): Boolean{
-        return cardNum.isNotEmpty() && cardNum.length >=10
+        return cardNum.isNotEmpty() && cardNum.length >=10 &&cardNum.length<= 16
     }
 
     fun isEmpty(string: String): Boolean{
