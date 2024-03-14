@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeBinding
     private var backPressedCount = 0
-    private lateinit var userRole: String
+    private var userRole: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,12 @@ class HomeActivity : AppCompatActivity() {
         //firebase
         auth = FirebaseAuth.getInstance()
 
-        userRole=getUserRole()
+        // lấy role
+        getUserRole { role ->
+            userRole = role
+            Log.d("curROLE", userRole)
+        }
+        Log.d("curROLE2", userRole)
 
         // ngay đầu add frag vào home luôn
         FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentNuser())
@@ -126,16 +131,21 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun getUserRole(): String{
+    private fun getUserRole(callback: (String) -> Unit) {
         val uid = auth.currentUser?.uid
-        var result="null"
-        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
-            val data: idAndRole? = it.getValue(idAndRole::class.java)
-            if (data != null) {
-                result = data.role.toString()
+        var result = "null string"
+        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get()
+            .addOnSuccessListener {
+                val data: idAndRole? = it.getValue(idAndRole::class.java)
+                if (data != null) {
+                    result = data.role.toString()
+                }
+                // Gọi hàm callback và truyền giá trị result vào
+                callback(result)
             }
-        }
-        return result
+            .addOnFailureListener {
+                callback("null string")
+            }
     }
 
 }

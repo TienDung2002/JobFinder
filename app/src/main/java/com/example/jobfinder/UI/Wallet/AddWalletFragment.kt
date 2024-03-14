@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentAddWalletBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -77,18 +78,20 @@ class AddWalletFragment : Fragment() {
             binding.txtMonth.error=if(isValidMonth)null else getString(R.string.no_choose_month)
 
             if(isValidBank && isValidCardNumber &&isValidExpDate && yearChoose&& monthChoose){
-                val cardColor = pickedColor
-                val uid = auth.currentUser?.uid
-                val cardId= FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).push().key
-                val newWalletRow = WalletRowModel(cardId,bankName, "0.0", cardNumber, expDate, cardColor)
-                FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).child(cardId.toString()).setValue(newWalletRow).addOnCompleteListener() {
-                    if(it.isSuccessful){
-                        Toast.makeText(context, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
-                        val intent = Intent(activity, WalletActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)
-                    }else {
-                        Toast.makeText(context, getString(R.string.add_card_fail), Toast.LENGTH_SHORT).show()
+                if (PreventDoubleClick.checkClick()) {
+                    val cardColor = pickedColor
+                    val uid = auth.currentUser?.uid
+                    val cardId= FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).push().key
+                    val newWalletRow = WalletRowModel(cardId,bankName, "0.0", cardNumber, expDate, cardColor)
+                    FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).child(cardId.toString()).setValue(newWalletRow).addOnCompleteListener() {
+                        if(it.isSuccessful){
+                            Toast.makeText(context, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
+                            val intent = Intent(activity, WalletActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
+                        }else {
+                            Toast.makeText(context, getString(R.string.add_card_fail), Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }else{
