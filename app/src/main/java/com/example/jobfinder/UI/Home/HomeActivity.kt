@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
+import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Jobs.JobsActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
@@ -13,11 +15,13 @@ import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityHomeBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeBinding
     private var backPressedCount = 0
+    private lateinit var userRole: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +29,8 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         //firebase
         auth = FirebaseAuth.getInstance()
+
+        userRole=getUserRole()
 
         // ngay đầu add frag vào home luôn
         FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragment())
@@ -116,6 +122,18 @@ class HomeActivity : AppCompatActivity() {
             R.id.notify -> currentFragment is NotificationsFragment
             else -> false
         }
+    }
+
+    private fun getUserRole(): String{
+        val uid = auth.currentUser?.uid
+        var result="null"
+        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
+            val data: idAndRole? = it.getValue(idAndRole::class.java)
+            if (data != null) {
+                result = data.role.toString()
+            }
+        }
+        return result
     }
 
 }
