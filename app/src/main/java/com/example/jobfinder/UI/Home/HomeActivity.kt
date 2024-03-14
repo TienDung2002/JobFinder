@@ -28,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         // ngay đầu add frag vào home luôn
-        FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragment())
+        FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentNuser())
 
 
         // trả về result về login để đóng activity
@@ -71,7 +71,8 @@ class HomeActivity : AppCompatActivity() {
         }
         when(itemId) {
             R.id.home -> {
-                FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragment())
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentNuser())
+//                FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentBuser())
                 return true
             }
             R.id.managermentJob  -> {
@@ -104,7 +105,7 @@ class HomeActivity : AppCompatActivity() {
     private fun updateNavigationBar() {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.HomeFrameLayout)
         when (currentFragment) {
-            is HomeFragment -> binding.bottomNavView.selectedItemId = R.id.home
+            is HomeFragmentNuser -> binding.bottomNavView.selectedItemId = R.id.home
             is NotificationsFragment -> binding.bottomNavView.selectedItemId = R.id.notify
         }
     }
@@ -113,7 +114,7 @@ class HomeActivity : AppCompatActivity() {
     private fun isCurrentFragment(itemId: Int): Boolean {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.HomeFrameLayout)
         return when (itemId) {
-            R.id.home -> currentFragment is HomeFragment
+            R.id.home -> currentFragment is HomeFragmentNuser
             R.id.notify -> currentFragment is NotificationsFragment
             else -> false
         }
