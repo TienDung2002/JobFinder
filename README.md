@@ -11,4 +11,4 @@
 - [Vũ Tiến Dũng](https://github.com/TienDung2002)
 
 ## About
--[Word](https://thanglongedu-my.sharepoint.com/:w:/g/personal/a38520_thanglong_edu_vn/EcAJVdxh9cRKjuI2aNRqHtQBHIHQLri2q1ydfLAaNJzL1Q?e=WxiCl1)
+- [Word](https://thanglongedu-my.sharepoint.com/:w:/g/personal/a38520_thanglong_edu_vn/EcAJVdxh9cRKjuI2aNRqHtQBHIHQLri2q1ydfLAaNJzL1Q?e=WxiCl1)
