@@ -175,22 +175,6 @@ class HomeActivity : AppCompatActivity() {
             else -> false
         }
     }
-
-//    private fun getUserRole(callback: (String) -> Unit) {
-//        val uid = auth.currentUser?.uid
-//        var result = "null string"
-//        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get()
-//            .addOnSuccessListener {
-//                val data: idAndRole? = it.getValue(idAndRole::class.java)
-//                if (data != null) {
-//                    result = data.role.toString()
-//                }
-//                // Gọi hàm callback và truyền giá trị result vào
-//                callback(result)
-//            }
-//            .addOnFailureListener {
-//                callback("null string")
-//            }
-//    }
+    
 
 }
