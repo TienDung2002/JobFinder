@@ -5,19 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Jobs.JobsActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
-import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityHomeBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
