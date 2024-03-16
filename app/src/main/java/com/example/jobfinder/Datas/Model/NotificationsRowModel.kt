@@ -1,7 +1,8 @@
 package com.example.jobfinder.Datas.Model
 data class NotificationsRowModel(
+  var notiId:String?,
   var from: String?,
   var detail: String?,
-  var duration: String?,
+  var date: String?,
 )
 

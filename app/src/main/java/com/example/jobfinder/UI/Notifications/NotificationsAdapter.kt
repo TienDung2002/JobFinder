@@ -100,7 +100,7 @@ class NotificationsAdapter(
       binding.apply {
         txtApplicationsen.text = item.from
         txtApplicationsfo.text = item.detail
-        txtDuration.text = item.duration
+        txtDate.text = item.date
       }
     }
   }

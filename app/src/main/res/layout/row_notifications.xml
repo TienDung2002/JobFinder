@@ -54,7 +54,6 @@
                     android:layout_marginTop="5.27dp"
                     android:layout_width="match_parent"
                     android:textSize="12sp"
-                    android:textFontWeight="400"
                     android:textColor="#514a6b"
                     android:maxLines="2"
                     android:ellipsize="end"
@@ -64,7 +63,7 @@
                     android:layout_marginTop="15.81dp"
                     android:layout_width="match_parent" android:orientation="horizontal">
                     <TextView android:ellipsize="end"
-                        android:id="@+id/txtDuration"
+                        android:id="@+id/txtDate"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2.64dp"
                         android:layout_weight="0.68"
