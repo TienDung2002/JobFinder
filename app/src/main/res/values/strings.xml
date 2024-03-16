@@ -98,7 +98,6 @@
     <string name="grid_recruit">Recruit</string>
     <string name="grid_recruit_posted">Recruit posted</string>
 
-    
 
     <!--    Notification-->
     <string name="notification_title">Notification</string>
@@ -150,11 +149,8 @@
     <string name="edit_profile_phonenum">Phone number</string>
     <string name="edit_profile_age">Age</string>
     <string name="edit_profile_save">Save</string>
-
-
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
