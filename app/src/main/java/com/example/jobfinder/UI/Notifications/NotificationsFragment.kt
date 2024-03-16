@@ -6,50 +6,64 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.databinding.FragmentNotificationsBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 
 class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-
-        val notificationList = mutableListOf(
-            NotificationsRowModel("01","Thông báo 1", "Applications for Google companies have entered for company review", "10 phút trước"),
-            NotificationsRowModel("01","Thông báo 2", "Applications for Google companies have entered for company review Applications for Google companies have entered for company review Applications for Google companies have entered for company review Applications for Google companies have entered for company review Applications for Google companies have entered for company review Applications for Google companies have entered for company review Applications for Google companies have entered for company review Applications for Google companies have entered for company review", "20 phút trước"),
-            NotificationsRowModel("01","Thông báo 3", "Nội dung thông báo 3", "30 phút trước"),
-            NotificationsRowModel("01","Thông báo 4", "Nội dung thông báo 4", "40 phút trước"),
-            NotificationsRowModel("01","Thông báo 5", "Nội dung thông báo 5", "50 phút trước")
-        )
-
-        // Fragment thì truyền "requireContext()" thay vì "this" như activity
-        val recyclerView = binding.recyclerNotifications
-        val adapter = NotificationsAdapter(notificationList,  requireContext(), binding.noNoti)
-        recyclerView.adapter = adapter
-
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        adapter.setOnItemClickListener(object : NotificationsAdapter.OnItemClickListener {
-            override fun onItemClick(view: View, position: Int, item: NotificationsRowModel) {
-                if (view.id == R.id.txtDelete) {
-                    adapter.removeItem(position)
-                }
-            }
-        })
-        // không được xóa
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        auth = FirebaseAuth.getInstance()
+        val uid = auth.currentUser?.uid
 
+        FirebaseDatabase.getInstance()
+            .getReference("Notifications")
+            .child(uid.toString())
+            .get()
+            .addOnSuccessListener { dataSnapshot ->
+                val notificationList = mutableListOf<NotificationsRowModel>()
+                for (notiSnapshot in dataSnapshot.children) {
+                    val notiId = notiSnapshot.child("notiId").getValue(String::class.java)
+                    val from = notiSnapshot.child("from").getValue(String::class.java)
+                    val detail = notiSnapshot.child("detail").getValue(String::class.java)
+                    val date = notiSnapshot.child("date").getValue(String::class.java)
+
+                    val notification = NotificationsRowModel(notiId, from, detail, date)
+                    notificationList.add(notification)
+                }
+
+                val recyclerView = binding.recyclerNotifications
+                val adapter = NotificationsAdapter(notificationList,  requireContext(), binding.noNoti)
+                recyclerView.adapter = adapter
+                recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+                // Xác định nếu người dùng nhấn vào nút "Xóa"
+                adapter.setOnItemClickListener(object : NotificationsAdapter.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int, item: NotificationsRowModel) {
+                        if (view.id == R.id.txtDelete) {
+                            adapter.removeItem(position)
+                            FirebaseDatabase.getInstance()
+                                .getReference("Notifications")
+                                .child(uid.toString())
+                                .child(item.notiId.toString()).removeValue()
+                        }
+                    }
+                })
+            }
+
+    }
 }

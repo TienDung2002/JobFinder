@@ -13,18 +13,19 @@ class NotificationsAdapter(
   var list: MutableList<NotificationsRowModel>,
   private val context: Context,
   private val noNotiLayout: ConstraintLayout
-) : RecyclerView.Adapter<NotificationsAdapter.RowNotificationsVH>() {
+) : RecyclerView.Adapter<NotificationsAdapter.RowNotifications>() {
   private var clickListener: OnItemClickListener? = null
+
   init {
     checkEmptyAdapter()
   }
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowNotificationsVH {
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowNotifications {
     val binding = RowNotificationsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    return RowNotificationsVH(binding)
+    return RowNotifications(binding)
   }
 
-  override fun onBindViewHolder(holder: RowNotificationsVH, position: Int) {
+  override fun onBindViewHolder(holder: RowNotifications, position: Int) {
     val notificationsRowModel = list[position]
     holder.bind(notificationsRowModel)
 
@@ -33,19 +34,11 @@ class NotificationsAdapter(
       val dialog = NotificationDetailDialog(context, selectedNotification)
       dialog.show()
     }
-
   }
 
   private var selectedNotification: NotificationsRowModel? = null
 
   override fun getItemCount(): Int = list.size
-
-  fun updateData(newData: List<NotificationsRowModel>) {
-    list.clear()
-    list.addAll(newData)
-    notifyDataSetChanged()
-    checkEmptyAdapter()
-  }
 
   fun removeItem(position: Int) {
     if (position in 0 until list.size) {
@@ -55,7 +48,6 @@ class NotificationsAdapter(
       checkEmptyAdapter()
     }
   }
-
 
   private fun checkEmptyAdapter() {
     if (list.isEmpty()) {
@@ -74,11 +66,10 @@ class NotificationsAdapter(
       view: View,
       position: Int,
       item: NotificationsRowModel
-    ) {
-    }
+    )
   }
 
-  inner class RowNotificationsVH(
+  inner class RowNotifications(
     private val binding: RowNotificationsBinding
   ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -90,7 +81,6 @@ class NotificationsAdapter(
       if (view == binding.txtDelete) {
         val position = adapterPosition
         if (position != RecyclerView.NO_POSITION) {
-          // Gọi phương thức xóa mục trong danh sách
           clickListener?.onItemClick(view, position, list[position])
         }
       }
@@ -104,5 +94,4 @@ class NotificationsAdapter(
       }
     }
   }
-
 }
