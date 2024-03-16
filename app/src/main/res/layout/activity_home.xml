@@ -7,32 +7,28 @@
     android:background="@color/grey"
     tools:context=".UI.Home.HomeActivity">
 
-<!--    <WebView-->
-<!--        android:id="@+id/webView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="300dp"-->
-<!--        android:translationZ="-1dp"/>-->
-
     <FrameLayout
         android:id="@+id/HomeFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/home_bg"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavView"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:id="@+id/animationView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:elevation="10dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toStartOf="parent"-->
-<!--        app:layout_constraintStart_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.45"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_loop="true"-->
-<!--        app:lottie_rawRes="@raw/loading" />-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45"
+        android:visibility="visible"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
