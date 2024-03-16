@@ -138,7 +138,7 @@
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     android:layout_marginTop="10dp"
-                    app:startIconDrawable="@drawable/ic_address24px">
+                    app:startIconDrawable="@drawable/ic_address_24px">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/rec_address"
