@@ -33,10 +33,10 @@ class user_profile : Fragment() {
         userRole = getUserRole()
         binding.profileAccount.setOnClickListener {
             if (userRole=="NUser"){
-                FragmentHelper.replaceFragment(requireContext(), binding.profileAccount, UserEditProfile())
+                FragmentHelper.replaceFragment(childFragmentManager , binding.profileAccount, UserEditProfile())
 
             }else if (userRole=="BUser"){
-                FragmentHelper.replaceFragment(supportFragmentManager, binding.profileAccount, RecruiterEditProfile())
+                FragmentHelper.replaceFragment(childFragmentManager , binding.profileAccount, RecruiterEditProfile())
 
             }
         }
