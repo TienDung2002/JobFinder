@@ -38,11 +38,12 @@ class AddWalletFragment : Fragment() {
 
         //firebase
         auth = FirebaseAuth.getInstance()
+
         binding.imageMainAddWalletImage.setImageResource(R.drawable.img_mask_group)
 
         binding.txtYear.setOnClickListener {
             if(!yearChoose){
-                binding.txtYear.text = "24"
+                binding.txtYear.text = "25"
                 binding.txtYear.error= null}
             txtYearSelected(it)
             yearChoose = true
@@ -150,11 +151,6 @@ class AddWalletFragment : Fragment() {
         popupMenu.menuInflater.inflate(R.menu.year_menu, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.year_24 -> {
-                    // Xử lý khi chọn năm 24
-                    binding.txtYear.text = "24"
-                    true
-                }
                 R.id.year_25 -> {
                     // Xử lý khi chọn năm 25
                     binding.txtYear.text = "25"

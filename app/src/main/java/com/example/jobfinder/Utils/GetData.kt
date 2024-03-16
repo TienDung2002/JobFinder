@@ -3,6 +3,9 @@ package com.example.jobfinder.Utils
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.Calendar
 
 // Cách dùng:
 // Khai báo giá trị mặc định cho 1 biến global ở Activity cần check :  private var userRole: String = ""
@@ -27,5 +30,11 @@ object GetData {
             .addOnFailureListener {
                 callback("null string") // Trả về null trong trường hợp có lỗi
             }
+    }
+
+    fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        return dateFormat.format(calendar.time)
     }
 }

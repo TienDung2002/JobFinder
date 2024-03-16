@@ -17,9 +17,6 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".UI.Wallet.wallet_history_activity"
-            android:exported="false" />
-        <activity
             android:name=".UI.SplashScreen.Splashscreen"
             android:exported="true"
             android:theme="@style/FullScreenTheme">
@@ -29,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".UI.Wallet.WalletHistoryActivity"
+            android:exported="false" />
         <activity
             android:name=".UI.ForgotPassword.ForgotPassActivity"
             android:exported="false"
@@ -51,10 +51,6 @@
             android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.UsersProfile.UserDetailActivity"
-            android:exported="false"
-            android:theme="@style/FullScreenTheme" />
-        <activity
-            android:name=".UI.Notifications.NotificationsActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity
