@@ -98,7 +98,6 @@
     <string name="grid_recruit">Recruit</string>
     <string name="grid_recruit_posted">Recruit posted</string>
 
-    
 
     <!--    Notification-->
     <string name="notification_title">Notification</string>
@@ -133,6 +132,25 @@
     <string name="cancel">Cancel</string>
     <string name="add_cash">Add cash</string>
     <string name="add_card">Add card</string>
+
+
+    <!--    Profile-->
+    <string name="username">Username</string>
+    <string name="decoy_username">Oriz</string>
+    <string name="profile_setting">Settings</string>
+    <string name="profile_account">Account</string>
+    <string name="profile_logout">Logout</string>
+
+    <!-- Edit Profile -->
+    <string name="edit_profile">Edit profile</string>
+    <string name="edit_profile_img">Tap to upload new image</string>
+    <string name="edit_profile_name">Name</string>
+    <string name="edit_profile_email">Email</string>
+    <string name="edit_profile_phonenum">Phone number</string>
+    <string name="edit_profile_age">Age</string>
+    <string name="edit_profile_save">Save</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
