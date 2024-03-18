@@ -2,6 +2,7 @@ package com.example.jobfinder.UI.Wallet
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.R
@@ -18,6 +20,9 @@ import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentAddWalletBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlin.system.exitProcess
 
 class AddWalletFragment : Fragment() {
     private lateinit var binding: FragmentAddWalletBinding
@@ -25,6 +30,7 @@ class AddWalletFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private var yearChoose= false
     private var monthChoose=false
+    private var validCard= true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +42,7 @@ class AddWalletFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        validCard= true
 
         //firebase
         auth = FirebaseAuth.getInstance()
@@ -64,12 +71,6 @@ class AddWalletFragment : Fragment() {
 
         binding.addCardBtn.setOnClickListener{
 
-            binding.addCardBtn.isClickable = false
-            binding.txtMonth.isClickable = false
-            binding.txtYear.isClickable = false
-            binding.addWalletBankEditTxt.isClickable = false
-            binding.addWalletCardNumEditTxt.isClickable = false
-
             val bankName = binding.addWalletBankEditTxt.text.toString().trim()
             val cardNumber = binding.addWalletCardNumEditTxt.text.toString().trim()
             val expYear = binding.txtYear.text.toString()
@@ -83,51 +84,67 @@ class AddWalletFragment : Fragment() {
             val isValidMonth= monthChoose
 
 
+
             binding.addWalletBankEditTxt.error = if (isValidBank) null else getString(R.string.error_invalid_bank)
             binding.addWalletCardNumEditTxt.error = if (isValidCardNumber) null else getString(R.string.error_invalid_card_num)
             binding.txtYear.error=if(isValidYear)null else getString(R.string.no_choose_year)
             binding.txtMonth.error=if(isValidMonth)null else getString(R.string.no_choose_month)
 
-            if(isValidBank && isValidCardNumber &&isValidExpDate && yearChoose&& monthChoose){
-                if (PreventDoubleClick.checkClick()) {
-                    val cardColor = pickedColor
-                    val uid = auth.currentUser?.uid
-                    val cardId= FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).push().key
-                    val newWalletRow = WalletRowModel(cardId,bankName, "0.0", cardNumber, expDate, cardColor)
-                    FirebaseDatabase
-                        .getInstance()
-                        .getReference("Wallet")
-                        .child(uid.toString())
-                        .child(cardId.toString())
-                        .setValue(newWalletRow)
-                        .addOnCompleteListener() {
-                        if(it.isSuccessful){
-                            val notiId = FirebaseDatabase
+            // Tạo một coroutine mới
+            lifecycleScope.launch {
+                val isValidCard = validCard(bankName, cardNumber)
+                if (isValidCard) {
+                    // Thẻ hợp lệ, tiếp tục xử lý
+                    if(isValidBank && isValidCardNumber &&isValidExpDate && yearChoose&& monthChoose){
+                        binding.addCardBtn.isClickable = false
+                        binding.txtMonth.isClickable = false
+                        binding.txtYear.isClickable = false
+                        binding.addWalletBankEditTxt.isClickable = false
+                        binding.addWalletCardNumEditTxt.isClickable = false
+                        if (PreventDoubleClick.checkClick()) {
+                            val cardColor = pickedColor
+                            val uid = auth.currentUser?.uid
+                            val cardId= FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).push().key
+                            val newWalletRow = WalletRowModel(cardId,bankName, "0.0", cardNumber, expDate, cardColor)
+                            FirebaseDatabase
                                 .getInstance()
-                                .getReference("Notifications")
-                                .child(uid.toString()).push().key.toString()
-                            val today = GetData.getCurrentDate()
-                            val notificationsRowModel= NotificationsRowModel(
-                                notiId,
-                                "Admin",
-                                "Add card to your wallet. Bank: $bankName card number: $cardNumber",
-                                today)
-                            FirebaseDatabase.getInstance()
-                                .getReference("Notifications")
+                                .getReference("Wallet")
                                 .child(uid.toString())
-                                .child(notiId)
-                                .setValue(notificationsRowModel)
-                            Toast.makeText(context, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
-                            val intent = Intent(activity, WalletActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            startActivity(intent)
-                        }else {
-                            Toast.makeText(context, getString(R.string.add_card_fail), Toast.LENGTH_SHORT).show()
+                                .child(cardId.toString())
+                                .setValue(newWalletRow)
+                                .addOnCompleteListener() {
+                                    if(it.isSuccessful){
+                                        val notiId = FirebaseDatabase
+                                            .getInstance()
+                                            .getReference("Notifications")
+                                            .child(uid.toString()).push().key.toString()
+                                        val today = GetData.getCurrentDate()
+                                        val notificationsRowModel= NotificationsRowModel(
+                                            notiId,
+                                            "Admin",
+                                            "Add card to your wallet. Bank: $bankName card number: $cardNumber",
+                                            today)
+                                        FirebaseDatabase.getInstance()
+                                            .getReference("Notifications")
+                                            .child(uid.toString())
+                                            .child(notiId)
+                                            .setValue(notificationsRowModel)
+                                        Toast.makeText(context, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
+                                        val intent = Intent(activity, WalletActivity::class.java)
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                        startActivity(intent)
+                                    }else {
+                                        Toast.makeText(context, getString(R.string.add_card_fail), Toast.LENGTH_SHORT).show()
+                                    }
+                                }
                         }
                     }
+                    else{
+                        checkToAutoFocus(isValidBank, isValidCardNumber,isValidExpDate)
+                    }
+                } else {
+                    Toast.makeText(context, getString(R.string.duplicate_card), Toast.LENGTH_SHORT).show()
                 }
-            }else{
-                checkToAutoFocus(isValidBank, isValidCardNumber,isValidExpDate)
             }
         }
 
@@ -159,6 +176,30 @@ class AddWalletFragment : Fragment() {
                 imageMainAddWalletImage.setImageResource(R.drawable.img_mask_group)
             }
         }
+    }
+
+    private suspend fun validCard(cardBank: String, cardNum: String): Boolean {
+
+        val dataSnapshot = try {
+            FirebaseDatabase.getInstance()
+                .getReference("Wallet")
+                .get()
+                .await()
+        } catch (e: Exception) {
+            return false
+        }
+        for(user in dataSnapshot.children) {
+            for (cardSnapshot in user.children) {
+                val bankName = cardSnapshot.child("bankName").getValue(String::class.java)
+                val cardNumber = cardSnapshot.child("cardNumber").getValue(String::class.java)
+
+                if (cardBank == bankName && cardNum == cardNumber) {
+                    return false
+                }
+            }
+        }
+
+        return true
     }
 
     private fun checkToAutoFocus(vararg isValidFields: Boolean) {
