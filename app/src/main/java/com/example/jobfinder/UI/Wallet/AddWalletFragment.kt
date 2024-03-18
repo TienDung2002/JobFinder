@@ -2,7 +2,6 @@ package com.example.jobfinder.UI.Wallet
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,10 @@ import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentAddWalletBinding
@@ -40,7 +41,11 @@ class AddWalletFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.imageMainAddWalletImage.setImageResource(R.drawable.img_mask_group)
-
+        binding.addCardBtn.isClickable = true
+        binding.txtMonth.isClickable = true
+        binding.txtYear.isClickable = true
+        binding.addWalletBankEditTxt.isClickable = true
+        binding.addWalletCardNumEditTxt.isClickable = true
         binding.txtYear.setOnClickListener {
             if(!yearChoose){
                 binding.txtYear.text = "25"
@@ -59,6 +64,11 @@ class AddWalletFragment : Fragment() {
 
         binding.addCardBtn.setOnClickListener{
 
+            binding.addCardBtn.isClickable = false
+            binding.txtMonth.isClickable = false
+            binding.txtYear.isClickable = false
+            binding.addWalletBankEditTxt.isClickable = false
+            binding.addWalletCardNumEditTxt.isClickable = false
 
             val bankName = binding.addWalletBankEditTxt.text.toString().trim()
             val cardNumber = binding.addWalletCardNumEditTxt.text.toString().trim()
@@ -84,8 +94,29 @@ class AddWalletFragment : Fragment() {
                     val uid = auth.currentUser?.uid
                     val cardId= FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).push().key
                     val newWalletRow = WalletRowModel(cardId,bankName, "0.0", cardNumber, expDate, cardColor)
-                    FirebaseDatabase.getInstance().getReference("Wallet").child(uid.toString()).child(cardId.toString()).setValue(newWalletRow).addOnCompleteListener() {
+                    FirebaseDatabase
+                        .getInstance()
+                        .getReference("Wallet")
+                        .child(uid.toString())
+                        .child(cardId.toString())
+                        .setValue(newWalletRow)
+                        .addOnCompleteListener() {
                         if(it.isSuccessful){
+                            val notiId = FirebaseDatabase
+                                .getInstance()
+                                .getReference("Notifications")
+                                .child(uid.toString()).push().key.toString()
+                            val today = GetData.getCurrentDate()
+                            val notificationsRowModel= NotificationsRowModel(
+                                notiId,
+                                "Admin",
+                                "Add card to your wallet. Bank: $bankName card number: $cardNumber",
+                                today)
+                            FirebaseDatabase.getInstance()
+                                .getReference("Notifications")
+                                .child(uid.toString())
+                                .child(notiId)
+                                .setValue(notificationsRowModel)
                             Toast.makeText(context, getString(R.string.add_card_success), Toast.LENGTH_SHORT).show()
                             val intent = Intent(activity, WalletActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

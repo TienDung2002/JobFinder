@@ -75,6 +75,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             val deleteButton = dialog.findViewById<Button>(R.id.delete_card_button)
             val addButton = dialog.findViewById<Button>(R.id.add_cash_button)
             val cancelButton = dialog.findViewById<Button>(R.id.button_cancel)
+            addButton.isClickable= true
 
             // Xử lý khi nhấn vào nút Xóa
             deleteButton.setOnClickListener {
@@ -90,6 +91,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
 
             // Xử lý khi nhấn vào nút Thêm
             addButton.setOnClickListener {
+                addButton.isClickable= false
                 // Thêm 10000 vào amount của thẻ
                 addMoney(wallet)
                 val uid = FirebaseAuth.getInstance().currentUser?.uid
