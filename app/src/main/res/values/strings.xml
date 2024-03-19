@@ -126,10 +126,12 @@
     <string name="add_cash_success">Add cash success</string>
     <string name="year">Year</string>
     <string name="month">Month</string>
+    <string name="no_choose_bank">Bank is blank</string>
     <string name="no_choose_year">Year is blank</string>
     <string name="no_choose_month">Month is blank</string>
     <string name="duplicate_card">This card already exist</string>
     <string name="no_history">Nothing here</string>
+    <string name="choose_Bank">Choose bank</string>
     <!--    Button-->
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>

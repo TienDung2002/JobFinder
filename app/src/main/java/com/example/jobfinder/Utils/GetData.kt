@@ -34,8 +34,8 @@ object GetData {
             }
     }
 
-    fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    fun getCurrentDateTime(): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
         val calendar = Calendar.getInstance()
         return dateFormat.format(calendar.time)
     }
@@ -45,7 +45,7 @@ object GetData {
             return null
         }
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
         try {
             return dateFormat.parse(dateString)
         } catch (e: ParseException) {
@@ -53,4 +53,18 @@ object GetData {
             e.printStackTrace()
         }
         return null
-    }}
+    }
+    fun getDateFromString(dateTimeString: String): String? {
+        val parts = dateTimeString.split(" ")
+        if (parts.isNotEmpty()) {
+            return parts[0] // Trả về phần tử đầu tiên, chứa ngày tháng năm
+        }
+        return null
+    }
+
+    fun getTimeFromDate(date: Date): String {
+        val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+        return timeFormat.format(date)
+    }
+
+}

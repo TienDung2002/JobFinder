@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.RowNotificationsBinding
 
 class NotificationsAdapter(
@@ -90,7 +91,7 @@ class NotificationsAdapter(
       binding.apply {
         txtApplicationsen.text = item.from
         txtApplicationsfo.text = item.detail
-        txtDate.text = item.date
+        txtDate.text = GetData.getDateFromString(item.date.toString()).toString()
       }
     }
   }

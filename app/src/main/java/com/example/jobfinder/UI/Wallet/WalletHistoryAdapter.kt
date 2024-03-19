@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.walletHistoryModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 
 class WalletHistoryAdapter(private val historyList: List<walletHistoryModel>) :
     RecyclerView.Adapter<WalletHistoryAdapter.ViewHolder>() {
@@ -29,7 +30,7 @@ class WalletHistoryAdapter(private val historyList: List<walletHistoryModel>) :
         holder.amountTextView.text = "$" + currentItem.amount
         holder.bankNameTextView.text = currentItem.bankName
         holder.cardNumTextView.text= currentItem.cardNum
-        holder.dateTextView.text = currentItem.date
+        holder.dateTextView.text = GetData.getDateFromString(currentItem.date.toString()).toString()
         holder.amountTextView.setTextColor(getHistoryTxtColor(holder.itemView.context, currentItem.type))
     }
 

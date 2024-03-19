@@ -103,7 +103,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                         .addOnSuccessListener {
                             val notiId = FirebaseDatabase.getInstance().getReference("Notifications").child(userId).push().key.toString()
                             val walletHistoryId= FirebaseDatabase.getInstance().getReference("WalletHistory").child(userId).child(wallet.cardId.toString()).push().key.toString()
-                            val today = GetData.getCurrentDate()
+                            val today = GetData.getCurrentDateTime()
                             val walletHistoryModel= walletHistoryModel(
                                 walletHistoryId,
                                 "10000",

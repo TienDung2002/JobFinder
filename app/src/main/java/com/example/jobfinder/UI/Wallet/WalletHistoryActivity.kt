@@ -67,4 +67,5 @@ class WalletHistoryActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }
