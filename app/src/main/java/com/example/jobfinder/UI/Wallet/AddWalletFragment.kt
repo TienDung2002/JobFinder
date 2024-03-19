@@ -1,8 +1,8 @@
 package com.example.jobfinder.UI.Wallet
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kotlin.system.exitProcess
 
 class AddWalletFragment : Fragment() {
     private lateinit var binding: FragmentAddWalletBinding
@@ -40,6 +39,7 @@ class AddWalletFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         validCard= true
@@ -83,8 +83,6 @@ class AddWalletFragment : Fragment() {
             val isValidYear= yearChoose
             val isValidMonth= monthChoose
 
-
-
             binding.addWalletBankEditTxt.error = if (isValidBank) null else getString(R.string.error_invalid_bank)
             binding.addWalletCardNumEditTxt.error = if (isValidCardNumber) null else getString(R.string.error_invalid_card_num)
             binding.txtYear.error=if(isValidYear)null else getString(R.string.no_choose_year)
@@ -112,7 +110,7 @@ class AddWalletFragment : Fragment() {
                                 .child(uid.toString())
                                 .child(cardId.toString())
                                 .setValue(newWalletRow)
-                                .addOnCompleteListener() {
+                                .addOnCompleteListener {
                                     if(it.isSuccessful){
                                         val notiId = FirebaseDatabase
                                             .getInstance()
@@ -218,6 +216,7 @@ class AddWalletFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun txtYearSelected(view: View) {
         val popupMenu = PopupMenu(context, view)
         popupMenu.menuInflater.inflate(R.menu.year_menu, popupMenu.menu)
@@ -268,6 +267,7 @@ class AddWalletFragment : Fragment() {
         }
         popupMenu.show()
     }
+    @SuppressLint("SetTextI18n")
     private fun txtMonthSelected(view: View) {
         val popupMenu = PopupMenu(context, view)
         popupMenu.menuInflater.inflate(R.menu.month_menu, popupMenu.menu)

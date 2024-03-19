@@ -118,12 +118,14 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                 "Add 10000$ to your card",
                                 today
                             )
+                            //add to WalletHistory
                             FirebaseDatabase.getInstance()
                                 .getReference("WalletHistory")
                                 .child(userId)
                                 .child(wallet.cardId.toString())
                                 .child(walletHistoryId)
                                 .setValue(walletHistoryModel)
+                            //add to Notifications
                             FirebaseDatabase.getInstance()
                                 .getReference("Notifications")
                                 .child(userId)

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.databinding.ActivityWalletHistoryBinding
 import com.example.jobfinder.Datas.Model.walletHistoryModel
+import com.example.jobfinder.Utils.GetData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -24,7 +25,6 @@ class WalletHistoryActivity : AppCompatActivity() {
         //firebase
         auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid
-        val walletHistoryList = mutableListOf<walletHistoryModel>()
 
         FirebaseDatabase.getInstance()
             .getReference("WalletHistory")
@@ -45,9 +45,10 @@ class WalletHistoryActivity : AppCompatActivity() {
                         walletHistoryModel(historyId, amount, cardId, bankName, cardNum, date, type)
                     }
                 }
+                val sortedList = walletHistoryList.sortedByDescending { GetData.convertStringToDate( it.date.toString()) }
 
                 // Khởi tạo và cài đặt adapter cho RecyclerView
-                val adapter = WalletHistoryAdapter(walletHistoryList)
+                val adapter = WalletHistoryAdapter(sortedList)
                 binding.recyclerWalletHistoryList.layoutManager = LinearLayoutManager(this)
                 binding.recyclerWalletHistoryList.adapter = adapter
             }

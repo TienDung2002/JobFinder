@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.FragmentNotificationsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -45,6 +46,7 @@ class NotificationsFragment : Fragment() {
                     val notification = NotificationsRowModel(notiId, from, detail, date)
                     notificationList.add(notification)
                 }
+                notificationList.sortByDescending { GetData.convertStringToDate( it.date.toString())}
 
                 val recyclerView = binding.recyclerNotifications
                 val adapter = NotificationsAdapter(notificationList,  requireContext(), binding.noNoti)
