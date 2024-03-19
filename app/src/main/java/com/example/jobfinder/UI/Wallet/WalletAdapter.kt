@@ -115,7 +115,8 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             val notificationsRowModel= NotificationsRowModel(
                                 notiId,
                                 "Admin",
-                                "Add 10000$ to your card",
+                                "+ $10000\n" +
+                                        "Bank: ${wallet.bankName}. Card number: ${wallet.cardNumber}",
                                 today
                             )
                             //add to WalletHistory

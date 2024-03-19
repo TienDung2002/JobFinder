@@ -130,7 +130,8 @@ class AddWalletFragment : Fragment() {
                                         val notificationsRowModel= NotificationsRowModel(
                                             notiId,
                                             "Admin",
-                                            "Add card to your wallet. Bank: $bankName card number: $cardNumber",
+                                            "Add card to your wallet.\n" +
+                                                    "Bank: $bankName. Card number: $cardNumber",
                                             today)
                                         FirebaseDatabase.getInstance()
                                             .getReference("Notifications")
