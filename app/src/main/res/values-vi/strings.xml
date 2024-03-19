@@ -129,6 +129,7 @@
     <string name="no_choose_year">Chưa chọn năm</string>
     <string name="no_choose_month">Chưa chọn tháng</string>
     <string name="duplicate_card">Thẻ này đã tồn tại</string>
+    <string name="no_history">Chưa có giao dịch nào</string>
     <!--    Button-->
     <string name="delete">Xóa</string>
     <string name="cancel">Hủy</string>

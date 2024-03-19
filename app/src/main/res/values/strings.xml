@@ -129,6 +129,7 @@
     <string name="no_choose_year">Year is blank</string>
     <string name="no_choose_month">Month is blank</string>
     <string name="duplicate_card">This card already exist</string>
+    <string name="no_history">Nothing here</string>
     <!--    Button-->
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>

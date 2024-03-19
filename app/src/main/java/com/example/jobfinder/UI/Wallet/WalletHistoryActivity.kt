@@ -4,6 +4,7 @@ import WalletHistoryAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.databinding.ActivityWalletHistoryBinding
@@ -45,12 +46,17 @@ class WalletHistoryActivity : AppCompatActivity() {
                         walletHistoryModel(historyId, amount, cardId, bankName, cardNum, date, type)
                     }
                 }
-                val sortedList = walletHistoryList.sortedByDescending { GetData.convertStringToDate( it.date.toString()) }
+                if(!walletHistoryList.isEmpty()){
+                    val sortedList = walletHistoryList.sortedByDescending { GetData.convertStringToDate( it.date.toString()) }
 
-                // Khởi tạo và cài đặt adapter cho RecyclerView
-                val adapter = WalletHistoryAdapter(sortedList)
-                binding.recyclerWalletHistoryList.layoutManager = LinearLayoutManager(this)
-                binding.recyclerWalletHistoryList.adapter = adapter
+                    // Khởi tạo và cài đặt adapter cho RecyclerView
+
+                    val adapter = WalletHistoryAdapter(sortedList)
+                    binding.recyclerWalletHistoryList.layoutManager = LinearLayoutManager(this)
+                    binding.recyclerWalletHistoryList.adapter = adapter
+                }else{
+                    binding.noWalletHistory.visibility= View.VISIBLE
+                }
             }
             .addOnFailureListener { exception ->
                 Log.e("Wallet data", "Error getting data from Firebase", exception)
@@ -60,8 +66,5 @@ class WalletHistoryActivity : AppCompatActivity() {
             startActivity(Intent(this, WalletActivity::class.java))
             finish()
         }
-
-
     }
-
 }
