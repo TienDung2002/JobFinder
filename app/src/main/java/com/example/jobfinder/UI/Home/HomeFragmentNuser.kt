@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.jobfinder.UI.Jobs.NewJobActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.databinding.FragmentHomeNuserBinding
 
@@ -29,7 +30,10 @@ class HomeFragmentNuser : Fragment() {
             startActivity(Intent(requireContext(), WalletActivity::class.java))
         }
 
-
+        // mở activity tìm job
+        binding.JobsearchBtn.setOnClickListener{
+            startActivity(Intent(requireContext(), NewJobActivity::class.java))
+        }
 
         return binding.root
     }
