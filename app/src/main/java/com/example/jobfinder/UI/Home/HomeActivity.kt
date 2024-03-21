@@ -8,7 +8,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.Jobs.JobsActivity
+import com.example.jobfinder.UI.Jobs.JobsManagementActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
@@ -92,9 +92,9 @@ class HomeActivity : AppCompatActivity() {
             }
             R.id.managermentJob  -> {
                 if (userRole == "BUser") {
-                    startActivity(Intent(this, JobsActivity::class.java))
+                    startActivity(Intent(this, JobsManagementActivity::class.java))
                 } else {
-                    startActivity(Intent(this, JobsActivity::class.java))
+                    startActivity(Intent(this, JobsManagementActivity::class.java))
                 }
                 return true
             }

@@ -4,16 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.jobfinder.R
-import com.example.jobfinder.databinding.ActivityJobsBinding
-import com.example.jobfinder.databinding.ActivityWalletBinding
+import com.example.jobfinder.databinding.ActivityJobsmanagementBinding
 
-class JobsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityJobsBinding
+class JobsManagementActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityJobsmanagementBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityJobsBinding.inflate(layoutInflater)
+        binding = ActivityJobsmanagementBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         
