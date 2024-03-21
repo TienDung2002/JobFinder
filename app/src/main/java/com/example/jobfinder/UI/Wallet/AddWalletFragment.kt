@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -37,6 +38,7 @@ class AddWalletFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddWalletBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 

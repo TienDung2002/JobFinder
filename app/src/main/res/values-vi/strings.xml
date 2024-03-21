@@ -132,6 +132,8 @@
     <string name="duplicate_card">Thẻ này đã tồn tại</string>
     <string name="no_history">Chưa có giao dịch nào</string>
     <string name="choose_Bank">Chọn ngân hàng</string>
+    <string name="all_card">Tất cả thẻ</string>
+
     <!--    Button-->
     <string name="delete">Xóa</string>
     <string name="cancel">Hủy</string>

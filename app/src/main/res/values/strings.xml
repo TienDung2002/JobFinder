@@ -132,11 +132,12 @@
     <string name="duplicate_card">This card already exist</string>
     <string name="no_history">Nothing here</string>
     <string name="choose_Bank">Choose bank</string>
+    <string name="all_card">All card</string>
+
     <!--    Button-->
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="add_cash">Add cash</string>
     <string name="add_card">Add card</string>
-
 
 </resources>

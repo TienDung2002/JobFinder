@@ -33,7 +33,23 @@
                 android:textSize="30sp" />
 
         </LinearLayout>
+<!--     choose card-->
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
 
+         <Spinner
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:dropDownVerticalOffset="60dp"
+             android:padding="10dp"
+             android:layout_marginEnd="20dp"
+             android:layout_marginStart="20dp"
+             android:background="@drawable/edittext_outline"
+             android:id="@+id/history_spinner"/>
+
+     </LinearLayout>
+<!--recycler view-->
      <RelativeLayout
          android:layout_width="match_parent"
          android:layout_height="match_parent">
