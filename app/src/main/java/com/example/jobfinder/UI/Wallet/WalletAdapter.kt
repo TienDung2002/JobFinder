@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.getString
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.Datas.Model.WalletRowModel
+import com.example.jobfinder.Datas.Model.walletHistoryModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.RowWalletCardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -50,7 +53,6 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                     showOptionsDialog(wallet)
                 }
 
-
             }
         }
 
@@ -73,6 +75,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             val deleteButton = dialog.findViewById<Button>(R.id.delete_card_button)
             val addButton = dialog.findViewById<Button>(R.id.add_cash_button)
             val cancelButton = dialog.findViewById<Button>(R.id.button_cancel)
+            addButton.isClickable= true
 
             // Xử lý khi nhấn vào nút Xóa
             deleteButton.setOnClickListener {
@@ -88,6 +91,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
 
             // Xử lý khi nhấn vào nút Thêm
             addButton.setOnClickListener {
+                addButton.isClickable= false
                 // Thêm 10000 vào amount của thẻ
                 addMoney(wallet)
                 val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -97,6 +101,37 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                         .child("amount")
                         .setValue(wallet.amount)
                         .addOnSuccessListener {
+                            val notiId = FirebaseDatabase.getInstance().getReference("Notifications").child(userId).push().key.toString()
+                            val walletHistoryId= FirebaseDatabase.getInstance().getReference("WalletHistory").child(userId).child(wallet.cardId.toString()).push().key.toString()
+                            val today = GetData.getCurrentDateTime()
+                            val walletHistoryModel= walletHistoryModel(
+                                walletHistoryId,
+                                "10000",
+                                wallet.cardId.toString(),
+                                wallet.bankName.toString(),
+                                wallet.cardNumber.toString(),
+                                today,
+                                "income")
+                            val notificationsRowModel= NotificationsRowModel(
+                                notiId,
+                                "Admin",
+                                "+ $10000\n" +
+                                        "Bank: ${wallet.bankName}. Card number: ${wallet.cardNumber}",
+                                today
+                            )
+                            //add to WalletHistory
+                            FirebaseDatabase.getInstance()
+                                .getReference("WalletHistory")
+                                .child(userId)
+                                .child(wallet.cardId.toString())
+                                .child(walletHistoryId)
+                                .setValue(walletHistoryModel)
+                            //add to Notifications
+                            FirebaseDatabase.getInstance()
+                                .getReference("Notifications")
+                                .child(userId)
+                                .child(notiId)
+                                .setValue(notificationsRowModel)
                             Toast.makeText(context, getString(context,R.string.add_cash_success), Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { exception ->
@@ -128,6 +163,9 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                         .removeValue()
                         .addOnSuccessListener {
                             // Handle success
+                            FirebaseDatabase.getInstance().getReference("WalletHistory").child(userId)
+                                .child(wallet.cardId ?: "")
+                                .removeValue()
                             Toast.makeText(context, getString(context,R.string.delete_card_success), Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { exception ->

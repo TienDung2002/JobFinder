@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private lateinit var binding: ActivityWalletBinding
@@ -18,7 +19,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private lateinit var fadeInAnimation: Animation
     private lateinit var fadeOutAnimation: Animation
     private var backCheck = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +52,14 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
+        }
+
+        binding.walletHistoryFtBtn.setOnClickListener{
+            startActivity(Intent(this, WalletHistoryActivity::class.java))
+        }
+
+        binding.walletHistoryFtTxt.setOnClickListener{
+            startActivity(Intent(this, WalletHistoryActivity::class.java))
         }
 
         // back bằng nút trên màn hình

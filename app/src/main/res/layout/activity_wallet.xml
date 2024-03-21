@@ -75,8 +75,6 @@
                 app:fabSize="mini"
                 app:pressedTranslationZ="12dp"
                 app:itemTextColor="@color/black"
-                app:itemIconTint="@color/black"
-                app:tint="@android:color/black"
                 android:backgroundTint="@color/primary_color3"
                 android:visibility="invisible"
                 app:shapeAppearance="@null"/>
@@ -107,19 +105,16 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/add_card"
+                android:src="@drawable/add"
                 android:id="@+id/add_wallet_ft_btn"
                 android:elevation="0dp"
                 app:elevation="0dp"
                 app:fabSize="mini"
                 app:pressedTranslationZ="12dp"
                 app:itemTextColor="@color/black"
-                app:itemIconTint="@color/black"
-                app:tint="@android:color/black"
                 android:backgroundTint="@color/primary_color3"
                 app:shapeAppearance="@null"
                 android:visibility="invisible">
-
 
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
@@ -133,10 +128,9 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/primary_color2"
-            android:src="@drawable/wallet_floating_btn_option"
+            android:src="@drawable/wallet"
             app:fabSize="normal"
             app:shapeAppearance="@null"
-            app:tint="@android:color/black"
             android:contentDescription="action Button" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

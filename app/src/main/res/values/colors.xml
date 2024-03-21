@@ -15,7 +15,7 @@
     <color name="profile_backfround">#F6F6F6</color>
     <color name="delete_notification_btn">#ff4b4b</color>
 
-
-
-
+    <color name="income_color">#50C878</color>
+    <color name="expense_color">#EA3C53</color>
+    <color name="gray">#646464</color>
 </resources>

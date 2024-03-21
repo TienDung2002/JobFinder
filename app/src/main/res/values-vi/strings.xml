@@ -126,8 +126,14 @@
     <string name="add_cash_success">Nạp tiền thành công</string>
     <string name="year">Năm</string>
     <string name="month">Tháng</string>
+    <string name="no_choose_bank">Chưa chọn ngân hàng</string>
     <string name="no_choose_year">Chưa chọn năm</string>
     <string name="no_choose_month">Chưa chọn tháng</string>
+    <string name="duplicate_card">Thẻ này đã tồn tại</string>
+    <string name="no_history">Chưa có giao dịch nào</string>
+    <string name="choose_Bank">Chọn ngân hàng</string>
+    <string name="all_card">Tất cả thẻ</string>
+
     <!--    Button-->
     <string name="delete">Xóa</string>
     <string name="cancel">Hủy</string>
