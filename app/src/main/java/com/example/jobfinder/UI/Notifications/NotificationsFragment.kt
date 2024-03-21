@@ -25,6 +25,7 @@ class NotificationsFragment : Fragment() {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,16 +47,21 @@ class NotificationsFragment : Fragment() {
                     val notification = NotificationsRowModel(notiId, from, detail, date)
                     notificationList.add(notification)
                 }
-                notificationList.sortByDescending { GetData.convertStringToDate( it.date.toString())}
+                notificationList.sortByDescending { GetData.convertStringToDate(it.date.toString()) }
 
                 val recyclerView = binding.recyclerNotifications
-                val adapter = NotificationsAdapter(notificationList,  requireContext(), binding.noNoti)
+                val adapter =
+                    NotificationsAdapter(notificationList, requireContext(), binding.noNoti)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
                 // Xác định nếu người dùng nhấn vào nút "Xóa"
                 adapter.setOnItemClickListener(object : NotificationsAdapter.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int, item: NotificationsRowModel) {
+                    override fun onItemClick(
+                        view: View,
+                        position: Int,
+                        item: NotificationsRowModel
+                    ) {
                         if (view.id == R.id.txtDelete) {
                             adapter.removeItem(position)
                             FirebaseDatabase.getInstance()
@@ -65,7 +71,7 @@ class NotificationsFragment : Fragment() {
                         }
                     }
                 })
+                binding.animationView.visibility = View.GONE
             }
-
     }
 }
