@@ -151,8 +151,23 @@
     <string name="edit_profile_save">Save</string>
 
 
-<!--    Find new job-->
+    <!--    Find new job-->
     <string name="hint_search">Search</string>
+    <!--    List job item-->
+    <string name="Ji_recName">Recruiter name</string>
+    <string name="Ji_recAdd">Recruiter address</string>
+    <string name="Ji_position1">Position:</string>
+    <string name="Ji_position2">Intern Java</string>
+    <string name="Ji_num_of_rec_title">Number of Recruits:</string>
+    <string name="Ji_num_of_recruits">3</string>
+    <string name="Ji_sub">Employees</string>
+    <string name="Ji_recruited1">Recruited:</string>
+    <string name="Ji_recruited2">0</string>
+    <string name="Ji_posttime">45 minutes ago</string>
+    <string name="Ji_unit1">$</string>
+    <string name="Ji_salary">20,000</string>
+    <string name="Ji_unit2">VNĐ</string>
+    <string name="Ji_unit3">/Hour</string>
 
 
 </resources>

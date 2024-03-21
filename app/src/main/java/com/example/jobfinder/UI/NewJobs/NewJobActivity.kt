@@ -1,10 +1,9 @@
-package com.example.jobfinder.UI.Jobs
+package com.example.jobfinder.UI.NewJobs
 
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.jobfinder.R
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 
 class NewJobActivity : AppCompatActivity() {

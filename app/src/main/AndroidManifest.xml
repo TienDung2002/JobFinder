@@ -17,7 +17,7 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".UI.Jobs.NewJobActivity"
+            android:name=".UI.NewJobs.NewJobActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity
@@ -59,7 +59,7 @@
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".UI.Jobs.JobsManagementActivity"
+            android:name=".UI.JobsManagement.JobsManagementActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity

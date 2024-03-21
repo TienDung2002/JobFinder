@@ -8,7 +8,7 @@ import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.Jobs.JobsManagementActivity
+import com.example.jobfinder.UI.JobsManagement.JobsManagementActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity

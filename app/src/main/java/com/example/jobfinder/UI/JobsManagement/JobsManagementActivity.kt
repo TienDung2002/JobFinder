@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.Jobs
+package com.example.jobfinder.UI.JobsManagement
 
 import android.app.Activity
 import android.content.Intent

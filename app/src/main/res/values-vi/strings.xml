@@ -154,5 +154,20 @@
 
     <!--    Find new job-->
     <string name="hint_search">Tìm kiếm</string>
+    <!--    List job item-->
+    <string name="Ji_recName">Tên nhà tuyển dụng</string>
+    <string name="Ji_recAdd">Địa chỉ làm việc</string>
+    <string name="Ji_position1">Vị trí:</string>
+    <string name="Ji_position2">Intern Java</string>
+    <string name="Ji_num_of_rec_title">Số lượng tuyển:</string>
+    <string name="Ji_num_of_recruits">3</string>
+    <string name="Ji_sub">Người</string>
+    <string name="Ji_recruited1">Đã tuyển:</string>
+    <string name="Ji_recruited2">0</string>
+    <string name="Ji_posttime">45 phút trước</string>
+    <string name="Ji_unit1">$</string>
+    <string name="Ji_salary">20,000</string>
+    <string name="Ji_unit2">VNĐ</string>
+    <string name="Ji_unit3">/Giờ</string>
 
 </resources>

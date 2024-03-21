@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.jobfinder.UI.Jobs.NewJobActivity
+import com.example.jobfinder.UI.NewJobs.NewJobActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.databinding.FragmentHomeNuserBinding
 
