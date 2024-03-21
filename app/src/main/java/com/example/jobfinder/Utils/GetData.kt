@@ -9,7 +9,7 @@ import java.util.Locale
 import java.util.Calendar
 import java.util.Date
 
-// Cách dùng:
+// Cách dùng getUserRole:
 // Khai báo giá trị mặc định cho 1 biến global ở Activity cần check :  private var userRole: String = ""
 // Gọi hàm và gán giá trị thu được từ callback cho biến vừa khai báo và sử dụng:
 //      GetData.getUserRole { role ->
