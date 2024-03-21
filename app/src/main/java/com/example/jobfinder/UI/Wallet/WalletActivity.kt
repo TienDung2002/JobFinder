@@ -56,12 +56,10 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
 
         binding.walletHistoryFtBtn.setOnClickListener{
             startActivity(Intent(this, WalletHistoryActivity::class.java))
-            finish()
         }
 
         binding.walletHistoryFtTxt.setOnClickListener{
             startActivity(Intent(this, WalletHistoryActivity::class.java))
-            finish()
         }
 
         // back bằng nút trên màn hình

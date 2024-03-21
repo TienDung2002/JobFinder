@@ -1,6 +1,7 @@
 package com.example.jobfinder.UI.Wallet
 
 import WalletHistoryAdapter
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -98,7 +99,8 @@ class WalletHistoryActivity : AppCompatActivity() {
             }
 
         binding.backButton.setOnClickListener {
-            startActivity(Intent(this, WalletActivity::class.java))
+            val resultIntent = Intent()
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
     }
