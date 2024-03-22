@@ -64,6 +64,7 @@ class AddWalletFragment : Fragment() {
                 binding.txtBank.error= null}
             bankSelect(it)
             bankChoosed = true
+            binding.txtBank.setTextColor(resources.getColor(R.color.black))
         }
         binding.txtYear.setOnClickListener {
             if(!yearChoose){
@@ -71,6 +72,7 @@ class AddWalletFragment : Fragment() {
                 binding.txtYear.error= null}
             txtYearSelected(it)
             yearChoose = true
+            binding.txtYear.setTextColor(resources.getColor(R.color.black))
         }
         binding.txtMonth.setOnClickListener{
             if(!monthChoose){
@@ -79,6 +81,7 @@ class AddWalletFragment : Fragment() {
             }
             txtMonthSelected(it)
             monthChoose = true
+            binding.txtMonth.setTextColor(resources.getColor(R.color.black))
         }
 
         binding.addCardBtn.setOnClickListener{

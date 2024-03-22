@@ -175,5 +175,13 @@
     <string name="Ji_unit2">VNĐ</string>
     <string name="Ji_unit3">/Hour</string>
 
+<!--    post job-->
+    <string name="post_job_title">Title</string>
+    <string name="job_des">Job description</string>
+    <string name="salary">Salary</string>
+    <string name="employee_amount">Employee amount</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
+    <string name="shift">Work shift</string>
 
 </resources>

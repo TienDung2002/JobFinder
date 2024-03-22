@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        style="@style/groupStylegray_50">
+        style="@style/home_bg">
 
             <RelativeLayout
                 android:layout_width="match_parent"

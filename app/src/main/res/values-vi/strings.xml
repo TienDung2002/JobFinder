@@ -176,4 +176,13 @@
     <string name="Ji_unit2">VNĐ</string>
     <string name="Ji_unit3">/Giờ</string>
 
+    <!--    post job-->
+    <string name="post_job_title">Tên công việc</string>
+    <string name="job_des">Mô tả công việc</string>
+    <string name="salary">Mức lương</string>
+    <string name="employee_amount">Số lượng người</string>
+    <string name="start_time">Thời gian bắt đầu</string>
+    <string name="end_time">Thời gian kết thúc</string>
+    <string name="shift">Ca làm</string>
+
 </resources>
