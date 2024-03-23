@@ -77,4 +77,15 @@ object GetData {
         return result.toString()
     }
 
+    fun compareFloatStrings(strA: String, strB: String): Boolean {
+        val floatA = strA.toFloatOrNull()
+        val floatB = strB.toFloatOrNull()
+
+        if (floatA != null && floatB != null) {
+            return floatA > floatB
+        }
+        return false
+    }
+
+
 }

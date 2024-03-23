@@ -18,6 +18,22 @@ android:background="@color/white">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:paddingTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/wallet_amount"
+                    android:id="@+id/amount"
+                    android:inputType="numberDecimal"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -38,9 +54,9 @@ android:background="@color/white">
                             android:background="@drawable/wallet_btn_shape"
                             app:backgroundTint="@null"
                             android:textColor="@color/black"
-                            android:id="@+id/cash_from_wallet_to_card"
+                            android:id="@+id/withdraw_cash"
                             android:textSize="16sp"
-                            android:text="@string/delete"/>
+                            android:text="@string/withdraw"/>
 
                     </RelativeLayout>
 
@@ -57,9 +73,9 @@ android:background="@color/white">
                             android:background="@drawable/wallet_btn_shape"
                             app:backgroundTint="@null"
                             android:textColor="@color/black"
-                            android:id="@+id/add_cash_to_wallet"
+                            android:id="@+id/deposit_cash"
                             android:textSize="16sp"
-                            android:text="@string/add_cash"/>
+                            android:text="@string/deposit"/>
 
                     </RelativeLayout>
 

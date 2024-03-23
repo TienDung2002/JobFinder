@@ -137,6 +137,10 @@
     <string name="deposit">Nạp tiền</string>
     <string name="withdraw_success">Rút tiền thành công</string>
     <string name="deposit_success">Nạp tiền thành công</string>
+    <string name="no_amount">Số tiền trống</string>
+    <string name="not_enough_money">Số dư không đủ</string>
+    <string name="amount">Số tiền</string>
+    <string name="wallet_amount_title">Số dư:</string>
 
 
     <!--    Button-->
