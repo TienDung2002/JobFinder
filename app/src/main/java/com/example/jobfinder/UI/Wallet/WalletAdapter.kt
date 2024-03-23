@@ -85,11 +85,9 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             addCashToCardBtn.isClickable= true
             depositBtn.isClickable= true
             withdrawBtn.isClickable= true
+            deleteButton.isClickable= true
 
             withdrawBtn.setOnClickListener {
-                depositBtn.isClickable= false
-                withdrawBtn.isClickable= false
-                addCashToCardBtn.isClickable= false
                 val amountTxt = amountEditTxt.text.toString().trim()
                 val isValidAmountTxt = VerifyField.isEmpty(amountTxt)
                 amountEditTxt.error = if(isValidAmountTxt) null else getString(binding.root.context, R.string.no_amount)
@@ -102,6 +100,10 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             if (data.exists()) {
                                 val currentWalletAmount = data.child("amount").getValue(String::class.java).toString()
                                 if (GetData.compareFloatStrings(currentWalletAmount, amountTxt)) {
+                                    depositBtn.isClickable= false
+                                    withdrawBtn.isClickable= false
+                                    addCashToCardBtn.isClickable= false
+                                    deleteButton.isClickable= false
                                     // Trừ số tiền từ số dư ví
                                     val newAmount = (wallet.amount.toString().toFloat() + amountTxt.toFloat()).toString()
                                     val newWalletAmount = (currentWalletAmount.toFloat() - amountTxt.toFloat()).toString()
@@ -134,9 +136,6 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             }
 
             depositBtn.setOnClickListener {
-                depositBtn.isClickable= false
-                withdrawBtn.isClickable= false
-                addCashToCardBtn.isClickable= false
                 val amountTxt = amountEditTxt.text.toString().trim()
                 val isValidAmountTxt = VerifyField.isEmpty(amountTxt)
                 amountEditTxt.error = if (isValidAmountTxt) null else getString(binding.root.context, R.string.no_amount)
@@ -149,6 +148,10 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             if (data.exists()) {
                                 val currentWalletAmount = data.child("amount").getValue(String::class.java).toString()
                                 if (GetData.compareFloatStrings(wallet.amount.toString(), amountTxt)) {
+                                    depositBtn.isClickable= false
+                                    withdrawBtn.isClickable= false
+                                    addCashToCardBtn.isClickable= false
+                                    deleteButton.isClickable= false
                                     // Trừ số tiền từ số dư ví
                                     val newAmount = (wallet.amount.toString().toFloat() - amountTxt.toFloat()).toString()
                                     val newWalletAmount = (currentWalletAmount.toFloat() + amountTxt.toFloat()).toString()
