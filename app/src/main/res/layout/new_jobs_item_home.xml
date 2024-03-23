@@ -2,13 +2,19 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    app:cardCornerRadius="25dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_marginBottom="30dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:background="@drawable/item_job_background">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
 
         <RelativeLayout
             android:id="@+id/topSection"
@@ -25,7 +31,7 @@
                 android:src="@drawable/avatar"/>
 
             <TextView
-                android:id="@+id/rec_name"
+                android:id="@+id/rec_nameNJ"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
@@ -39,12 +45,12 @@
                 android:text="@string/Ji_recName"/>
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="30dp"
+                android:id="@+id/bookmark_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/ic_bookmark_white24px" />
+                android:background="@drawable/ic_bookmark_grey30px" />
         </RelativeLayout>
 
 
@@ -53,13 +59,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/topSection"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:id="@+id/layoutmiddleSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="2dp">
                 <TextView
                     android:id="@+id/JiPosition1"
                     android:layout_width="wrap_content"
@@ -72,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:textStyle="italic"
                     android:layout_marginStart="5dp"
                     android:textSize="17sp"
                     android:text="@string/Ji_position2"/>
@@ -83,7 +91,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layoutmiddleSection"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="2dp">
                 <TextView
                     android:id="@+id/NumRecTitle"
                     android:layout_width="wrap_content"
@@ -97,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:textStyle="italic"
                     android:layout_marginStart="5dp"
                     android:textSize="17sp"
                     android:text="@string/Ji_num_of_recruits"/>
@@ -105,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:textStyle="italic"
                     android:layout_marginStart="5dp"
                     android:textSize="17sp"
                     android:text="@string/Ji_sub"/>
@@ -129,6 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:textStyle="italic"
                     android:layout_marginStart="5dp"
                     android:textSize="17sp"
                     android:text="@string/Ji_num_of_recruits"/>
@@ -137,6 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:textStyle="italic"
                     android:layout_marginStart="5dp"
                     android:textSize="17sp"
                     android:text="@string/Ji_sub"/>
@@ -162,7 +175,7 @@
                 android:id="@+id/unit1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/income_color"
                 android:textStyle="bold"
                 android:layout_marginEnd="1dp"
                 android:layout_toStartOf="@+id/salary"
@@ -174,7 +187,7 @@
                 android:id="@+id/salary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/income_color"
                 android:textStyle="bold"
                 android:layout_toStartOf="@+id/unit2"
                 android:textSize="16sp"
