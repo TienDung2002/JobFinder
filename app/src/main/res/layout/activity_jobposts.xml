@@ -54,7 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -72,35 +73,66 @@
 
             </LinearLayout>
 
-<!--            input job type-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/job_des"
-                    android:textSize="16sp"
-                    android:id="@+id/post_job_type"/>
-
-            </LinearLayout>
-
 <!--            work shift-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
-                <Spinner
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:dropDownVerticalOffset="40dp"
-                    android:paddingBottom="12dp"
-                    android:paddingTop="12dp"
-                    android:background="@drawable/edittext_outline"
-                    android:id="@+id/work_shift_spinner" />
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shift"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="end"
+                    android:baselineAligned="false"
+                    android:id="@+id/shift_choose">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shift_1"
+                            android:id="@+id/rec_shift1"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end">
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shift_2"
+                            android:id="@+id/rec_shift2"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
@@ -108,14 +140,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_time"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/start_time"
                     android:textSize="16sp"
-                    android:id="@+id/post_job_start_time"/>
+                    android:id="@+id/post_job_start_time"
+                    android:focusable="false"
+                    android:inputType="none"/>
 
             </LinearLayout>
 
@@ -123,14 +165,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_time"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/end_time"
                     android:textSize="16sp"
-                    android:id="@+id/post_job_end_time"/>
+                    android:id="@+id/post_job_end_time"
+                    android:focusable="false"
+                    android:inputType="none"/>
 
             </LinearLayout>
 
@@ -138,7 +190,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/employee_amount"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -154,12 +214,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/salary"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/salary"
+                    android:inputType="number"
                     android:textSize="16sp"
                     android:id="@+id/post_job_salary"/>
 
@@ -169,7 +238,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rec_address"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -179,6 +256,51 @@
                     android:id="@+id/post_job_address"/>
 
             </LinearLayout>
+
+            <!--            input job des-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/job_des"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"/>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/job_des"
+                    android:textSize="16sp"
+                    android:id="@+id/post_job_des"
+                    android:inputType="textMultiLine|textCapSentences"/>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/wallet_btn_shape"
+                android:text="@string/add_job"
+                android:textSize="20sp"
+                android:paddingEnd="25dp"
+                android:paddingStart="25dp"
+                android:id="@+id/post_job_btn"
+                />
+
+        </LinearLayout>
+
 
         </LinearLayout>
 

@@ -38,6 +38,51 @@ android:background="@color/white">
                             android:background="@drawable/wallet_btn_shape"
                             app:backgroundTint="@null"
                             android:textColor="@color/black"
+                            android:id="@+id/cash_from_wallet_to_card"
+                            android:textSize="16sp"
+                            android:text="@string/delete"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/wallet_btn_shape"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/black"
+                            android:id="@+id/add_cash_to_wallet"
+                            android:textSize="16sp"
+                            android:text="@string/add_cash"/>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/wallet_btn_shape"
+                            app:backgroundTint="@null"
+                            android:textColor="@color/black"
                             android:id="@+id/delete_card_button"
                             android:textSize="16sp"
                             android:text="@string/delete"/>
@@ -57,7 +102,7 @@ android:background="@color/white">
                             android:background="@drawable/wallet_btn_shape"
                             app:backgroundTint="@null"
                             android:textColor="@color/black"
-                            android:id="@+id/add_cash_button"
+                            android:id="@+id/add_cash_to_card"
                             android:textSize="16sp"
                             android:text="@string/add_cash"/>
 

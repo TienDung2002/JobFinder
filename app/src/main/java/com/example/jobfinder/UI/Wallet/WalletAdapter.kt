@@ -73,7 +73,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
 
             // Tìm kiếm các nút trong dialog
             val deleteButton = dialog.findViewById<Button>(R.id.delete_card_button)
-            val addButton = dialog.findViewById<Button>(R.id.add_cash_button)
+            val addButton = dialog.findViewById<Button>(R.id.add_cash_to_card)
             val cancelButton = dialog.findViewById<Button>(R.id.button_cancel)
             addButton.isClickable= true
 
