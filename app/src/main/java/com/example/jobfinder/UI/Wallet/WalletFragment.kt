@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -39,6 +40,7 @@ class WalletFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,7 +55,7 @@ class WalletFragment : Fragment() {
             .addOnSuccessListener { data ->
                 if (data.exists()) {
                     val amount = data.child("amount").getValue(String::class.java)
-                        binding.amountInWalletAmount.text = amount.toString()
+                        binding.amountInWalletAmount.text = "$"+ amount.toString()
                 } else {
                     val walletAmount = walletAmountModel("0.0")
                     FirebaseDatabase.getInstance()
@@ -62,7 +64,7 @@ class WalletFragment : Fragment() {
                         .setValue(walletAmount)
                         .addOnSuccessListener {
                             // Xử lý khi tạo giá trị mới thành công
-                            binding.amountInWalletAmount.text= "0.0"
+                            binding.amountInWalletAmount.text= "$0.0"
                         }
                         .addOnFailureListener { exception ->
                             // Xử lý khi tạo giá trị mới không thành công
@@ -97,7 +99,7 @@ class WalletFragment : Fragment() {
 
                 // Khởi tạo adapter và thiết lập RecyclerView
                 walletAdapter = WalletAdapter(walletList, requireContext(), binding.noWalletCard) { newAmount ->
-                    binding.amountInWalletAmount.text = newAmount
+                    binding.amountInWalletAmount.text = "$$newAmount"
                 }
                 binding.recyclerWalletList.layoutManager = LinearLayoutManager(requireContext())
                 binding.recyclerWalletList.adapter = walletAdapter

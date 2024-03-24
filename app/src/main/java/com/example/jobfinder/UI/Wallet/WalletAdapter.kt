@@ -71,6 +71,12 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
         // Hiển thị dialog với các chức năng
         private fun showOptionsDialog(wallet: WalletRowModel) {
             val dialog = Dialog(binding.root.context)
+            val today = GetData.getCurrentDateTime()
+            val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount").child(uid)
+            val walletRef = FirebaseDatabase.getInstance().getReference("Wallet").child(uid).child(wallet.cardId ?: "")
+            val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(uid)
+            val walletHistoryRef= FirebaseDatabase.getInstance().getReference("WalletHistory").child(uid).child(wallet.cardId.toString())
 
             dialog.setContentView(R.layout.dialog_wallet_data)
 
@@ -93,44 +99,64 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 amountEditTxt.error = if(isValidAmountTxt) null else getString(binding.root.context, R.string.no_amount)
 
                 if(isValidAmountTxt){
-                    val uid = FirebaseAuth.getInstance().currentUser?.uid
-                    uid?.let { userId ->
-                        val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount").child(userId)
-                        walletAmountRef.get().addOnSuccessListener { data ->
-                            if (data.exists()) {
-                                val currentWalletAmount = data.child("amount").getValue(String::class.java).toString()
-                                if (GetData.compareFloatStrings(currentWalletAmount, amountTxt)) {
-                                    depositBtn.isClickable= false
-                                    withdrawBtn.isClickable= false
-                                    addCashToCardBtn.isClickable= false
-                                    deleteButton.isClickable= false
-                                    // Trừ số tiền từ số dư ví
-                                    val newAmount = (wallet.amount.toString().toFloat() + amountTxt.toFloat()).toString()
-                                    val newWalletAmount = (currentWalletAmount.toFloat() - amountTxt.toFloat()).toString()
-                                    walletAmountRef.child("amount").setValue(newWalletAmount)
+                    walletAmountRef.get().addOnSuccessListener { data ->
+                        if (data.exists()) {
+                            val currentWalletAmount = data.child("amount").getValue(String::class.java).toString()
+                            if (GetData.compareFloatStrings(currentWalletAmount, amountTxt)) {
+                                depositBtn.isClickable= false
+                                withdrawBtn.isClickable= false
+                                addCashToCardBtn.isClickable= false
+                                deleteButton.isClickable= false
+                                // Trừ số tiền từ số dư ví
+                                val newAmount = (wallet.amount.toString().toFloat() + amountTxt.toFloat()).toString()
+                                val newWalletAmount = (currentWalletAmount.toFloat() - amountTxt.toFloat()).toString()
+                                walletAmountRef.child("amount").setValue(newWalletAmount)
 
-                                    Toast.makeText(binding.root.context, getString(binding.root.context, R.string.withdraw_success), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(binding.root.context, getString(binding.root.context, R.string.withdraw_success), Toast.LENGTH_SHORT).show()
 
+                                // Cập nhật số dư trong thẻ
+                                walletRef.child("amount")
+                                    .setValue(newAmount)
 
-                                    // Cập nhật số dư trong thẻ
-                                    FirebaseDatabase.getInstance().getReference("Wallet").child(userId)
-                                        .child(wallet.cardId ?: "")
-                                        .child("amount")
-                                        .setValue(newAmount)
-                                    depositWithdrawListener.invoke(newWalletAmount)
-                                    wallet.amount = newAmount
-                                    bind(wallet)
-                                    dialog.dismiss()
-                                } else {
-                                    // Số dư trong ví không đủ
-                                    Toast.makeText(binding.root.context, getString(binding.root.context, R.string.not_enough_money), Toast.LENGTH_SHORT).show()
-                                }
+                                //update fragment
+                                depositWithdrawListener.invoke(newWalletAmount)
+                                wallet.amount = newAmount
+                                bind(wallet)
+
+                                // noti
+                                val notiId = notiRef.push().key.toString()
+                                val newNoti = NotificationsRowModel(notiId, "Admin",
+                                    "Withdraw\n" +
+                                            "$amountTxt \n" +
+                                            "From bank: ${wallet.bankName}. Card number: ${wallet.cardNumber}",
+                                    today)
+                                notiRef
+                                    .child(notiId)
+                                    .setValue(newNoti)
+                                //wallet history
+                                val walletHistoryId= walletHistoryRef.push().key.toString()
+                                val walletHistoryModel= walletHistoryModel(
+                                    walletHistoryId,
+                                    amountTxt,
+                                    wallet.cardId.toString(),
+                                    wallet.bankName.toString(),
+                                    wallet.cardNumber.toString(),
+                                    today,
+                                    "income")
+                                walletHistoryRef
+                                    .child(walletHistoryId)
+                                    .setValue(walletHistoryModel)
+
+                                dialog.dismiss()
                             } else {
-                                // Xử lý khi không tìm thấy dữ liệu trong nút "WalletAmount"
+                                // Số dư trong ví không đủ
+                                Toast.makeText(binding.root.context, getString(binding.root.context, R.string.not_enough_money), Toast.LENGTH_SHORT).show()
                             }
-                        }.addOnFailureListener { exception ->
-                            // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
+                        } else {
+                            // Xử lý khi không tìm thấy dữ liệu trong nút "WalletAmount"
                         }
+                    }.addOnFailureListener { exception ->
+                        // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
                     }
                 }
             }
@@ -141,46 +167,66 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 amountEditTxt.error = if (isValidAmountTxt) null else getString(binding.root.context, R.string.no_amount)
 
                 if (isValidAmountTxt) {
-                    val uid = FirebaseAuth.getInstance().currentUser?.uid
-                    uid?.let { userId ->
-                        val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount").child(userId)
-                        walletAmountRef.get().addOnSuccessListener { data ->
-                            if (data.exists()) {
-                                val currentWalletAmount = data.child("amount").getValue(String::class.java).toString()
-                                if (GetData.compareFloatStrings(wallet.amount.toString(), amountTxt)) {
-                                    depositBtn.isClickable= false
-                                    withdrawBtn.isClickable= false
-                                    addCashToCardBtn.isClickable= false
-                                    deleteButton.isClickable= false
-                                    // Trừ số tiền từ số dư ví
-                                    val newAmount = (wallet.amount.toString().toFloat() - amountTxt.toFloat()).toString()
-                                    val newWalletAmount = (currentWalletAmount.toFloat() + amountTxt.toFloat()).toString()
-                                    walletAmountRef.child("amount").setValue(newWalletAmount)
+                    walletAmountRef.get().addOnSuccessListener { data ->
+                        if (data.exists()) {
+                            val currentWalletAmount = data.child("amount").getValue(String::class.java).toString()
+                            if (GetData.compareFloatStrings(wallet.amount.toString(), amountTxt)) {
+                                depositBtn.isClickable= false
+                                withdrawBtn.isClickable= false
+                                addCashToCardBtn.isClickable= false
+                                deleteButton.isClickable= false
+                                // Trừ số tiền từ số dư ví
+                                val newAmount = (wallet.amount.toString().toFloat() - amountTxt.toFloat()).toString()
+                                val newWalletAmount = (currentWalletAmount.toFloat() + amountTxt.toFloat()).toString()
+                                walletAmountRef.child("amount").setValue(newWalletAmount)
 
-                                    Toast.makeText(binding.root.context, getString(binding.root.context, R.string.deposit_success), Toast.LENGTH_SHORT).show()
-                                    // Cập nhật số dư trong thẻ
-                                    FirebaseDatabase.getInstance().getReference("Wallet").child(userId)
-                                        .child(wallet.cardId ?: "")
-                                        .child("amount")
-                                        .setValue(newAmount)
-                                    depositWithdrawListener.invoke(newWalletAmount)
-                                    wallet.amount = newAmount
-                                    bind(wallet)
-                                    dialog.dismiss()
-                                } else {
-                                    // Số dư trong ví không đủ
-                                    Toast.makeText(binding.root.context, getString(binding.root.context, R.string.not_enough_money), Toast.LENGTH_SHORT).show()
-                                }
+                                Toast.makeText(binding.root.context, getString(binding.root.context, R.string.deposit_success), Toast.LENGTH_SHORT).show()
+                                // Cập nhật số dư trong thẻ
+                                walletRef.child("amount")
+                                    .setValue(newAmount)
+
+                                // update in fragment
+                                wallet.amount = newAmount
+                                bind(wallet)
+                                depositWithdrawListener.invoke(newWalletAmount)
+
+                                // noti
+                                val notiId = notiRef.push().key.toString()
+                                val newNoti = NotificationsRowModel(notiId, "Admin",
+                                    "Deposit\n" +
+                                            "$amountTxt \n" +
+                                            "From bank: ${wallet.bankName}. Card number: ${wallet.cardNumber}",
+                                    today)
+                                notiRef
+                                    .child(notiId)
+                                    .setValue(newNoti)
+                                //wallet history
+                                val walletHistoryId= walletHistoryRef.push().key.toString()
+                                val walletHistoryModel= walletHistoryModel(
+                                    walletHistoryId,
+                                    amountTxt,
+                                    wallet.cardId.toString(),
+                                    wallet.bankName.toString(),
+                                    wallet.cardNumber.toString(),
+                                    today,
+                                    "expense")
+                                walletHistoryRef
+                                    .child(walletHistoryId)
+                                    .setValue(walletHistoryModel)
+
+                                dialog.dismiss()
                             } else {
-                                // Xử lý khi không tìm thấy dữ liệu trong nút "WalletAmount"
+                                // Số dư trong ví không đủ
+                                Toast.makeText(binding.root.context, getString(binding.root.context, R.string.not_enough_money), Toast.LENGTH_SHORT).show()
                             }
-                        }.addOnFailureListener { exception ->
-                            // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
+                        } else {
+                            // Xử lý khi không tìm thấy dữ liệu trong nút "WalletAmount"
                         }
+                    }.addOnFailureListener { exception ->
+                        // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
                     }
                 }
             }
-
 
             // Xử lý khi nhấn vào nút Xóa
             deleteButton.setOnClickListener {
@@ -199,16 +245,11 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 addCashToCardBtn.isClickable= false
                 // Thêm 10000 vào amount của thẻ
                 addMoney(wallet)
-                val uid = FirebaseAuth.getInstance().currentUser?.uid
-                uid?.let { userId ->
-                    FirebaseDatabase.getInstance().getReference("Wallet").child(userId)
-                        .child(wallet.cardId ?: "")
-                        .child("amount")
+                    walletRef.child("amount")
                         .setValue(wallet.amount)
                         .addOnSuccessListener {
-                            val notiId = FirebaseDatabase.getInstance().getReference("Notifications").child(userId).push().key.toString()
-                            val walletHistoryId= FirebaseDatabase.getInstance().getReference("WalletHistory").child(userId).child(wallet.cardId.toString()).push().key.toString()
-                            val today = GetData.getCurrentDateTime()
+                            val notiId = notiRef.push().key.toString()
+                            val walletHistoryId= walletHistoryRef.push().key.toString()
                             val walletHistoryModel= walletHistoryModel(
                                 walletHistoryId,
                                 "10000",
@@ -225,16 +266,11 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                 today
                             )
                             //add to WalletHistory
-                            FirebaseDatabase.getInstance()
-                                .getReference("WalletHistory")
-                                .child(userId)
-                                .child(wallet.cardId.toString())
+                            walletHistoryRef
                                 .child(walletHistoryId)
                                 .setValue(walletHistoryModel)
                             //add to Notifications
-                            FirebaseDatabase.getInstance()
-                                .getReference("Notifications")
-                                .child(userId)
+                            notiRef
                                 .child(notiId)
                                 .setValue(notificationsRowModel)
                             Toast.makeText(context, getString(context,R.string.add_cash_success), Toast.LENGTH_SHORT).show()
@@ -243,8 +279,6 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             // Xử lý khi thêm thất bại
                             Log.e("Add Money", "Error adding money to Firebase", exception)
                         }
-                }
-
                 dialog.dismiss() // Đóng dialog // Đóng dialog
             }
 

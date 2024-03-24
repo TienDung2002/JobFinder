@@ -77,9 +77,9 @@ class WalletHistoryActivity : AppCompatActivity() {
                             } else {
                                 // Lọc lịch sử ví để chỉ hiển thị lịch sử ví của thẻ được chọn
                                 val filteredHistoryList = walletHistoryList.filter { it.bankName == selectedCard.bankName && it.cardNum == selectedCard.cardNum }
-
+                                val filteredSortedHistoryList = filteredHistoryList.sortedByDescending { GetData.convertStringToDate( it.date.toString()) }
                                 // Hiển thị danh sách lịch sử ví được lọc trong RecyclerView
-                                val adapter = WalletHistoryAdapter(filteredHistoryList)
+                                val adapter = WalletHistoryAdapter(filteredSortedHistoryList)
                                 binding.recyclerWalletHistoryList.layoutManager = LinearLayoutManager(this@WalletHistoryActivity)
                                 binding.recyclerWalletHistoryList.adapter = adapter
                             }
