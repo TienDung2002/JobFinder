@@ -184,7 +184,6 @@
     <string name="Ji_unit2">VNĐ</string>
     <string name="Ji_unit3">/Hour</string>
 
-<!--    post job-->
     <string name="post_job_title">Job title</string>
     <string name="job_des">Job description</string>
     <string name="salary">Salary</string>
