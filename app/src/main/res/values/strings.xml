@@ -204,5 +204,6 @@
     <string name="post_job_success">Job posted</string>
     <string name="no_start_time">No start time</string>
     <string name="no_end_time">No end time</string>
+    <string name="end_time_be4_start">Start time must before end time</string>
 
 </resources>

@@ -11,5 +11,7 @@ class JobModel (
     var address: String?,
     var jobDes: String?,
     var totalSalary: String?,
-    var postDate: String?
+    var postDate: String?,
+    var numOfRecruited: String?,
+    var BUserName: String?
 )
