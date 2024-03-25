@@ -1,3 +1,5 @@
+package com.example.jobfinder.UI.Wallet
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -26,7 +28,7 @@ class WalletFragment : Fragment() {
     }
 
 
-    // interface này cho phép WalletFragment gừi thông diệp cho WalletActivity khi load xong data
+    // interface này cho phép com.example.jobfinder.UI.Wallet.WalletFragment gừi thông diệp cho WalletActivity khi load xong data
     interface DataLoadListener {
         fun onDataLoaded()
         fun onDataLoadedEmpty(isListEmpty: Boolean)
@@ -66,13 +68,13 @@ class WalletFragment : Fragment() {
                             // Xử lý khi tạo giá trị mới thành công
                             binding.amountInWalletAmount.text= "$0.0"
                         }
-                        .addOnFailureListener { exception ->
+                        .addOnFailureListener {
                             // Xử lý khi tạo giá trị mới không thành công
                         }
                 }
                 dataLoadListener.onDataLoaded()
             }
-            .addOnFailureListener { exception ->
+            .addOnFailureListener {
                 // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
             }
 
@@ -98,9 +100,10 @@ class WalletFragment : Fragment() {
                 }
 
                 // Khởi tạo adapter và thiết lập RecyclerView
-                walletAdapter = WalletAdapter(walletList, requireContext(), binding.noWalletCard) { newAmount ->
-                    binding.amountInWalletAmount.text = "$$newAmount"
-                }
+                walletAdapter =
+                    WalletAdapter(walletList, requireContext(), binding.noWalletCard) { newAmount ->
+                        binding.amountInWalletAmount.text = "$$newAmount"
+                    }
                 binding.recyclerWalletList.layoutManager = LinearLayoutManager(requireContext())
                 binding.recyclerWalletList.adapter = walletAdapter
                 // Gọi sự kiện đối với list empty tương tự như khi adapter có data

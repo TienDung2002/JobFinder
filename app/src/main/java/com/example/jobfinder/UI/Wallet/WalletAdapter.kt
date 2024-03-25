@@ -1,3 +1,5 @@
+package com.example.jobfinder.UI.Wallet
+
 import android.app.Dialog
 import android.content.Context
 import android.util.Log
@@ -126,9 +128,9 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                 // noti
                                 val notiId = notiRef.push().key.toString()
                                 val newNoti = NotificationsRowModel(notiId, "Admin",
-                                    "Withdraw\n" +
+                                    "${getString(binding.root.context, R.string.withdraw)}\n." +
                                             "$amountTxt \n" +
-                                            "From bank: ${wallet.bankName}. Card number: ${wallet.cardNumber}",
+                                            "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName}. ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
                                     today)
                                 notiRef
                                     .child(notiId)
@@ -155,7 +157,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                         } else {
                             // Xử lý khi không tìm thấy dữ liệu trong nút "WalletAmount"
                         }
-                    }.addOnFailureListener { exception ->
+                    }.addOnFailureListener {
                         // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
                     }
                 }
@@ -193,9 +195,9 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                 // noti
                                 val notiId = notiRef.push().key.toString()
                                 val newNoti = NotificationsRowModel(notiId, "Admin",
-                                    "Deposit\n" +
+                                    "${getString(binding.root.context, R.string.deposit)}.\n" +
                                             "$amountTxt \n" +
-                                            "From bank: ${wallet.bankName}. Card number: ${wallet.cardNumber}",
+                                            "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName}. ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
                                     today)
                                 notiRef
                                     .child(notiId)
@@ -222,7 +224,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                         } else {
                             // Xử lý khi không tìm thấy dữ liệu trong nút "WalletAmount"
                         }
-                    }.addOnFailureListener { exception ->
+                    }.addOnFailureListener {
                         // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
                     }
                 }
@@ -262,7 +264,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                 notiId,
                                 "Admin",
                                 "+ $10000\n" +
-                                        "Bank: ${wallet.bankName}. Card number: ${wallet.cardNumber}",
+                                        "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName}. ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
                                 today
                             )
                             //add to WalletHistory

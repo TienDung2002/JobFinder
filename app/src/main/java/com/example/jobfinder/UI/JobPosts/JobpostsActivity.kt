@@ -141,8 +141,8 @@ class JobpostsActivity : AppCompatActivity() {
                             val notificationsRowModel= NotificationsRowModel(
                                 notiId,
                                 "Admin",
-                                "Posted job.\n" +
-                                        "Title: $title",
+                                "${getString(R.string.post_job_success)}.\n" +
+                                        "${getString(R.string.post_job_title)}: $title",
                                 date)
                             FirebaseDatabase.getInstance()
                                 .getReference("Notifications")

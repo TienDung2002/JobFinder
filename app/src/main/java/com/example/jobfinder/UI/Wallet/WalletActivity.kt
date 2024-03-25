@@ -1,6 +1,5 @@
 package com.example.jobfinder.UI.Wallet
 
-import WalletFragment
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,6 @@ import android.view.animation.AnimationUtils
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
-import com.google.firebase.auth.FirebaseAuth
 
 class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private lateinit var binding: ActivityWalletBinding
@@ -40,7 +38,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
         FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
 
         binding.addWalletFtBtn.setOnClickListener {
-            // Thay thế WalletFragment bằng AddWalletFragment
+            // Thay thế com.example.jobfinder.UI.Wallet.WalletFragment bằng AddWalletFragment
             FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
@@ -48,7 +46,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
 
 
         binding.addWalletFtTxt.setOnClickListener {
-            // Thay thế WalletFragment bằng AddWalletFragment
+            // Thay thế com.example.jobfinder.UI.Wallet.WalletFragment bằng AddWalletFragment
             FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
@@ -76,7 +74,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
         }
     }
 
-    // Xử lý khi dữ liệu đã tải xong bên WalletFragment (nếu adapter không rỗng)
+    // Xử lý khi dữ liệu đã tải xong bên com.example.jobfinder.UI.Wallet.WalletFragment (nếu adapter không rỗng)
     override fun onDataLoaded() {
         binding.animationView.visibility = View.GONE
     }

@@ -106,6 +106,7 @@
     <string name="from">Người gửi:</string>
     <string name="Username">Tên doanh nghiệp</string>
     <string name="close_btn">Đóng</string>
+    <string name="add_card_to_user_wallet">Đã thêm thẻ vào ví của bạn</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Ví</string>
