@@ -1,3 +1,6 @@
+package com.example.jobfinder.UI.Wallet
+
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.WalletRowModel
+import com.example.jobfinder.Datas.Model.walletAmountModel
 import com.example.jobfinder.databinding.FragmentWalletBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -24,7 +28,7 @@ class WalletFragment : Fragment() {
     }
 
 
-    // interface này cho phép WalletFragment gừi thông diệp cho WalletActivity khi load xong data
+    // interface này cho phép com.example.jobfinder.UI.Wallet.WalletFragment gừi thông diệp cho WalletActivity khi load xong data
     interface DataLoadListener {
         fun onDataLoaded()
         fun onDataLoadedEmpty(isListEmpty: Boolean)
@@ -38,12 +42,41 @@ class WalletFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid
         val walletList = mutableListOf<WalletRowModel>()
+
+        FirebaseDatabase.getInstance()
+            .getReference("WalletAmount")
+            .child(uid.toString())
+            .get()
+            .addOnSuccessListener { data ->
+                if (data.exists()) {
+                    val amount = data.child("amount").getValue(String::class.java)
+                        binding.amountInWalletAmount.text = "$"+ amount.toString()
+                } else {
+                    val walletAmount = walletAmountModel("0.0")
+                    FirebaseDatabase.getInstance()
+                        .getReference("WalletAmount")
+                        .child(uid.toString())
+                        .setValue(walletAmount)
+                        .addOnSuccessListener {
+                            // Xử lý khi tạo giá trị mới thành công
+                            binding.amountInWalletAmount.text= "$0.0"
+                        }
+                        .addOnFailureListener {
+                            // Xử lý khi tạo giá trị mới không thành công
+                        }
+                }
+                dataLoadListener.onDataLoaded()
+            }
+            .addOnFailureListener {
+                // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
+            }
 
         FirebaseDatabase.getInstance()
             .getReference("Wallet")
@@ -67,7 +100,10 @@ class WalletFragment : Fragment() {
                 }
 
                 // Khởi tạo adapter và thiết lập RecyclerView
-                walletAdapter = WalletAdapter(walletList, requireContext(), binding.noWalletCard)
+                walletAdapter =
+                    WalletAdapter(walletList, requireContext(), binding.noWalletCard) { newAmount ->
+                        binding.amountInWalletAmount.text = "$$newAmount"
+                    }
                 binding.recyclerWalletList.layoutManager = LinearLayoutManager(requireContext())
                 binding.recyclerWalletList.adapter = walletAdapter
                 // Gọi sự kiện đối với list empty tương tự như khi adapter có data

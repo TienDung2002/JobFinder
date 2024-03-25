@@ -67,4 +67,25 @@ object GetData {
         return timeFormat.format(date)
     }
 
+    fun multiplyStrings(string1: String, string2: String): String {
+        // Chuyển đổi chuỗi thành số float
+        val number1 = string1.toFloatOrNull() ?: 0f
+        val number2 = string2.toFloatOrNull() ?: 0f
+
+        val result = number1 * number2
+
+        return result.toString()
+    }
+
+    fun compareFloatStrings(strA: String, strB: String): Boolean {
+        val floatA = strA.toFloatOrNull()
+        val floatB = strB.toFloatOrNull()
+
+        if (floatA != null && floatB != null) {
+            return floatA > floatB
+        }
+        return false
+    }
+
+
 }

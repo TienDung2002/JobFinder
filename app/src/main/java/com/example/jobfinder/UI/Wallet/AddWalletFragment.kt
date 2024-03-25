@@ -42,7 +42,6 @@ class AddWalletFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         validCard= true
@@ -132,8 +131,8 @@ class AddWalletFragment : Fragment() {
                                         val notificationsRowModel= NotificationsRowModel(
                                             notiId,
                                             "Admin",
-                                            "Add card to your wallet.\n" +
-                                                    "Bank: $bankName. Card number: $cardNumber",
+                                            "${getString(R.string.add_card_to_user_wallet)}.\n" +
+                                                    "${getString(R.string.bank_name)}: $bankName. ${getString(R.string.card_number)}: $cardNumber",
                                             today)
                                         FirebaseDatabase.getInstance()
                                             .getReference("Notifications")

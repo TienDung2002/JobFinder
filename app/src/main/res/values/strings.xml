@@ -105,6 +105,7 @@
     <string name="from">From:</string>
     <string name="Username">BUser name</string>
     <string name="close_btn">Close</string>
+    <string name="add_card_to_user_wallet">Added card to your wallet</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -122,7 +123,7 @@
     <string name="add_card_success">Add card success</string>
     <string name="add_card_fail">Fail to add card</string>
     <string name="delete_card_success">Deleted</string>
-    <string name="add_cash_success">Add cash success</string>
+    <string name="add_cash_success">Add cash to card success</string>
     <string name="year">Year</string>
     <string name="month">Month</string>
     <string name="no_choose_bank">Bank is blank</string>
@@ -132,6 +133,14 @@
     <string name="no_history">Nothing here</string>
     <string name="choose_Bank">Choose bank</string>
     <string name="all_card">All card</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="deposit">Deposit</string>
+    <string name="withdraw_success">Withdraw success</string>
+    <string name="deposit_success">Deposit success</string>
+    <string name="no_amount">Amount blank</string>
+    <string name="not_enough_money">Insufficient balance</string>
+    <string name="amount">Amount</string>
+    <string name="wallet_amount_title">Wallet amount:</string>
 
     <!--    Button-->
     <string name="delete">Delete</string>
@@ -175,5 +184,25 @@
     <string name="Ji_unit2">VNĐ</string>
     <string name="Ji_unit3">/Hour</string>
 
+<!--    post job-->
+    <string name="post_job_title">Job title</string>
+    <string name="job_des">Job description</string>
+    <string name="salary">Salary</string>
+    <string name="employee_amount">Employee amount</string>
+    <string name="start_time">Start time</string>
+    <string name="end_time">End time</string>
+    <string name="shift">Work shift</string>
+    <string name="shift_1">Shift 1</string>
+    <string name="shift_2">Shift 2</string>
+    <string name="add_job">Post job</string>
+    <string name="no_shift_choose">No shift been choosed</string>
+    <string name="no_post_job_title">Job title is blank</string>
+    <string name="no_emp_amount">Employee amount is blank</string>
+    <string name="no_address">Address is blank</string>
+    <string name="no_job_des">Job description is blank</string>
+    <string name="no_salary">Salary is blank</string>
+    <string name="post_job_success">Job posted</string>
+    <string name="no_start_time">No start time</string>
+    <string name="no_end_time">No end time</string>
 
 </resources>

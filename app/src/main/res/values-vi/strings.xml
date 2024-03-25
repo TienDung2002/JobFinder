@@ -106,6 +106,7 @@
     <string name="from">Người gửi:</string>
     <string name="Username">Tên doanh nghiệp</string>
     <string name="close_btn">Đóng</string>
+    <string name="add_card_to_user_wallet">Đã thêm thẻ vào ví của bạn</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Ví</string>
@@ -123,7 +124,7 @@
     <string name="add_card_success">Thêm thẻ thành công</string>
     <string name="add_card_fail">Thêm thẻ thất bại</string>
     <string name="delete_card_success">Đã xóa thẻ</string>
-    <string name="add_cash_success">Nạp tiền thành công</string>
+    <string name="add_cash_success">Thêm tiền vào thẻ thành công</string>
     <string name="year">Năm</string>
     <string name="month">Tháng</string>
     <string name="no_choose_bank">Chưa chọn ngân hàng</string>
@@ -133,11 +134,20 @@
     <string name="no_history">Chưa có giao dịch nào</string>
     <string name="choose_Bank">Chọn ngân hàng</string>
     <string name="all_card">Tất cả thẻ</string>
+    <string name="withdraw">Rút tiền</string>
+    <string name="deposit">Nạp tiền</string>
+    <string name="withdraw_success">Rút tiền thành công</string>
+    <string name="deposit_success">Nạp tiền thành công</string>
+    <string name="no_amount">Số tiền trống</string>
+    <string name="not_enough_money">Số dư không đủ</string>
+    <string name="amount">Số tiền</string>
+    <string name="wallet_amount_title">Số dư:</string>
+
 
     <!--    Button-->
     <string name="delete">Xóa</string>
     <string name="cancel">Hủy</string>
-    <string name="add_cash">Nạp tiền</string>
+    <string name="add_cash">Thêm tiền</string>
     <string name="add_card">Thêm thẻ</string>
 
 
@@ -175,5 +185,26 @@
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>
     <string name="Ji_unit3">/Giờ</string>
+
+    <!--    post job-->
+    <string name="post_job_title">Tên công việc</string>
+    <string name="job_des">Mô tả công việc</string>
+    <string name="salary">Mức lương</string>
+    <string name="employee_amount">Số lượng người</string>
+    <string name="start_time">Thời gian bắt đầu</string>
+    <string name="end_time">Thời gian kết thúc</string>
+    <string name="shift">Ca làm</string>
+    <string name="shift_1">Ca 1</string>
+    <string name="shift_2">Ca 2</string>
+    <string name="add_job">Đăng tuyển</string>
+    <string name="no_shift_choose">Chưa chọn ca làm</string>
+    <string name="no_post_job_title">Chưa có tiêu đề</string>
+    <string name="no_emp_amount">Số lượng nhân viên trống</string>
+    <string name="no_address">Địa chỉ trống</string>
+    <string name="no_job_des">Mô tả công việc trống</string>
+    <string name="no_salary">Lương trống</string>
+    <string name="post_job_success">Đã đăng</string>
+    <string name="no_start_time">Ngày bắt đầu trống</string>
+    <string name="no_end_time">Ngày kết thúc trống</string>
 
 </resources>

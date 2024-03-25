@@ -6,7 +6,7 @@
         android:id="@+id/linearNotifications"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical" style="@style/groupStylegray_50"
+        android:orientation="vertical" style="@style/home_bg"
         android:background="@color/home_bg">
 
         <TextView android:ellipsize="end"
