@@ -86,10 +86,6 @@ class JobpostsActivity : AppCompatActivity() {
             val address = binding.postJobAddress.text.toString()
             val jobDes= binding.postJobDes.text.toString()
 
-            Log.d("StartasdsadTime", "sddsgfjgdsjfdsf")
-            Log.d("StartTime", startTime)
-            Log.d("EndTime", endTime)
-
             //field check
             if(!shiftChoose){
                 Toast.makeText(binding.root.context, getString(R.string.no_shift_choose), Toast.LENGTH_SHORT).show()
@@ -114,7 +110,7 @@ class JobpostsActivity : AppCompatActivity() {
             binding.postJobStartTime.error= if(isValidStartTime) null else getString(R.string.no_start_time)
             binding.postJobEndTime.error= if(isValidEndTime) null else getString(R.string.no_end_time)
 
-            if( shiftChoose && isValidTitle && isValidAddress && isValidEmpAmount && isValidSalary && isValidJobDes && isValidStartTime && isValidEndTime ){
+            if( shiftChoose && isValidTitle && isValidAddress && isValidEmpAmount && isValidSalary && isValidJobDes && isValidStartTime && isValidEndTime && isValidWorkDate){
                 binding.postJobTitle.isClickable = false
                 binding.recShift1.isClickable = false
                 binding.recShift2.isClickable = false

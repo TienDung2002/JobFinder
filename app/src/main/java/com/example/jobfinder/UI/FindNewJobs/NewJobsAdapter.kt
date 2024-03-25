@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.newJobHomeData
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 import java.util.Locale
 
 class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataImage: ImageView) :
@@ -19,7 +20,6 @@ class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataI
 
     lateinit var mListener: onItemClickListener
     private var originalData: List<newJobHomeData> = list
-    private var filteredData: List<newJobHomeData> = list
 
     interface onItemClickListener {
         fun onItemClicked(position: Int) {}
@@ -66,16 +66,16 @@ class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataI
 
     // gán data vào từng phần tử trong item (gán data trong Model.newJobHomeData vào textview)
     override fun onBindViewHolder(holder: NewJobViewHolder, position: Int) {
-        val salaryValue = list[position].salary?.toDouble() ?: 0.0  //default salary là 0.0
+        val salaryValue = list[position].salaryPerEmp?.toDouble() ?: 0.0  //default salary là 0.0
         // Định dạng giá trị salary với dấu phẩy VNĐ
         val formattedSalary = NumberFormat.getNumberInstance(Locale("vi", "VN")).format(salaryValue)
 
-        holder.avatar.setImageResource(list[position].avatar)
-        holder.rec_nameNJ.text = list[position].recNameNJ
+//        holder.avatar.setImageResource(list[position].avatar)
+        holder.rec_nameNJ.text = list[position].BUserName
         holder.jobTitle.text = list[position].jobTitle
-        holder.numOfRecruits.text = list[position].numOfRecruits
+        holder.numOfRecruits.text = list[position].empAmount
         holder.numOfRecruited.text = list[position].numOfRecruited
-        holder.postedTime.text = list[position].postedTime
+        holder.postedTime.text = GetData.getDateFromString(list[position].postDate.toString())
         holder.salary.text = formattedSalary.toString()
 
         // nút bookmark
@@ -91,9 +91,49 @@ class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataI
 
     override fun getItemCount(): Int = list.size
 
+
     // Lọc data khi search
     override fun getFilter(): Filter {
-        TODO("Not yet implemented")
+        return object: Filter() {
+            // logic lọc data và trả về kết quả lọc
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val queryInput = constraint?.toString()?.trim()?.lowercase() ?: ""
+                val filteredList = mutableListOf<newJobHomeData>()
+
+                if (queryInput.isEmpty()) {
+                    filteredList.addAll(originalData)
+                } else {
+                    for (item in originalData) {
+                        val recName = item.BUserName?.lowercase() ?: ""
+                        val jobTitle = item.jobTitle?.lowercase() ?: ""
+                        if (recName.contains(queryInput) || jobTitle.contains(queryInput)) {
+                            filteredList.add(item)
+                        }
+                    }
+                }
+
+                val filterResults = FilterResults()
+                filterResults.count = filteredList.size
+                filterResults.values = filteredList
+
+                return filterResults
+            }
+
+            // Cập nhật dữ liệu với kết quả sau khi lọc đã sẵn sàng
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                val filteredList = results?.values as? List<newJobHomeData> ?: emptyList()
+
+                list = filteredList
+                notifyDataSetChanged()
+
+                if (list.isEmpty()) {
+                    showNoDataFoundImg()
+                } else {
+                    hideNoDataFoundImg()
+                }
+
+            }
+        }
     }
 
 

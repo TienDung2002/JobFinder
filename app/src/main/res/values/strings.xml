@@ -182,7 +182,7 @@
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>
-    <string name="Ji_unit3">/Hour</string>
+    <string name="Ji_unit3">/Day</string>
 
     <!--    post job-->
     <string name="post_job_title">Job title</string>
