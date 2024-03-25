@@ -54,6 +54,20 @@ object GetData {
         }
         return null
     }
+
+    fun compareDates(dateA: String, dateB: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        // Chuyển đổi chuỗi ngày thành đối tượng Date
+        val dateObjA = dateFormat.parse(dateA)
+        val dateObjB = dateFormat.parse(dateB)
+
+        // So sánh ngày
+        return !dateObjB.before(dateObjA)
+    }
+
+
+
     fun getDateFromString(dateTimeString: String): String? {
         val parts = dateTimeString.split(" ")
         if (parts.isNotEmpty()) {

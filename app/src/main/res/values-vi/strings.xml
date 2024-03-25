@@ -206,5 +206,6 @@
     <string name="post_job_success">Đã đăng</string>
     <string name="no_start_time">Ngày bắt đầu trống</string>
     <string name="no_end_time">Ngày kết thúc trống</string>
+    <string name="end_time_be4_start">Thời gian kết thúc phải sau thời gian bắt đầu</string>
 
 </resources>
