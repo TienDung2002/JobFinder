@@ -1,9 +1,12 @@
 package com.example.jobfinder.UI.FindNewJobs
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
@@ -36,15 +39,14 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // gán data cứng vào viewmodel và adapter
-        viewModel.addJobsData(newJobHomeData("1", R.drawable.avatar, "Công ty TNHH 10 thành viên", "Intern Javascript", "3", "2", "23/3/2023", "20000" ))
-        viewModel.addJobsData(newJobHomeData("2", R.drawable.app_icon,"Công ty TNHH 10 thành viên2", "Intern Javascript2", "3", "2", "23/3/2023", "15000" ))
-        viewModel.addJobsData(newJobHomeData("3", R.drawable.add,"Công ty TNHH 10 thành viên3", "Intern Javascript3", "3", "2", "23/3/2023", "8000" ))
-        viewModel.addJobsData(newJobHomeData("4", R.drawable.app_icon_ct2,"Công ty TNHH 10 thành viên4", "Intern Javascript4", "3", "2", "23/3/2023", "100000" ))
-        viewModel.addJobsData(newJobHomeData("5", R.drawable.avatar, "Công ty TNHH 10 thành viên", "Intern Javascript", "3", "2", "23/3/2023", "20000" ))
-        viewModel.addJobsData(newJobHomeData("6", R.drawable.app_icon,"Công ty TNHH 10 thành viên2", "Intern Javascript2", "3", "2", "23/3/2023", "15000" ))
-        viewModel.addJobsData(newJobHomeData("7", R.drawable.add,"Công ty TNHH 10 thành viên3", "Intern Javascript3", "3", "2", "23/3/2023", "8000" ))
-        viewModel.addJobsData(newJobHomeData("8", R.drawable.app_icon_ct2,"Công ty TNHH 10 thành viên4", "Intern Javascript4", "3", "2", "23/3/2023", "100000" ))
-
+        viewModel.addJobsData(newJobHomeData("1", "Công ty TNHH Dục", "Intern Javascript", "", "", "", "3", "1", "160000", "", "", "", "25/3/2024" ))
+        viewModel.addJobsData(newJobHomeData("2", "Công ty TNHH Hoằng", "Fresher Java", "", "", "", "3", "1", "100000", "", "", "", "26/3/2024" ))
+        viewModel.addJobsData(newJobHomeData("3", "Công ty TNHH Mai", "Senior SQL", "", "", "", "3", "1", "240000", "", "", "", "27/3/2024" ))
+        viewModel.addJobsData(newJobHomeData("4", "Công ty Xi măng Nguyễn", "Trộn vữa", "", "", "", "3", "1", "64000", "", "", "", "28/3/2024" ))
+        viewModel.addJobsData(newJobHomeData("5", "Công ty TNHH Dục", "Intern Javascript", "", "", "", "3", "1", "160000", "", "", "", "29/3/2024" ))
+        viewModel.addJobsData(newJobHomeData("6", "Công ty TNHH Hoằng", "Fresher Java", "", "", "", "3", "1", "100000", "", "", "", "29/3/2024" ))
+        viewModel.addJobsData(newJobHomeData("7", "Công ty TNHH Mai", "Senior SQL", "", "", "", "3", "1", "240000", "", "", "", "27/3/2024" ))
+        viewModel.addJobsData(newJobHomeData("8", "Công ty Xi măng Nguyễn", "Trộn vữa", "", "", "", "3", "1", "64000", "", "", "", "28/3/2024" ))
 
         // Gán danh sách dữ liệu từ ViewModel cho adapter
         val JobsListData = viewModel.getJobsList()
@@ -71,7 +73,41 @@ class NewJobActivity : AppCompatActivity() {
         })
 
 
+        // mục search
+        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(submitInput: String?): Boolean {
+                // Ẩn bàn phím
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.searchView.windowToken, 0)
+                // bỏ focus
+                binding.searchView.clearFocus()
+                // logic search
+                adapter.filter.filter(submitInput)
+                return true
+            }
 
+            override fun onQueryTextChange(dataInput: String): Boolean {
+                // Nếu không nhập text vào
+                if (dataInput.isEmpty()) {
+                    adapter.resetOriginalList()
+                    return false
+                } else { // có nhập text
+                    adapter.filter.filter(dataInput)
+                    return true
+                }
+            }
+        })
+
+
+        // nút close của searchView
+        binding.searchView.setOnCloseListener {
+            adapter.resetOriginalList()
+            false
+        }
+
+        binding.rootNewJob.setOnClickListener{
+            binding.searchView.clearFocus()
+        }
 
     }
 
