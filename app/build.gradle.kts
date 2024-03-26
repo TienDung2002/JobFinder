@@ -45,7 +45,7 @@ android {
 }
 
 dependencies {
-    implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.activity:activity-ktx:1.8.2")
     val retrofitVersion = "2.9.0";
     val lifecycleVersion = "2.7.0";
     val glideVersion = "4.16.0";
@@ -65,7 +65,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // google service firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
     implementation("com.google.firebase:firebase-auth:22.3.1")
     // FirebaseUI for Firebase Realtime Database
     implementation ("com.firebaseui:firebase-ui-database:$firebase_ver")
@@ -124,7 +124,7 @@ dependencies {
 
     // splash screen animation
     implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("androidx.compose.animation:animation-core-android:1.6.2")
+    implementation("androidx.compose.animation:animation-core-android:1.6.4")
 
     // loading lib from LottieFile
     implementation("com.airbnb.android:lottie:$lottieVersion")

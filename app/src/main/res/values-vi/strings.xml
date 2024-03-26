@@ -104,7 +104,7 @@
     <string name="notification_title">Thông báo</string>
     <string name="no_noti">Không có thông báo</string>
     <string name="from">Người gửi:</string>
-    <string name="Username">Tên doanh nghiệp</string>
+    <string name="BUsername">Tên doanh nghiệp</string>
     <string name="close_btn">Đóng</string>
     <string name="add_card_to_user_wallet">Đã thêm thẻ vào ví của bạn</string>
 
@@ -190,7 +190,7 @@
     <string name="post_job_title">Tên công việc</string>
     <string name="job_des">Mô tả công việc</string>
     <string name="salary">Mức lương</string>
-    <string name="employee_amount">Số lượng người</string>
+    <string name="employee_amount">Số người</string>
     <string name="start_time">Thời gian bắt đầu</string>
     <string name="end_time">Thời gian kết thúc</string>
     <string name="shift">Ca làm</string>
@@ -199,7 +199,7 @@
     <string name="add_job">Đăng tuyển</string>
     <string name="no_shift_choose">Chưa chọn ca làm</string>
     <string name="no_post_job_title">Chưa có tiêu đề</string>
-    <string name="no_emp_amount">Số lượng nhân viên trống</string>
+    <string name="no_emp_amount">Số lượng nhân viên dưới 10</string>
     <string name="no_address">Địa chỉ trống</string>
     <string name="no_job_des">Mô tả công việc trống</string>
     <string name="no_salary">Lương trống</string>
@@ -207,5 +207,9 @@
     <string name="no_start_time">Ngày bắt đầu trống</string>
     <string name="no_end_time">Ngày kết thúc trống</string>
     <string name="end_time_be4_start">Thời gian kết thúc phải sau thời gian bắt đầu</string>
+
+    <!--    job detail-->
+    <string name="apply">Ứng tuyển</string>
+    <string name="job_detail_title">Chi tiết công việc</string>
 
 </resources>

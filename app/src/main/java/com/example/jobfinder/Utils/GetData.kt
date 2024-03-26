@@ -55,19 +55,46 @@ object GetData {
         return null
     }
 
+    //kiểm tra ngày B có trước ngày A không
     fun compareDates(dateA: String, dateB: String): Boolean {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
-        // Chuyển đổi chuỗi ngày thành đối tượng Date
-        val dateObjA = dateFormat.parse(dateA)
-        val dateObjB = dateFormat.parse(dateB)
+        if(dateA.isNotEmpty() && dateB.isNotEmpty()) {
+            // Chuyển đổi chuỗi ngày thành đối tượng Date
+            val dateObjA = dateFormat.parse(dateA)
+            val dateObjB = dateFormat.parse(dateB)
 
-        // So sánh ngày
-        return !dateObjB.before(dateObjA)
+            // So sánh ngày
+            if (dateObjB != null && dateObjA != null) {
+                return !dateObjB.before(dateObjA)
+            }
+        }
+        return false
     }
 
+    //đếm số ngày từ ngày A đến ngày B
+    fun countDaysBetweenDates(dateA: String, dateB: String): Int {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
+        try {
+            // Chuyển đổi chuỗi ngày thành đối tượng Date
+            val startDate = dateFormat.parse(dateA)
+            val endDate = dateFormat.parse(dateB)
 
+            // Tính số lượng miliseconds giữa hai ngày
+            val diffInMillis = endDate.time - startDate.time
+
+            // Chuyển đổi số miliseconds thành số ngày và trả về kết quả
+            return (diffInMillis / (1000 * 60 * 60 * 24)).toInt()
+        } catch (e: Exception) {
+            // Xử lý nếu có lỗi xảy ra trong quá trình chuyển đổi ngày
+            e.printStackTrace()
+        }
+
+        return -1 // Trả về -1 nếu có lỗi xảy ra
+    }
+
+    // lấy ngày theo dang dd/MM/yyyy từ String date
     fun getDateFromString(dateTimeString: String): String? {
         val parts = dateTimeString.split(" ")
         if (parts.isNotEmpty()) {
@@ -76,6 +103,7 @@ object GetData {
         return null
     }
 
+    // lấy giờ từ string date
     fun getTimeFromDate(date: Date): String {
         val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         return timeFormat.format(date)
@@ -91,6 +119,7 @@ object GetData {
         return result.toString()
     }
 
+    //kiểm tra xem A có lớn hơn B không
     fun compareFloatStrings(strA: String, strB: String): Boolean {
         val floatA = strA.toFloatOrNull()
         val floatB = strB.toFloatOrNull()
