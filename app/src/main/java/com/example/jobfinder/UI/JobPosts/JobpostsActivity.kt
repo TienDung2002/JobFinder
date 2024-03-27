@@ -182,7 +182,8 @@ class JobpostsActivity : AppCompatActivity() {
                                                     notiId,
                                                     "Admin",
                                                     "${getString(R.string.post_job_success)}.\n" +
-                                                            "${getString(R.string.post_job_title)}: $title",
+                                                            "${getString(R.string.post_job_title)}: $title.\n" +
+                                                            "-$$totalSalary ${getString(R.string.from_wallet)}",
                                                     date
                                                 )
                                                 FirebaseDatabase.getInstance()

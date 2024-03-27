@@ -142,6 +142,7 @@
     <string name="not_enough_money">Số dư không đủ</string>
     <string name="amount">Số tiền</string>
     <string name="wallet_amount_title">Số dư:</string>
+    <string name="from_wallet">từ ví</string>
 
 
     <!--    Button-->

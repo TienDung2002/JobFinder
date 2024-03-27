@@ -106,6 +106,7 @@
     <string name="BUsername">BUser name</string>
     <string name="close_btn">Close</string>
     <string name="add_card_to_user_wallet">Added card to your wallet</string>
+    <string name="from_wallet">from wallet</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
