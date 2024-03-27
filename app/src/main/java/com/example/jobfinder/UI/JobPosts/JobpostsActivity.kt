@@ -54,6 +54,8 @@ class JobpostsActivity : AppCompatActivity() {
                 binding.recShift2.isChecked = false
                 shift = "1"
                 shiftChoose = true
+            }else{
+                shiftChoose = false
             }
         }
 
@@ -62,6 +64,8 @@ class JobpostsActivity : AppCompatActivity() {
                 binding.recShift1.isChecked = false
                 shift = "2"
                 shiftChoose = true
+            }else{
+                shiftChoose = false
             }
         }
 
@@ -99,9 +103,7 @@ class JobpostsActivity : AppCompatActivity() {
             val isValidJobDes = VerifyField.isEmpty(jobDes.trim())
             val isValidWorkDate = GetData.compareDates(startTime, endTime)
 
-
-
-            if(!isValidWorkDate){
+            if(!isValidWorkDate && isValidStartTime && isValidEndTime){
                 Toast.makeText(binding.root.context, getString(R.string.end_time_be4_start),Toast.LENGTH_SHORT).show()
             }
             binding.postJobTitle.error = if (isValidTitle) null else getString(R.string.no_post_job_title)
@@ -113,6 +115,17 @@ class JobpostsActivity : AppCompatActivity() {
             binding.postJobEndTime.error= if(isValidEndTime) null else getString(R.string.no_end_time)
 
             if( shiftChoose && isValidTitle && isValidAddress && isValidEmpAmount && isValidSalary && isValidJobDes && isValidStartTime && isValidEndTime && isValidWorkDate){
+
+                binding.postJobTitle.isClickable = false
+                binding.recShift1.isClickable = false
+                binding.recShift2.isClickable = false
+                binding.postJobStartTime.isClickable = false
+                binding.postJobEndTime.isClickable = false
+                binding.postJobEmpAmount.isClickable = false
+                binding.postJobSalary.isClickable = false
+                binding.postJobAddress.isClickable = false
+                binding.postJobDes.isClickable = false
+                binding.postJobBtn.isClickable = false
 
                 val uid = auth.currentUser?.uid
 
@@ -135,18 +148,6 @@ class JobpostsActivity : AppCompatActivity() {
                                         .toString()
 
                                 if(GetData.compareFloatStrings(walletAmount, totalSalary)) {
-
-                                    binding.postJobTitle.isClickable = false
-                                    binding.recShift1.isClickable = false
-                                    binding.recShift2.isClickable = false
-                                    binding.postJobStartTime.isClickable = false
-                                    binding.postJobEndTime.isClickable = false
-                                    binding.postJobEmpAmount.isClickable = false
-                                    binding.postJobSalary.isClickable = false
-                                    binding.postJobAddress.isClickable = false
-                                    binding.postJobDes.isClickable = false
-                                    binding.postJobBtn.isClickable = false
-
                                     val newJob = JobModel(
                                         jobId,
                                         title,
