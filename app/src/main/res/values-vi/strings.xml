@@ -153,7 +153,7 @@
 
     <!--    Trang cá nhân-->
     <string name="username">Tên người dùng</string>
-    <string name="decoy_username">Oriz</string>
+    <string name="decoy_username">Tên người dùng</string>
     <string name="profile_setting">Cài đặt</string>
     <string name="profile_account">Tài Khoản</string>
     <string name="profile_logout">Đăng xuất</string>

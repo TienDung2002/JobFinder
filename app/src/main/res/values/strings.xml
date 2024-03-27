@@ -151,7 +151,7 @@
 
     <!--    Profile-->
     <string name="username">Username</string>
-    <string name="decoy_username">Oriz</string>
+    <string name="decoy_username">User Name</string>
     <string name="profile_setting">Settings</string>
     <string name="profile_account">Account</string>
     <string name="profile_logout">Logout</string>
@@ -184,7 +184,7 @@
     <string name="Ji_unit2">VNĐ</string>
     <string name="Ji_unit3">/Hour</string>
 
-<!--    post job-->
+    <!--    post job-->
     <string name="post_job_title">Job title</string>
     <string name="job_des">Job description</string>
     <string name="salary">Salary</string>
@@ -204,5 +204,7 @@
     <string name="post_job_success">Job posted</string>
     <string name="no_start_time">No start time</string>
     <string name="no_end_time">No end time</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
