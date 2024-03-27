@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.JobsManagement.JobsManagementActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var viewModel: HomeViewModel
     private var backPressedCount = 0
     private var userRole: String = ""
 
@@ -32,14 +34,24 @@ class HomeActivity : AppCompatActivity() {
         //firebase
         auth = FirebaseAuth.getInstance()
 
-        // gọi hàm getUserRole từ trong Utils.GetData
-        GetData.getUserRole { role ->
-            role?.let {
-                // Gán giá trị chỉ khi role không null (logic là thế nhưng hàm getUserRole t cho trả về "null string" thay vì null)
-                userRole = it
-                addFragmentDefault(userRole)
-                updateNavigationBar()
+        // Khởi tạo viewmodel
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        // Chỉ add fragment vào home khi trạng thái hiện tại là null (tránh xoay màn hình lại add lại gây lỗi)
+        if (savedInstanceState == null) {
+            // gọi hàm getUserRole từ trong Utils.GetData
+            GetData.getUserRole { role ->
+                role?.let {
+                    // Gán giá trị chỉ khi role không null (logic là thế nhưng hàm getUserRole t cho trả về "null string" thay vì null)
+                    userRole = it
+                    addFragmentDefault(userRole)
+                    updateNavigationBar()
+                }
             }
+        } else {
+            // Khôi phục trạng thái của activity từ bundle
+            viewModel.userRole = savedInstanceState.getString("userRole", "")
+            binding.animationView.visibility = View.GONE
         }
 
 
@@ -60,6 +72,13 @@ class HomeActivity : AppCompatActivity() {
         backPressedCount = 0 // Reset lại backPressedCount khi activity resume
         updateNavigationBar()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Lưu trạng thái của activity vào bundle
+        outState.putString("userRole", viewModel.userRole)
+    }
+
 
     // Bấm 1 lần để hỏi, lần thứ 2 sẽ thoát ứng dụng
     override fun onBackPressed() {
