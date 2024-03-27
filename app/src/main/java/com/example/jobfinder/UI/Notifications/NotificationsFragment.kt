@@ -82,7 +82,7 @@ class NotificationsFragment : Fragment() {
 
 
     // Fetch data từ Firebase và cập nhật dữ liệu trong ViewModel
-    fun fetchNotificationsFromFirebase() {
+    private fun fetchNotificationsFromFirebase() {
         val uid = auth.currentUser?.uid
 
         FirebaseDatabase.getInstance()
