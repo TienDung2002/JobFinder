@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.UsersProfile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -24,7 +25,7 @@ class SeekerEditProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
 
-        // hiển thị username
+
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid
         userId?.let {
@@ -33,7 +34,32 @@ class SeekerEditProfileFragment : Fragment() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val userName = snapshot.child("name").getValue(String::class.java)
                     userName?.let {
-                        binding.editProfileName.text = it
+                        binding.editProfileName.setText(it)
+                    }
+                    val email = snapshot.child("email").getValue(String::class.java)
+                    email?.let {
+                        binding.editProfileEmail.setText(it)
+                    }
+                    val phone = snapshot.child("phone_num").getValue(String::class.java)
+                    phone?.let {
+                        binding.editProfilePhonenum.setText(it)
+                    }
+                    val address = snapshot.child("address").getValue(String::class.java)
+                    address?.let {
+                        binding.editProfileAddress.setText(it)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
+                }
+            })
+            database.child("NUserInfo").child(it).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val age = snapshot.child("age").getValue(Int::class.java)
+                    age?.let {
+                        binding.editProfileAge.setText(it.toString())
                     }
                 }
 
@@ -69,6 +95,7 @@ class SeekerEditProfileFragment : Fragment() {
         phone.isEnabled = false
         age.isEnabled = false
 
+        //button sửa
         binding.editProfileEditbtn.setOnClickListener {
             name.isEnabled = true
             address.isEnabled = true
@@ -77,11 +104,36 @@ class SeekerEditProfileFragment : Fragment() {
 
             save.visibility = View.VISIBLE
         }
-        binding.editProfileSaveChange.setOnClickListener {
+        //button save
+        save.setOnClickListener {
+            val newName = name.text.toString()
+            val newAddress = address.text.toString()
+            val newPhone = phone.text.toString()
+            val newAge = age.text.toString().toIntOrNull()
+
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            userId?.let {
+                val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
+                val NUser = FirebaseDatabase.getInstance().reference.child("NUserInfo").child(it)
+                userBI.child("name").setValue(newName)
+                userBI.child("address").setValue(newAddress)
+                userBI.child("phone_num").setValue(newPhone)
+                NUser.child("age").setValue(newAge)
+            }
+            name.isEnabled = false
+            address.isEnabled = false
+            phone.isEnabled = false
+            age.isEnabled = false
+
+            save.visibility = View.GONE
 
         }
-
-
+        //button back
+        binding.editProfileBackbtn.setOnClickListener {
+            val intent = Intent(requireContext(), UserDetailActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
     }
 
 }

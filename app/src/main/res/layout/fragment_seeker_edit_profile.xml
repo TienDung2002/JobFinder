@@ -278,6 +278,7 @@
                             android:maxLines="1"
                             android:inputType="number"
                             android:background="@drawable/edit_text_blank"
+                            android:textColor="@color/black"
                             />
 
                     </RelativeLayout>
