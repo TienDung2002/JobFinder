@@ -36,6 +36,10 @@ object VerifyField {
      fun isValidPhoneNumber(phoneNumber: String): Boolean {
         return phoneNumber.isNotEmpty() && phoneNumber.length == 10
     }
+    fun isValidAge(Age: String): Boolean {
+        val age = Age.toIntOrNull()
+        return age != null && age >= 18 && Age.matches(Regex("\\d+"))
+    }
 
     // check pass hợp lệ
     fun isValidPassword(password: String): Boolean {
