@@ -50,6 +50,7 @@
     <string name="rec_address">Địa chỉ</string>
     <string name="rec_taxcode">Mã số thuế</string>
     <string name="rec_hotline">Hotline</string>
+    <string name="rec_description">Mô tả</string>
     <string name="rec_foundationDay">Ngày thành lập</string>
     <string name="rec_typeOfBusiness">Loại hình kinh doanh</string>
     <string name="rec_TOB_private">Tư nhân</string>
@@ -166,6 +167,18 @@
     <string name="edit_profile_phonenum">Số điện thoại</string>
     <string name="edit_profile_age">Tuổi</string>
     <string name="edit_profile_save">Lưu</string>
+
+    <string name="edit_taxcode">Tax code</string>
+    <string name="edit_description">Mô tả thông tin nhà tuyển dụng</string>
+    <string name="edit_SectorOfBusiness">Chọn lĩnh vực kinh doanh</string>
+    <string name="edit_typeOfBusiness">Chọn loại hình kinh doanh</string>
+
+    <string name="error_invalid_tax">Mã số thuế trống</string>
+    <string name="error_invalid_des">Mô tả thông tin nhà tuyển dụng trống</string>
+    <string name="error_invalid_BusType">lĩnh vực kinh doanh trống</string>
+    <string name="error_invalid_BusSec">loại hình kinh doanh trống</string>
+    <string name="error_invalid_Age">Tuổi trống hoặc tuổi ít hơn 18</string>
+
 
 
     <!--    Find new job-->

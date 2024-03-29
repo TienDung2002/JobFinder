@@ -49,7 +49,6 @@ class UserProfileMenuFragment : Fragment() {
         }
 
 
-
     }
 
     override fun onCreateView(
@@ -72,6 +71,9 @@ class UserProfileMenuFragment : Fragment() {
         //logout
         binding.profileLogout.setOnClickListener {
             auth.signOut()
+            startActivity(Intent(context, SelectRoleActivity::class.java))
+            Toast.makeText(context, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
+            requireActivity().finish()
 
         }
 

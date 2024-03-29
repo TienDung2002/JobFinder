@@ -48,6 +48,7 @@
     <string name="rec_address">Address</string>
     <string name="rec_taxcode">Tax code</string>
     <string name="rec_hotline">Hotline</string>
+    <string name="rec_description">Description</string>
     <string name="rec_foundationDay">Foundation day</string>
     <string name="rec_typeOfBusiness">Type of business</string>
     <string name="rec_TOB_private">Private enterprise</string>
@@ -156,6 +157,7 @@
     <string name="profile_account">Account</string>
     <string name="profile_logout">Logout</string>
 
+
     <!-- Edit Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="edit_profile_img">Tap to upload new image</string>
@@ -164,6 +166,16 @@
     <string name="edit_profile_phonenum">Phone number</string>
     <string name="edit_profile_age">Age</string>
     <string name="edit_profile_save">Save</string>
+    <string name="edit_taxcode">ax code</string>
+    <string name="edit_description">Recruter description</string>
+    <string name="edit_SectorOfBusiness">Choose business type</string>
+    <string name="edit_typeOfBusiness">Choose business sectors</string>
+    <string name="error_invalid_tax">Tax code is blank</string>
+    <string name="error_invalid_des">Description is blank</string>
+    <string name="error_invalid_BusType">Business type is blank</string>
+    <string name="error_invalid_BusSec">Business sectors is blank</string>
+    <string name="error_invalid_Age">Age is blank or age is less than 18</string>
+
 
 
     <!--    Find new job-->
@@ -204,7 +216,6 @@
     <string name="post_job_success">Job posted</string>
     <string name="no_start_time">No start time</string>
     <string name="no_end_time">No end time</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

@@ -118,6 +118,7 @@
                             android:layout_marginEnd="15dp"
                             android:maxLines="1"
                             android:inputType="text"
+                            android:textSize="20sp"
                             android:background="@drawable/edit_text_blank"
                             />
 
@@ -159,6 +160,7 @@
                             android:layout_marginEnd="15dp"
                             android:maxLines="1"
                             android:inputType="text"
+                            android:textSize="20sp"
                             android:background="@drawable/edit_text_blank"
                             />
 
@@ -202,6 +204,7 @@
                             android:inputType="number"
                             android:maxLines="1"
                             android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:textColorHint="@color/grey" />
 
                     </RelativeLayout>
@@ -243,6 +246,7 @@
                             android:layout_marginEnd="15dp"
                             android:maxLines="1"
                             android:inputType="text"
+                            android:textSize="20sp"
                             android:background="@drawable/edit_text_blank"
                             />
 
@@ -284,6 +288,7 @@
                             android:layout_marginEnd="15dp"
                             android:maxLines="1"
                             android:inputType="number"
+                            android:textSize="20sp"
                             android:background="@drawable/edit_text_blank"
                             />
 
@@ -298,7 +303,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/rec_foundationDay"
+                        android:text="@string/rec_description"
                         android:textColor="@color/primary_color1"
                         android:textSize="18sp"
                         />
@@ -326,6 +331,7 @@
                             android:layout_marginEnd="15dp"
                             android:maxLines="1"
                             android:inputType="text"
+                            android:textSize="20sp"
                             android:background="@drawable/edit_text_blank"
                             />
 
@@ -358,14 +364,17 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edit_profile_bustype"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:layout_centerVertical="true"                            android:textColorHint="@color/grey"
+                            android:textColorHint="#6b6b6b"
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
                             android:maxLines="1"
+                            android:hint="@string/error_invalid_BusSec"
+                            android:textSize="20sp"
+                            android:padding="14dp"
                             android:textColor="@color/black"
                             android:background="@drawable/edit_text_blank"
 
@@ -400,14 +409,17 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             />
-                        <EditText
+                        <TextView
                             android:id="@+id/edit_profile_busSec"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:layout_centerVertical="true"                            android:textColorHint="@color/grey"
+                            android:textColorHint="#6b6b6b"
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
                             android:maxLines="1"
+                            android:hint="@string/edit_typeOfBusiness"
+                            android:textSize="20sp"
+                            android:padding="14dp"
                             android:textColor="@color/black"
                             android:background="@drawable/edit_text_blank"
                             />

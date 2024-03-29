@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil.setContentView
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentSeekerEditProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -57,8 +60,9 @@ class SeekerEditProfileFragment : Fragment() {
             database.child("NUserInfo").child(it).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val age = snapshot.child("age").getValue(Int::class.java)
+                    val age = snapshot.child("age").getValue(String::class.java)
                     age?.let {
+
                         binding.editProfileAge.setText(it.toString())
                     }
                 }
@@ -109,23 +113,39 @@ class SeekerEditProfileFragment : Fragment() {
             val newName = name.text.toString()
             val newAddress = address.text.toString()
             val newPhone = phone.text.toString()
-            val newAge = age.text.toString().toIntOrNull()
+            val newAge = age.text.toString()
 
-            val userId = FirebaseAuth.getInstance().currentUser?.uid
-            userId?.let {
-                val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
-                val NUser = FirebaseDatabase.getInstance().reference.child("NUserInfo").child(it)
-                userBI.child("name").setValue(newName)
-                userBI.child("address").setValue(newAddress)
-                userBI.child("phone_num").setValue(newPhone)
-                NUser.child("age").setValue(newAge)
+            val isValidName = newName.isNotEmpty()
+            val isValidAddress = newAddress.isNotEmpty()
+            val isValidPhone = VerifyField.isValidPhoneNumber(newPhone)
+            val isValidAge = VerifyField.isValidAge(newAge)
+
+            name.error = if (isValidName) null else getString(R.string.error_invalid_name)
+            address.error = if (isValidAddress) null else getString(R.string.error_invalid_addr)
+            phone.error = if (isValidPhone) null else getString(R.string.error_invalid_hotline)
+            age.error = if (isValidAge) null else getString(R.string.error_invalid_Age)
+
+            if (isValidName && isValidAddress && isValidPhone && isValidAge){
+                val userId = FirebaseAuth.getInstance().currentUser?.uid
+                userId?.let {
+                    val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
+                    val NUser = FirebaseDatabase.getInstance().reference.child("NUserInfo").child(it)
+                    userBI.child("name").setValue(newName)
+                    userBI.child("address").setValue(newAddress)
+                    userBI.child("phone_num").setValue(newPhone)
+                    NUser.child("age").setValue(newAge)
+                }
+                name.isEnabled = false
+                address.isEnabled = false
+                phone.isEnabled = false
+                age.isEnabled = false
+
+                save.visibility = View.GONE
+            } else {
+                checkToAutoFocus(isValidName , isValidAddress , isValidPhone , isValidAge)
             }
-            name.isEnabled = false
-            address.isEnabled = false
-            phone.isEnabled = false
-            age.isEnabled = false
 
-            save.visibility = View.GONE
+
 
         }
         //button back
@@ -133,6 +153,24 @@ class SeekerEditProfileFragment : Fragment() {
             val intent = Intent(requireContext(), UserDetailActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
+        }
+    }
+    private fun checkToAutoFocus(vararg isValidFields: Boolean) {
+        val invalidFields = mutableListOf<EditText>()
+        for ((index, isValid) in isValidFields.withIndex()) {
+            if (!isValid) {
+                when (index) {
+                    0 -> invalidFields.add(binding.editProfileName)
+                    1 -> invalidFields.add(binding.editProfilePhonenum)
+                    2 -> invalidFields.add(binding.editProfileAddress)
+                    3 -> invalidFields.add(binding.editProfileAge)
+
+                }
+            }
+        }
+
+        if (invalidFields.isNotEmpty()) {
+            invalidFields.first().requestFocus()
         }
     }
 

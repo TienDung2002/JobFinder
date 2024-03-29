@@ -114,6 +114,7 @@
                             android:textColorHint="@color/grey"
                             android:maxLines="1"
                             android:inputType="text"
+                            android:textSize="20sp"
                             android:background="@drawable/edit_text_blank"
                             />
 
@@ -158,6 +159,7 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:textColorHint="@color/grey" />
 
                     </RelativeLayout>
@@ -199,6 +201,7 @@
                             android:inputType="number"
                             android:maxLines="1"
                             android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:textColorHint="@color/grey" />
 
                     </RelativeLayout>
@@ -239,6 +242,7 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:textColor="@color/black"
+                            android:textSize="20sp"
                             android:textColorHint="@color/grey" />
 
                     </RelativeLayout>
@@ -278,6 +282,7 @@
                             android:maxLines="1"
                             android:inputType="number"
                             android:background="@drawable/edit_text_blank"
+                            android:textSize="20sp"
                             android:textColor="@color/black"
                             />
 
