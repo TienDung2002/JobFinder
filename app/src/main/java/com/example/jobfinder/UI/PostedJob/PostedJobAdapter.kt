@@ -13,9 +13,19 @@ import com.example.jobfinder.Utils.GetData
 class PostedJobAdapter(private val context: Context, private val jobList: List<JobModel>) :
     RecyclerView.Adapter<PostedJobAdapter.PostedJobViewHolder>() {
 
+    interface OnItemClickListener {
+        fun onItemClick(job: JobModel)
+    }
+
+    private var listener: OnItemClickListener? = null
+
+    // Phương thức để thiết lập listener
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostedJobViewHolder {
-        val view =
-            LayoutInflater.from(context).inflate(R.layout.row_posted_job, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.row_posted_job, parent, false)
         return PostedJobViewHolder(view)
     }
 
@@ -28,6 +38,10 @@ class PostedJobAdapter(private val context: Context, private val jobList: List<J
         holder.numOfRecruitedTxtView.text= job.numOfRecruited
         holder.salaryTextView.text = job.salaryPerEmp
         holder.postTimeTextView.text = GetData.getDateFromString(job.postDate.toString())
+
+        holder.itemView.setOnClickListener {
+            listener?.onItemClick(job)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -7,11 +7,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.databinding.ActivityJobpostsBinding
+import com.example.jobfinder.UI.JobDetails.JobDetailActivity
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityPostedJobBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.Job
 
 class PostedJobActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostedJobBinding
@@ -50,7 +50,7 @@ class PostedJobActivity : AppCompatActivity() {
                     val totalSalary = job.child("totalSalary").getValue(String::class.java)
                     val postDate = job.child("postDate").getValue(String::class.java)
                     val numOfRecruited = job.child("numOfRecruited").getValue(String::class.java)
-                    val bUserName = job.child("BUserName").getValue(String::class.java)
+                    val bUserName = job.child("buserName").getValue(String::class.java)
 
                     val jobModel = JobModel(
                         jobId,
@@ -71,8 +71,18 @@ class PostedJobActivity : AppCompatActivity() {
                     postedJobList.add(jobModel)
 
                 }
+                val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate( it.postDate.toString()) }
+                val adapter = PostedJobAdapter(this, sortedPostedJobList)
+                // Đoạn mã sau khi khởi tạo adapter
+                adapter.setOnItemClickListener(object : PostedJobAdapter.OnItemClickListener {
+                    override fun onItemClick(job: JobModel) {
+                        // Chuyển sang JobDetailActivity và truyền dữ liệu của công việc
+                        val intent = Intent(this@PostedJobActivity, JobDetailActivity::class.java)
+                        intent.putExtra("job", job)
+                        startActivity(intent)
+                    }
+                })
 
-                val adapter = PostedJobAdapter(this, postedJobList)
                 checkEmptyAdapter(postedJobList)
                 // Set adapter cho RecyclerView
                 binding.recyclerPostedJob.adapter = adapter
