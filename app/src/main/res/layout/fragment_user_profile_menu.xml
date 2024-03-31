@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:text="@string/decoy_username"
+                    android:text=""
                     android:textColor="@color/black"
                     android:textSize="28sp" />
             </RelativeLayout>
