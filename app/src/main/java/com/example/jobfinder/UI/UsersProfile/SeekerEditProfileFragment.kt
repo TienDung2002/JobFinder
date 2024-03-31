@@ -139,7 +139,7 @@ class SeekerEditProfileFragment : Fragment() {
                     userBI.child("phone_num").setValue(newPhone)
                     NUser.child("age").setValue(newAge)
 
-                    Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.profile_edited), Toast.LENGTH_SHORT).show()
 
                 }
                 name.isEnabled = false

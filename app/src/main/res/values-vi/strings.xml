@@ -158,7 +158,8 @@
     <string name="profile_setting">Cài đặt</string>
     <string name="profile_account">Tài Khoản</string>
     <string name="profile_logout">Đăng xuất</string>
-    <string name="profile">Trang cá nhân</string>
+    <string name="profile">Hồ sơ cá nhân</string>
+    <string name="profile_edited">Hồ sơ cá nhân đã được chỉnh sửa</string>
 
     <!-- Edit Profile -->
     <string name="edit_profile">chỉnh sửa hồ sơ</string>

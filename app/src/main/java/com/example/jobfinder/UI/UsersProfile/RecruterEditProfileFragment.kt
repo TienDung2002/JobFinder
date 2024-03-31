@@ -182,7 +182,7 @@ class RecruterEditProfileFragment : Fragment() {
                     Buser.child("business_sector").setValue(newBusSec)
                     Buser.child("business_type").setValue(newBusType)
 
-                    Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.profile_edited), Toast.LENGTH_SHORT).show()
 
                 }
 
