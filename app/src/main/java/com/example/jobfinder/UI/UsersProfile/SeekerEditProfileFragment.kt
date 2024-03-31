@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.UsersProfile
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -150,8 +151,8 @@ class SeekerEditProfileFragment : Fragment() {
         }
         //button back
         binding.editProfileBackbtn.setOnClickListener {
-            val intent = Intent(requireContext(), UserDetailActivity::class.java)
-            startActivity(intent)
+            val resultIntent = Intent()
+            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
             requireActivity().finish()
         }
     }

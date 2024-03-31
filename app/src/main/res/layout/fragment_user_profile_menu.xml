@@ -12,6 +12,16 @@
         android:background="@color/profile_backfround"
         >
 
+        <Button
+            android:id="@+id/profile_backbtn"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="9dp"
+            android:layout_height="19dp"
+            android:background="@drawable/ic_backbtn_19px" />
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +34,7 @@
                 android:id="@+id/profile_image"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/img_defalt_profile_80px"/>
 
             <RelativeLayout

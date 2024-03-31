@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.UsersProfile
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -75,6 +76,12 @@ class UserProfileMenuFragment : Fragment() {
             Toast.makeText(context, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
             requireActivity().finish()
 
+        }
+        // back button
+        binding.profileBackbtn.setOnClickListener {
+            val resultIntent = Intent()
+            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+            requireActivity().finish()
         }
 
     }

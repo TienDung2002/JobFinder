@@ -156,6 +156,9 @@
     <string name="profile_setting">Settings</string>
     <string name="profile_account">Account</string>
     <string name="profile_logout">Logout</string>
+    <string name="profile">Profile</string>
+
+
 
 
     <!-- Edit Profile -->
