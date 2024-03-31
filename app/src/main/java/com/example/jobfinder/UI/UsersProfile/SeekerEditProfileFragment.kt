@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil.setContentView
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.VerifyField
@@ -93,6 +94,7 @@ class SeekerEditProfileFragment : Fragment() {
         val phone = binding.editProfilePhonenum
         val age = binding.editProfileAge
         val save = binding.editProfileSaveChange
+        var isEdited = false
 
 
         name.isEnabled = false
@@ -102,12 +104,13 @@ class SeekerEditProfileFragment : Fragment() {
 
         //button sửa
         binding.editProfileEditbtn.setOnClickListener {
-            name.isEnabled = true
-            address.isEnabled = true
-            phone.isEnabled = true
-            age.isEnabled = true
+            isEdited =!isEdited
+            name.isEnabled = isEdited
+            address.isEnabled = isEdited
+            phone.isEnabled = isEdited
+            age.isEnabled = isEdited
 
-            save.visibility = View.VISIBLE
+            save.visibility = if (isEdited) View.VISIBLE else View.GONE
         }
         //button save
         save.setOnClickListener {
@@ -135,6 +138,9 @@ class SeekerEditProfileFragment : Fragment() {
                     userBI.child("address").setValue(newAddress)
                     userBI.child("phone_num").setValue(newPhone)
                     NUser.child("age").setValue(newAge)
+
+                    Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
+
                 }
                 name.isEnabled = false
                 address.isEnabled = false

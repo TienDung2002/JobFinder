@@ -3,29 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".UI.UsersProfile.UserProfileMenuFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:background="@color/profile_backfround"
+        android:background="@color/home_bg"
         >
-
-        <Button
-            android:id="@+id/profile_backbtn"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="15dp"
-            android:layout_width="9dp"
-            android:layout_height="19dp"
-            android:background="@drawable/ic_backbtn_19px" />
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:orientation="horizontal"
 
             >
@@ -67,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/wrapper_profile"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="180dp"
             >
             <RelativeLayout
                 android:id="@+id/profile_account"

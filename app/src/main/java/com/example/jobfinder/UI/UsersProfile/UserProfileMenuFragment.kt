@@ -77,12 +77,7 @@ class UserProfileMenuFragment : Fragment() {
             requireActivity().finish()
 
         }
-        // back button
-        binding.profileBackbtn.setOnClickListener {
-            val resultIntent = Intent()
-            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-            requireActivity().finish()
-        }
+
 
     }
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentRecruterEditProfileBinding
@@ -115,6 +116,8 @@ class RecruterEditProfileFragment : Fragment() {
         val busType = binding.editProfileBustype
         val busSec = binding.editProfileBusSec
         val tax = binding.editProfileTaxnum
+        var isEdited = false
+
 
         name.isEnabled = false
         address.isEnabled = false
@@ -127,15 +130,17 @@ class RecruterEditProfileFragment : Fragment() {
 
         //button sửa
         binding.editProfileEditbtn.setOnClickListener {
-            name.isEnabled = true
-            address.isEnabled = true
-            phone.isEnabled = true
-            description.isEnabled = true
-            busType.isEnabled = true
-            busSec.isEnabled = true
-            tax.isEnabled = true
+            isEdited =!isEdited
 
-            save.visibility = View.VISIBLE
+            name.isEnabled = isEdited
+            address.isEnabled = isEdited
+            phone.isEnabled = isEdited
+            description.isEnabled = isEdited
+            busType.isEnabled = isEdited
+            busSec.isEnabled = isEdited
+            tax.isEnabled = isEdited
+
+            save.visibility = if (isEdited) View.VISIBLE else View.GONE
         }
 
         save.setOnClickListener {
@@ -176,6 +181,9 @@ class RecruterEditProfileFragment : Fragment() {
                     Buser.child("tax_code").setValue(newTax)
                     Buser.child("business_sector").setValue(newBusSec)
                     Buser.child("business_type").setValue(newBusType)
+
+                    Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
+
                 }
 
                 name.isEnabled = false
