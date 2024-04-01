@@ -65,12 +65,37 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/post_job_job_title_InputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/post_job_title"
-                    android:textSize="16sp"
-                    android:id="@+id/post_job_title"/>
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:startIconDrawable="@drawable/suitcase"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/post_job_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/post_job_title"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingStart="50dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -84,14 +109,29 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
 
-                    <TextView
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/shift"
-                        android:textSize="20sp"
-                        android:textColor="@color/black"/>
+                        app:boxStrokeColor="@color/black"
+                        app:boxStrokeErrorColor="@color/black"
+                        app:startIconDrawable="@drawable/clock"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:text="@string/shift"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/transparent_background"
+                            android:enabled="false"
+                            android:paddingStart="50dp"
+                            android:paddingEnd="20dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -100,7 +140,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:gravity="end"
+                    android:gravity="center"
                     android:baselineAligned="false"
                     android:id="@+id/shift_choose">
 
@@ -113,6 +153,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/shift_1"
+                            android:textSize="16sp"
                             android:id="@+id/rec_shift1"/>
                     </LinearLayout>
 
@@ -127,6 +168,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/shift_2"
+                            android:textSize="16sp"
                             android:id="@+id/rec_shift2"/>
 
                     </LinearLayout>
@@ -151,14 +193,37 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/post_job_start_time_InputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/start_time"
-                    android:textSize="16sp"
-                    android:id="@+id/post_job_start_time"
-                    android:focusable="false"
-                    android:inputType="none"/>
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:startIconDrawable="@drawable/ic_calendar24px"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/post_job_start_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/start_time"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:paddingStart="50dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -176,14 +241,37 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/post_job_end_time_InputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/end_time"
-                    android:textSize="16sp"
-                    android:id="@+id/post_job_end_time"
-                    android:focusable="false"
-                    android:inputType="none"/>
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:startIconDrawable="@drawable/ic_calendar24px"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/post_job_end_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/end_time"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:paddingStart="50dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -201,13 +289,37 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/post_job_emp_amount_InputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/employee_amount"
-                    android:textSize="16sp"
-                    android:id="@+id/post_job_emp_amount"
-                    android:inputType="number"/>
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:startIconDrawable="@drawable/ic_name24px"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/post_job_emp_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/employee_amount"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:paddingStart="50dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -225,13 +337,37 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/post_job_salary_InputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/salary"
-                    android:inputType="numberDecimal"
-                    android:textSize="16sp"
-                    android:id="@+id/post_job_salary"/>
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:startIconDrawable="@drawable/salary"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/post_job_salary"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/salary"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:paddingStart="50dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -249,14 +385,37 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/post_job_address_InputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/rec_address"
-                    android:textSize="16sp"
-                    android:maxLines="1"
-                    android:id="@+id/post_job_address"
-                    android:inputType="text"/>
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:startIconDrawable="@drawable/ic_address_24px"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/post_job_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/rec_address"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingStart="50dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -274,13 +433,33 @@
                     android:textSize="20sp"
                     android:textColor="@color/black"/>
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/post_job_des_InputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/job_des"
-                    android:textSize="16sp"
-                    android:id="@+id/post_job_des"
-                    android:inputType="textMultiLine|textCapSentences"/>
+                    app:boxStrokeColor="@color/black"
+                    app:boxStrokeErrorColor="@color/black"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/post_job_des"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/job_des"
+                        android:background="@drawable/transparent_background"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
