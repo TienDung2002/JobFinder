@@ -59,6 +59,7 @@
                 android:background="@drawable/ic_filter_background">
 
                 <ImageButton
+                    android:id="@+id/filterIcon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/ic_search_filter24px"

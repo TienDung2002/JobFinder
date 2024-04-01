@@ -212,7 +212,7 @@
     <string name="apply">Apply</string>
     <string name="job_detail_title">Job detail</string>
 
-<!--    posted job-->
+    <!--    posted job-->
     <string name="posted_job_title">Posted job</string>
     <string name="no_posted_job">No job posted</string>
 </resources>

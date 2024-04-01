@@ -45,6 +45,8 @@ class NewJobActivity : AppCompatActivity() {
         viewModel.addJobsData(JobModel("4", "Nhân viên lau bàn", "2", "", "", "3", "2000", "", "", "", "03/4/2024", "1", "Công ty Dũng hót boi" ))
         viewModel.addJobsData(JobModel("5", "Senior đánh giày", "2", "", "", "3", "123000", "", "", "", "05/4/2024", "2", "Công ty TNHH 10 thành viên" ))
         viewModel.addJobsData(JobModel("6", "Tạp vụ", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng" ))
+        viewModel.addJobsData(JobModel("7", "Tạp vụ 2", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 2" ))
+        viewModel.addJobsData(JobModel("8", "Tạp vụ 3", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 3" ))
 
         // Gán danh sách dữ liệu từ ViewModel cho adapter
         val JobsListData = viewModel.getJobsList()
@@ -105,6 +107,14 @@ class NewJobActivity : AppCompatActivity() {
 
         binding.rootNewJob.setOnClickListener{
             binding.searchView.clearFocus()
+        }
+
+
+
+
+        // nút filter
+        binding.filterIcon.setOnClickListener{
+            Toast.makeText(this, "Filter clicked", Toast.LENGTH_SHORT).show()
         }
 
     }
