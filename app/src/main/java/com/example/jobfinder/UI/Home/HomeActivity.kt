@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.JobsManagement.JobsManagementActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
@@ -20,8 +21,9 @@ import com.google.firebase.auth.FirebaseAuth
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var viewModel: HomeViewModel
     private var backPressedCount = 0
-    private var userRole: String = ""
+    private var addingFragmentInProgress = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,14 +34,26 @@ class HomeActivity : AppCompatActivity() {
         //firebase
         auth = FirebaseAuth.getInstance()
 
-        // gọi hàm getUserRole từ trong Utils.GetData
-        GetData.getUserRole { role ->
-            role?.let {
-                // Gán giá trị chỉ khi role không null (logic là thế nhưng hàm getUserRole t cho trả về "null string" thay vì null)
-                userRole = it
-                addFragmentDefault(userRole)
-                updateNavigationBar()
+        // Khởi tạo viewmodel
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        // Chỉ add fragment vào home khi trạng thái hiện tại là null (tránh xoay màn hình lại add lại gây lỗi)
+        if (savedInstanceState == null) {
+            addingFragmentInProgress = true
+            // gọi hàm getUserRole từ trong Utils.GetData
+            GetData.getUserRole { role ->
+                role?.let {
+                    // Gán giá trị chỉ khi role không null (logic là thế nhưng hàm getUserRole t cho trả về "null string" thay vì null)
+                    viewModel.userRole = it
+                    addFragmentDefault(viewModel.userRole)
+                    updateNavigationBar()
+                    addingFragmentInProgress = false
+                }
             }
+        } else {
+            // Khôi phục trạng thái của activity từ bundle
+            viewModel.userRole = savedInstanceState.getString("userRole", "")
+            binding.animationView.visibility = View.GONE
         }
 
 
@@ -50,7 +64,10 @@ class HomeActivity : AppCompatActivity() {
 
         // thanh Navigation
         binding.bottomNavView.setOnItemSelectedListener { menuItem ->
-            handleNavigation(menuItem.itemId)
+            if (!addingFragmentInProgress) { // Kiểm tra xem quá trình thêm fragment có đang diễn ra không
+                handleNavigation(menuItem.itemId)
+            }
+            true
         }
 
     }
@@ -60,6 +77,13 @@ class HomeActivity : AppCompatActivity() {
         backPressedCount = 0 // Reset lại backPressedCount khi activity resume
         updateNavigationBar()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        // Lưu trạng thái của activity vào bundle
+        outState.putString("userRole", viewModel.userRole)
+    }
+
 
     // Bấm 1 lần để hỏi, lần thứ 2 sẽ thoát ứng dụng
     override fun onBackPressed() {
@@ -83,7 +107,7 @@ class HomeActivity : AppCompatActivity() {
         }
         when(itemId) {
             R.id.home -> {
-                if (userRole == "BUser") {
+                if (viewModel.userRole == "BUser") {
                     FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentBuser())
                 } else {
                     FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentNuser())
@@ -91,7 +115,7 @@ class HomeActivity : AppCompatActivity() {
                 return true
             }
             R.id.managermentJob  -> {
-                if (userRole == "BUser") {
+                if (viewModel.userRole == "BUser") {
                     startActivity(Intent(this, JobsManagementActivity::class.java))
                 } else {
                     startActivity(Intent(this, JobsManagementActivity::class.java))
@@ -143,11 +167,11 @@ class HomeActivity : AppCompatActivity() {
     private fun updateNavigationBar() {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.HomeFrameLayout)
         when {
-            currentFragment is HomeFragmentNuser && userRole == "NUser" -> {
+            currentFragment is HomeFragmentNuser && viewModel.userRole == "NUser" -> {
                 binding.bottomNavView.selectedItemId = R.id.home
                 binding.animationView.visibility = View.GONE
             }
-            currentFragment is HomeFragmentBuser && userRole == "BUser" -> {
+            currentFragment is HomeFragmentBuser && viewModel.userRole == "BUser" -> {
                 binding.bottomNavView.selectedItemId = R.id.home
                 binding.animationView.visibility = View.GONE
             }
@@ -163,7 +187,7 @@ class HomeActivity : AppCompatActivity() {
         val currentFragment = supportFragmentManager.findFragmentById(R.id.HomeFrameLayout)
         return when (itemId) {
             R.id.home -> {
-                if (userRole == "BUser") {
+                if (viewModel.userRole == "BUser") {
                     currentFragment is HomeFragmentBuser
                 } else {
                     currentFragment is HomeFragmentNuser

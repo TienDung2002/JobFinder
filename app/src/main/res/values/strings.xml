@@ -104,9 +104,10 @@
     <string name="notification_title">Notification</string>
     <string name="no_noti">No notification</string>
     <string name="from">From:</string>
-    <string name="Username">BUser name</string>
+    <string name="BUsername">BUser name</string>
     <string name="close_btn">Close</string>
     <string name="add_card_to_user_wallet">Added card to your wallet</string>
+    <string name="from_wallet">from wallet</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -198,7 +199,7 @@
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>
-    <string name="Ji_unit3">/Hour</string>
+    <string name="Ji_unit3">/Day</string>
 
     <!--    post job-->
     <string name="post_job_title">Job title</string>
@@ -213,13 +214,17 @@
     <string name="add_job">Post job</string>
     <string name="no_shift_choose">No shift been choosed</string>
     <string name="no_post_job_title">Job title is blank</string>
-    <string name="no_emp_amount">Employee amount is blank</string>
+    <string name="no_emp_amount">Employee amount must smaller than 10</string>
     <string name="no_address">Address is blank</string>
     <string name="no_job_des">Job description is blank</string>
     <string name="no_salary">Salary is blank</string>
     <string name="post_job_success">Job posted</string>
     <string name="no_start_time">No start time</string>
     <string name="no_end_time">No end time</string>
+    <string name="end_time_be4_start">Start time must before end time</string>
 
 
+<!--    job detail-->
+    <string name="apply">Apply</string>
+    <string name="job_detail_title">Job detail</string>
 </resources>

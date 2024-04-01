@@ -54,4 +54,11 @@ object VerifyField {
         return  string.isNotEmpty() && string.length >=1
     }
 
+    fun maxEmpAmount(empAmount : String): Boolean{
+        if( empAmount == ""){
+            return false
+        }
+        return empAmount.toInt() <=10
+    }
+
 }

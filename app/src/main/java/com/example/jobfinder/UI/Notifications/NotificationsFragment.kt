@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
@@ -16,7 +17,9 @@ import com.google.firebase.database.FirebaseDatabase
 
 class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var viewModel: NotificationViewModel
+    val uid = auth.currentUser?.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +32,57 @@ class NotificationsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = FirebaseAuth.getInstance()
+        // Khởi tạo viewmodel nếu fragment đã dc add vào activity
+        if (isAdded) {
+            viewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
+        }
+
+        // Quan sát dữ liệu trong ViewModel và cập nhật giao diện khi có thay đổi
+        viewModel.notificationList.observe(viewLifecycleOwner) { list ->
+            updateRecyclerView(list)
+        }
+
+
+        // Kiểm tra xem dữ liệu đã được lưu trong ViewModel chưa
+        if (viewModel.notificationList.value == null) {
+            // Nếu chưa có dữ liệu, thực hiện fetch từ Firebase
+            fetchNotificationsFromFirebase()
+        } else {
+            // Nếu đã có dữ liệu, cập nhật RecyclerView trực tiếp
+            updateRecyclerView(viewModel.notificationList.value!!)
+        }
+    }
+
+
+    private fun updateRecyclerView(notificationList: List<NotificationsRowModel>) {
+        val convertToMutableList = notificationList.toMutableList()
+        // Cập nhật RecyclerView với danh sách thông báo mới
+        val adapter = NotificationsAdapter(convertToMutableList, requireContext(), binding.noNoti)
+        binding.recyclerNotifications.adapter = adapter
+        binding.recyclerNotifications.layoutManager = LinearLayoutManager(requireContext())
+
+        // Xác định nếu người dùng nhấn vào nút "Xóa"
+        adapter.setOnItemClickListener(object : NotificationsAdapter.OnItemClickListener {
+            override fun onItemClick(
+                view: View,
+                position: Int,
+                item: NotificationsRowModel
+            ) {
+                if (view.id == R.id.txtDelete) {
+                    adapter.removeItem(position)
+                    FirebaseDatabase.getInstance()
+                        .getReference("Notifications")
+                        .child(uid.toString())
+                        .child(item.notiId.toString()).removeValue()
+                }
+            }
+        })
+        binding.animationView.visibility = View.GONE
+    }
+
+
+    // Fetch data từ Firebase và cập nhật dữ liệu trong ViewModel
+    private fun fetchNotificationsFromFirebase() {
         val uid = auth.currentUser?.uid
 
         FirebaseDatabase.getInstance()
@@ -49,29 +102,8 @@ class NotificationsFragment : Fragment() {
                 }
                 notificationList.sortByDescending { GetData.convertStringToDate(it.date.toString()) }
 
-                val recyclerView = binding.recyclerNotifications
-                val adapter =
-                    NotificationsAdapter(notificationList, requireContext(), binding.noNoti)
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-                // Xác định nếu người dùng nhấn vào nút "Xóa"
-                adapter.setOnItemClickListener(object : NotificationsAdapter.OnItemClickListener {
-                    override fun onItemClick(
-                        view: View,
-                        position: Int,
-                        item: NotificationsRowModel
-                    ) {
-                        if (view.id == R.id.txtDelete) {
-                            adapter.removeItem(position)
-                            FirebaseDatabase.getInstance()
-                                .getReference("Notifications")
-                                .child(uid.toString())
-                                .child(item.notiId.toString()).removeValue()
-                        }
-                    }
-                })
-                binding.animationView.visibility = View.GONE
+                // Cập nhật danh sách thông báo trong ViewModel
+                viewModel.updateNotificationList(notificationList)
             }
     }
 }

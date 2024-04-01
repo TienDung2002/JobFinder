@@ -42,7 +42,7 @@
                             android:textColor="@color/black"
                             android:textFontWeight="700"
                             android:textSize="16sp"
-                            android:text="@string/Username"
+                            android:text="@string/BUsername"
                             android:id="@+id/notiDetailUsername"/>
 
                     </LinearLayout>

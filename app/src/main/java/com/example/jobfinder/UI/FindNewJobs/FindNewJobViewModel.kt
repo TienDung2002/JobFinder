@@ -7,8 +7,8 @@ class FindNewJobViewModel:ViewModel() {
     private val JobsList: MutableList<newJobHomeData> = mutableListOf()
 
     // Thêm dữ liệu vào JobsList
-    fun addJobsData(conferenceData: newJobHomeData) {
-        JobsList.add(conferenceData)
+    fun addJobsData(JobsData: newJobHomeData) {
+        JobsList.add(JobsData)
     }
 
     // Lấy danh sách dữ liệu cho adapter.
