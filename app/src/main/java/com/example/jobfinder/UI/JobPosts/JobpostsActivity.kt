@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
@@ -16,12 +18,15 @@ import com.example.jobfinder.databinding.ActivityJobpostsBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import android.util.Log
+
 
 class JobpostsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobpostsBinding
     private var shift = "none"
     private lateinit var auth: FirebaseAuth
     private var shiftChoose = false
+    private var jobType: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJobpostsBinding.inflate(layoutInflater)
@@ -29,6 +34,8 @@ class JobpostsActivity : AppCompatActivity() {
 
         //firebase
         auth = FirebaseAuth.getInstance()
+
+        setupSpinner()
 
         binding.postJobTitle.isClickable = true
         binding.recShift1.isClickable = true
@@ -138,8 +145,7 @@ class JobpostsActivity : AppCompatActivity() {
 
                 FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).get().addOnSuccessListener { data ->
                     if(data.exists()) {
-                        val BUserName =
-                            data.child("name").getValue(String::class.java).toString()
+                        val BUserName = data.child("name").getValue(String::class.java).toString()
                         val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount").child(uid.toString())
                         walletAmountRef.get().addOnSuccessListener { walletData ->
                             if(walletData.exists()) {
@@ -161,7 +167,8 @@ class JobpostsActivity : AppCompatActivity() {
                                         totalSalary,
                                         date,
                                         "0",
-                                        BUserName
+                                        BUserName,
+                                        jobType
                                     )
 
                                     //add to firebase
@@ -239,5 +246,31 @@ class JobpostsActivity : AppCompatActivity() {
             invalidFields.first().requestFocus()
         }
     }
+
+    private fun setupSpinner() {
+        val spinner = binding.jobTypeSpinner
+        val jobTypesArray = resources.getStringArray(R.array.job_types_array)
+        val spinnerAdapter = JobTypeSpinner(binding.root.context, jobTypesArray)
+        spinner.adapter = spinnerAdapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                jobType = parent?.getItemAtPosition(position).toString()
+                // Gọi hàm xử lý dữ liệu nếu cần
+                handleSelectedJobType(jobType)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Xử lý khi không có mục nào được chọn
+            }
+        }
+    }
+
+    // Hàm để xử lý dữ liệu khi một loại công việc được chọn từ Spinner
+    private fun handleSelectedJobType(jobType: String) {
+        // Xử lý dữ liệu ở đây, ví dụ:
+        Log.d("Selected Job Type", jobType)
+    }
+
 
 }

@@ -209,6 +209,19 @@
     <string name="no_start_time">Ngày bắt đầu trống</string>
     <string name="no_end_time">Ngày kết thúc trống</string>
     <string name="end_time_be4_start">Thời gian kết thúc phải sau thời gian bắt đầu</string>
+    <string name="job_type">Loại công việc</string>
+    <string-array name="job_types_array">
+        <item>Nhân viên hàng</item>
+        <item>Phục vụ</item>
+        <item>Trợ lý hành chính</item>
+        <item>Gia sư</item>
+        <item>Pha chế cà phê</item>
+        <item>Thu ngân</item>
+        <item>Nhân viên giao hàng</item>
+        <item>Lễ tân</item>
+        <item>Khác</item>
+    </string-array>
+
 
     <!--    job detail-->
     <string name="apply">Ứng tuyển</string>

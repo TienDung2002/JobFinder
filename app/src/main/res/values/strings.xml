@@ -207,6 +207,19 @@
     <string name="no_start_time">No start time</string>
     <string name="no_end_time">No end time</string>
     <string name="end_time_be4_start">Start time must before end time</string>
+    <string name="job_type">Job type</string>
+    <string-array name="job_types_array">
+        <item>Retail Sales Associate</item>
+        <item>Food and Beverage Server</item>
+        <item>Administrative Assistant</item>
+        <item>Tutor</item>
+        <item>Barista</item>
+        <item>Cashier</item>
+        <item>Delivery Driver</item>
+        <item>Receptionist</item>
+        <item>Other</item>
+    </string-array>
+
 
     <!--    job detail-->
     <string name="apply">Apply</string>

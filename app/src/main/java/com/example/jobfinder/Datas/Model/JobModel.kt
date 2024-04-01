@@ -17,6 +17,7 @@ class JobModel : Parcelable {
     var postDate: String? = null
     var numOfRecruited: String? = null
     var BUserName: String? = null
+    var jobType: String?=null
 
     constructor() {
         // Default constructor required for Firebase
@@ -35,7 +36,8 @@ class JobModel : Parcelable {
         totalSalary: String?,
         postDate: String?,
         numOfRecruited: String?,
-        BUserName: String?
+        BUserName: String?,
+        jobType: String?
     ) {
         this.jobId = jobId
         this.jobTitle = jobTitle
@@ -50,9 +52,11 @@ class JobModel : Parcelable {
         this.postDate = postDate
         this.numOfRecruited = numOfRecruited
         this.BUserName = BUserName
+        this.jobType = jobType
     }
 
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -82,6 +86,7 @@ class JobModel : Parcelable {
         parcel.writeString(postDate)
         parcel.writeString(numOfRecruited)
         parcel.writeString(BUserName)
+        parcel.writeString(jobType)
     }
 
     override fun describeContents(): Int {
