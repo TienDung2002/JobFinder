@@ -43,6 +43,9 @@ object VerifyField {
         val age = Age.toIntOrNull()
         return age != null && age >= 18 && Age.matches(Regex("\\d+"))
     }
+    fun isValidTaxCode(Tax: String): Boolean {
+        return Tax.isNotEmpty() && (Tax.length == 10 || Tax.length == 13)
+    }
 
     // check pass hợp lệ
     fun isValidPassword(password: String): Boolean {
