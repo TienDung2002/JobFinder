@@ -17,6 +17,9 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
+            android:name=".UI.PostedJob.PostedJobActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.JobDetails.JobDetailActivity"
             android:exported="false" />
         <activity

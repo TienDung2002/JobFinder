@@ -26,6 +26,7 @@ import kotlin.random.Random
 class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                     private val context: Context,
                     private val noWalletLayout: ConstraintLayout,
+                    private val viewModel: WalletCardListViewModel,
                     private val depositWithdrawListener: (newAmount: String) -> Unit
 ) : RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
@@ -308,6 +309,9 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                 .child(wallet.cardId ?: "")
                                 .removeValue()
                             Toast.makeText(context, getString(context,R.string.delete_card_success), Toast.LENGTH_SHORT).show()
+
+                            // Update ViewModel after successful deletion
+                            viewModel.removeCardData(wallet)
                         }
                         .addOnFailureListener { exception ->
                             // Handle failure
@@ -316,6 +320,8 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 }
             }
         }
+
+
         // Hàm thêm tiền vào thẻ
         private fun addMoney(wallet: WalletRowModel) {
             // Chuyển đổi giá trị amount từ string thành kiểu float

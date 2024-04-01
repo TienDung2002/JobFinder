@@ -24,6 +24,7 @@
     <string name="error_email_pass">Please check the fields again</string>
     <string name="login_failed">Login failed…Please check again</string>
     <string name="wrong_role">Login with wrong role!</string>
+    <string name="duplicate_phone">Duplicate phone number</string>
 
     <!--    register-->
     <string name="register_btn">Register</string>
@@ -183,7 +184,7 @@
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>
-    <string name="Ji_unit3">/Day</string>
+    <string name="Ji_unit3">/Hour</string>
 
     <!--    post job-->
     <string name="post_job_title">Job title</string>
@@ -207,7 +208,11 @@
     <string name="no_end_time">No end time</string>
     <string name="end_time_be4_start">Start time must before end time</string>
 
-<!--    job detail-->
+    <!--    job detail-->
     <string name="apply">Apply</string>
     <string name="job_detail_title">Job detail</string>
+
+<!--    posted job-->
+    <string name="posted_job_title">Posted job</string>
+    <string name="no_posted_job">No job posted</string>
 </resources>

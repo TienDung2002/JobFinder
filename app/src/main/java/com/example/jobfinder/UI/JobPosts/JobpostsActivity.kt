@@ -205,6 +205,7 @@ class JobpostsActivity : AppCompatActivity() {
                                         }
                                 }else{
                                     Toast.makeText(binding.root.context, getString(R.string.not_enough_money),Toast.LENGTH_SHORT).show()
+                                    binding.postJobBtn.isClickable = true
                                 }
                             }
                         }
