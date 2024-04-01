@@ -162,7 +162,7 @@
     <string name="profile_edited">Hồ sơ cá nhân đã được chỉnh sửa</string>
 
     <!-- Edit Profile -->
-    <string name="edit_profile">chỉnh sửa hồ sơ</string>
+    <string name="edit_profile">Chỉnh sửa hồ sơ</string>
     <string name="edit_profile_img">Nhấn để tải lên hình ảnh mới</string>
     <string name="edit_profile_name">Tên hồ sơ</string>
     <string name="edit_profile_email">Email</string>
