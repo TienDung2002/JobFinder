@@ -9,13 +9,13 @@ class JobModel(
     var shift: String?,
     var startTime: String?,
     var endTime: String?,
-    var empAmount: String?,
-    var salaryPerEmp: String?,
-    var address: String?,
-    var jobDes: String?,
-    var totalSalary: String?,
-    var postDate: String?,
-    var numOfRecruited: String?,
+    var empAmount: String?,         // số nhân viên yêu cầu
+    var salaryPerEmp: String?,      // lương theo giờ
+    var address: String?,           // địa chỉ
+    var jobDes: String?,            // mô tả công việc
+    var totalSalary: String?,       // tổng lương
+    var postDate: String?,          // ngày đăng
+    var numOfRecruited: String?,    // số nhân viên đã tuyển
     var BUserName: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
