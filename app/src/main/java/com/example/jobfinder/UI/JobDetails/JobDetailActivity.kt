@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityJobDetailBinding
 
@@ -24,6 +25,7 @@ class JobDetailActivity : AppCompatActivity() {
                 binding.detailJobBtnHolder.visibility= View.VISIBLE
             }
 
+
             if (job != null) {
                 val emp = job.numOfRecruited+"/"+ job.empAmount
                 binding.jobDetailJobTitle.text = job.jobTitle
@@ -32,11 +34,9 @@ class JobDetailActivity : AppCompatActivity() {
                 binding.jobDetailEmpAmount.text= emp
                 binding.jobDetailStartTime.text= job.startTime
                 binding.jobDetailEndTime.text= job.endTime
-                binding.jobDetailWorkShift.text= job.shift
+                binding.jobDetailWorkShift.text= job.shift?.let { shift(it) }
                 binding.jobDetailAddress.text= job.address
                 binding.jobDetailDes.text= job.jobDes
-            }else{
-                Log.d("null job", "null jobbbbbb")
             }
         }
 
@@ -47,5 +47,13 @@ class JobDetailActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    fun shift(shift: String): String{
+        return if(shift == "1"){
+            resources.getString(R.string.jdetail_shift_1)
+        }else{
+            resources.getString(R.string.jdetail_shift_2)
+        }
     }
 }

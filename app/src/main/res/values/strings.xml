@@ -211,6 +211,8 @@
     <!--    job detail-->
     <string name="apply">Apply</string>
     <string name="job_detail_title">Job detail</string>
+    <string name="jdetail_shift_1">7:30 am to 2:30 pm</string>
+    <string name="jdetail_shift_2">2:30 am to 9:30 pm</string>
 
 <!--    posted job-->
     <string name="posted_job_title">Posted job</string>
