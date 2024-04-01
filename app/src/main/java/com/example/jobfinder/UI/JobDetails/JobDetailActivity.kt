@@ -17,11 +17,26 @@ class JobDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityJobDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val job = intent.getParcelableExtra<JobModel>("job")
         GetData.getUserRole { userRole->
-            if (userRole == "BUser"){
-                binding.detailJobBtnHolder.isEnabled = false
-                binding.detailJobBtnHolder.visibility= View.GONE
+            if (userRole == "NUser"){
+                binding.detailJobBtnHolder.isEnabled = true
+                binding.detailJobBtnHolder.visibility= View.VISIBLE
+            }
+
+            if (job != null) {
+                val emp = job.numOfRecruited+"/"+ job.empAmount
+                binding.jobDetailJobTitle.text = job.jobTitle
+                binding.jobDetailBuserName.text= job.BUserName
+                binding.jobDetailSalary.text= job.salaryPerEmp
+                binding.jobDetailEmpAmount.text= emp
+                binding.jobDetailStartTime.text= job.startTime
+                binding.jobDetailEndTime.text= job.endTime
+                binding.jobDetailWorkShift.text= job.shift
+                binding.jobDetailAddress.text= job.address
+                binding.jobDetailDes.text= job.jobDes
+            }else{
+                Log.d("null job", "null jobbbbbb")
             }
         }
 
@@ -29,23 +44,6 @@ class JobDetailActivity : AppCompatActivity() {
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
-        }
-
-        val job = intent.getParcelableExtra<JobModel>("job")
-
-        if (job != null) {
-            val emp = job.numOfRecruited+"/"+ job.empAmount
-            binding.jobDetailJobTitle.text = job.jobTitle
-            binding.jobDetailBuserName.text= job.BUserName
-            binding.jobDetailSalary.text= job.salaryPerEmp
-            binding.jobDetailEmpAmount.text= emp
-            binding.jobDetailStartTime.text= job.startTime
-            binding.jobDetailEndTime.text= job.endTime
-            binding.jobDetailWorkShift.text= job.shift
-            binding.jobDetailAddress.text= job.address
-            binding.jobDetailDes.text= job.jobDes
-        }else{
-            Log.d("null job", "null jobbbbbb")
         }
 
 
