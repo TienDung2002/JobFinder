@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UI.UsersProfile.RecruterEditProfileFragment">
 
     <RelativeLayout
@@ -20,12 +21,12 @@
             >
 
             <Button
-                android:id="@+id/edit_profile_backbtn"
-                android:layout_width="13dp"
-                android:layout_height="23dp"
-                android:background="@drawable/ic_backbtn_19px"
-                android:layout_centerVertical="true"
-                />
+                android:id="@+id/editProfileBackbtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/transparent_background"
+                android:drawableStart="@drawable/ic_back24px"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,11 +38,12 @@
                 />
             <Button
                 android:id="@+id/edit_profile_editbtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/ic_edit_20px"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
                 />
         </RelativeLayout>
 
@@ -110,19 +112,19 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             />
-                        <EditText
+
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_profile_name"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:layout_centerVertical="true"                            android:textColor="@color/black"
-                            android:textColorHint="@color/grey"
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
-                            android:maxLines="1"
-                            android:inputType="text"
-                            android:textSize="20sp"
                             android:background="@drawable/edit_text_blank"
-                            />
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey"
+                            android:textSize="20sp" />
 
                     </RelativeLayout>
                 </RelativeLayout>
@@ -198,7 +200,7 @@
                             android:layout_marginStart="15dp"
                             />
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_profile_phonenum"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
@@ -240,7 +242,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             />
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_profile_address"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
@@ -282,7 +284,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             />
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edit_profile_taxnum"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
@@ -299,49 +301,7 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/rec_description"
-                        android:textColor="@color/primary_color1"
-                        android:textSize="18sp"
-                        />
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:layout_marginTop="40dp"
-                        android:background="@drawable/input_box"
-                        >
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:background="@drawable/ic_age_32px"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="15dp"
-                            />
-                        <EditText
-                            android:id="@+id/edit_profile_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="54dp"
-                            android:layout_centerVertical="true"                            android:textColor="@color/black"
-                            android:textColorHint="@color/grey"
-                            android:layout_marginStart="50dp"
-                            android:layout_marginEnd="15dp"
-                            android:maxLines="1"
-                            android:inputType="text"
-                            android:textSize="20sp"
-                            android:background="@drawable/edit_text_blank"
-                            />
-
-                    </RelativeLayout>
-
-                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -431,6 +391,45 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rec_description"
+                        android:textColor="@color/primary_color1"
+                        android:textSize="18sp"
+                        />
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp"
+
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editProfileDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/black"
+                            android:padding="15dp"
+                            android:hint="@string/rec_description"
+                            android:textColorHint="#6b6b6b"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:textSize="20sp"
+                            android:background="@drawable/edit_text_blank"
+                            />
+
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -452,6 +451,8 @@
                         />
 
                 </RelativeLayout>
+
+
 
 
 

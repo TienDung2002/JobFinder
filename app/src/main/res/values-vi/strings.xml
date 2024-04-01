@@ -171,17 +171,22 @@
     <string name="edit_profile_phonenum">Số điện thoại</string>
     <string name="edit_profile_age">Tuổi</string>
     <string name="edit_profile_save">Lưu</string>
+    <string name="edit_profile_enable">Bật chỉnh sửa</string>
+    <string name="edit_profile_disable">Tắt chỉnh sửa</string>
+    <string name="edit_email">Email không được phép chỉnh sửa</string>
+
 
     <string name="edit_taxcode">Tax code</string>
     <string name="edit_description">Mô tả thông tin nhà tuyển dụng</string>
     <string name="edit_SectorOfBusiness">Chọn lĩnh vực kinh doanh</string>
     <string name="edit_typeOfBusiness">Chọn loại hình kinh doanh</string>
 
-    <string name="error_invalid_tax">Mã số thuế trống</string>
     <string name="error_invalid_des">Mô tả thông tin nhà tuyển dụng trống</string>
     <string name="error_invalid_BusType">lĩnh vực kinh doanh trống</string>
     <string name="error_invalid_BusSec">loại hình kinh doanh trống</string>
     <string name="error_invalid_Age">Tuổi trống hoặc tuổi ít hơn 18</string>
+    <string name="error_invalid_Tax">Mã số thuế không được trống và phải là 10 hoặc 13 số</string>
+
 
 
 

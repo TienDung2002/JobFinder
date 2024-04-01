@@ -140,8 +140,21 @@ class RecruterEditProfileFragment : Fragment() {
             tax.isEnabled = isEdited
 
             save.visibility = if (isEdited) View.VISIBLE else View.GONE
-        }
 
+            if (isEdited == false){
+                Toast.makeText(requireContext(), getString(R.string.edit_profile_disable), Toast.LENGTH_SHORT).show()
+
+            } else if (isEdited == true){
+                Toast.makeText(requireContext(), getString(R.string.edit_profile_enable), Toast.LENGTH_SHORT).show()
+            }
+        }
+        // sau khi ấn button sửa, nếu ấn vào email sẽ thông báo
+        if (isEdited == true){
+            binding.editProfileEmail.setOnClickListener {
+                Toast.makeText(requireContext(), getString(R.string.edit_email), Toast.LENGTH_SHORT).show()
+            }
+        }
+        // button lưu
         save.setOnClickListener {
             val newName = name.text.toString()
             val newAddress = address.text.toString()
@@ -155,7 +168,7 @@ class RecruterEditProfileFragment : Fragment() {
             val isValidAddress = newAddress.isNotEmpty()
             val isValidPhone = VerifyField.isValidPhoneNumber(newPhone)
             val isValidDes = newDes.isNotEmpty()
-            val isValidTax = newTax.isNotEmpty()
+            val isValidTax = VerifyField.isValidTaxCode(newTax)
             val isValidBusType = newBusType.isNotEmpty()
             val isValidBusSec = newBusSec.isNotEmpty()
 
@@ -166,7 +179,7 @@ class RecruterEditProfileFragment : Fragment() {
             description.error = if (isValidDes) null else getString(R.string.error_invalid_des)
             busType.error = if (isValidBusType) null else getString(R.string.error_invalid_BusType)
             busSec.error = if (isValidBusSec) null else getString(R.string.error_invalid_BusSec)
-            tax.error = if (isValidTax) null else getString(R.string.error_invalid_tax)
+            tax.error = if (isValidTax) null else getString(R.string.error_invalid_Tax)
 
             if (isValidName && isValidAddress && isValidPhone && isValidDes && isValidBusType && isValidBusSec && isValidTax) {
                 val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -185,13 +198,15 @@ class RecruterEditProfileFragment : Fragment() {
 
                 }
 
-                name.isEnabled = false
-                address.isEnabled = false
-                phone.isEnabled = false
-                description.isEnabled = false
-                busType.isEnabled = false
-                busSec.isEnabled = false
-                tax.isEnabled = false
+                isEdited = false
+
+                name.isEnabled = isEdited
+                address.isEnabled = isEdited
+                phone.isEnabled = isEdited
+                description.isEnabled = isEdited
+                busType.isEnabled = isEdited
+                busSec.isEnabled = isEdited
+                tax.isEnabled = isEdited
 
                 save.visibility = View.GONE
             } else {

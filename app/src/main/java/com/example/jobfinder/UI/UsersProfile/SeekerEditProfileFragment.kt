@@ -109,6 +109,19 @@ class SeekerEditProfileFragment : Fragment() {
             age.isEnabled = isEdited
 
             save.visibility = if (isEdited) View.VISIBLE else View.GONE
+            if (isEdited == false){
+                Toast.makeText(requireContext(), getString(R.string.edit_profile_disable), Toast.LENGTH_SHORT).show()
+
+            } else if (isEdited == true){
+                Toast.makeText(requireContext(), getString(R.string.edit_profile_enable), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // sau khi ấn button sửa, nếu ấn vào email sẽ thông báo
+        if (isEdited == true){
+            binding.editProfileEmail.setOnClickListener {
+                Toast.makeText(requireContext(), getString(R.string.edit_email), Toast.LENGTH_SHORT).show()
+            }
         }
         //button save
         save.setOnClickListener {
@@ -140,10 +153,12 @@ class SeekerEditProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), getString(R.string.profile_edited), Toast.LENGTH_SHORT).show()
 
                 }
-                name.isEnabled = false
-                address.isEnabled = false
-                phone.isEnabled = false
-                age.isEnabled = false
+                isEdited = false
+
+                name.isEnabled = isEdited
+                address.isEnabled = isEdited
+                phone.isEnabled = isEdited
+                age.isEnabled = isEdited
 
                 save.visibility = View.GONE
             } else {

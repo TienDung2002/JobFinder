@@ -172,15 +172,21 @@
     <string name="edit_profile_phonenum">Phone number</string>
     <string name="edit_profile_age">Age</string>
     <string name="edit_profile_save">Save</string>
-    <string name="edit_taxcode">ax code</string>
+    <string name="edit_profile_enable">Edit enable</string>
+    <string name="edit_profile_disable">Edit disable</string>
+    <string name="edit_email">Emails are not allowed to be edited</string>
+
+    <string name="edit_taxcode">Tax code</string>
     <string name="edit_description">Recruter description</string>
     <string name="edit_SectorOfBusiness">Choose business type</string>
     <string name="edit_typeOfBusiness">Choose business sectors</string>
-    <string name="error_invalid_tax">Tax code is blank</string>
+
     <string name="error_invalid_des">Description is blank</string>
     <string name="error_invalid_BusType">Business type is blank</string>
     <string name="error_invalid_BusSec">Business sectors is blank</string>
     <string name="error_invalid_Age">Age is blank or age is less than 18</string>
+    <string name="error_invalid_Tax">Tax code cannot be empty and must be 10 or 13 numbers</string>
+
 
 
 
