@@ -72,6 +72,7 @@
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     app:startIconDrawable="@drawable/suitcase"
+                    app:startIconTint="@color/black"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -118,6 +119,7 @@
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeErrorColor="@color/black"
                         app:startIconDrawable="@drawable/clock"
+                        app:startIconTint="@color/black"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -200,6 +202,7 @@
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     app:startIconDrawable="@drawable/ic_calendar24px"
+                    app:startIconTint="@color/black"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -248,6 +251,7 @@
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     app:startIconDrawable="@drawable/ic_calendar24px"
+                    app:startIconTint="@color/black"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -296,6 +300,7 @@
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     app:startIconDrawable="@drawable/ic_name24px"
+                    app:startIconTint="@color/black"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -344,6 +349,7 @@
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     app:startIconDrawable="@drawable/salary"
+                    app:startIconTint="@color/black"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -392,6 +398,7 @@
                     app:boxStrokeColor="@color/black"
                     app:boxStrokeErrorColor="@color/black"
                     app:startIconDrawable="@drawable/ic_address_24px"
+                    app:startIconTint="@color/black"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
