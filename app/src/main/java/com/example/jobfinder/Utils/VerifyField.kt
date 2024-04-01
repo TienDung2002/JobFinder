@@ -3,6 +3,9 @@ import android.text.method.PasswordTransformationMethod
 import androidx.core.util.PatternsCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 
 data class PasswordToggleState(var isPassVisible: Boolean)
@@ -59,6 +62,23 @@ object VerifyField {
             return false
         }
         return empAmount.toInt() <=10
+    }
+
+    fun duplicatePhoneNum(phoneNum: String, callback: (Boolean) -> Unit) {
+        FirebaseDatabase.getInstance().getReference("UserBasicInfo").get().addOnSuccessListener { dataSnapshot ->
+            var isDuplicate = false
+            for (user in dataSnapshot.children) {
+                val userPhoneNum = user.child("phone_num").getValue(String::class.java)
+                if (phoneNum == userPhoneNum) {
+                    isDuplicate = true
+                    break
+                }
+            }
+            callback(!isDuplicate)
+        }.addOnFailureListener {
+            // Handle any potential errors here
+            callback(false) // Assuming that if there's a failure, we don't want to allow duplicates
+        }
     }
 
 }
