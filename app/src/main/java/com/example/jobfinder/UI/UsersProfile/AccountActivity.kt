@@ -1,15 +1,10 @@
 package com.example.jobfinder.UI.UsersProfile
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityAccountBinding
-import com.example.jobfinder.databinding.ActivityWalletBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class AccountActivity : AppCompatActivity() {

@@ -1,6 +1,5 @@
 package com.example.jobfinder.UI.UsersProfile
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
-import com.example.jobfinder.UI.Wallet.WalletHistoryActivity
-import com.example.jobfinder.Utils.FragmentHelper
-import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.FragmentUserProfileMenuBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -33,8 +29,8 @@ class UserProfileMenuFragment : Fragment() {
         // hiển thị username
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid
-        userId?.let {
-            database.child("UserBasicInfo").child(it).addListenerForSingleValueEvent(object :
+        userId?.let { userId ->
+            database.child("UserBasicInfo").child(userId).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val userName = snapshot.child("name").getValue(String::class.java)
@@ -55,7 +51,7 @@ class UserProfileMenuFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentUserProfileMenuBinding.inflate(inflater,container,false)
         return binding.root
     }

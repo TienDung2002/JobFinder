@@ -9,9 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil.setContentView
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentSeekerEditProfileBinding
@@ -65,7 +63,7 @@ class SeekerEditProfileFragment : Fragment() {
                     val age = snapshot.child("age").getValue(String::class.java)
                     age?.let {
 
-                        binding.editProfileAge.setText(it.toString())
+                        binding.editProfileAge.setText(it)
                     }
                 }
 

@@ -15,7 +15,6 @@ import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentRecruterEditProfileBinding
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -37,8 +36,8 @@ class RecruterEditProfileFragment : Fragment() {
 
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid
-        userId?.let {
-            database.child("UserBasicInfo").child(it).addListenerForSingleValueEvent(object :
+        userId?.let { userId ->
+            database.child("UserBasicInfo").child(userId).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val userName = snapshot.child("name").getValue(String::class.java)
@@ -64,7 +63,7 @@ class RecruterEditProfileFragment : Fragment() {
                     Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
                 }
             })
-            database.child("BUserInfo").child(it).addListenerForSingleValueEvent(object :
+            database.child("BUserInfo").child(userId).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val tax = snapshot.child("tax_code").getValue(String::class.java)
@@ -77,11 +76,11 @@ class RecruterEditProfileFragment : Fragment() {
                     }
                     val busType = snapshot.child("business_type").getValue(String::class.java)
                     busType?.let {
-                        binding.editProfileBustype.setText(it)
+                        binding.editProfileBustype.text = it
                     }
                     val busSec = snapshot.child("business_sector").getValue(String::class.java)
                     busSec?.let {
-                        binding.editProfileBusSec.setText(it)
+                        binding.editProfileBusSec.text = it
                     }
                 }
 
@@ -98,7 +97,7 @@ class RecruterEditProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentRecruterEditProfileBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -199,10 +198,6 @@ class RecruterEditProfileFragment : Fragment() {
                 checkToAutoFocus(isValidName , isValidAddress , isValidPhone , isValidDes , isValidBusType , isValidBusSec , isValidTax)
             }
 
-
-
-
-
         }
 
         //button back
@@ -221,8 +216,6 @@ class RecruterEditProfileFragment : Fragment() {
             BusSecSelect(it)
             BusSecChoosed = true
         }
-
-
 
     }
 
