@@ -233,4 +233,7 @@
     <string name="posted_job_title">Việc đã đăng</string>
     <string name="no_posted_job">Chưa đăng tuyển</string>
 
+    <!--    buser detail info-->
+    <string name="recruiter_info_title">Nhà tuyển dụng</string>
+
 </resources>

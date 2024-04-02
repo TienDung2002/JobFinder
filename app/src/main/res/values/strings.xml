@@ -227,7 +227,10 @@
     <string name="jdetail_shift_1">7:30 am to 2:30 pm</string>
     <string name="jdetail_shift_2">2:30 am to 9:30 pm</string>
 
-<!--    posted job-->
+    <!--    posted job-->
     <string name="posted_job_title">Posted job</string>
     <string name="no_posted_job">No job posted</string>
+
+<!--    buser detail info-->
+    <string name="recruiter_info_title">Recruiter\'s information</string>
 </resources>

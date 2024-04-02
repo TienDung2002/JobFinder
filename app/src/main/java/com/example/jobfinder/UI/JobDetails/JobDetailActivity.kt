@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityJobDetailBinding
 
@@ -19,17 +20,20 @@ class JobDetailActivity : AppCompatActivity() {
         binding = ActivityJobDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val job = intent.getParcelableExtra<JobModel>("job")
+        val uid = job?.BUserId
+
+
         GetData.getUserRole { userRole->
             if (userRole == "NUser"){
                 binding.detailJobBtnHolder.isEnabled = true
                 binding.detailJobBtnHolder.visibility= View.VISIBLE
             }
 
-
             if (job != null) {
                 val emp = job.numOfRecruited+"/"+ job.empAmount
                 binding.jobDetailJobTitle.text = job.jobTitle
                 binding.jobDetailBuserName.text= job.BUserName
+                binding.jobDetailJobType.text= job.jobType
                 binding.jobDetailSalary.text= job.salaryPerEmp
                 binding.jobDetailEmpAmount.text= emp
                 binding.jobDetailStartTime.text= job.startTime
@@ -37,6 +41,12 @@ class JobDetailActivity : AppCompatActivity() {
                 binding.jobDetailWorkShift.text= job.shift?.let { shift(it) }
                 binding.jobDetailAddress.text= job.address
                 binding.jobDetailDes.text= job.jobDes
+
+                binding.jobDetailBuserName.setOnClickListener {
+                    val intent = Intent(this, BUserDetailInfoActivity::class.java)
+                    intent.putExtra("uid", uid)
+                    startActivity(intent)
+                }
             }
         }
 

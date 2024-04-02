@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.UI.JobDetails.JobDetailActivity
 import com.example.jobfinder.databinding.ActivityPostedJobBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class PostedJobActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostedJobBinding
@@ -18,6 +19,8 @@ class PostedJobActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPostedJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
 
         binding.backButton.setOnClickListener {
             setResult(RESULT_OK)

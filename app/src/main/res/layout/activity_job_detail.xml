@@ -81,6 +81,22 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/job_type"
+                        android:textSize="24sp"
+                        android:textColor="@color/black"
+                        android:id="@+id/job_detail_job_type"/>
+
+                </LinearLayout>
+
                 <!--            salary-->
                 <LinearLayout
                     android:layout_width="match_parent"

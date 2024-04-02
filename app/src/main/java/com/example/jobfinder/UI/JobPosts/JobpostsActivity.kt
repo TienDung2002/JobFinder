@@ -139,13 +139,13 @@ class JobpostsActivity : AppCompatActivity() {
                 val jobId= FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).push().key
                 val totalWorkDay = GetData.countDaysBetweenDates(startTime, endTime)
                 val totalWorkHour= totalWorkDay * 8
-                val OneEmpSalary = GetData.multiplyStrings(totalWorkHour.toString(), salary)
-                val totalSalary = GetData.multiplyStrings(empAmount, OneEmpSalary)
+                val oneEmpSalary = GetData.multiplyStrings(totalWorkHour.toString(), salary)
+                val totalSalary = GetData.multiplyStrings(empAmount, oneEmpSalary)
                 val date = GetData.getCurrentDateTime()
 
                 FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).get().addOnSuccessListener { data ->
                     if(data.exists()) {
-                        val BUserName = data.child("name").getValue(String::class.java).toString()
+                        val bUserName = data.child("name").getValue(String::class.java).toString()
                         val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount").child(uid.toString())
                         walletAmountRef.get().addOnSuccessListener { walletData ->
                             if(walletData.exists()) {
@@ -167,8 +167,9 @@ class JobpostsActivity : AppCompatActivity() {
                                         totalSalary,
                                         date,
                                         "0",
-                                        BUserName,
-                                        jobType
+                                        bUserName,
+                                        jobType,
+                                        uid
                                     )
 
                                     //add to firebase
