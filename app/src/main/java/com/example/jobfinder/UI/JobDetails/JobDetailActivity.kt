@@ -56,7 +56,6 @@ class JobDetailActivity : AppCompatActivity() {
             finish()
         }
 
-
     }
 
     fun shift(shift: String): String{
