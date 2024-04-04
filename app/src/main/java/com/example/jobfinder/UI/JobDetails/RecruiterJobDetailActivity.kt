@@ -24,10 +24,11 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
 
         if (job != null) {
             val emp = job.numOfRecruited+"/"+ job.empAmount
+            val salaryTxt = "$"+job.salaryPerEmp+resources.getString(R.string.Ji_unit3)
             binding.jobDetailJobTitle.text = job.jobTitle
             binding.jobDetailBuserName.text= job.BUserName
             binding.jobDetailJobType.text= job.jobType
-            binding.jobDetailSalary.text= "$"+job.salaryPerEmp
+            binding.jobDetailSalary.text= salaryTxt
             binding.jobDetailEmpAmount.text= emp
             binding.jobDetailStartTime.text= job.startTime
             binding.jobDetailEndTime.text= job.endTime

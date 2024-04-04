@@ -18,10 +18,6 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
         binding.uid.text = uid
 
-        if (uid != null) {
-            Log.e("JobDetailActivitydsfsdfsdsdfsd", uid)
-        }
-
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
