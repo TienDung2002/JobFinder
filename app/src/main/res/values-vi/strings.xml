@@ -228,6 +228,11 @@
     <string name="job_detail_title">Chi tiết công việc</string>
     <string name="jdetail_shift_1">7:30 đến 14:30</string>
     <string name="jdetail_shift_2">14:30 đến 21:30</string>
+    <string name="status_row_posted_job">Trạng thái:</string>
+    <string name="status">Trạng thái</string>
+    <string name="status_working">Đang hoạt động</string>
+    <string name="status_recruiting">Đang tuyển</string>
+    <string name="status_closed">Đã đóng</string>
 
     <!--    posted job-->
     <string name="posted_job_title">Việc đã đăng</string>

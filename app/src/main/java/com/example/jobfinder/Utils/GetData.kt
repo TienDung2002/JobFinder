@@ -130,5 +130,20 @@ object GetData {
         return false
     }
 
+    fun getStatus(startTime: String, endTime: String): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val currentDate = sdf.format(Date())
+
+        val startDate = sdf.parse(startTime)
+        val endDate = sdf.parse(endTime)
+        val today = sdf.parse(currentDate)
+
+        return when {
+            today.after(endDate) -> "closed"
+            today.before(startDate) -> "recruiting"
+            else -> "working"
+        }
+
+    }
 
 }
