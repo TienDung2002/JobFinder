@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.UI.JobDetails.JobDetailActivity
+import com.example.jobfinder.UI.JobDetails.RecruiterJobDetailActivity
 import com.example.jobfinder.databinding.ActivityPostedJobBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -31,7 +31,7 @@ class PostedJobActivity : AppCompatActivity() {
             val adapter = PostedJobAdapter(this, postedJobList)
             adapter.setOnItemClickListener(object : PostedJobAdapter.OnItemClickListener {
                 override fun onItemClick(job: JobModel) {
-                    val intent = Intent(this@PostedJobActivity, JobDetailActivity::class.java)
+                    val intent = Intent(this@PostedJobActivity, RecruiterJobDetailActivity::class.java)
                     intent.putExtra("job", job)
                     startActivity(intent)
                 }

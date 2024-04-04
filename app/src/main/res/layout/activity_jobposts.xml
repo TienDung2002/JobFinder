@@ -63,7 +63,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/post_job_title"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/post_job_job_title_InputLayout"
@@ -113,7 +114,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/job_type"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <LinearLayout
                     android:id="@+id/post_job_job_type_InputLayout"
@@ -182,7 +184,8 @@
                             android:enabled="false"
                             android:paddingStart="50dp"
                             android:paddingEnd="20dp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/primary_color1"
+                            android:textStyle="bold"
                             android:textSize="20sp"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -245,7 +248,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/start_time"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/post_job_start_time_InputLayout"
@@ -294,7 +298,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/end_time"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/post_job_end_time_InputLayout"
@@ -343,7 +348,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/employee_amount"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/post_job_emp_amount_InputLayout"
@@ -392,7 +398,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/salary"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/post_job_salary_InputLayout"
@@ -441,7 +448,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/rec_address"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/post_job_address_InputLayout"
@@ -490,7 +498,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/job_des"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/post_job_des_InputLayout"
