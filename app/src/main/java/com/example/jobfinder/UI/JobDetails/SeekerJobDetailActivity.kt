@@ -4,34 +4,18 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.PostedJob.PostedJobActivity
-import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
-import com.example.jobfinder.databinding.ActivityRecruiterJobDetailBinding
+import com.example.jobfinder.databinding.ActivitySeekerJobDetailBinding
 
-class RecruiterJobDetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityRecruiterJobDetailBinding
-    private val viewModel: PostedJobViewModel by viewModels()
-    private val REQUEST_CODE_POSTED_JOB = 1001
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_POSTED_JOB && resultCode == Activity.RESULT_OK) {
-            viewModel.fetchPostedJobs()
-        }
-    }
-
+class SeekerJobDetailActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySeekerJobDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRecruiterJobDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = ActivitySeekerJobDetailBinding.inflate(layoutInflater)
+
         val job = intent.getParcelableExtra<JobModel>("job")
         val uid = job?.BUserId
 
@@ -42,6 +26,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             val emp = job.numOfRecruited+"/"+ job.empAmount
             val salaryTxt = "$"+job.salaryPerEmp+resources.getString(R.string.Ji_unit3)
             binding.jobDetailJobTitle.text = job.jobTitle
+            binding.jobDetailBuserName.text= job.BUserName
             binding.jobDetailJobType.text= job.jobType
             binding.jobDetailSalary.text= salaryTxt
             binding.jobDetailEmpAmount.text= emp
@@ -54,27 +39,22 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.detailJobScrollView.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
 
-            binding.deleteBtn.setOnClickListener {
-                viewModel.deleteJob(job.jobId.toString())
-                Toast.makeText(binding.root.context,
-                    ContextCompat.getString(binding.root.context, R.string.deleted_job), Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, PostedJobActivity::class.java)
-
-                startActivityForResult(intent, REQUEST_CODE_POSTED_JOB)
-                finish()
+            binding.jobDetailBuserName.setOnClickListener {
+                val intent = Intent(this, BUserDetailInfoActivity::class.java)
+                intent.putExtra("uid", uid)
+                startActivity(intent)
             }
 
-            binding.appliedListBtn.setOnClickListener {
+            binding.btnRecLogo.setOnClickListener {
                 val intent = Intent(this, BUserDetailInfoActivity::class.java)
-                intent.putExtra("uid", job.jobId)
+                intent.putExtra("uid", uid)
                 startActivity(intent)
             }
         }
 
         binding.backButton.setOnClickListener {
-            val intent = Intent(this, PostedJobActivity::class.java)
-            startActivity(intent)
+            val resultIntent = Intent()
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
 
@@ -86,5 +66,6 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
         }else{
             resources.getString(R.string.jdetail_shift_2)
         }
+
     }
 }

@@ -66,4 +66,5 @@ class PostedJobAdapter(private val context: Context, private val jobList: List<J
             else -> R.string.status_closed
         }
     }
+
 }

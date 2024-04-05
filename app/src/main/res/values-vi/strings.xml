@@ -233,10 +233,12 @@
     <string name="status_working">Đang hoạt động</string>
     <string name="status_recruiting">Đang tuyển</string>
     <string name="status_closed">Đã đóng</string>
+    <string name="applicant">Ứng viên</string>
 
     <!--    posted job-->
     <string name="posted_job_title">Việc đã đăng</string>
     <string name="no_posted_job">Chưa đăng tuyển</string>
+    <string name="deleted_job">Đã xóa công việc</string>
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Nhà tuyển dụng</string>

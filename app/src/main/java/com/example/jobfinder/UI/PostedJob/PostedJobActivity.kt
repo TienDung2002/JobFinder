@@ -20,8 +20,6 @@ class PostedJobActivity : AppCompatActivity() {
         binding = ActivityPostedJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val uid = FirebaseAuth.getInstance().currentUser?.uid
-
         binding.backButton.setOnClickListener {
             setResult(RESULT_OK)
             finish()
@@ -34,6 +32,7 @@ class PostedJobActivity : AppCompatActivity() {
                     val intent = Intent(this@PostedJobActivity, RecruiterJobDetailActivity::class.java)
                     intent.putExtra("job", job)
                     startActivity(intent)
+                    finish()
                 }
             })
             checkEmptyAdapter(postedJobList)
@@ -50,4 +49,5 @@ class PostedJobActivity : AppCompatActivity() {
             binding.noJob.visibility = View.GONE
         }
     }
+
 }

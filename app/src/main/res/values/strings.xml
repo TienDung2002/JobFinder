@@ -231,11 +231,13 @@
     <string name="status_working">Working</string>
     <string name="status_recruiting">Recruiting</string>
     <string name="status_closed">Closed</string>
+    <string name="applicant">Applicant</string>
+    <string name="deleted_job">Job deleted</string>
 
     <!--    posted job-->
     <string name="posted_job_title">Posted job</string>
     <string name="no_posted_job">No job posted</string>
 
-<!--    buser detail info-->
+    <!--    buser detail info-->
     <string name="recruiter_info_title">Recruiter\'s information</string>
 </resources>

@@ -18,6 +18,12 @@ class PostedJobViewModel : ViewModel() {
     private val auth = FirebaseAuth.getInstance()
     private val uid = auth.currentUser?.uid
     private val database = FirebaseDatabase.getInstance().getReference("Job").child(uid.toString())
+    private var onJobDeletedListener: OnJobDeletedListener? = null
+
+
+    interface OnJobDeletedListener {
+        fun onJobDeleted()
+    }
 
     fun fetchPostedJobs() {
         _isLoading.value = true
@@ -35,4 +41,14 @@ class PostedJobViewModel : ViewModel() {
             // Handle error
         }
     }
+
+    fun deleteJob(jobId: String) {
+        database.child(jobId).removeValue()
+            .addOnSuccessListener {
+                onJobDeletedListener?.onJobDeleted()
+            }
+            .addOnFailureListener { error ->
+            }
+    }
+
 }

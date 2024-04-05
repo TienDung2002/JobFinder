@@ -28,7 +28,8 @@
                     android:id="@+id/amount_in_wallet_title"
                     android:text="@string/wallet_amount_title"
                     android:textSize="20sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/primary_color1"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
