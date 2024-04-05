@@ -1,6 +1,5 @@
 package com.example.jobfinder.UI.JobDetails
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.PostedJob.PostedJobActivity
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.databinding.ActivityRecruiterJobDetailBinding
@@ -18,22 +16,12 @@ import com.example.jobfinder.databinding.ActivityRecruiterJobDetailBinding
 class RecruiterJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecruiterJobDetailBinding
     private val viewModel: PostedJobViewModel by viewModels()
-    private val REQUEST_CODE_POSTED_JOB = 1001
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_POSTED_JOB && resultCode == Activity.RESULT_OK) {
-            viewModel.fetchPostedJobs()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecruiterJobDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val job = intent.getParcelableExtra<JobModel>("job")
-        val uid = job?.BUserId
 
         binding.animationView.visibility = View.VISIBLE
         binding.detailJobScrollView.visibility = View.GONE
@@ -54,14 +42,11 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.detailJobScrollView.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
 
+            // Thay đổi phần xóa công việc để gửi kết quả trở lại
             binding.deleteBtn.setOnClickListener {
                 viewModel.deleteJob(job.jobId.toString())
-                Toast.makeText(binding.root.context,
-                    ContextCompat.getString(binding.root.context, R.string.deleted_job), Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, PostedJobActivity::class.java)
-
-                startActivityForResult(intent, REQUEST_CODE_POSTED_JOB)
+                Toast.makeText(binding.root.context, ContextCompat.getString(binding.root.context, R.string.deleted_job), Toast.LENGTH_SHORT).show()
+                setResult(RESULT_OK)
                 finish()
             }
 
@@ -73,8 +58,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener {
-            val intent = Intent(this, PostedJobActivity::class.java)
-            startActivity(intent)
+            setResult(RESULT_OK)
             finish()
         }
 

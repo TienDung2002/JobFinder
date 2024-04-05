@@ -10,7 +10,7 @@ import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 
-class PostedJobAdapter(private val context: Context, private val jobList: List<JobModel>) :
+class PostedJobAdapter(private val context: Context, private var jobList: List<JobModel>) :
     RecyclerView.Adapter<PostedJobAdapter.PostedJobViewHolder>() {
 
     interface OnItemClickListener {
@@ -22,6 +22,11 @@ class PostedJobAdapter(private val context: Context, private val jobList: List<J
     // Phương thức để thiết lập listener
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
+    }
+
+    fun updateData(newList: List<JobModel>) {
+        jobList = newList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostedJobViewHolder {
