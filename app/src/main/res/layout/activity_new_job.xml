@@ -93,7 +93,6 @@
 
     </RelativeLayout>
 
-
     <LinearLayout
         android:id="@+id/slideMenu"
         android:layout_width="280dp"

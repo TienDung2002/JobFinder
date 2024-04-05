@@ -117,6 +117,7 @@ class NewJobActivity : AppCompatActivity() {
 
         // nút filter
         binding.filterIcon.setOnClickListener{
+            // mở drawer
             binding.rootNewJob.openDrawer(GravityCompat.END)
 
         }
