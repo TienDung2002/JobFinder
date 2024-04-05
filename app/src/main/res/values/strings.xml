@@ -170,6 +170,8 @@
 
     <!--    Find new job-->
     <string name="hint_search">Search</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
     <string name="Ji_recAdd">Recruiter address</string>

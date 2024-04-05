@@ -9,16 +9,19 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 
 class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
     private lateinit var viewModel: FindNewJobViewModel
-
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,7 @@ class NewJobActivity : AppCompatActivity() {
         viewModel.addJobsData(JobModel("6", "Tạp vụ", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng" ))
         viewModel.addJobsData(JobModel("7", "Tạp vụ 2", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 2" ))
         viewModel.addJobsData(JobModel("8", "Tạp vụ 3", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 3" ))
+
 
         // Gán danh sách dữ liệu từ ViewModel cho adapter
         val JobsListData = viewModel.getJobsList()
@@ -111,11 +115,13 @@ class NewJobActivity : AppCompatActivity() {
 
 
 
-
         // nút filter
         binding.filterIcon.setOnClickListener{
-            Toast.makeText(this, "Filter clicked", Toast.LENGTH_SHORT).show()
+            binding.rootNewJob.openDrawer(GravityCompat.END)
+
         }
+
+
 
     }
 
