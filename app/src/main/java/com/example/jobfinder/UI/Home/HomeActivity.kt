@@ -7,10 +7,12 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.JobsManagement.JobsManagementActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
+import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.Utils.FragmentHelper
@@ -24,6 +26,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var viewModel: HomeViewModel
     private var backPressedCount = 0
     private var addingFragmentInProgress = false
+    private val jobViewModel: PostedJobViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +39,8 @@ class HomeActivity : AppCompatActivity() {
 
         // Khởi tạo viewmodel
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        jobViewModel.fetchPostedJobs()
 
         // Chỉ add fragment vào home khi trạng thái hiện tại là null (tránh xoay màn hình lại add lại gây lỗi)
         if (savedInstanceState == null) {

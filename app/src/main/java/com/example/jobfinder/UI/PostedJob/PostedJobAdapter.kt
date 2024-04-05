@@ -36,7 +36,6 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
 
     override fun onBindViewHolder(holder: PostedJobViewHolder, position: Int) {
         val job = jobList[position]
-        val status = GetData.getStatus(job.startTime.toString(), job.endTime.toString())
 
         // Bind data to views
         holder.jobTitleTextView.text = job.jobTitle
@@ -44,7 +43,7 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
         holder.numOfRecruitedTxtView.text= job.numOfRecruited
         holder.salaryTextView.text = job.salaryPerEmp
         holder.postTimeTextView.text = GetData.getDateFromString(job.postDate.toString())
-        holder.status.setText(getStatus(status))
+        holder.status.setText(getStatus(job.status.toString()))
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(job)

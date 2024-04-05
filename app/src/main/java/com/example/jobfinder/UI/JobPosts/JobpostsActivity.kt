@@ -169,7 +169,8 @@ class JobpostsActivity : AppCompatActivity() {
                                         "0",
                                         bUserName,
                                         jobType,
-                                        uid
+                                        uid,
+                                        "recruiting"
                                     )
 
                                     //add to firebase

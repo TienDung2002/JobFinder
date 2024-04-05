@@ -31,16 +31,24 @@ class PostedJobViewModel : ViewModel() {
             val postedJobList: MutableList<JobModel> = mutableListOf()
             for (jobSnapshot in dataSnapshot.children) {
                 val jobModel = jobSnapshot.getValue(JobModel::class.java)
-                jobModel?.let { postedJobList.add(it) }
+                jobModel?.let {
+                    // Update status based on start time and end time
+                    it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString())
+                    // Add the updated jobModel to the list
+                    postedJobList.add(it)
+                }
             }
             val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
             _postedJobList.value = sortedPostedJobList
+            // Update status to Firebase
+            updateStatusToFirebase(sortedPostedJobList)
             _isLoading.value = false
         }.addOnFailureListener { error ->
             _isLoading.value = false
             // Handle error
         }
     }
+
 
     fun deleteJob(jobId: String) {
         database.child(jobId).removeValue()
@@ -50,5 +58,18 @@ class PostedJobViewModel : ViewModel() {
             .addOnFailureListener { error ->
             }
     }
+
+    private fun updateStatusToFirebase(jobList: List<JobModel>) {
+        for (jobModel in jobList) {
+            database.child(jobModel.jobId.toString()).child("status").setValue(jobModel.status)
+                .addOnSuccessListener {
+                    // Status updated successfully
+                }
+                .addOnFailureListener { error ->
+                    // Handle error
+                }
+        }
+    }
+
 
 }
