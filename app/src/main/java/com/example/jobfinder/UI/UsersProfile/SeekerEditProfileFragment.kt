@@ -2,6 +2,8 @@ package com.example.jobfinder.UI.UsersProfile
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentSeekerEditProfileBinding
@@ -18,16 +24,20 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class SeekerEditProfileFragment : Fragment() {
     private lateinit var binding: FragmentSeekerEditProfileBinding
     private lateinit var auth: FirebaseAuth
+    lateinit var viewModel: ProfileViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
-
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid
@@ -71,6 +81,7 @@ class SeekerEditProfileFragment : Fragment() {
                     Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
                 }
             })
+            retriveImage(userId)
         }
 
     }
@@ -109,18 +120,27 @@ class SeekerEditProfileFragment : Fragment() {
             age.isEnabled = isEdited
 
             save.visibility = if (isEdited) View.VISIBLE else View.GONE
-            if (isEdited == false){
-                Toast.makeText(requireContext(), getString(R.string.edit_profile_disable), Toast.LENGTH_SHORT).show()
+            if (isEdited == false) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.edit_profile_disable),
+                    Toast.LENGTH_SHORT
+                ).show()
 
-            } else if (isEdited == true){
-                Toast.makeText(requireContext(), getString(R.string.edit_profile_enable), Toast.LENGTH_SHORT).show()
+            } else if (isEdited == true) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.edit_profile_enable),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
         // sau khi ấn button sửa, nếu ấn vào email sẽ thông báo
-        if (isEdited == true){
+        if (isEdited == true) {
             binding.editProfileEmail.setOnClickListener {
-                Toast.makeText(requireContext(), getString(R.string.edit_email), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.edit_email), Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         //button save
@@ -140,17 +160,23 @@ class SeekerEditProfileFragment : Fragment() {
             phone.error = if (isValidPhone) null else getString(R.string.error_invalid_hotline)
             age.error = if (isValidAge) null else getString(R.string.error_invalid_Age)
 
-            if (isValidName && isValidAddress && isValidPhone && isValidAge){
+            if (isValidName && isValidAddress && isValidPhone && isValidAge) {
                 val userId = FirebaseAuth.getInstance().currentUser?.uid
                 userId?.let {
-                    val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
-                    val NUser = FirebaseDatabase.getInstance().reference.child("NUserInfo").child(it)
+                    val userBI =
+                        FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
+                    val NUser =
+                        FirebaseDatabase.getInstance().reference.child("NUserInfo").child(it)
                     userBI.child("name").setValue(newName)
                     userBI.child("address").setValue(newAddress)
                     userBI.child("phone_num").setValue(newPhone)
                     NUser.child("age").setValue(newAge)
 
-                    Toast.makeText(requireContext(), getString(R.string.profile_edited), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.profile_edited),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 }
                 isEdited = false
@@ -162,9 +188,8 @@ class SeekerEditProfileFragment : Fragment() {
 
                 save.visibility = View.GONE
             } else {
-                checkToAutoFocus(isValidName , isValidAddress , isValidPhone , isValidAge)
+                checkToAutoFocus(isValidName, isValidAddress, isValidPhone, isValidAge)
             }
-
 
 
         }
@@ -174,7 +199,15 @@ class SeekerEditProfileFragment : Fragment() {
             requireActivity().setResult(Activity.RESULT_OK, resultIntent)
             requireActivity().finish()
         }
+
+        //button upload image
+        binding.uploadImage.setOnClickListener() {
+            val intent = Intent(requireContext(), profile_upload_image::class.java)
+            startActivity(intent)
+        }
+
     }
+
     private fun checkToAutoFocus(vararg isValidFields: Boolean) {
         val invalidFields = mutableListOf<EditText>()
         for ((index, isValid) in isValidFields.withIndex()) {
@@ -192,6 +225,24 @@ class SeekerEditProfileFragment : Fragment() {
         if (invalidFields.isNotEmpty()) {
             invalidFields.first().requestFocus()
         }
+    }
+
+    private fun retriveImage(userid : String) {
+        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+        val imageRef: StorageReference = storageReference.child(userid)
+
+        imageRef.downloadUrl
+            .addOnSuccessListener { uri: Uri ->
+                viewModel.imageUri = uri
+                Glide.with(requireContext())
+                    .load(viewModel.imageUri)
+                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
+                    .into(binding.profileImage)
+
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(requireContext(), "Failed to Retrieve Image: " + exception.message, Toast.LENGTH_LONG).show()
+            }
     }
 
 }

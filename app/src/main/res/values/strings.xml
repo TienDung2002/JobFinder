@@ -162,8 +162,6 @@
     <string name="profile_edited">Profile edited</string>
 
 
-
-
     <!-- Edit Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="edit_profile_img">Tap to upload new image</string>
@@ -175,6 +173,18 @@
     <string name="edit_profile_enable">Edit enable</string>
     <string name="edit_profile_disable">Edit disable</string>
     <string name="edit_email">Emails are not allowed to be edited</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="profile_image_discard">Discard</string>
+    <string name="profile_image_choose">Choose profile image</string>
+    <string name="profile_image_please_choose">Please select image to upload</string>
+    <string name="profile_image_uploading">Uploading image</string>
+    <string name="profile_image_process">Processing</string>
+    <string name="profile_image_save_success">Image uploaded successfully</string>
+    <string name="profile_image_save_failed">Image uploaded failed</string>
+
+
+
+
 
     <string name="edit_taxcode">Tax code</string>
     <string name="edit_description">Recruter description</string>
@@ -186,8 +196,6 @@
     <string name="error_invalid_BusSec">Business sectors is blank</string>
     <string name="error_invalid_Age">Age is blank or age is less than 18</string>
     <string name="error_invalid_Tax">Tax code cannot be empty and must be 10 or 13 numbers</string>
-
-
 
 
     <!--    Find new job-->
@@ -235,7 +243,7 @@
     <string name="apply">Apply</string>
     <string name="job_detail_title">Job detail</string>
 
-<!--    posted job-->
+    <!--    posted job-->
     <string name="posted_job_title">Posted job</string>
     <string name="no_posted_job">No job posted</string>
 </resources>
