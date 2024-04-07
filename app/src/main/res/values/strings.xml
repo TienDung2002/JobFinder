@@ -164,7 +164,7 @@
 
     <!-- Edit Profile -->
     <string name="edit_profile">Edit profile</string>
-    <string name="edit_profile_img">Tap to upload new image</string>
+    <string name="edit_profile_img">Tap to edit image</string>
     <string name="edit_profile_name">Name</string>
     <string name="edit_profile_email">Email</string>
     <string name="edit_profile_phonenum">Phone number</string>
@@ -181,6 +181,14 @@
     <string name="profile_image_process">Processing</string>
     <string name="profile_image_save_success">Image uploaded successfully</string>
     <string name="profile_image_save_failed">Image uploaded failed</string>
+    <string name="profile_image_deleted_success">Image deleted success</string>
+    <string name="profile_image_delete_failed">Image deleted failed</string>
+
+    <string name="profile_image_delete_confim">Confirm delete image</string>
+    <string name="profile_image_delete_confim_noti">Note: Deleting current image will return to the default avatar.</string>
+    <string name="profile_image_delete_confim_yes">Yes</string>
+    <string name="profile_image_delete_confim_no">No</string>
+
 
 
 

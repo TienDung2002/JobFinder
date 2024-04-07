@@ -165,7 +165,7 @@
 
     <!-- Edit Profile -->
     <string name="edit_profile">Chỉnh sửa hồ sơ</string>
-    <string name="edit_profile_img">Nhấn để tải lên hình ảnh mới</string>
+    <string name="edit_profile_img">Nhấn để chỉnh sửa ảnh hiện tại</string>
     <string name="edit_profile_name">Tên hồ sơ</string>
     <string name="edit_profile_email">Email</string>
     <string name="edit_profile_phonenum">Số điện thoại</string>
@@ -175,13 +175,20 @@
     <string name="edit_profile_disable">Tắt chỉnh sửa</string>
     <string name="edit_email">Email không được phép chỉnh sửa</string>
     <string name="profile_image">Ảnh đại diện</string>
-    <string name="profile_image_discard">Hủy bỏ</string>
+    <string name="profile_image_discard">Xóa bỏ</string>
     <string name="profile_image_choose">Chọn ảnh đại diện</string>
     <string name="profile_image_please_choose">Vui lòng chọn ảnh để tải lên</string>
     <string name="profile_image_uploading">Đang tải ảnh lên</string>
     <string name="profile_image_process">Đang xử lý</string>
     <string name="profile_image_save_success">Tải ảnh lên thành công</string>
     <string name="profile_image_save_failed">Tải ảnh lên thất bại</string>
+    <string name="profile_image_deleted_success">Xóa ảnh thành công</string>
+    <string name="profile_image_delete_failed">Xóa ảnh thất bại</string>
+
+    <string name="profile_image_delete_confim">Xác nhận xóa ảnh</string>
+    <string name="profile_image_delete_confim_noti">Lưu ý: Xóa ảnh hiện tại sẽ trở về ảnh đại diện mặc định.</string>
+    <string name="profile_image_delete_confim_yes">Có</string>
+    <string name="profile_image_delete_confim_no">Không</string>
 
 
 

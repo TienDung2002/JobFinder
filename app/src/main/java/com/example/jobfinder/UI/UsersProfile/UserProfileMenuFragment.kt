@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.example.jobfinder.R
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.databinding.FragmentUserProfileMenuBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -30,6 +31,7 @@ class UserProfileMenuFragment : Fragment() {
     private lateinit var binding: FragmentUserProfileMenuBinding
     private lateinit var auth: FirebaseAuth
     lateinit var viewModel: ProfileViewModel
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +57,7 @@ class UserProfileMenuFragment : Fragment() {
                 }
             })
 
-            retriveImage(userId)
+            retrieveImage(userId)
         }
 
 
@@ -89,13 +91,16 @@ class UserProfileMenuFragment : Fragment() {
 
 
     }
-    private fun retriveImage(userid : String) {
+    private fun retrieveImage(userid : String) {
         val storageReference: StorageReference = FirebaseStorage.getInstance().reference
         val imageRef: StorageReference = storageReference.child(userid)
+        Log.d("SeekerEditProfileFragment", "ImageRef path: $imageRef")
+
 
         imageRef.downloadUrl
             .addOnSuccessListener { uri: Uri ->
-//                viewModel.imageUri = uri
+                binding.profileImage.setBackgroundResource(R.drawable.image_loading_80px)
+                viewModel.imageUri = uri
                 Glide.with(requireContext())
                     .load(uri)
                     .apply(RequestOptions.bitmapTransform(CircleCrop()))
@@ -103,9 +108,12 @@ class UserProfileMenuFragment : Fragment() {
 
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Failed to Retrieve Image: " + exception.message, Toast.LENGTH_LONG).show()
+                Log.e("UserProfileMenuFragment", "Failed to retrieve image: ${exception.message}")
+                binding.profileImage.setBackgroundResource(R.drawable.profile)
+
             }
     }
+
 
 
 

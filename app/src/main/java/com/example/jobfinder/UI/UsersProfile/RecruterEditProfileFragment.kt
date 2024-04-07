@@ -2,6 +2,7 @@ package com.example.jobfinder.UI.UsersProfile
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,10 @@ import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.FragmentRecruterEditProfileBinding
@@ -20,12 +25,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class RecruterEditProfileFragment : Fragment() {
     private lateinit var binding: FragmentRecruterEditProfileBinding
     private lateinit var auth: FirebaseAuth
+    lateinit var viewModel: ProfileViewModel
     private var BusTypeChoosed = false
     private var BusSecChoosed = false
 
@@ -33,6 +40,8 @@ class RecruterEditProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+
 
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid
@@ -88,6 +97,10 @@ class RecruterEditProfileFragment : Fragment() {
                     Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
                 }
             })
+
+            // fetch ảnh
+            retrieveImage(userId)
+
 
         }
 
@@ -276,5 +289,27 @@ class RecruterEditProfileFragment : Fragment() {
         if (invalidFields.isNotEmpty()) {
             invalidFields.first().requestFocus()
         }
+    }
+
+    private fun retrieveImage(userid : String) {
+        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+        val imageRef: StorageReference = storageReference.child(userid)
+        Log.d("RecruterEditProfileFragment", "ImageRef is null: ${imageRef == null}")
+
+        imageRef.downloadUrl
+            .addOnSuccessListener { uri: Uri ->
+                binding.profileImage.setBackgroundResource(R.drawable.image_loading_80px)
+                viewModel.imageUri = uri
+                Glide.with(requireContext())
+                    .load(viewModel.imageUri)
+                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
+                    .into(binding.profileImage)
+
+            }
+            .addOnFailureListener { exception ->
+                Log.e("RecruterEditProfileFragment", "Failed to retrieve image: ${exception.message}")
+                binding.profileImage.setBackgroundResource(R.drawable.profile)
+
+            }
     }
 }

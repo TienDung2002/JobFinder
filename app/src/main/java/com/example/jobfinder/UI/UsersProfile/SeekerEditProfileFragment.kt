@@ -32,6 +32,7 @@ class SeekerEditProfileFragment : Fragment() {
     private lateinit var binding: FragmentSeekerEditProfileBinding
     private lateinit var auth: FirebaseAuth
     lateinit var viewModel: ProfileViewModel
+    
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +65,7 @@ class SeekerEditProfileFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
+                    Log.e("SeekerEditProfileFragment", "Database error: ${error.message}")
                 }
             })
             database.child("NUserInfo").child(it).addListenerForSingleValueEvent(object :
@@ -78,10 +79,11 @@ class SeekerEditProfileFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
+                    Log.e("SeekerEditProfileFragment", "Database error: ${error.message}")
                 }
             })
-            retriveImage(userId)
+            // fetch ảnh
+            retrieveImage(userId)
         }
 
     }
@@ -91,8 +93,8 @@ class SeekerEditProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSeekerEditProfileBinding.inflate(inflater, container, false)
-
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -227,12 +229,14 @@ class SeekerEditProfileFragment : Fragment() {
         }
     }
 
-    private fun retriveImage(userid : String) {
+    private fun retrieveImage(userid : String) {
         val storageReference: StorageReference = FirebaseStorage.getInstance().reference
         val imageRef: StorageReference = storageReference.child(userid)
+        Log.d("SeekerEditProfileFragment", "ImageRef is null: ${imageRef == null}")
 
         imageRef.downloadUrl
             .addOnSuccessListener { uri: Uri ->
+                binding.profileImage.setBackgroundResource(R.drawable.image_loading_80px)
                 viewModel.imageUri = uri
                 Glide.with(requireContext())
                     .load(viewModel.imageUri)
@@ -241,8 +245,12 @@ class SeekerEditProfileFragment : Fragment() {
 
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Failed to Retrieve Image: " + exception.message, Toast.LENGTH_LONG).show()
+                Log.e("SeekerEditProfileFragment", "Failed to retrieve image: ${exception.message}")
+                binding.profileImage.setBackgroundResource(R.drawable.profile)
+
             }
     }
+
+
 
 }
