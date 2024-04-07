@@ -78,9 +78,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
-                android:background="@drawable/btn_wrapper_pcolor1"
+                android:background="@drawable/btn_wrapper_color_red"
                 android:text="@string/profile_image_discard"
-                android:textColor="@color/white"
+                android:textColor="@color/primary_color1"
                 android:textSize="20sp" />
 
             <Button
@@ -90,7 +90,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/btn_wrapper_pcolor4"
                 android:text="@string/edit_profile_save"
-                android:textColor="@color/black"
+                android:textColor="@color/primary_color1"
                 android:textSize="20sp" />
 
         </LinearLayout>
