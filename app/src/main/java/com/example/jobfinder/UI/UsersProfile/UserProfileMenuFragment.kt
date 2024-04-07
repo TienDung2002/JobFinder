@@ -86,7 +86,7 @@ class UserProfileMenuFragment : Fragment() {
             val intent = Intent(requireContext(), SelectRoleActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-            Toast.makeText(context, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.profile_logout_toast, Toast.LENGTH_SHORT).show()
             requireActivity().finishAffinity()
 
         }

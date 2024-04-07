@@ -162,6 +162,8 @@
     <string name="profile_logout">Đăng xuất</string>
     <string name="profile">Hồ sơ cá nhân</string>
     <string name="profile_edited">Hồ sơ cá nhân đã được chỉnh sửa</string>
+    <string name="profile_logout_toast">Đăng xuất thành công</string>
+
 
     <!-- Edit Profile -->
     <string name="edit_profile">Chỉnh sửa hồ sơ</string>
