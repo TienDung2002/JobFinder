@@ -83,9 +83,11 @@ class UserProfileMenuFragment : Fragment() {
         //logout
         binding.profileLogout.setOnClickListener {
             auth.signOut()
-            startActivity(Intent(context, SelectRoleActivity::class.java))
+            val intent = Intent(requireContext(), SelectRoleActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             Toast.makeText(context, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
-            requireActivity().finish()
+            requireActivity().finishAffinity()
 
         }
 

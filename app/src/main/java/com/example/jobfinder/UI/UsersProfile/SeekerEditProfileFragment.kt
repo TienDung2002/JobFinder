@@ -32,7 +32,7 @@ class SeekerEditProfileFragment : Fragment() {
     private lateinit var binding: FragmentSeekerEditProfileBinding
     private lateinit var auth: FirebaseAuth
     lateinit var viewModel: ProfileViewModel
-    
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

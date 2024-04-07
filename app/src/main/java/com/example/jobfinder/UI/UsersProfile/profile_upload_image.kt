@@ -145,7 +145,7 @@ class profile_upload_image : AppCompatActivity() {
     private fun deleteImage(userId: String) {
         val storageReference: StorageReference = FirebaseStorage.getInstance().getReference()
         val imageRef: StorageReference = storageReference.child(userId)
-
+        // gỡ ảnh hiện tại
         imageRef.delete().addOnSuccessListener {
             Glide.with(this)
                 .load(imageRef)
@@ -157,6 +157,7 @@ class profile_upload_image : AppCompatActivity() {
                 applicationContext, R.string.profile_image_deleted_success,
                 Toast.LENGTH_LONG
             ).show()
+            //thay bằng ảnh default
             binding.profileImage.setBackgroundResource(R.drawable.profile)
         }.addOnFailureListener {
             Toast.makeText(
@@ -171,12 +172,13 @@ class profile_upload_image : AppCompatActivity() {
         val imageRef: StorageReference = storageReference.child(userid)
         Log.d("SeekerEditProfileFragment", "ImageRef path: $imageRef")
 
+        // gỡ ảnh hiện tại
         Glide.with(this)
             .load(imageRef)
             .apply(RequestOptions.bitmapTransform(CircleCrop()))
             .into(binding.profileImage)
             .clearOnDetach()
-
+        // gắn ảnh mới đã fetch vào
         imageRef.downloadUrl
             .addOnSuccessListener { uri: Uri ->
                 binding.profileImage.setBackgroundResource(R.drawable.image_loading_80px)
