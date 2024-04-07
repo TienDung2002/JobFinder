@@ -72,15 +72,14 @@
                         android:layout_marginTop="40dp"
                         android:background="@drawable/image_loading_80px"/>
                     <TextView
+                        android:id="@+id/upload_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/edit_profile_img"
-                        android:padding="15dp"
-                        android:textColor="@color/primary_color2"
-                        android:textSize="15sp"
                         android:layout_gravity="center_horizontal"
-
-                        />
+                        android:padding="15dp"
+                        android:text="@string/edit_profile_img"
+                        android:textColor="@color/primary_color2"
+                        android:textSize="15sp" />
 
 
 

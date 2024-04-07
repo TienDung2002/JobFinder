@@ -245,6 +245,11 @@ class RecruterEditProfileFragment : Fragment() {
             BusSecChoosed = true
         }
 
+        binding.uploadImage.setOnClickListener() {
+            val intent = Intent(requireContext(), profile_upload_image::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun showPopupMenu(view: View, menuResId: Int, itemClickListener: (String) -> Unit) {
@@ -294,7 +299,7 @@ class RecruterEditProfileFragment : Fragment() {
     private fun retrieveImage(userid : String) {
         val storageReference: StorageReference = FirebaseStorage.getInstance().reference
         val imageRef: StorageReference = storageReference.child(userid)
-        Log.d("RecruterEditProfileFragment", "ImageRef is null: ${imageRef == null}")
+
 
         imageRef.downloadUrl
             .addOnSuccessListener { uri: Uri ->
