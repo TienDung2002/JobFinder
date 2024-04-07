@@ -87,8 +87,10 @@ class profile_upload_image : AppCompatActivity() {
             fileUri = data.data
             try {
                 val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, fileUri)
-                binding.profileImage.setImageBitmap(bitmap)
-                binding.profileImage.setBackgroundColor(Color.BLACK)
+                Glide.with(this)
+                    .load(bitmap)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(binding.profileImage)
 
             } catch (e: Exception) {
                 Log.e("Exception", "Error: " + e)
