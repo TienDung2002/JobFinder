@@ -85,7 +85,7 @@ object GetData {
             val diffInMillis = endDate.time - startDate.time
 
             // Chuyển đổi số miliseconds thành số ngày và trả về kết quả
-            return (diffInMillis / (1000 * 60 * 60 * 24)).toInt()
+            return ((diffInMillis / (1000 * 60 * 60 * 24)).toInt()) +1
         } catch (e: Exception) {
             // Xử lý nếu có lỗi xảy ra trong quá trình chuyển đổi ngày
             e.printStackTrace()
@@ -114,7 +114,7 @@ object GetData {
         val number1 = string1.toFloatOrNull() ?: 0f
         val number2 = string2.toFloatOrNull() ?: 0f
 
-        val result = number1 * number2 +1
+        val result = number1 * number2
 
         return result.toString()
     }
