@@ -114,7 +114,7 @@ object GetData {
         val number1 = string1.toFloatOrNull() ?: 0f
         val number2 = string2.toFloatOrNull() ?: 0f
 
-        val result = number1 * number2
+        val result = number1 * number2 +1
 
         return result.toString()
     }
