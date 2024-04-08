@@ -172,6 +172,19 @@
     <string name="hint_search">Search</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="sortby">Sort by</string>
+    <string name="sort_JobTitle">Job title</string>
+    <string name="sort_JT_All">All</string>
+    <string name="sort_JT_AtoZ">In order A-Z</string>
+    <string name="sort_Recname">Recruiter name</string>
+    <string name="sort_Rec_All">All</string>
+    <string name="sort_Rec_AtoZ">In order A-Z</string>
+    <string name="sort_postedTime">Posted time</string>
+    <string name="sort_PT_Anytime">Any time</string>
+    <string name="sort_PT_Today">Today</string>
+    <string name="sort_PT_thisMonth">This month</string>
+    <string name="sort_workShift">Work shift</string>
+    <string name="sort_salary">Salary</string>
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
     <string name="Ji_recAdd">Recruiter address</string>
