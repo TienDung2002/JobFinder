@@ -183,7 +183,6 @@
                             android:background="@drawable/transparent_background"
                             android:enabled="false"
                             android:paddingStart="50dp"
-                            android:paddingEnd="20dp"
                             android:textColor="@color/primary_color1"
                             android:textStyle="bold"
                             android:textSize="20sp"
@@ -209,11 +208,10 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/shift_1"
-                            android:textSize="16sp"
+                            android:text="@string/jdetail_shift_1"
+                            android:textSize="14sp"
                             android:id="@+id/rec_shift1"/>
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -224,8 +222,8 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/shift_2"
-                            android:textSize="16sp"
+                            android:text="@string/jdetail_shift_2"
+                            android:textSize="14sp"
                             android:id="@+id/rec_shift2"/>
 
                     </LinearLayout>

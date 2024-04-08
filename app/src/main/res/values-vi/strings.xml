@@ -228,8 +228,8 @@
     <!--    job detail-->
     <string name="apply">Ứng tuyển</string>
     <string name="job_detail_title">Chi tiết công việc</string>
-    <string name="jdetail_shift_1">7:30 đến 14:30</string>
-    <string name="jdetail_shift_2">14:30 đến 21:30</string>
+    <string name="jdetail_shift_1">7:30-14:30</string>
+    <string name="jdetail_shift_2">14:30-21:30</string>
     <string name="status_row_posted_job">Trạng thái:</string>
     <string name="status">Trạng thái</string>
     <string name="status_working">Đang hoạt động</string>
