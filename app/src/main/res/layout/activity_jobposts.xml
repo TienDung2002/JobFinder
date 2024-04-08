@@ -159,78 +159,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shift"
+                        android:textSize="20sp"
+                        android:textColor="@color/primary_color1"
+                        android:textStyle="bold"/>
+
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/post_job_time_start_InputLayout"
                         android:layout_width="match_parent"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         app:boxStrokeColor="@color/black"
                         app:boxStrokeErrorColor="@color/black"
-                        app:startIconDrawable="@drawable/clock"
                         app:startIconTint="@color/black"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/post_job_start_hr"
                             android:layout_width="match_parent"
-                            android:text="@string/shift"
                             android:layout_height="match_parent"
+                            android:hint="@string/shift_1"
+                            android:gravity="end"
                             android:background="@drawable/transparent_background"
-                            android:enabled="false"
-                            android:paddingStart="50dp"
-                            android:textColor="@color/primary_color1"
-                            android:textStyle="bold"
-                            android:textSize="20sp"
-                            />
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="8dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/post_job_time_end_InputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:boxStrokeColor="@color/black"
+                        app:boxStrokeErrorColor="@color/black"
+                        app:startIconTint="@color/black"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/post_job_end_hr"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/shift_2"
+                            android:gravity="end"
+                            android:background="@drawable/transparent_background"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:paddingTop="16dp"
+                            android:paddingBottom="8dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:baselineAligned="false"
-                    android:id="@+id/shift_choose">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/jdetail_shift_1"
-                            android:textSize="14sp"
-                            android:id="@+id/rec_shift1"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end">
-
-                        <CheckBox
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/jdetail_shift_2"
-                            android:textSize="14sp"
-                            android:id="@+id/rec_shift2"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 

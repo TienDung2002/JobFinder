@@ -195,12 +195,15 @@
     <string name="job_des">Mô tả công việc</string>
     <string name="salary">Mức lương</string>
     <string name="employee_amount">Số người</string>
-    <string name="start_time">Thời gian bắt đầu</string>
-    <string name="end_time">Thời gian kết thúc</string>
+    <string name="start_time">Ngày bắt đầu</string>
+    <string name="end_time">Ngày kết thúc</string>
     <string name="shift">Ca làm</string>
-    <string name="shift_1">Ca 1</string>
-    <string name="shift_2">Ca 2</string>
+    <string name="shift_1">Giờ bắt đầu ca</string>
+    <string name="shift_2">Giờ kết thúc ca</string>
     <string name="add_job">Đăng tuyển</string>
+    <string name="shift_start_blank">Chưa chọn giờ bắt đầu ca</string>
+    <string name="shift_end_blank">Chưa chọn giờ kết thúc ca</string>
+    <string name="end_shift_time_be4_start">Giờ kết thúc phải sau giờ bắt đầu ít nhất 1 giờ</string>
     <string name="no_shift_choose">Chưa chọn ca làm</string>
     <string name="no_post_job_title">Chưa có tiêu đề</string>
     <string name="no_emp_amount">Số lượng nhân viên dưới 10</string>
@@ -210,7 +213,7 @@
     <string name="post_job_success">Đã đăng</string>
     <string name="no_start_time">Ngày bắt đầu trống</string>
     <string name="no_end_time">Ngày kết thúc trống</string>
-    <string name="end_time_be4_start">Thời gian kết thúc phải sau thời gian bắt đầu</string>
+    <string name="end_time_be4_start">Ngày kết thúc phải sau ngày bắt đầu</string>
     <string name="job_type">Loại công việc</string>
     <string-array name="job_types_array">
         <item>Nhân viên bán hàng</item>

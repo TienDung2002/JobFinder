@@ -42,14 +42,14 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // gán data cứng vào viewmodel và adapter
-        viewModel.addJobsData(JobModel("1", "Intern Javascript", "2", "", "", "3", "30000", "", "", "", "01/4/2024", "2", "Công ty TNHH Hoàng Hàu" ))
-        viewModel.addJobsData(JobModel("2", "Senior Java", "2", "", "", "3", "45000", "", "", "", "02/4/2024", "1", "Công ty Nguyên Nguyễn" ))
-        viewModel.addJobsData(JobModel("3", "Intent SQL", "2", "", "", "3", "5000", "", "", "", "03/4/2024", "0", "Tập đoàn Mai Đào" ))
-        viewModel.addJobsData(JobModel("4", "Nhân viên lau bàn", "2", "", "", "3", "2000", "", "", "", "03/4/2024", "1", "Công ty Dũng hót boi" ))
-        viewModel.addJobsData(JobModel("5", "Senior đánh giày", "2", "", "", "3", "123000", "", "", "", "05/4/2024", "2", "Công ty TNHH 10 thành viên" ))
-        viewModel.addJobsData(JobModel("6", "Tạp vụ", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng" ))
-        viewModel.addJobsData(JobModel("7", "Tạp vụ 2", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 2" ))
-        viewModel.addJobsData(JobModel("8", "Tạp vụ 3", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 3" ))
+//        viewModel.addJobsData(JobModel("1", "Intern Javascript", "2", "", "", "3", "30000", "", "", "", "01/4/2024", "2", "Công ty TNHH Hoàng Hàu" ))
+//        viewModel.addJobsData(JobModel("2", "Senior Java", "2", "", "", "3", "45000", "", "", "", "02/4/2024", "1", "Công ty Nguyên Nguyễn" ))
+//        viewModel.addJobsData(JobModel("3", "Intent SQL", "2", "", "", "3", "5000", "", "", "", "03/4/2024", "0", "Tập đoàn Mai Đào" ))
+//        viewModel.addJobsData(JobModel("4", "Nhân viên lau bàn", "2", "", "", "3", "2000", "", "", "", "03/4/2024", "1", "Công ty Dũng hót boi" ))
+//        viewModel.addJobsData(JobModel("5", "Senior đánh giày", "2", "", "", "3", "123000", "", "", "", "05/4/2024", "2", "Công ty TNHH 10 thành viên" ))
+//        viewModel.addJobsData(JobModel("6", "Tạp vụ", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng" ))
+//        viewModel.addJobsData(JobModel("7", "Tạp vụ 2", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 2" ))
+//        viewModel.addJobsData(JobModel("8", "Tạp vụ 3", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 3" ))
 
 
         // Gán danh sách dữ liệu từ ViewModel cho adapter

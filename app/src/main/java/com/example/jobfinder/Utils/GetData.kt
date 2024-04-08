@@ -146,4 +146,43 @@ object GetData {
 
     }
 
+    fun isTimeBeforeOneHour(timeA: String, timeB: String): Boolean {
+        if(timeA.isNotEmpty() && timeB.isNotEmpty()) {
+            try {
+                val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                sdf.isLenient = false
+
+                // Parse thời gian từ chuỗi
+                val dateA = sdf.parse(timeA)
+                val dateB = sdf.parse(timeB)
+
+                // Sử dụng Calendar để tính toán chênh lệch thời gian
+                val calendarA = Calendar.getInstance().apply { time = dateA }
+                val calendarB = Calendar.getInstance().apply { time = dateB }
+
+                // Xóa thông tin liên quan đến ngày
+                calendarA.set(Calendar.YEAR, 0)
+                calendarA.set(Calendar.MONTH, 0)
+                calendarA.set(Calendar.DAY_OF_MONTH, 0)
+
+                calendarB.set(Calendar.YEAR, 0)
+                calendarB.set(Calendar.MONTH, 0)
+                calendarB.set(Calendar.DAY_OF_MONTH, 0)
+
+                // Chênh lệch thời gian tính bằng millisecond
+                val timeDifference = calendarB.timeInMillis - calendarA.timeInMillis
+
+                // Chuyển đổi 1 giờ thành millisecond
+                val oneHourInMillis = 3600000 // 1 giờ = 60 phút * 60 giây * 1000 milliseconds
+
+                // Kiểm tra xem thời gian chênh lệch có lớn hơn hoặc bằng 1 tiếng không
+                return timeDifference >= oneHourInMillis
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return false
+    }
+
+
 }

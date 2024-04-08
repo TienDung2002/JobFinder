@@ -7,7 +7,6 @@ import android.os.Parcelable
 class JobModel : Parcelable {
     var jobId: String? = null
     var jobTitle: String? = null
-    var shift: String? = null
     var startTime: String? = null
     var endTime: String? = null
     var empAmount: String? = null
@@ -21,6 +20,8 @@ class JobModel : Parcelable {
     var jobType: String?=null
     var BUserId: String? =null
     var status:String? = null
+    var startHr: String?=null
+    var endHr:String? =null
 
     constructor() {
         // Default constructor required for Firebase
@@ -29,7 +30,6 @@ class JobModel : Parcelable {
     constructor(
         jobId: String?,
         jobTitle: String?,
-        shift: String?,
         startTime: String?,
         endTime: String?,
         empAmount: String?,
@@ -42,11 +42,12 @@ class JobModel : Parcelable {
         BUserName: String?,
         jobType: String?,
         BUserId: String?,
-        status: String?
+        status: String?,
+        startHr:String?,
+        endHr:String?
     ) {
         this.jobId = jobId
         this.jobTitle = jobTitle
-        this.shift = shift
         this.startTime = startTime
         this.endTime = endTime
         this.empAmount = empAmount
@@ -60,6 +61,8 @@ class JobModel : Parcelable {
         this.jobType = jobType
         this.BUserId = BUserId
         this.status = status
+        this.startHr= startHr
+        this.endHr= endHr
     }
 
 
@@ -67,7 +70,6 @@ class JobModel : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(jobId)
         parcel.writeString(jobTitle)
-        parcel.writeString(shift)
         parcel.writeString(startTime)
         parcel.writeString(endTime)
         parcel.writeString(empAmount)
@@ -81,9 +83,12 @@ class JobModel : Parcelable {
         parcel.writeString(jobType)
         parcel.writeString(BUserId)
         parcel.writeString(status)
+        parcel.writeString(startHr)
+        parcel.writeString(endHr)
     }
 
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
