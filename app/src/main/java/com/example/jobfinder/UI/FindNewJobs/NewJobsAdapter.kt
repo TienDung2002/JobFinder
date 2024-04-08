@@ -10,16 +10,16 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jobfinder.Datas.Model.newJobHomeData
+import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import java.util.Locale
 
-class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataImage: ImageView) :
+class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView) :
     RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
-    private var originalData: List<newJobHomeData> = list
+    private var originalData: List<JobModel> = list
 
     interface onItemClickListener {
         fun onItemClicked(position: Int) {}
@@ -64,7 +64,7 @@ class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataI
         return NewJobViewHolder(view, mListener)
     }
 
-    // gán data vào từng phần tử trong item (gán data trong Model.newJobHomeData vào textview)
+    // gán data vào từng phần tử trong item (gán data trong Model.JobModel vào textview)
     override fun onBindViewHolder(holder: NewJobViewHolder, position: Int) {
         val salaryValue = list[position].salaryPerEmp?.toDouble() ?: 0.0  //default salary là 0.0
         // Định dạng giá trị salary với dấu phẩy VNĐ
@@ -98,7 +98,7 @@ class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataI
             // logic lọc data và trả về kết quả lọc
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val queryInput = constraint?.toString()?.trim()?.lowercase() ?: ""
-                val filteredList = mutableListOf<newJobHomeData>()
+                val filteredList = mutableListOf<JobModel>()
 
                 if (queryInput.isEmpty()) {
                     filteredList.addAll(originalData)
@@ -121,7 +121,7 @@ class NewJobsAdapter(private var list: List<newJobHomeData>, private val noDataI
 
             // Cập nhật dữ liệu với kết quả sau khi lọc đã sẵn sàng
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val filteredList = results?.values as? List<newJobHomeData> ?: emptyList()
+                val filteredList = results?.values as? List<JobModel> ?: emptyList()
 
                 list = filteredList
                 notifyDataSetChanged()

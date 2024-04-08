@@ -172,6 +172,8 @@
 
     <!--    Find new job-->
     <string name="hint_search">Tìm kiếm</string>
+    <string name="open">Mở</string>
+    <string name="close">Đóng</string>
     <!--    List job item-->
     <string name="Ji_recName">Tên nhà tuyển dụng</string>
     <string name="Ji_recAdd">Địa chỉ làm việc</string>

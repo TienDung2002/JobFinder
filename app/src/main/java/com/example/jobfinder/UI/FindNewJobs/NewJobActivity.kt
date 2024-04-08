@@ -9,16 +9,19 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.jobfinder.Datas.Model.newJobHomeData
+import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 
 class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
     private lateinit var viewModel: FindNewJobViewModel
-
+    lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +42,15 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // gán data cứng vào viewmodel và adapter
-        viewModel.addJobsData(newJobHomeData("1", "Công ty TNHH Dục", "Intern Javascript", "", "", "", "3", "1", "160000", "", "", "", "25/3/2024" ))
-        viewModel.addJobsData(newJobHomeData("2", "Công ty TNHH Hoằng", "Fresher Java", "", "", "", "3", "1", "100000", "", "", "", "26/3/2024" ))
-        viewModel.addJobsData(newJobHomeData("3", "Công ty TNHH Mai", "Senior SQL", "", "", "", "3", "1", "240000", "", "", "", "27/3/2024" ))
-        viewModel.addJobsData(newJobHomeData("4", "Công ty Xi măng Nguyễn", "Trộn vữa", "", "", "", "3", "1", "64000", "", "", "", "28/3/2024" ))
-        viewModel.addJobsData(newJobHomeData("5", "Công ty TNHH Dục", "Intern Javascript", "", "", "", "3", "1", "160000", "", "", "", "29/3/2024" ))
-        viewModel.addJobsData(newJobHomeData("6", "Công ty TNHH Hoằng", "Fresher Java", "", "", "", "3", "1", "100000", "", "", "", "29/3/2024" ))
-        viewModel.addJobsData(newJobHomeData("7", "Công ty TNHH Mai", "Senior SQL", "", "", "", "3", "1", "240000", "", "", "", "27/3/2024" ))
-        viewModel.addJobsData(newJobHomeData("8", "Công ty Xi măng Nguyễn", "Trộn vữa", "", "", "", "3", "1", "64000", "", "", "", "28/3/2024" ))
+        viewModel.addJobsData(JobModel("1", "Intern Javascript", "2", "", "", "3", "30000", "", "", "", "01/4/2024", "2", "Công ty TNHH Hoàng Hàu" ))
+        viewModel.addJobsData(JobModel("2", "Senior Java", "2", "", "", "3", "45000", "", "", "", "02/4/2024", "1", "Công ty Nguyên Nguyễn" ))
+        viewModel.addJobsData(JobModel("3", "Intent SQL", "2", "", "", "3", "5000", "", "", "", "03/4/2024", "0", "Tập đoàn Mai Đào" ))
+        viewModel.addJobsData(JobModel("4", "Nhân viên lau bàn", "2", "", "", "3", "2000", "", "", "", "03/4/2024", "1", "Công ty Dũng hót boi" ))
+        viewModel.addJobsData(JobModel("5", "Senior đánh giày", "2", "", "", "3", "123000", "", "", "", "05/4/2024", "2", "Công ty TNHH 10 thành viên" ))
+        viewModel.addJobsData(JobModel("6", "Tạp vụ", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng" ))
+        viewModel.addJobsData(JobModel("7", "Tạp vụ 2", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 2" ))
+        viewModel.addJobsData(JobModel("8", "Tạp vụ 3", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 3" ))
+
 
         // Gán danh sách dữ liệu từ ViewModel cho adapter
         val JobsListData = viewModel.getJobsList()
@@ -108,6 +112,17 @@ class NewJobActivity : AppCompatActivity() {
         binding.rootNewJob.setOnClickListener{
             binding.searchView.clearFocus()
         }
+
+
+
+        // nút filter
+        binding.filterIcon.setOnClickListener{
+            // mở drawer
+            binding.rootNewJob.openDrawer(GravityCompat.END)
+
+        }
+
+
 
     }
 

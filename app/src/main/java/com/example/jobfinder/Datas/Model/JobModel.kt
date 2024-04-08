@@ -3,6 +3,7 @@ package com.example.jobfinder.Datas.Model
 import android.os.Parcel
 import android.os.Parcelable
 
+
 class JobModel : Parcelable {
     var jobId: String? = null
     var jobTitle: String? = null
@@ -61,24 +62,7 @@ class JobModel : Parcelable {
         this.status = status
     }
 
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    )
+
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(jobId)
@@ -99,6 +83,25 @@ class JobModel : Parcelable {
         parcel.writeString(status)
     }
 
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    )
+
     override fun describeContents(): Int {
         return 0
     }
@@ -112,4 +115,5 @@ class JobModel : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }
