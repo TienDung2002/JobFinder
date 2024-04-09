@@ -18,8 +18,6 @@ class PostedJobViewModel : ViewModel() {
     private val auth = FirebaseAuth.getInstance()
     private val uid = auth.currentUser?.uid
     private val database = FirebaseDatabase.getInstance().getReference("Job").child(uid.toString())
-    private var onJobDeletedListener: OnJobDeletedListener? = null
-
 
     interface OnJobDeletedListener {
         fun onJobDeleted()
@@ -33,7 +31,7 @@ class PostedJobViewModel : ViewModel() {
                 val jobModel = jobSnapshot.getValue(JobModel::class.java)
                 jobModel?.let {
                     // Update status based on start time and end time
-                    it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString())
+                    it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
                     // Add the updated jobModel to the list
                     postedJobList.add(it)
                 }
@@ -53,7 +51,6 @@ class PostedJobViewModel : ViewModel() {
     fun deleteJob(jobId: String) {
         database.child(jobId).removeValue()
             .addOnSuccessListener {
-                onJobDeletedListener?.onJobDeleted()
             }
             .addOnFailureListener { error ->
             }

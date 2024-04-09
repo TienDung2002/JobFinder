@@ -18,6 +18,9 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
+            android:name=".UI.Applicants.ActivityApplicantsList"
+            android:exported="false" />
+        <activity
             android:name=".UI.JobDetails.SeekerJobDetailActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme"/>

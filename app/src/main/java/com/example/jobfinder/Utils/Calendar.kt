@@ -1,8 +1,11 @@
 package com.example.jobfinder.Utils
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import com.google.android.material.textfield.TextInputEditText
 import android.content.Context
+import android.widget.EditText
+import com.google.android.material.textfield.TextInputLayout
 
 
 object Calendar {
@@ -27,6 +30,24 @@ object Calendar {
         datePickerDialog.datePicker.minDate = System.currentTimeMillis()
 
         datePickerDialog.show()
+    }
+
+    fun showTimePickerDialog(context: Context, editText: EditText) {
+        val calendar = java.util.Calendar.getInstance()
+        val hour = calendar.get(java.util.Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(java.util.Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            context,
+            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                // Update EditText with selected time
+                editText.setText(String.format("%02d:%02d", hourOfDay, minute))
+            },
+            hour,
+            minute,
+            true
+        )
+        timePickerDialog.show()
     }
 
 }

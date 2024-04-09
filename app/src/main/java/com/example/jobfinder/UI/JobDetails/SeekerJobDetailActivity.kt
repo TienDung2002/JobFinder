@@ -25,6 +25,7 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         if (job != null) {
             val emp = job.numOfRecruited+"/"+ job.empAmount
             val salaryTxt = "$"+job.salaryPerEmp+resources.getString(R.string.Ji_unit3)
+            val shift = job.startHr+"-"+job.endHr
             binding.jobDetailJobTitle.text = job.jobTitle
             binding.jobDetailBuserName.text= job.BUserName
             binding.jobDetailJobType.text= job.jobType
@@ -32,7 +33,7 @@ class SeekerJobDetailActivity : AppCompatActivity() {
             binding.jobDetailEmpAmount.text= emp
             binding.jobDetailStartTime.text= job.startTime
             binding.jobDetailEndTime.text= job.endTime
-            binding.jobDetailWorkShift.text= job.shift?.let { shift(it) }
+            binding.jobDetailWorkShift.text= shift
             binding.jobDetailAddress.text= job.address
             binding.jobDetailDes.text= job.jobDes
 

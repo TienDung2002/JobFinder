@@ -76,22 +76,19 @@ object GetData {
     fun countDaysBetweenDates(dateA: String, dateB: String): Int {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
+        var result = -1 // Khởi tạo giá trị mặc định nếu có lỗi xảy ra
+
         try {
-            // Chuyển đổi chuỗi ngày thành đối tượng Date
             val startDate = dateFormat.parse(dateA)
             val endDate = dateFormat.parse(dateB)
 
-            // Tính số lượng miliseconds giữa hai ngày
             val diffInMillis = endDate.time - startDate.time
-
-            // Chuyển đổi số miliseconds thành số ngày và trả về kết quả
-            return ((diffInMillis / (1000 * 60 * 60 * 24)).toInt()) +1
-        } catch (e: Exception) {
-            // Xử lý nếu có lỗi xảy ra trong quá trình chuyển đổi ngày
+            result = (diffInMillis / (1000 * 60 * 60 * 24)).toInt() + 1
+        } catch (e: ParseException) {
             e.printStackTrace()
         }
 
-        return -1 // Trả về -1 nếu có lỗi xảy ra
+        return result // Di chuyển lệnh return ra khỏi khối try-catch
     }
 
     // lấy ngày theo dang dd/MM/yyyy từ String date
@@ -101,12 +98,6 @@ object GetData {
             return parts[0] // Trả về phần tử đầu tiên, chứa ngày tháng năm
         }
         return null
-    }
-
-    // lấy giờ từ string date
-    fun getTimeFromDate(date: Date): String {
-        val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        return timeFormat.format(date)
     }
 
     fun multiplyStrings(string1: String, string2: String): String {
@@ -130,7 +121,7 @@ object GetData {
         return false
     }
 
-    fun getStatus(startTime: String, endTime: String): String {
+    fun getStatus(startTime: String, endTime: String, empAmount: String, recruitedEmp: String): String {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val currentDate = sdf.format(Date())
 
@@ -138,12 +129,83 @@ object GetData {
         val endDate = sdf.parse(endTime)
         val today = sdf.parse(currentDate)
 
+        val empAmountInt = empAmount.toIntOrNull()
+        val recruitedEmpInt = recruitedEmp.toIntOrNull()
+
+        if (empAmountInt != null && recruitedEmpInt != null) {
+            if (recruitedEmpInt >= empAmountInt) {
+                return "closed"
+            }
+        }
         return when {
             today.after(endDate) -> "closed"
             today.before(startDate) -> "recruiting"
             else -> "working"
         }
+    }
 
+
+    fun isTimeBeforeOneHour(timeA: String, timeB: String): Boolean {
+        if(timeA.isNotEmpty() && timeB.isNotEmpty()) {
+            try {
+                val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                sdf.isLenient = false
+
+                // Parse thời gian từ chuỗi
+                val dateA = sdf.parse(timeA)
+                val dateB = sdf.parse(timeB)
+
+                // Sử dụng Calendar để tính toán chênh lệch thời gian
+                val calendarA = Calendar.getInstance().apply { time = dateA }
+                val calendarB = Calendar.getInstance().apply { time = dateB }
+
+                // Xóa thông tin liên quan đến ngày
+                calendarA.set(Calendar.YEAR, 0)
+                calendarA.set(Calendar.MONTH, 0)
+                calendarA.set(Calendar.DAY_OF_MONTH, 0)
+
+                calendarB.set(Calendar.YEAR, 0)
+                calendarB.set(Calendar.MONTH, 0)
+                calendarB.set(Calendar.DAY_OF_MONTH, 0)
+
+                // Chênh lệch thời gian tính bằng millisecond
+                val timeDifference = calendarB.timeInMillis - calendarA.timeInMillis
+
+                // Chuyển đổi 1 giờ thành millisecond
+                val oneHourInMillis = 3600000 // 1 giờ = 60 phút * 60 giây * 1000 milliseconds
+
+                // Kiểm tra xem thời gian chênh lệch có lớn hơn hoặc bằng 1 tiếng không
+                return timeDifference >= oneHourInMillis
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return false
+    }
+
+    fun calculateHourDifference(timeA: String, timeB: String): Float {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        var result = 0f // Khởi tạo giá trị mặc định nếu có lỗi xảy ra
+
+        try {
+            val dateA = sdf.parse(timeA)
+            val dateB = sdf.parse(timeB)
+
+            val calendarA = Calendar.getInstance().apply { time = dateA }
+            val calendarB = Calendar.getInstance().apply { time = dateB }
+
+            val timeDifference = calendarB.timeInMillis - calendarA.timeInMillis
+
+            val hours = timeDifference / (1000 * 60 * 60).toFloat()
+            val minutes = (timeDifference % (1000 * 60 * 60)).toFloat() / (1000 * 60)
+
+            result = hours + (minutes / 60)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return result // Di chuyển lệnh return ra khỏi khối try-catch
     }
 
 }

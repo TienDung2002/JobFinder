@@ -109,6 +109,9 @@
     <string name="close_btn">Close</string>
     <string name="add_card_to_user_wallet">Added card to your wallet</string>
     <string name="from_wallet">from wallet</string>
+    <string name="to_wallet">to wallet</string>
+    <string name="refund">Refund</string>
+    <string name="from_job">From job:</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -242,12 +245,15 @@
     <string name="job_des">Job description</string>
     <string name="salary">Salary</string>
     <string name="employee_amount">Employee amount</string>
-    <string name="start_time">Start time</string>
-    <string name="end_time">End time</string>
+    <string name="start_time">Start date</string>
+    <string name="end_time">End date</string>
     <string name="shift">Work shift</string>
-    <string name="shift_1">Shift 1</string>
-    <string name="shift_2">Shift 2</string>
+    <string name="shift_1">Start time</string>
+    <string name="shift_2">End time</string>
     <string name="add_job">Post job</string>
+    <string name="shift_start_blank">Shift start time is blank</string>
+    <string name="shift_end_blank">Shift end time is blank</string>
+    <string name="end_shift_time_be4_start">Start time must before end time at least 1hr</string>
     <string name="no_shift_choose">No shift been choosed</string>
     <string name="no_post_job_title">Job title is blank</string>
     <string name="no_emp_amount">Employee amount must smaller than 10</string>
@@ -255,9 +261,9 @@
     <string name="no_job_des">Job description is blank</string>
     <string name="no_salary">Salary is blank</string>
     <string name="post_job_success">Job posted</string>
-    <string name="no_start_time">No start time</string>
-    <string name="no_end_time">No end time</string>
-    <string name="end_time_be4_start">Start time must before end time</string>
+    <string name="no_start_time">No start date</string>
+    <string name="no_end_time">No end date</string>
+    <string name="end_time_be4_start">Start date must before end date</string>
     <string name="job_type">Job type</string>
     <string-array name="job_types_array">
         <item>Retail Sales Associate</item>
@@ -276,8 +282,8 @@
     <!--    job detail-->
     <string name="apply">Apply</string>
     <string name="job_detail_title">Job detail</string>
-    <string name="jdetail_shift_1">7:30 am to 2:30 pm</string>
-    <string name="jdetail_shift_2">2:30 am to 9:30 pm</string>
+    <string name="jdetail_shift_1">7:30-14:30</string>
+    <string name="jdetail_shift_2">14:30-21:30</string>
     <string name="status_row_posted_job">Status:</string>
     <string name="status">Status</string>
     <string name="status_working">Working</string>
@@ -292,4 +298,7 @@
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Recruiter\'s information</string>
+
+<!--    applicants list-->
+    <string name="applicant_list_title">Applicants list</string>
 </resources>

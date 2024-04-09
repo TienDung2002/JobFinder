@@ -23,9 +23,7 @@ import android.util.Log
 
 class JobpostsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobpostsBinding
-    private var shift = "none"
     private lateinit var auth: FirebaseAuth
-    private var shiftChoose = false
     private var jobType: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +36,6 @@ class JobpostsActivity : AppCompatActivity() {
         setupSpinner()
 
         binding.postJobTitle.isClickable = true
-        binding.recShift1.isClickable = true
-        binding.recShift2.isClickable = true
         binding.postJobStartTime.isClickable = true
         binding.postJobEndTime.isClickable = true
         binding.postJobEmpAmount.isClickable = true
@@ -47,6 +43,8 @@ class JobpostsActivity : AppCompatActivity() {
         binding.postJobAddress.isClickable = true
         binding.postJobDes.isClickable = true
         binding.postJobBtn.isClickable = true
+        binding.postJobStartHr.isClickable= true
+        binding.postJobEndHr.isClickable= true
 
         //back btn
         binding.backButton.setOnClickListener {
@@ -55,25 +53,15 @@ class JobpostsActivity : AppCompatActivity() {
             finish()
         }
 
-        //check box
-        binding.recShift1.setOnCheckedChangeListener{_, isChecked ->
-            if (isChecked) {
-                binding.recShift2.isChecked = false
-                shift = "1"
-                shiftChoose = true
-            }else{
-                shiftChoose = false
-            }
+        //start time shift
+        binding.postJobStartHr.setOnClickListener{
+            Calendar.showTimePickerDialog(binding.root.context, binding.postJobStartHr)
         }
 
-        binding.recShift2.setOnCheckedChangeListener{_, isChecked ->
-            if (isChecked) {
-                binding.recShift1.isChecked = false
-                shift = "2"
-                shiftChoose = true
-            }else{
-                shiftChoose = false
-            }
+        //end time shift
+
+        binding.postJobEndHr.setOnClickListener{
+            Calendar.showTimePickerDialog(binding.root.context, binding.postJobEndHr)
         }
 
         //start time
@@ -89,7 +77,8 @@ class JobpostsActivity : AppCompatActivity() {
         //button
         binding.postJobBtn.setOnClickListener {
             val title = binding.postJobTitle.text.toString()
-            val workShift = shift
+            val workStartTime = binding.postJobStartHr.text.toString()
+            val workEndTime = binding.postJobEndHr.text.toString()
             val startTime = binding.postJobStartTime.text.toString()
             val endTime = binding.postJobEndTime.text.toString()
             val empAmount = binding.postJobEmpAmount.text.toString()
@@ -98,9 +87,6 @@ class JobpostsActivity : AppCompatActivity() {
             val jobDes= binding.postJobDes.text.toString()
 
             //field check
-            if(!shiftChoose){
-                Toast.makeText(binding.root.context, getString(R.string.no_shift_choose), Toast.LENGTH_SHORT).show()
-            }
             val isValidStartTime = VerifyField.isEmpty(startTime.trim())
             val isValidEndTime = VerifyField.isEmpty(endTime.trim())
             val isValidTitle = VerifyField.isEmpty(title.trim())
@@ -108,10 +94,17 @@ class JobpostsActivity : AppCompatActivity() {
             val isValidSalary =  VerifyField.isEmpty(salary.trim())
             val isValidAddress = VerifyField.isEmpty(address.trim())
             val isValidJobDes = VerifyField.isEmpty(jobDes.trim())
+            val isValidWorkStartTime = VerifyField.isEmpty(workStartTime.trim())
+            val isValidWorkEndTime = VerifyField.isEmpty(workEndTime.trim())
             val isValidWorkDate = GetData.compareDates(startTime, endTime)
+            val isValidWorkShift = GetData.isTimeBeforeOneHour(workStartTime, workEndTime)
 
             if(!isValidWorkDate && isValidStartTime && isValidEndTime){
                 Toast.makeText(binding.root.context, getString(R.string.end_time_be4_start),Toast.LENGTH_SHORT).show()
+            }
+
+            if(!isValidWorkShift && isValidWorkStartTime && isValidWorkEndTime){
+                Toast.makeText(binding.root.context, getString(R.string.end_shift_time_be4_start),Toast.LENGTH_SHORT).show()
             }
             binding.postJobTitle.error = if (isValidTitle) null else getString(R.string.no_post_job_title)
             binding.postJobEmpAmount.error = if(isValidEmpAmount) null else getString(R.string.no_emp_amount)
@@ -120,12 +113,13 @@ class JobpostsActivity : AppCompatActivity() {
             binding.postJobDes.error = if(isValidJobDes) null else getString(R.string.no_job_des)
             binding.postJobStartTime.error= if(isValidStartTime) null else getString(R.string.no_start_time)
             binding.postJobEndTime.error= if(isValidEndTime) null else getString(R.string.no_end_time)
+            binding.postJobStartHr.error= if(isValidWorkStartTime) null else getString(R.string.shift_start_blank)
+            binding.postJobEndHr.error= if(isValidWorkEndTime) null else getString(R.string.shift_end_blank)
 
-            if( shiftChoose && isValidTitle && isValidAddress && isValidEmpAmount && isValidSalary && isValidJobDes && isValidStartTime && isValidEndTime && isValidWorkDate){
+            if(isValidTitle && isValidAddress && isValidEmpAmount && isValidSalary && isValidJobDes
+                && isValidStartTime && isValidEndTime && isValidWorkDate && isValidWorkShift && isValidWorkStartTime && isValidWorkEndTime){
 
                 binding.postJobTitle.isClickable = false
-                binding.recShift1.isClickable = false
-                binding.recShift2.isClickable = false
                 binding.postJobStartTime.isClickable = false
                 binding.postJobEndTime.isClickable = false
                 binding.postJobEmpAmount.isClickable = false
@@ -133,12 +127,15 @@ class JobpostsActivity : AppCompatActivity() {
                 binding.postJobAddress.isClickable = false
                 binding.postJobDes.isClickable = false
                 binding.postJobBtn.isClickable = false
+                binding.postJobStartHr.isClickable= false
+                binding.postJobEndHr.isClickable= false
 
                 val uid = auth.currentUser?.uid
 
                 val jobId= FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).push().key
                 val totalWorkDay = GetData.countDaysBetweenDates(startTime, endTime)
-                val totalWorkHour= totalWorkDay * 8
+                val hrWordPerDay = GetData.calculateHourDifference(workStartTime, workEndTime)
+                val totalWorkHour= totalWorkDay.toFloat() * hrWordPerDay
                 val oneEmpSalary = GetData.multiplyStrings(totalWorkHour.toString(), salary)
                 val totalSalary = GetData.multiplyStrings(empAmount, oneEmpSalary)
                 val date = GetData.getCurrentDateTime()
@@ -157,7 +154,6 @@ class JobpostsActivity : AppCompatActivity() {
                                     val newJob = JobModel(
                                         jobId,
                                         title,
-                                        workShift,
                                         startTime,
                                         endTime,
                                         empAmount,
@@ -170,7 +166,9 @@ class JobpostsActivity : AppCompatActivity() {
                                         bUserName,
                                         jobType,
                                         uid,
-                                        "recruiting"
+                                        "recruiting",
+                                        workStartTime,
+                                        workEndTime
                                     )
 
                                     //add to firebase
