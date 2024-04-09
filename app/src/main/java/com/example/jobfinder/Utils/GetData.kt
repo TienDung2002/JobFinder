@@ -103,12 +103,6 @@ object GetData {
         return null
     }
 
-    // lấy giờ từ string date
-    fun getTimeFromDate(date: Date): String {
-        val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        return timeFormat.format(date)
-    }
-
     fun multiplyStrings(string1: String, string2: String): String {
         // Chuyển đổi chuỗi thành số float
         val number1 = string1.toFloatOrNull() ?: 0f
@@ -130,7 +124,7 @@ object GetData {
         return false
     }
 
-    fun getStatus(startTime: String, endTime: String): String {
+    fun getStatus(startTime: String, endTime: String, empAmount: String, recruitedEmp: String): String {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val currentDate = sdf.format(Date())
 
@@ -138,13 +132,21 @@ object GetData {
         val endDate = sdf.parse(endTime)
         val today = sdf.parse(currentDate)
 
+        val empAmountInt = empAmount.toIntOrNull()
+        val recruitedEmpInt = recruitedEmp.toIntOrNull()
+
+        if (empAmountInt != null && recruitedEmpInt != null) {
+            if (recruitedEmpInt >= empAmountInt) {
+                return "closed"
+            }
+        }
         return when {
             today.after(endDate) -> "closed"
             today.before(startDate) -> "recruiting"
             else -> "working"
         }
-
     }
+
 
     fun isTimeBeforeOneHour(timeA: String, timeB: String): Boolean {
         if(timeA.isNotEmpty() && timeB.isNotEmpty()) {
