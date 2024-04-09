@@ -108,6 +108,9 @@
     <string name="BUsername">Tên doanh nghiệp</string>
     <string name="close_btn">Đóng</string>
     <string name="add_card_to_user_wallet">Đã thêm thẻ vào ví của bạn</string>
+    <string name="to_wallet">đến ví</string>
+    <string name="refund">Hoàn trả</string>
+    <string name="from_job">Từ công việc:</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Ví</string>
@@ -247,5 +250,8 @@
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Nhà tuyển dụng</string>
+
+    <!--    applicants list-->
+    <string name="applicant_list_title">Danh sách ứng viên</string>
 
 </resources>

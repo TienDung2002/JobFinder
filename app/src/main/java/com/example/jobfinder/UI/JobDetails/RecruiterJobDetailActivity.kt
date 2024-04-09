@@ -6,12 +6,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Applicants.ActivityApplicantsList
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
-import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityRecruiterJobDetailBinding
+import com.google.firebase.database.*
 
 class RecruiterJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecruiterJobDetailBinding
@@ -23,13 +25,14 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         val job = intent.getParcelableExtra<JobModel>("job")
 
+
         binding.animationView.visibility = View.VISIBLE
         binding.detailJobScrollView.visibility = View.GONE
 
         if (job != null) {
-            val emp = job.numOfRecruited+"/"+ job.empAmount
-            val salaryTxt = "$"+job.salaryPerEmp+resources.getString(R.string.Ji_unit3)
-            val shift = job.startHr+"-"+job.endHr
+            val emp = "${job.numOfRecruited}/${job.empAmount}"
+            val salaryTxt = "$${job.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
+            val shift = "${job.startHr}-${job.endHr}"
             binding.jobDetailJobTitle.text = job.jobTitle
             binding.jobDetailJobType.text= job.jobType
             binding.jobDetailSalary.text= salaryTxt
@@ -43,16 +46,18 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.detailJobScrollView.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
 
-            // Thay đổi phần xóa công việc để gửi kết quả trở lại
             binding.deleteBtn.setOnClickListener {
+                if (job.status == "recruiting") {
+                    amountWorking(job)
+                }
                 viewModel.deleteJob(job.jobId.toString())
-                Toast.makeText(binding.root.context, ContextCompat.getString(binding.root.context, R.string.deleted_job), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@RecruiterJobDetailActivity, getString(R.string.deleted_job), Toast.LENGTH_SHORT).show()
                 setResult(RESULT_OK)
                 finish()
             }
 
             binding.appliedListBtn.setOnClickListener {
-                val intent = Intent(this, BUserDetailInfoActivity::class.java)
+                val intent = Intent(this, ActivityApplicantsList::class.java)
                 intent.putExtra("uid", job.jobId)
                 startActivity(intent)
             }
@@ -65,11 +70,45 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun shift(shift: String): String{
-        return if(shift == "1"){
-            resources.getString(R.string.jdetail_shift_1)
-        }else{
-            resources.getString(R.string.jdetail_shift_2)
-        }
+    private fun amountWorking(job: JobModel){
+        val walletAmountRef =
+            FirebaseDatabase.getInstance().getReference("WalletAmount")
+                .child(job.BUserId.toString()).child("amount")
+        walletAmountRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val walletAmountString = snapshot.getValue(String::class.java)
+                    val walletAmount = walletAmountString?.toFloatOrNull() ?: 0f
+                    val newWalletAmount = walletAmount + job.totalSalary.toString().toFloat()
+                    //refund to wallet
+                    walletAmountRef.setValue(newWalletAmount.toString())
+
+                    // notification
+                    val date = GetData.getCurrentDateTime()
+                    val notiId = FirebaseDatabase.getInstance()
+                        .getReference("Notifications")
+                        .child(job.BUserId.toString()).push().key.toString()
+                    val notificationsRowModel = NotificationsRowModel(
+                        notiId,
+                        "Admin",
+                        "${getString(R.string.refund)}.\n" +
+                                "${getString(R.string.from_job)} ${job.jobTitle}.\n" +
+                                "+$${job.totalSalary} ${getString(R.string.to_wallet)}",
+                        date
+                    )
+                    FirebaseDatabase.getInstance()
+                        .getReference("Notifications")
+                        .child(job.BUserId.toString())
+                        .child(notiId)
+                        .setValue(notificationsRowModel)
+                } else {
+                    // Handle case when wallet data does not exist
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle database error
+            }
+        })
     }
 }

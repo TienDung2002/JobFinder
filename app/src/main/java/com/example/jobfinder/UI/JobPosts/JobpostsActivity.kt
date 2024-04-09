@@ -134,7 +134,8 @@ class JobpostsActivity : AppCompatActivity() {
 
                 val jobId= FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).push().key
                 val totalWorkDay = GetData.countDaysBetweenDates(startTime, endTime)
-                val totalWorkHour= totalWorkDay * 8
+                val hrWordPerDay = GetData.calculateHourDifference(workStartTime, workEndTime)
+                val totalWorkHour= totalWorkDay.toFloat() * hrWordPerDay
                 val oneEmpSalary = GetData.multiplyStrings(totalWorkHour.toString(), salary)
                 val totalSalary = GetData.multiplyStrings(empAmount, oneEmpSalary)
                 val date = GetData.getCurrentDateTime()

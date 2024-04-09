@@ -108,6 +108,9 @@
     <string name="close_btn">Close</string>
     <string name="add_card_to_user_wallet">Added card to your wallet</string>
     <string name="from_wallet">from wallet</string>
+    <string name="to_wallet">to wallet</string>
+    <string name="refund">Refund</string>
+    <string name="from_job">From job:</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -245,4 +248,7 @@
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Recruiter\'s information</string>
+
+<!--    applicants list-->
+    <string name="applicant_list_title">Applicants list</string>
 </resources>

@@ -76,22 +76,19 @@ object GetData {
     fun countDaysBetweenDates(dateA: String, dateB: String): Int {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
+        var result = -1 // Khởi tạo giá trị mặc định nếu có lỗi xảy ra
+
         try {
-            // Chuyển đổi chuỗi ngày thành đối tượng Date
             val startDate = dateFormat.parse(dateA)
             val endDate = dateFormat.parse(dateB)
 
-            // Tính số lượng miliseconds giữa hai ngày
             val diffInMillis = endDate.time - startDate.time
-
-            // Chuyển đổi số miliseconds thành số ngày và trả về kết quả
-            return ((diffInMillis / (1000 * 60 * 60 * 24)).toInt()) +1
-        } catch (e: Exception) {
-            // Xử lý nếu có lỗi xảy ra trong quá trình chuyển đổi ngày
+            result = (diffInMillis / (1000 * 60 * 60 * 24)).toInt() + 1
+        } catch (e: ParseException) {
             e.printStackTrace()
         }
 
-        return -1 // Trả về -1 nếu có lỗi xảy ra
+        return result // Di chuyển lệnh return ra khỏi khối try-catch
     }
 
     // lấy ngày theo dang dd/MM/yyyy từ String date
@@ -186,5 +183,29 @@ object GetData {
         return false
     }
 
+    fun calculateHourDifference(timeA: String, timeB: String): Float {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        var result = 0f // Khởi tạo giá trị mặc định nếu có lỗi xảy ra
+
+        try {
+            val dateA = sdf.parse(timeA)
+            val dateB = sdf.parse(timeB)
+
+            val calendarA = Calendar.getInstance().apply { time = dateA }
+            val calendarB = Calendar.getInstance().apply { time = dateB }
+
+            val timeDifference = calendarB.timeInMillis - calendarA.timeInMillis
+
+            val hours = timeDifference / (1000 * 60 * 60).toFloat()
+            val minutes = (timeDifference % (1000 * 60 * 60)).toFloat() / (1000 * 60)
+
+            result = hours + (minutes / 60)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return result // Di chuyển lệnh return ra khỏi khối try-catch
+    }
 
 }
