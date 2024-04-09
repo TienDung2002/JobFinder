@@ -56,7 +56,7 @@ class NewJobActivity : AppCompatActivity() {
 
         // Gán danh sách dữ liệu từ ViewModel cho adapter
         val JobsListData = viewModel.getJobsList()
-        var adapter = NewJobsAdapter(JobsListData, binding.noDataImage)
+        val adapter = NewJobsAdapter(JobsListData, binding.noDataImage)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
@@ -94,12 +94,12 @@ class NewJobActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(dataInput: String): Boolean {
                 // Nếu không nhập text vào
-                if (dataInput.isEmpty()) {
+                return if (dataInput.isEmpty()) {
                     adapter.resetOriginalList()
-                    return false
+                    false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
-                    return true
+                    true
                 }
             }
         })

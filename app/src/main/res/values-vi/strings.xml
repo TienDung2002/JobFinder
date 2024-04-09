@@ -227,6 +227,19 @@
     <string name="hint_search">Tìm kiếm</string>
     <string name="open">Mở</string>
     <string name="close">Đóng</string>
+    <string name="sortby">Lọc theo</string>
+    <string name="sort_JobTitle">Tên công việc</string>
+    <string name="sort_JT_All">Tất cả</string>
+    <string name="sort_JT_AtoZ">Thứ tự A-Z</string>
+    <string name="sort_Recname">Tên nhà tuyển dụng</string>
+    <string name="sort_Rec_All">Tất cả</string>
+    <string name="sort_Rec_AtoZ">Thứ tự A-Z</string>
+    <string name="sort_postedTime">Giờ đăng</string>
+    <string name="sort_PT_Anytime">Bất cứ khi nào</string>
+    <string name="sort_PT_Today">Hôm nay</string>
+    <string name="sort_PT_thisMonth">Tháng này</string>
+    <string name="sort_workShift">Giờ làm</string>
+    <string name="sort_salary">Mức lương</string>
     <!--    List job item-->
     <string name="Ji_recName">Tên nhà tuyển dụng</string>
     <string name="Ji_recAdd">Địa chỉ làm việc</string>

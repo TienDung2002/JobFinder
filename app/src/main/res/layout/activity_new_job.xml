@@ -93,18 +93,12 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <!-- Menu filter -->
+    <include
         android:id="@+id/slideMenu"
         android:layout_width="280dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="test"/>
-    </LinearLayout>
+        layout="@layout/custom_filter_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

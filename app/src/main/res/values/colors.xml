@@ -2,8 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="grey">#EEEEEE</color>
-    <color name="grey_hint_ForgotPass">#8C8C8C</color>
     <color name="white">#FFFFFF</color>
+    <color name="grey_hint_ForgotPass">#8C8C8C</color>
+    <color name="filter_border_btn_default">#E4E4E4</color>
+    <color name="filter_border_btn_selected">#FFD9B4</color>
+
 
     <color name="primary_color1">#130160</color>
     <color name="primary_color2">#FCA34D</color>
