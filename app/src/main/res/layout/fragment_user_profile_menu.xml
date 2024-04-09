@@ -3,19 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.UsersProfile.user_profile">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    tools:context=".UI.UsersProfile.UserProfileMenuFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:background="@color/profile_backfround"
+        android:background="@color/home_bg"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
 
             >
 
@@ -23,8 +26,8 @@
                 android:id="@+id/profile_image"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginStart="20dp"
-                android:background="@drawable/img_defalt_profile_80px"/>
+                android:layout_marginStart="30dp"
+                android:background="@drawable/image_loading_80px"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -39,15 +42,26 @@
                     android:textColor="#91919F"
                     android:textSize="15sp" />
 
-                <TextView
+                <HorizontalScrollView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    >
+                    <TextView
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:text="@string/decoy_username"
                     android:textColor="@color/black"
-                    android:textSize="28sp" />
+                    android:textSize="28sp"
+                    android:maxLines="1"
+
+                        />
+
+                </HorizontalScrollView>
+
             </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -55,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/wrapper_profile"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="180dp"
             >
             <RelativeLayout
                 android:id="@+id/profile_account"
@@ -165,7 +179,17 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:elevation="10dp"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
 
+    </RelativeLayout>
 
 </FrameLayout>

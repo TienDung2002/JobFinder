@@ -130,4 +130,9 @@ dependencies {
     // loading lib from LottieFile
     implementation("com.airbnb.android:lottie:$lottieVersion")
 
+    //profile image
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
+
 }

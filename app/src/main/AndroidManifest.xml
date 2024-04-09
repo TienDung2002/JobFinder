@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,7 +19,32 @@
         tools:targetApi="31">
         <activity
             android:name=".UI.JobDetails.SeekerJobDetailActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.JobDetails.RecruiterJobDetailActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".UI.UsersProfile.profile_upload_image"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.UsersProfile.AccountActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".UI.PostedJob.PostedJobActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".UI.FindNewJobs.NewJobActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".UI.Wallet.WalletHistoryActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.SplashScreen.Splashscreen"
             android:exported="true"
@@ -77,22 +103,7 @@
             android:name=".UI.UserDetailInfo.BUserDetailInfoActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
-        <activity
-            android:name=".UI.PostedJob.PostedJobActivity"
-            android:exported="false"
-            android:theme="@style/FullScreenTheme" />
-        <activity
-            android:name=".UI.JobDetails.RecruiterJobDetailActivity"
-            android:exported="false"
-            android:theme="@style/FullScreenTheme" />
-        <activity
-            android:name=".UI.FindNewJobs.NewJobActivity"
-            android:exported="false"
-            android:theme="@style/FullScreenTheme" />
-        <activity
-            android:name=".UI.Wallet.WalletHistoryActivity"
-            android:exported="false"
-            android:theme="@style/FullScreenTheme" />
+
     </application>
 
 </manifest>

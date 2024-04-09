@@ -30,6 +30,10 @@ object VerifyField {
         editText.text?.let { editText.setSelection(it.length) } //di chuyển con trỏ về cuối text
     }
 
+    fun isValidName(username: String): Boolean {
+        return username.isNotEmpty() && username.length <= 50
+    }
+
     // check email hợp lệ
     fun isValidEmail(email: String): Boolean {
         return PatternsCompat.EMAIL_ADDRESS.matcher(email).matches() && email.isNotEmpty()
@@ -38,6 +42,13 @@ object VerifyField {
     // check độ dài số điện thoại
      fun isValidPhoneNumber(phoneNumber: String): Boolean {
         return phoneNumber.isNotEmpty() && phoneNumber.length == 10
+    }
+    fun isValidAge(Age: String): Boolean {
+        val age = Age.toIntOrNull()
+        return age != null && age in 18 until 81 && Age.matches(Regex("\\d+"))
+    }
+    fun isValidTaxCode(Tax: String): Boolean {
+        return Tax.isNotEmpty() && (Tax.length == 10 || Tax.length == 13)
     }
 
     // check pass hợp lệ
