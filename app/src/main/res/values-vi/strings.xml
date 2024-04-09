@@ -191,6 +191,7 @@
     <string name="profile_image_save_failed">Tải ảnh lên thất bại</string>
     <string name="profile_image_deleted_success">Xóa ảnh thành công</string>
     <string name="profile_image_delete_failed">Xóa ảnh thất bại</string>
+    <string name="edit_profile_nothing_change">Không có thay đổi nào được thực hiện đối với hồ sơ</string>
 
     <string name="profile_image_delete_confim">Xác nhận xóa ảnh</string>
     <string name="profile_image_delete_confim_noti">Lưu ý: Xóa ảnh hiện tại sẽ trở về ảnh đại diện mặc định.</string>

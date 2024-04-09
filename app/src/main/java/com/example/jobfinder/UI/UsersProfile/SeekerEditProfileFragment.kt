@@ -189,36 +189,46 @@ class SeekerEditProfileFragment : Fragment() {
             age.error = if (isValidAge) null else getString(R.string.error_invalid_Age)
             gender.error = if (isValidGender) null else getString(R.string.error_invalid_Gender)
 
-            if (isValidName && isValidAddress && isValidPhone && isValidAge) {
-                val userId = FirebaseAuth.getInstance().currentUser?.uid
-                userId?.let {
-                    viewModel.name = newName
-                    viewModel.address = newAddress
-                    viewModel.phone = newPhone
-                    viewModel.age = newAge
-                    viewModel.gender = newGender
+            if( checkIfEdited() == true) {
+                if (isValidName && isValidAddress && isValidPhone && isValidAge) {
+                    val userId = FirebaseAuth.getInstance().currentUser?.uid
+                    userId?.let {
+                        viewModel.name = newName
+                        viewModel.address = newAddress
+                        viewModel.phone = newPhone
+                        viewModel.age = newAge
+                        viewModel.gender = newGender
 
-                    val userBI =
-                        FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
-                    val NUser =
-                        FirebaseDatabase.getInstance().reference.child("NUserInfo").child(it)
-                    userBI.child("name").setValue(viewModel.name)
-                    userBI.child("address").setValue(viewModel.address)
-                    userBI.child("phone_num").setValue(viewModel.phone)
-                    NUser.child("age").setValue(viewModel.age)
-                    NUser.child("gender").setValue(viewModel.gender)
+                        val userBI =
+                            FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
+                        val NUser =
+                            FirebaseDatabase.getInstance().reference.child("NUserInfo").child(it)
+                        userBI.child("name").setValue(viewModel.name)
+                        userBI.child("address").setValue(viewModel.address)
+                        userBI.child("phone_num").setValue(viewModel.phone)
+                        NUser.child("age").setValue(viewModel.age)
+                        NUser.child("gender").setValue(viewModel.gender)
 
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.profile_edited),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.profile_edited),
+                            Toast.LENGTH_SHORT
+                        ).show()
 
+                    }
+                    isEdited = false
+                    disableButton(isEdited)
+                } else {
+                    checkToAutoFocus(isValidName, isValidAddress, isValidPhone, isValidAge)
                 }
+            }else{
                 isEdited = false
                 disableButton(isEdited)
-            } else {
-                checkToAutoFocus(isValidName, isValidAddress, isValidPhone, isValidAge)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.edit_profile_nothing_change),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
 

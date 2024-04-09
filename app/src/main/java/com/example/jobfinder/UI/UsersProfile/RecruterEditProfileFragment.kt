@@ -224,37 +224,46 @@ class RecruterEditProfileFragment : Fragment() {
             tax.error = if (isValidTax) null else getString(R.string.error_invalid_Tax)
 
 
+            if( checkIfEdited() == true) {
+                if (isValidName && isValidAddress && isValidPhone && isValidDes && isValidBusType && isValidBusSec && isValidTax) {
+                    val userId = FirebaseAuth.getInstance().currentUser?.uid
+                    userId?.let {
 
-            if (isValidName && isValidAddress && isValidPhone && isValidDes && isValidBusType && isValidBusSec && isValidTax) {
-                val userId = FirebaseAuth.getInstance().currentUser?.uid
-                userId?.let {
+                        viewModel.name = newName
+                        viewModel.address = newAddress
+                        viewModel.phone = newPhone
+                        viewModel.des = newDes
+                        viewModel.tax= newTax
+                        viewModel.busType = newBusSec
+                        viewModel.busSec = newBusType
 
-                    viewModel.name = newName
-                    viewModel.address = newAddress
-                    viewModel.phone = newPhone
-                    viewModel.des = newDes
-                    viewModel.tax= newTax
-                    viewModel.busType = newBusSec
-                    viewModel.busSec = newBusType
+                        val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
+                        val Buser = FirebaseDatabase.getInstance().reference.child("BUserInfo").child(it)
+                        userBI.child("name").setValue(newName)
+                        userBI.child("address").setValue(newAddress)
+                        userBI.child("phone_num").setValue(newPhone)
+                        Buser.child("description").setValue(newDes)
+                        Buser.child("tax_code").setValue(newTax)
+                        Buser.child("business_sector").setValue(newBusSec)
+                        Buser.child("business_type").setValue(newBusType)
 
-                    val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
-                    val Buser = FirebaseDatabase.getInstance().reference.child("BUserInfo").child(it)
-                    userBI.child("name").setValue(newName)
-                    userBI.child("address").setValue(newAddress)
-                    userBI.child("phone_num").setValue(newPhone)
-                    Buser.child("description").setValue(newDes)
-                    Buser.child("tax_code").setValue(newTax)
-                    Buser.child("business_sector").setValue(newBusSec)
-                    Buser.child("business_type").setValue(newBusType)
+                        Toast.makeText(requireContext(), getString(R.string.profile_edited), Toast.LENGTH_SHORT).show()
 
-                    Toast.makeText(requireContext(), getString(R.string.profile_edited), Toast.LENGTH_SHORT).show()
+                    }
 
+                    isEdited = false
+                    disableButton(isEdited)
+                } else {
+                    checkToAutoFocus(isValidName , isValidAddress , isValidPhone , isValidDes , isValidBusType , isValidBusSec , isValidTax)
                 }
-
+            }else{
                 isEdited = false
                 disableButton(isEdited)
-            } else {
-                checkToAutoFocus(isValidName , isValidAddress , isValidPhone , isValidDes , isValidBusType , isValidBusSec , isValidTax)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.edit_profile_nothing_change),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
         }

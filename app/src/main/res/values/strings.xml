@@ -190,6 +190,7 @@
     <string name="profile_image_save_failed">Image uploaded failed</string>
     <string name="profile_image_deleted_success">Image deleted success</string>
     <string name="profile_image_delete_failed">Image deleted failed</string>
+    <string name="edit_profile_nothing_change">No changes have been made to profile</string>
 
     <string name="profile_image_delete_confim">Confirm delete image</string>
     <string name="profile_image_delete_confim_noti">Note: Deleting current image will return to the default avatar.</string>
