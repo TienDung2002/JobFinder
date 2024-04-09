@@ -34,7 +34,7 @@
     <string name="return_login_rec">Bắt đầu tuyển dụng</string>
     <string name="hintrePassword">Nhập lại mật khẩu</string>
     <string name="return_login">Đã có tài khoản?</string>
-    <string name="error_invalid_name">Tên trống</string>
+    <string name="error_invalid_name">Tên trống hoặc có độ dài độ dài không hợp lệ (>50) </string>
     <string name="error_invalid_hotline">Hotline trống hoặc có độ dài không hợp lệ (=10)</string>
     <string name="error_invalid_phone">SĐT trống hoặc có độ dài không hợp lệ (=10)</string>
     <string name="error_invalid_addr">Địa chỉ trống</string>
@@ -168,10 +168,15 @@
     <!-- Edit Profile -->
     <string name="edit_profile">Chỉnh sửa hồ sơ</string>
     <string name="edit_profile_img">Nhấn để chỉnh sửa ảnh hiện tại</string>
-    <string name="edit_profile_name">Tên hồ sơ</string>
+    <string name="edit_profile_name">Tên người dùng</string>
+    <string name="edit_profile_gender">Giới tính</string>
+    <string name="edit_profile_enterprise">Tên doanh nghiệp</string>
     <string name="edit_profile_email">Email</string>
     <string name="edit_profile_phonenum">Số điện thoại</string>
     <string name="edit_profile_age">Tuổi</string>
+    <string name="edit_profile_gendermale">Nam</string>
+    <string name="edit_profile_genderfemale">Nữ</string>
+    <string name="edit_profile_genderother">Khác</string>
     <string name="edit_profile_save">Lưu</string>
     <string name="edit_profile_enable">Bật chỉnh sửa</string>
     <string name="edit_profile_disable">Tắt chỉnh sửa</string>
@@ -191,6 +196,9 @@
     <string name="profile_image_delete_confim_noti">Lưu ý: Xóa ảnh hiện tại sẽ trở về ảnh đại diện mặc định.</string>
     <string name="profile_image_delete_confim_yes">Có</string>
     <string name="profile_image_delete_confim_no">Không</string>
+    <string name="profile_cancle_edit_confirm">Xác nhận hủy bỏ chỉnh sửa</string>
+    <string name="profile_cancle_edit_confirm_noti">Lưu ý: Việc hủy chỉnh sửa hiện tại sẽ không được lưu và quay lại thông tin trước khi sửa.</string>
+
 
 
 
@@ -204,7 +212,8 @@
     <string name="error_invalid_des">Mô tả thông tin nhà tuyển dụng trống</string>
     <string name="error_invalid_BusType">lĩnh vực kinh doanh trống</string>
     <string name="error_invalid_BusSec">loại hình kinh doanh trống</string>
-    <string name="error_invalid_Age">Tuổi trống hoặc tuổi ít hơn 18</string>
+    <string name="error_invalid_Gender">Giới tính trống</string>
+    <string name="error_invalid_Age">Tuổi trống hoặc tuổi ít hơn 18 hoặc lớn hơn 80</string>
     <string name="error_invalid_Tax">Mã số thuế không được trống và phải là 10 hoặc 13 số</string>
 
 

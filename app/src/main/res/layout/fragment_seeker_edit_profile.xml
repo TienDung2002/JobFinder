@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UI.UsersProfile.SeekerEditProfileFragment">
 
     <RelativeLayout
@@ -26,13 +27,15 @@
                 android:drawableStart="@drawable/ic_back24px" />
 
             <TextView
+                android:id="@+id/account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="@string/profile"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="@string/edit_profile"
                 android:textColor="@color/primary_color1"
-                android:textSize="24sp" />
+                android:layout_centerVertical="true"
+                />
 
             <Button
                 android:id="@+id/edit_profile_editbtn"
@@ -107,11 +110,11 @@
                             android:layout_marginStart="15dp"
                             android:background="@drawable/ic_human_profile_24px" />
 
+
                         <EditText
                             android:id="@+id/edit_profile_name"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:layout_centerVertical="true"
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
                             android:background="@drawable/edit_text_blank"
@@ -120,6 +123,8 @@
                             android:textColor="@color/black"
                             android:textColorHint="@color/grey"
                             android:textSize="20sp" />
+
+
 
 
                     </RelativeLayout>
@@ -236,18 +241,25 @@
                             android:layout_marginStart="15dp"
                             android:background="@drawable/ic_address_24px" />
 
-                        <EditText
-                            android:id="@+id/edit_profile_address"
+                        <HorizontalScrollView
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
-                            android:background="@drawable/edit_text_blank"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/grey"
-                            android:textSize="20sp" />
+                            android:scrollbars="none"
+                            >
+                            <EditText
+                                android:id="@+id/edit_profile_address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="54dp"
+                                android:background="@drawable/edit_text_blank"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/grey"
+                                android:textSize="20sp" />
+
+                        </HorizontalScrollView>
 
                     </RelativeLayout>
                 </RelativeLayout>
@@ -291,7 +303,56 @@
                             android:textSize="20sp" />
 
                     </RelativeLayout>
+
+
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/edit_profile_gender"
+                        android:textColor="@color/primary_color1"
+                        android:textSize="18sp"
+                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="40dp"
+                        android:background="@drawable/input_box"
+                        >
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/ic_gender_26px"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="15dp"
+                            />
+                        <TextView
+                            android:id="@+id/edit_profile_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:textColorHint="#6b6b6b"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginEnd="15dp"
+                            android:maxLines="1"
+                            android:hint="@string/error_invalid_Gender"
+                            android:textSize="20sp"
+                            android:padding="14dp"
+                            android:textColor="@color/black"
+                            android:background="@drawable/edit_text_blank"
+
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -317,6 +378,7 @@
             </LinearLayout>
 
         </ScrollView>
+
 
 
     </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.example.jobfinder.UI.UsersProfile
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.GetData
@@ -26,10 +27,10 @@ class AccountActivity : AppCompatActivity() {
                 userRole = it
                 if (userRole=="NUser"){
                     FragmentHelper.replaceFragment(supportFragmentManager , binding.profileframelayout, SeekerEditProfileFragment())
-
+                    binding.animationView.visibility = View.GONE
                 }else if (userRole=="BUser"){
                     FragmentHelper.replaceFragment(supportFragmentManager , binding.profileframelayout, RecruterEditProfileFragment())
-
+                    binding.animationView.visibility = View.GONE
                 }
             }
         }

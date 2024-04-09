@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -45,7 +46,6 @@ class profile_upload_image : AppCompatActivity() {
 
         userId?.let { userId ->
             retrieveImage(userId)
-
         }
         //back
         binding.uploadImageBackbtn.setOnClickListener(){
@@ -111,6 +111,7 @@ class profile_upload_image : AppCompatActivity() {
                 progressDialog.dismiss()
                 Toast.makeText(applicationContext, R.string.profile_image_save_success, Toast.LENGTH_LONG)
                     .show()
+                back()
             }.addOnFailureListener {
                 progressDialog.dismiss()
                 Toast.makeText(applicationContext, R.string.profile_image_save_failed, Toast.LENGTH_LONG)
@@ -159,6 +160,8 @@ class profile_upload_image : AppCompatActivity() {
                 applicationContext, R.string.profile_image_deleted_success,
                 Toast.LENGTH_LONG
             ).show()
+            back()
+
             //thay bằng ảnh default
             binding.profileImage.setBackgroundResource(R.drawable.profile)
         }.addOnFailureListener {
@@ -189,13 +192,14 @@ class profile_upload_image : AppCompatActivity() {
                     .load(uri)
                     .apply(RequestOptions.bitmapTransform(CircleCrop()))
                     .into(binding.profileImage)
-
+                binding.animationView.visibility = View.GONE
 
 
             }
             .addOnFailureListener { exception ->
                 Log.e("UserProfileMenuFragment", "Failed to retrieve image: ${exception.message}")
                 binding.profileImage.setBackgroundResource(R.drawable.profile)
+                binding.animationView.visibility = View.GONE
 
             }
     }

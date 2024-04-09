@@ -1,6 +1,7 @@
 package com.example.jobfinder.UI.UsersProfile
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -45,61 +46,68 @@ class RecruterEditProfileFragment : Fragment() {
 
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid
-        userId?.let { userId ->
-            database.child("UserBasicInfo").child(userId).addListenerForSingleValueEvent(object :
+        userId?.let {
+            database.child("UserBasicInfo").child(it).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val userName = snapshot.child("name").getValue(String::class.java)
                     userName?.let {
-                        binding.editProfileName.setText(it)
+                        viewModel.name = it
+                        binding.editProfileName.setText(viewModel.name)
                     }
                     val email = snapshot.child("email").getValue(String::class.java)
                     email?.let {
-                        binding.editProfileEmail.setText(it)
+                        viewModel.email = it
+                        binding.editProfileEmail.setText(viewModel.email)
                     }
                     val phone = snapshot.child("phone_num").getValue(String::class.java)
                     phone?.let {
-                        binding.editProfilePhonenum.setText(it)
+                        viewModel.phone = it
+                        binding.editProfilePhonenum.setText(viewModel.phone)
                     }
                     val address = snapshot.child("address").getValue(String::class.java)
                     address?.let {
-                        binding.editProfileAddress.setText(it)
+                        viewModel.address = it
+                        binding.editProfileAddress.setText(viewModel.address)
                     }
 
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
+                    Log.e("RecruterEditProfileFragment", "Database error: ${error.message}")
                 }
             })
-            database.child("BUserInfo").child(userId).addListenerForSingleValueEvent(object :
+            database.child("BUserInfo").child(it).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val tax = snapshot.child("tax_code").getValue(String::class.java)
                     tax?.let {
-                        binding.editProfileTaxnum.setText(it)
+                        viewModel.tax = it
+                        binding.editProfileTaxnum.setText(viewModel.tax)
                     }
                     val description = snapshot.child("description").getValue(String::class.java)
                     description?.let {
-                        binding.editProfileDescription.setText(it)
+                        viewModel.des = it
+                        binding.editProfileDescription.setText(viewModel.des)
                     }
                     val busType = snapshot.child("business_type").getValue(String::class.java)
                     busType?.let {
-                        binding.editProfileBustype.text = it
+                        viewModel.busType = it
+                        binding.editProfileBustype.text = viewModel.busType
                     }
                     val busSec = snapshot.child("business_sector").getValue(String::class.java)
                     busSec?.let {
-                        binding.editProfileBusSec.text = it
+                        viewModel.busSec = it
+                        binding.editProfileBusSec.text = viewModel.busSec
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e("UserProfileMenuFragment", "Database error: ${error.message}")
+                    Log.e("RecruterEditProfileFragment", "Database error: ${error.message}")
                 }
             })
 
-            // fetch ảnh
-            retrieveImage(userId)
+            viewModel.userid = it
 
 
         }
@@ -116,6 +124,12 @@ class RecruterEditProfileFragment : Fragment() {
 
     }
 
+    // fetch ảnh
+    override fun onResume() {
+        super.onResume()
+        retrieveImage(viewModel.userid)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -128,45 +142,60 @@ class RecruterEditProfileFragment : Fragment() {
         val busType = binding.editProfileBustype
         val busSec = binding.editProfileBusSec
         val tax = binding.editProfileTaxnum
+        val image = binding.uploadImage
         var isEdited = false
 
 
-        name.isEnabled = false
-        address.isEnabled = false
-        phone.isEnabled = false
-        description.isEnabled = false
-        busType.isEnabled = false
-        busSec.isEnabled = false
-        tax.isEnabled = false
+        disableButton(isEdited)
+
 
 
         //button sửa
         binding.editProfileEditbtn.setOnClickListener {
             isEdited =!isEdited
 
-            name.isEnabled = isEdited
-            address.isEnabled = isEdited
-            phone.isEnabled = isEdited
-            description.isEnabled = isEdited
-            busType.isEnabled = isEdited
-            busSec.isEnabled = isEdited
-            tax.isEnabled = isEdited
-
-            save.visibility = if (isEdited) View.VISIBLE else View.GONE
-
             if (isEdited == false){
-                Toast.makeText(requireContext(), getString(R.string.edit_profile_disable), Toast.LENGTH_SHORT).show()
 
+                if( checkIfEdited() == true) {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle(R.string.profile_cancle_edit_confirm)
+                    builder.setMessage(R.string.profile_cancle_edit_confirm_noti)
+                    builder.setPositiveButton(R.string.profile_image_delete_confim_yes) { dialog, which ->
+                        binding.editProfileName.setText(viewModel.name)
+                        binding.editProfileEmail.setText(viewModel.email)
+                        binding.editProfilePhonenum.setText(viewModel.phone)
+                        binding.editProfileAddress.setText(viewModel.address)
+                        binding.editProfileTaxnum.setText(viewModel.tax)
+                        binding.editProfileDescription.setText(viewModel.des)
+                        binding.editProfileBustype.text = viewModel.busType
+                        binding.editProfileBusSec.text = viewModel.busSec
+                        binding.account.setText(getString(R.string.profile))
+                        Toast.makeText(requireContext(), getString(R.string.edit_profile_disable), Toast.LENGTH_SHORT).show()
+                        disableButton(isEdited)
+
+                    }
+                    builder.setNegativeButton(R.string.profile_image_delete_confim_no) { dialog, which ->
+                        dialog.dismiss()
+                        isEdited = true
+                    }
+                    val dialog = builder.create()
+                    dialog.show()
+                }
+                else{
+                    disableButton(isEdited)
+                    binding.account.setText(getString(R.string.profile))
+                    Toast.makeText(requireContext(), getString(R.string.edit_profile_disable), Toast.LENGTH_SHORT).show()
+
+                }
+
+                //bật edit
             } else if (isEdited == true){
+                disableButton(isEdited)
+                binding.account.setText(getString(R.string.edit_profile))
                 Toast.makeText(requireContext(), getString(R.string.edit_profile_enable), Toast.LENGTH_SHORT).show()
             }
         }
-        // sau khi ấn button sửa, nếu ấn vào email sẽ thông báo
-        if (isEdited == true){
-            binding.editProfileEmail.setOnClickListener {
-                Toast.makeText(requireContext(), getString(R.string.edit_email), Toast.LENGTH_SHORT).show()
-            }
-        }
+
         // button lưu
         save.setOnClickListener {
             val newName = name.text.toString()
@@ -177,7 +206,7 @@ class RecruterEditProfileFragment : Fragment() {
             val newBusType = busType.text.toString()
             val newBusSec = busSec.text.toString()
 
-            val isValidName = newName.isNotEmpty()
+            val isValidName = VerifyField.isValidName(newName)
             val isValidAddress = newAddress.isNotEmpty()
             val isValidPhone = VerifyField.isValidPhoneNumber(newPhone)
             val isValidDes = newDes.isNotEmpty()
@@ -194,9 +223,20 @@ class RecruterEditProfileFragment : Fragment() {
             busSec.error = if (isValidBusSec) null else getString(R.string.error_invalid_BusSec)
             tax.error = if (isValidTax) null else getString(R.string.error_invalid_Tax)
 
+
+
             if (isValidName && isValidAddress && isValidPhone && isValidDes && isValidBusType && isValidBusSec && isValidTax) {
                 val userId = FirebaseAuth.getInstance().currentUser?.uid
                 userId?.let {
+
+                    viewModel.name = newName
+                    viewModel.address = newAddress
+                    viewModel.phone = newPhone
+                    viewModel.des = newDes
+                    viewModel.tax= newTax
+                    viewModel.busType = newBusSec
+                    viewModel.busSec = newBusType
+
                     val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
                     val Buser = FirebaseDatabase.getInstance().reference.child("BUserInfo").child(it)
                     userBI.child("name").setValue(newName)
@@ -212,16 +252,7 @@ class RecruterEditProfileFragment : Fragment() {
                 }
 
                 isEdited = false
-
-                name.isEnabled = isEdited
-                address.isEnabled = isEdited
-                phone.isEnabled = isEdited
-                description.isEnabled = isEdited
-                busType.isEnabled = isEdited
-                busSec.isEnabled = isEdited
-                tax.isEnabled = isEdited
-
-                save.visibility = View.GONE
+                disableButton(isEdited)
             } else {
                 checkToAutoFocus(isValidName , isValidAddress , isValidPhone , isValidDes , isValidBusType , isValidBusSec , isValidTax)
             }
@@ -250,6 +281,7 @@ class RecruterEditProfileFragment : Fragment() {
             startActivity(intent)
         }
 
+
     }
 
     private fun showPopupMenu(view: View, menuResId: Int, itemClickListener: (String) -> Unit) {
@@ -274,6 +306,29 @@ class RecruterEditProfileFragment : Fragment() {
         }
     }
 
+    private fun disableButton(isEdited : Boolean){
+        binding.editProfileName.isEnabled = isEdited
+        binding.editProfileAddress.isEnabled = isEdited
+        binding.editProfilePhonenum.isEnabled = isEdited
+        binding.editProfileDescription.isEnabled = isEdited
+        binding.editProfileBustype.isEnabled = isEdited
+        binding.editProfileBusSec.isEnabled = isEdited
+        binding.editProfileTaxnum.isEnabled = isEdited
+        binding.uploadImage.visibility = if (isEdited) View.VISIBLE else View.GONE
+        binding.editProfileSave.visibility = if (isEdited) View.VISIBLE else View.GONE
+    }
+
+    private fun checkIfEdited(): Boolean {
+        if( (binding.editProfileName.text.toString() != viewModel.name) || (binding.editProfileEmail.text.toString() != viewModel.email)
+            || (binding.editProfilePhonenum.text.toString() != viewModel.phone) || (binding.editProfileAddress.text.toString() != viewModel.address)
+            || (binding.editProfileTaxnum.text.toString() != viewModel.tax) || (binding.editProfileDescription.text.toString() != viewModel.des)
+            || (binding.editProfileBusSec.text.toString() != viewModel.busSec) || (binding.editProfileBustype.text.toString() != viewModel.busType)){
+            return true
+        } else {
+            return false
+        }
+    }
+
     private fun checkToAutoFocus(vararg isValidFields: Boolean) {
         val invalidFields = mutableListOf<EditText>()
         val invalidField = mutableListOf<TextView>()
@@ -295,10 +350,16 @@ class RecruterEditProfileFragment : Fragment() {
             invalidFields.first().requestFocus()
         }
     }
-
+    //fetch ảnh
     private fun retrieveImage(userid : String) {
         val storageReference: StorageReference = FirebaseStorage.getInstance().reference
         val imageRef: StorageReference = storageReference.child(userid)
+
+        Glide.with(this)
+            .load(imageRef)
+            .apply(RequestOptions.bitmapTransform(CircleCrop()))
+            .into(binding.profileImage)
+            .clearOnDetach()
 
 
         imageRef.downloadUrl
@@ -317,4 +378,5 @@ class RecruterEditProfileFragment : Fragment() {
 
             }
     }
+
 }

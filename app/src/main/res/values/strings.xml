@@ -32,7 +32,7 @@
     <string name="return_login_rec">Start recruiting</string>
     <string name="hintrePassword">Re-enter password</string>
     <string name="return_login">Already have an account?</string>
-    <string name="error_invalid_name">Name is blank</string>
+    <string name="error_invalid_name">Name is blank or has an invalid length (>50)</string>
     <string name="error_invalid_hotline">Hotline is empty or has an invalid length (=10)</string>
     <string name="error_invalid_phone">Phone is empty or has an invalid length (=10)</string>
     <string name="error_invalid_addr">Address is blank</string>
@@ -167,10 +167,15 @@
     <!-- Edit Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="edit_profile_img">Tap to edit image</string>
-    <string name="edit_profile_name">Name</string>
+    <string name="edit_profile_name">User name</string>
+    <string name="edit_profile_gender">Gender</string>
+    <string name="edit_profile_enterprise">Enterprise name</string>
     <string name="edit_profile_email">Email</string>
     <string name="edit_profile_phonenum">Phone number</string>
     <string name="edit_profile_age">Age</string>
+    <string name="edit_profile_gendermale">Male</string>
+    <string name="edit_profile_genderfemale">Female</string>
+    <string name="edit_profile_genderother">Other</string>
     <string name="edit_profile_save">Save</string>
     <string name="edit_profile_enable">Edit enable</string>
     <string name="edit_profile_disable">Edit disable</string>
@@ -190,6 +195,8 @@
     <string name="profile_image_delete_confim_noti">Note: Deleting current image will return to the default avatar.</string>
     <string name="profile_image_delete_confim_yes">Yes</string>
     <string name="profile_image_delete_confim_no">No</string>
+    <string name="profile_cancle_edit_confirm">Confirm cancle edit</string>
+    <string name="profile_cancle_edit_confirm_noti">Note: Canceling the current edit will not be saved and will return to the information before editing.</string>
 
 
 
@@ -204,7 +211,8 @@
     <string name="error_invalid_des">Description is blank</string>
     <string name="error_invalid_BusType">Business type is blank</string>
     <string name="error_invalid_BusSec">Business sectors is blank</string>
-    <string name="error_invalid_Age">Age is blank or age is less than 18</string>
+    <string name="error_invalid_Gender">Gender is blank</string>
+    <string name="error_invalid_Age">Age is blank or age is less than 18 or more than 80</string>
     <string name="error_invalid_Tax">Tax code cannot be empty and must be 10 or 13 numbers</string>
 
 

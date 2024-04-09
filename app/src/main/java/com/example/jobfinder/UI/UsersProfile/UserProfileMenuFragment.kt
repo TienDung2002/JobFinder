@@ -49,6 +49,7 @@ class UserProfileMenuFragment : Fragment() {
                     val userName = snapshot.child("name").getValue(String::class.java)
                     userName?.let {
                         binding.userName.text = it
+                        binding.animationView.visibility = View.GONE
                     }
                 }
 
@@ -59,7 +60,6 @@ class UserProfileMenuFragment : Fragment() {
 
             retrieveImage(userId)
         }
-
 
     }
 
@@ -92,15 +92,17 @@ class UserProfileMenuFragment : Fragment() {
         }
 
 
+
     }
     private fun retrieveImage(userid : String) {
         val storageReference: StorageReference = FirebaseStorage.getInstance().reference
         val imageRef: StorageReference = storageReference.child(userid)
         Log.d("SeekerEditProfileFragment", "ImageRef path: $imageRef")
-
+        
 
         imageRef.downloadUrl
             .addOnSuccessListener { uri: Uri ->
+
                 binding.profileImage.setBackgroundResource(R.drawable.image_loading_80px)
                 viewModel.imageUri = uri
                 Glide.with(requireContext())
