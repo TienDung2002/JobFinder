@@ -261,9 +261,27 @@ class RecruterEditProfileFragment : Fragment() {
 
         //button back
         binding.editProfileBackbtn.setOnClickListener {
-            val resultIntent = Intent()
-            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-            requireActivity().finish()
+            if( checkIfEdited() == true) {
+                val builder = AlertDialog.Builder(requireContext())
+                builder.setTitle(R.string.profile_cancle_edit_confirm)
+                builder.setMessage(R.string.profile_cancle_edit_confirm_noti)
+                builder.setPositiveButton(R.string.profile_image_delete_confim_yes) { dialog, which ->
+                    val resultIntent = Intent()
+                    requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                    requireActivity().finish()
+                }
+                builder.setNegativeButton(R.string.profile_image_delete_confim_no) { dialog, which ->
+                    dialog.dismiss()
+
+                }
+                val dialog = builder.create()
+                dialog.show()
+            }
+            else{
+                val resultIntent = Intent()
+                requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                requireActivity().finish()
+            }
         }
 
         busType.setOnClickListener {
