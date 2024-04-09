@@ -25,9 +25,9 @@
         android:icon="@drawable/ic_menu_profile50px"
         />
 
-    <item
-        android:id="@+id/logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_logout50px"
-        />
+<!--    <item-->
+<!--        android:id="@+id/logout"-->
+<!--        android:title="Logout"-->
+<!--        android:icon="@drawable/ic_logout50px"-->
+<!--        />-->
 </menu>
