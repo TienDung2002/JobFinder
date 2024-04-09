@@ -1,6 +1,5 @@
 package com.example.jobfinder.UI.PostedJob
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,16 +25,11 @@ class PostedJobViewModel : ViewModel() {
             val postedJobList: MutableList<JobModel> = mutableListOf()
             userInfoDb.child("name").get().addOnSuccessListener { nameSnapshot ->
                 val userName = nameSnapshot.getValue(String::class.java).toString()
-                Log.d("BUserName", userName)
                 dataSnapshot.children.forEach { jobSnapshot ->
                     val jobModel = jobSnapshot.getValue(JobModel::class.java)
                     jobModel?.let {
-                        // Cập nhật tên người dùng cho mỗi công việc
                         it.BUserName = userName
-                        Log.d("BUserName2", it.BUserName.toString())
-                        // Cập nhật trạng thái dựa trên thời gian bắt đầu và kết thúc
                         it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
-                        // Thêm công việc đã cập nhật vào danh sách
                         postedJobList.add(it)
                     }
                 }

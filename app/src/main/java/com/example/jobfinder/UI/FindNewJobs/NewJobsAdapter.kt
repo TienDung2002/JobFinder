@@ -13,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
+import io.grpc.Context
 import java.util.Locale
 
-class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView) :
+class NewJobsAdapter( private var list: List<JobModel>, private val noDataImage: ImageView) :
     RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
@@ -149,5 +150,10 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
 
     fun hideNoDataFoundImg() {
         noDataImage.visibility = View.GONE
+    }
+
+    fun updateData(newList: List<JobModel>) {
+        list = newList
+        notifyDataSetChanged()
     }
 }
