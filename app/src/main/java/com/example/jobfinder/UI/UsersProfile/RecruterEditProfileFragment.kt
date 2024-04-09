@@ -234,8 +234,8 @@ class RecruterEditProfileFragment : Fragment() {
                         viewModel.phone = newPhone
                         viewModel.des = newDes
                         viewModel.tax= newTax
-                        viewModel.busType = newBusSec
-                        viewModel.busSec = newBusType
+                        viewModel.busType = newBusType
+                        viewModel.busSec = newBusSec
 
                         val userBI = FirebaseDatabase.getInstance().reference.child("UserBasicInfo").child(it)
                         val Buser = FirebaseDatabase.getInstance().reference.child("BUserInfo").child(it)
@@ -350,7 +350,7 @@ class RecruterEditProfileFragment : Fragment() {
             || (binding.editProfilePhonenum.text.toString() != viewModel.phone) || (binding.editProfileAddress.text.toString() != viewModel.address)
             || (binding.editProfileTaxnum.text.toString() != viewModel.tax) || (binding.editProfileDescription.text.toString() != viewModel.des)
             || (binding.editProfileBusSec.text.toString() != viewModel.busSec) || (binding.editProfileBustype.text.toString() != viewModel.busType)){
-            return true
+                return true
         } else {
             return false
         }
