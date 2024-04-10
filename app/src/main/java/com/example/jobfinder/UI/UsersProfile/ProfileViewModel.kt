@@ -16,4 +16,8 @@ class ProfileViewModel:ViewModel() {
     var busSec : String = ""
     var tax : String = ""
     var gender : String = ""
+
+    fun updateImageUri(uri: Uri) {
+        imageUri = uri
+    }
 }

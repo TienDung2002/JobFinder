@@ -166,7 +166,6 @@
     <string name="profile_logout_toast">Log out successfully</string>
 
 
-
     <!-- Edit Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="edit_profile_img">Tap to edit image</string>
@@ -201,10 +200,6 @@
     <string name="profile_image_delete_confim_no">No</string>
     <string name="profile_cancle_edit_confirm">Confirm cancle edit</string>
     <string name="profile_cancle_edit_confirm_noti">Note: Canceling the current edit will not be saved and will return to the information before editing.</string>
-
-
-
-
 
 
     <string name="edit_taxcode">Tax code</string>
@@ -291,7 +286,6 @@
     </string-array>
 
 
-
     <!--    job detail-->
     <string name="apply">Apply</string>
     <string name="job_detail_title">Job detail</string>
@@ -311,8 +305,10 @@
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Recruiter\'s information</string>
+<!--    nuser detail info-->
+    <string name="seeker_info_title">Seeker\'s information</string>
 
-<!--    applicants list-->
+    <!--    applicants list-->
     <string name="applicant_list_title">Applicants list</string>
     <string name="no_applicant">No applicant yet</string>
     <string name="approve">Approve</string>

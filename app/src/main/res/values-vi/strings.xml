@@ -313,6 +313,8 @@
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Nhà tuyển dụng</string>
+    <!--    nuser detail info-->
+    <string name="seeker_info_title">Thông tin ứng viên</string>
 
     <!--    applicants list-->
     <string name="applicant_list_title">Danh sách ứng viên</string>
