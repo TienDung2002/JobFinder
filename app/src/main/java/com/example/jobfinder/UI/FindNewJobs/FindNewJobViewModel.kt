@@ -11,8 +11,7 @@ import com.google.firebase.database.*
 class FindNewJobViewModel : ViewModel() {
     private val _postedJobList = MutableLiveData<List<JobModel>>()
     val postedJobList: LiveData<List<JobModel>> get() = _postedJobList
-
-    private val _isLoading = MutableLiveData<Boolean>()
+    val _isLoading = MutableLiveData<Boolean>()
     private val database = FirebaseDatabase.getInstance().getReference("Job")
 
     fun fetchJobs() {
@@ -41,4 +40,5 @@ class FindNewJobViewModel : ViewModel() {
             }
         })
     }
+
 }

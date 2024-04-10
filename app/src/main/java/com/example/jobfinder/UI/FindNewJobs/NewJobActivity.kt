@@ -5,19 +5,15 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.R
-import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
-import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 
 class NewJobActivity : AppCompatActivity() {
@@ -37,14 +33,19 @@ class NewJobActivity : AppCompatActivity() {
                 finish()
             }
 
+
             adapter = NewJobsAdapter(viewModel.postedJobList.value ?: emptyList(), binding.noDataImage)
             binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             binding.newJobHomeRecyclerView.adapter = adapter
-            // Gán danh sách dữ liệu từ ViewModel cho adapter
+            // Quan sát list có thay đổi data hay không
             viewModel.postedJobList.observe(this) { updatedList ->
                 adapter.updateData(updatedList)
             }
-
+            // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
+            viewModel._isLoading.observe(this) { isLoading ->
+                binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
+            }
+            // Fetch dữ liệu sau khi observer đã được thiết lập
             viewModel.fetchJobs()
 
 
@@ -113,9 +114,10 @@ class NewJobActivity : AppCompatActivity() {
 
         }
 
-
-
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchJobs()
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.jobfinder.UI.FindNewJobs
 
 import android.icu.text.NumberFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
@@ -16,7 +18,7 @@ import com.example.jobfinder.Utils.GetData
 import io.grpc.Context
 import java.util.Locale
 
-class NewJobsAdapter( private var list: List<JobModel>, private val noDataImage: ImageView) :
+class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView) :
     RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
@@ -136,6 +138,7 @@ class NewJobsAdapter( private var list: List<JobModel>, private val noDataImage:
             }
         }
     }
+
 
 
     fun resetOriginalList() {

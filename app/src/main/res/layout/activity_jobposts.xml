@@ -547,6 +547,7 @@
                 android:paddingEnd="25dp"
                 android:paddingStart="25dp"
                 android:id="@+id/post_job_btn"
+                android:foreground="?android:attr/selectableItemBackground"
                 />
 
         </LinearLayout>
