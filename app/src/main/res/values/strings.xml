@@ -314,4 +314,7 @@
 
 <!--    applicants list-->
     <string name="applicant_list_title">Applicants list</string>
+    <string name="no_applicant">No applicant yet</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
 </resources>
