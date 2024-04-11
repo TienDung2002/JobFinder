@@ -28,9 +28,8 @@ class NUserDetailInfoActivity : AppCompatActivity() {
         val applicant = intent.getParcelableExtra<ApplicantsModel>("nuser_applicant")
 
         if (applicant != null) {
-
             val userId = applicant.userId.toString()
-            userId?.let {
+            userId.let {
                 database.child("UserBasicInfo").child(it).addListenerForSingleValueEvent(object :
                     ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -81,8 +80,9 @@ class NUserDetailInfoActivity : AppCompatActivity() {
                     }
                 })
                 viewModel.userid = it
-
             }
+
+            binding.applicantDescription.setText(applicant.applicantDes.toString())
         }
 
         binding.backButton.setOnClickListener {

@@ -321,5 +321,6 @@
     <string name="no_applicant">Chưa có ứng viên</string>
     <string name="approve">Phê duyệt</string>
     <string name="reject">Từ chối</string>
+    <string name="blank_age">Tuổi trống</string>
 
 </resources>
