@@ -42,16 +42,29 @@ class NewJobActivity : AppCompatActivity() {
         fetchJobs()
 
         // gán vào adapter
-        adapter = NewJobsAdapter(emptyList(), binding.noDataImage)
+        adapter = NewJobsAdapter(emptyList(), binding.noDataImage, viewModel)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
-        // Quan sát list có thay đổi data hay không
+        // Quan sát tổng công việc có thay đổi không
         viewModel.postedJobList.observe(this) { updatedList ->
             updatedList?.let {
                 adapter.updateData(it)
             }
         }
+        // Quan sát bộ lọc khi search để thay đổi recycler
+        viewModel.filteredJobList.observe(this) { filteredList ->
+            filteredList?.let {
+                adapter.updateData(it)
+                if (it.isEmpty()) {
+                    adapter.showNoDataFoundImg()
+                } else {
+                    adapter.updateData(it)
+                    adapter.hideNoDataFoundImg()
+                }
+            }
+        }
+
         // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
         viewModel._isLoading.observe(this) { isLoading ->
             binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
@@ -97,6 +110,7 @@ class NewJobActivity : AppCompatActivity() {
                     false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
+                    adapter.updateFiltteredData(viewModel.filteredJobList)
                     true
                 }
             }
