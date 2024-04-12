@@ -1,6 +1,8 @@
 package com.example.jobfinder.Utils
 
+import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.Datas.Model.idAndRole
+import com.example.jobfinder.UI.FindNewJobs.FindNewJobViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.ParseException
