@@ -17,6 +17,7 @@ class PostedJobActivity : AppCompatActivity() {
     private val viewModel: PostedJobViewModel by viewModels()
     private lateinit var adapter: PostedJobAdapter
     private val REQUEST_CODE_DELETE_JOB = 1002
+    private var isActivityOpened = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +36,14 @@ class PostedJobActivity : AppCompatActivity() {
 
         adapter.setOnItemClickListener(object : PostedJobAdapter.OnItemClickListener {
             override fun onItemClick(job: JobModel) {
-                val intent = Intent(this@PostedJobActivity, RecruiterJobDetailActivity::class.java)
-                intent.putExtra("job", job)
-                startActivityForResult(intent, REQUEST_CODE_DELETE_JOB)
+                if (!isActivityOpened) {
+                    // Mở activity chỉ khi activity chưa được mở
+                    val intent = Intent(this@PostedJobActivity, RecruiterJobDetailActivity::class.java)
+                    intent.putExtra("job", job)
+                    startActivityForResult(intent, REQUEST_CODE_DELETE_JOB)
+                    // Đặt biến kiểm tra là đã mở
+                    isActivityOpened = true
+                }
             }
         })
 
@@ -55,6 +61,7 @@ class PostedJobActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_DELETE_JOB && resultCode == Activity.RESULT_OK) {
+            isActivityOpened = false
             viewModel.fetchPostedJobs()
         }
     }

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
@@ -27,6 +28,7 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
         val userId = intent.getStringExtra("uid")
         userId?.let {
+
             database.child("UserBasicInfo").child(it).addListenerForSingleValueEvent(object :
                 ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -83,6 +85,7 @@ class BUserDetailInfoActivity : AppCompatActivity() {
             })
 
             viewModel.userid = it
+            binding.animationView.visibility = View.GONE
 
         }
 
@@ -95,6 +98,6 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        RetriveImg.retrieveImage(viewModel.userid, binding.profileImage, this@BUserDetailInfoActivity, viewModel)
+        RetriveImg.retrieveImage(viewModel.userid, binding.profileImage)
     }
 }

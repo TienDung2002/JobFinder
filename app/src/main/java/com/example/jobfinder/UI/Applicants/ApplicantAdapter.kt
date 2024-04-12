@@ -1,19 +1,17 @@
 package com.example.jobfinder.UI.Applicants
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.RetriveImg
 
-class ApplicantAdapter(private val applicantList: List<ApplicantsModel>, val viewModel: ProfileViewModel, val activity: Activity) :
+class ApplicantAdapter(private val applicantList: List<ApplicantsModel>) :
     RecyclerView.Adapter<ApplicantAdapter.ApplicantViewHolder>() {
 
     interface OnItemClickListener {
@@ -45,7 +43,7 @@ class ApplicantAdapter(private val applicantList: List<ApplicantsModel>, val vie
         holder.textViewName.text = currentItem.userName
         holder.textViewDescription.text = currentItem.applicantDes
 
-        RetriveImg.retrieveImage(currentItem.userId.toString(), holder.imgView, activity, viewModel)
+        RetriveImg.retrieveImage(currentItem.userId.toString(), holder.imgView)
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(currentItem)

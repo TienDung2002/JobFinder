@@ -16,6 +16,7 @@ class NotificationsAdapter(
   private val noNotiLayout: ConstraintLayout
 ) : RecyclerView.Adapter<NotificationsAdapter.RowNotifications>() {
   private var clickListener: OnItemClickListener? = null
+  private var isDialogOpened = false
 
   init {
     checkEmptyAdapter()
@@ -31,9 +32,15 @@ class NotificationsAdapter(
     holder.bind(notificationsRowModel)
 
     holder.itemView.setOnClickListener {
-      selectedNotification = notificationsRowModel
-      val dialog = NotificationDetailDialog(context, selectedNotification)
-      dialog.show()
+      if (!isDialogOpened) {
+        selectedNotification = notificationsRowModel
+        val dialog = NotificationDetailDialog(context, selectedNotification)
+        dialog.setOnDismissListener {
+          isDialogOpened = false
+        }
+        dialog.show()
+        isDialogOpened = true
+      }
     }
   }
 

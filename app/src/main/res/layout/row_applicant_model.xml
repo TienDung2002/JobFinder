@@ -29,7 +29,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/avatar"/>
+                android:background="@drawable/image_loading_80px"/>
 
             <TextView
                 android:id="@+id/applicant_username"

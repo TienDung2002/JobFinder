@@ -5,17 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.UI.UserDetailInfo.NUserDetailInfoActivity
-import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.databinding.ActivityApplicantsListBinding
 
 class ActivityApplicantsList : AppCompatActivity() {
     private lateinit var binding: ActivityApplicantsListBinding
     private val REQUEST_CODE = 1002
-    lateinit var viewModel: ProfileViewModel
+    private var isActivityOpened = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityApplicantsListBinding.inflate(layoutInflater)
@@ -23,7 +21,6 @@ class ActivityApplicantsList : AppCompatActivity() {
 
         val job_id = intent.getStringExtra("job_id")
 
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         // Tạo danh sách mẫu các ứng viên
         val applicantList = listOf(
@@ -34,16 +31,19 @@ class ActivityApplicantsList : AppCompatActivity() {
             )
 
         // Tạo adapter và gán vào RecyclerView
-        val adapter = ApplicantAdapter(applicantList, viewModel, this@ActivityApplicantsList)
+        val adapter = ApplicantAdapter(applicantList)
         binding.recyclerApplicantList.adapter = adapter
         binding.recyclerApplicantList.layoutManager = LinearLayoutManager(this)
         binding.animationView.visibility = View.GONE
 
         adapter.setOnItemClickListener(object : ApplicantAdapter.OnItemClickListener {
             override fun onItemClick(applicant: ApplicantsModel) {
-                val intent = Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
-                intent.putExtra("nuser_applicant", applicant)
-                startActivityForResult(intent, REQUEST_CODE)
+                if (!isActivityOpened){
+                    val intent = Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
+                    intent.putExtra("nuser_applicant", applicant)
+                    startActivityForResult(intent, REQUEST_CODE)
+                    isActivityOpened = true
+                }
             }
         })
 
@@ -51,6 +51,14 @@ class ActivityApplicantsList : AppCompatActivity() {
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+            isActivityOpened = false
         }
     }
 }
