@@ -20,6 +20,7 @@
     <string name="hintPassword">Mật khẩu</string>
     <string name="create_acc">Chưa có tài khoản?</string>
     <string name="forgot_pass">Quên mật khẩu?</string>
+    <string name="forgot_pass_title">Quên mật khẩu</string>
     <string name="error_invalid_email">Email trống hoặc không hợp lệ</string>
     <string name="error_pass">Mật khẩu trống hoặc không chính xác (tối thiểu 6 kí tự)</string>
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
@@ -204,10 +205,6 @@
     <string name="profile_cancle_edit_confirm_noti">Lưu ý: Việc hủy chỉnh sửa hiện tại sẽ không được lưu và quay lại thông tin trước khi sửa.</string>
 
 
-
-
-
-
     <string name="edit_taxcode">Tax code</string>
     <string name="edit_description">Mô tả thông tin nhà tuyển dụng</string>
     <string name="edit_SectorOfBusiness">Chọn lĩnh vực kinh doanh</string>
@@ -219,6 +216,29 @@
     <string name="error_invalid_Gender">Giới tính trống</string>
     <string name="error_invalid_Age">Tuổi trống hoặc tuổi ít hơn 18 hoặc lớn hơn 80</string>
     <string name="error_invalid_Tax">Mã số thuế không được trống và phải là 10 hoặc 13 số</string>
+
+    <!-- Settings Profile -->
+    <string name="Setting">Cài đặt</string>
+    <string name="Current_pass_title">Nhập mật khẩu hiện tại để xác nhận</string>
+    <string name="Current_pass">Nhập mật khẩu hiện tại</string>
+    <string name="Change_pass">Đổi mật khẩu</string>
+    <string name="Delete_acc">Xóa tài khoản</string>
+    <string name="About_app">Về ứng dụng</string>
+    <string name="Change_newpass">Nhập mật khẩu mới</string>
+    <string name="Confirm_newpass">Xác nhận mật khẩu mới</string>
+    <string name="Change_newpass_success">Đã cập nhật mật khẩu thành công.</string>
+    <string name="Change_newpass_failed">Không cập nhật được mật khẩu. Vui lòng thử lại.</string>
+    <string name="Confirm">Xác nhận</string>
+    <string name="Confirm_change_pass">Xác nhận đổi mật khẩu</string>
+    <string name="Confirm_delete_account">Xác nhận xóa tài khoản</string>
+    <string name="Error_invalid_newpass">Mật khẩu mới trống hoặc không chính xác (tối thiểu 6 kí tự)</string>
+    <string name="Error_invalid_confirm_newpass">Xác nhận mật khẩu mới trống hoặc không khớp</string>
+    <string name="re_authen_failed">Xác thực lại không thành công. Vui lòng thử lại.</string>
+    <string name="account_deleted">Đã xóa tài khoản</string>
+    <string name="delete_account_failed">Xóa tài khoản không thành công. Vui lòng thử lại.</string>
+
+
+
 
 
 

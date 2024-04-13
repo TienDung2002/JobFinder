@@ -214,6 +214,7 @@
                         app:endIconMode="password_toggle"
                         app:startIconDrawable="@drawable/ic_password24px">
 
+                        <!-- gạch dưới -->
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/password"
                             android:layout_width="match_parent"
@@ -228,7 +229,6 @@
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
-                        <!-- gạch dưới -->
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"

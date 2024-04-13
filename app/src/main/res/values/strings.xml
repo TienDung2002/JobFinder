@@ -19,6 +19,7 @@
     <string name="hintPassword">Password</string>
     <string name="create_acc">Don\'t have an account?</string>
     <string name="forgot_pass">Forgot password?</string>
+    <string name="forgot_pass_title">Forgot password</string>
     <string name="error_invalid_email">Empty or invalid email</string>
     <string name="error_pass">Password is blank or incorrect (at least 6 characters)</string>
     <string name="error_email_pass">Please check the fields again</string>
@@ -166,7 +167,6 @@
     <string name="profile_logout_toast">Log out successfully</string>
 
 
-
     <!-- Edit Profile -->
     <string name="edit_profile">Edit profile</string>
     <string name="edit_profile_img">Tap to edit image</string>
@@ -194,17 +194,12 @@
     <string name="profile_image_deleted_success">Image deleted success</string>
     <string name="profile_image_delete_failed">Image deleted failed</string>
     <string name="edit_profile_nothing_change">No changes have been made to profile</string>
-
     <string name="profile_image_delete_confim">Confirm delete image</string>
     <string name="profile_image_delete_confim_noti">Note: Deleting current image will return to the default avatar.</string>
     <string name="profile_image_delete_confim_yes">Yes</string>
     <string name="profile_image_delete_confim_no">No</string>
     <string name="profile_cancle_edit_confirm">Confirm cancle edit</string>
     <string name="profile_cancle_edit_confirm_noti">Note: Canceling the current edit will not be saved and will return to the information before editing.</string>
-
-
-
-
 
 
     <string name="edit_taxcode">Tax code</string>
@@ -218,6 +213,26 @@
     <string name="error_invalid_Gender">Gender is blank</string>
     <string name="error_invalid_Age">Age is blank or age is less than 18 or more than 80</string>
     <string name="error_invalid_Tax">Tax code cannot be empty and must be 10 or 13 numbers</string>
+
+    <!-- Settings Profile -->
+    <string name="Setting">Setting</string>
+    <string name="Current_pass_title">Enter current password to confirm</string>
+    <string name="Current_pass">Enter current password</string>
+    <string name="Change_pass">Change password</string>
+    <string name="Delete_acc">Delete account</string>
+    <string name="About_app">About app</string>
+    <string name="Change_newpass">Enter new Password</string>
+    <string name="Change_newpass_success">Password updated successfully.</string>
+    <string name="Change_newpass_failed">Failed to update password. Please try again.</string>
+    <string name="Confirm_newpass">Confirm new Password</string>
+    <string name="Confirm">Confirm</string>
+    <string name="Confirm_change_pass">Confirm change password</string>
+    <string name="Confirm_delete_account">Confirm delete account</string>
+    <string name="Error_invalid_newpass">New password is blank or incorrect (at least 6 characters)</string>
+    <string name="Error_invalid_confirm_newpass">New password confirm is blank or does match</string>
+    <string name="re_authen_failed">Re-authentication failed. Please try again.</string>
+    <string name="account_deleted">Account deleted</string>
+    <string name="delete_account_failed">Delete account failed. Please try again.</string>
 
 
     <!--    Find new job-->
@@ -291,7 +306,6 @@
     </string-array>
 
 
-
     <!--    job detail-->
     <string name="apply">Apply</string>
     <string name="job_detail_title">Job detail</string>
@@ -312,6 +326,6 @@
     <!--    buser detail info-->
     <string name="recruiter_info_title">Recruiter\'s information</string>
 
-<!--    applicants list-->
+    <!--    applicants list-->
     <string name="applicant_list_title">Applicants list</string>
 </resources>
