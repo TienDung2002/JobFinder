@@ -219,7 +219,7 @@
 
     <!-- Settings Profile -->
     <string name="Setting">Cài đặt</string>
-    <string name="Current_pass_title">Nhập mật khẩu hiện tại để xác nhận</string>
+    <string name="Current_pass_title">Nhập mật khẩu hiện tại để xác minh</string>
     <string name="Current_pass">Nhập mật khẩu hiện tại</string>
     <string name="Change_pass">Đổi mật khẩu</string>
     <string name="Delete_acc">Xóa tài khoản</string>
