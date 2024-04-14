@@ -9,13 +9,14 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import java.util.Locale
 
-class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView) :
+class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView, private val viewModel: FindNewJobViewModel) :
     RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
@@ -94,8 +95,7 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
 
     // Lọc data khi search
     override fun getFilter(): Filter {
-        return object: Filter() {
-            // logic lọc data và trả về kết quả lọc
+        return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val queryInput = constraint?.toString()?.trim()?.lowercase() ?: ""
                 val filteredList = mutableListOf<JobModel>()
@@ -119,22 +119,22 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
                 return filterResults
             }
 
-            // Cập nhật dữ liệu với kết quả sau khi lọc đã sẵn sàng
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 val filteredList = results?.values as? List<JobModel> ?: emptyList()
 
                 list = filteredList
                 notifyDataSetChanged()
 
-                if (list.isEmpty()) {
+                if (filteredList.isEmpty()) {
                     showNoDataFoundImg()
                 } else {
                     hideNoDataFoundImg()
                 }
-
             }
         }
     }
+
+
 
 
     fun resetOriginalList() {
@@ -143,6 +143,12 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
         notifyDataSetChanged()
     }
 
+    fun updateData(newList: List<JobModel>) {
+        list = newList
+        notifyDataSetChanged()
+    }
+
+
     fun showNoDataFoundImg() {
         noDataImage.visibility = View.VISIBLE
     }
@@ -150,4 +156,5 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
     fun hideNoDataFoundImg() {
         noDataImage.visibility = View.GONE
     }
+
 }

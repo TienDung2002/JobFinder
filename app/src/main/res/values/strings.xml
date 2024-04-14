@@ -247,8 +247,8 @@
     <string name="sort_Rec_All">All</string>
     <string name="sort_Rec_AtoZ">In order A-Z</string>
     <string name="sort_postedTime">Posted time</string>
-    <string name="sort_PT_Anytime">Any time</string>
-    <string name="sort_PT_Today">Today</string>
+    <string name="sort_PT_Anytime">Anytime</string>
+    <string name="sort_PT_Newest">Newest</string>
     <string name="sort_PT_thisMonth">This month</string>
     <string name="sort_workShift">Work shift</string>
     <string name="sort_salary">Salary</string>
@@ -325,7 +325,12 @@
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Recruiter\'s information</string>
+<!--    nuser detail info-->
+    <string name="seeker_info_title">Seeker\'s information</string>
 
     <!--    applicants list-->
     <string name="applicant_list_title">Applicants list</string>
+    <string name="no_applicant">No applicant yet</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
 </resources>

@@ -354,7 +354,7 @@
                             android:maxLines="1"
                             android:hint="@string/error_invalid_Gender"
                             android:textSize="20sp"
-                            android:padding="14dp"
+                            android:paddingTop="14dp"
                             android:textColor="@color/black"
                             android:background="@drawable/edit_text_blank"
 

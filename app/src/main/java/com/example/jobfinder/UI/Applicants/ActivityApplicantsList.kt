@@ -3,24 +3,49 @@ package com.example.jobfinder.UI.Applicants
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.jobfinder.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.jobfinder.Datas.Model.ApplicantsModel
+import com.example.jobfinder.UI.UserDetailInfo.NUserDetailInfoActivity
+import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.databinding.ActivityApplicantsListBinding
-import com.example.jobfinder.databinding.ActivityBuserDetailInfoBinding
 
 class ActivityApplicantsList : AppCompatActivity() {
     private lateinit var binding: ActivityApplicantsListBinding
+    private val REQUEST_CODE = 1002
+    lateinit var viewModel: ProfileViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityApplicantsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val uid = intent.getStringExtra("uid")
+        val job_id = intent.getStringExtra("job_id")
 
-        binding.uid.text = uid
+        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
+
+        // Tạo danh sách mẫu các ứng viên
+        val applicantList = listOf(
+            ApplicantsModel("2xcDUDAkHkXB6Hhcj1uCX2fLTEV2", "Applicant 1's description","", job_id.toString()),
+            ApplicantsModel("3MpbWhQQPAZSC6xkAGVndW6I3SB2", "Applicant 2's description", "","Stand Smith"),
+            ApplicantsModel("3", "Applicant 3's description Applicant 3's description Applicant 3's description Applicant 3's description", "","Jane Smith"),
+            ApplicantsModel("4", "Applicant 4's description", "","Jane Mary"),
+            )
+
+        // Tạo adapter và gán vào RecyclerView
+        val adapter = ApplicantAdapter(applicantList, viewModel, this@ActivityApplicantsList)
+        binding.recyclerApplicantList.adapter = adapter
+        binding.recyclerApplicantList.layoutManager = LinearLayoutManager(this)
+        binding.animationView.visibility = View.GONE
+
+        adapter.setOnItemClickListener(object : ApplicantAdapter.OnItemClickListener {
+            override fun onItemClick(applicant: ApplicantsModel) {
+                val intent = Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
+                intent.putExtra("nuser_applicant", applicant)
+                startActivityForResult(intent, REQUEST_CODE)
+            }
+        })
 
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()

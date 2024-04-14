@@ -13,60 +13,63 @@ class PostedJobViewModel : ViewModel() {
     val postedJobList: LiveData<List<JobModel>> get() = _postedJobList
 
     private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
 
     private val auth = FirebaseAuth.getInstance()
     private val uid = auth.currentUser?.uid
     private val database = FirebaseDatabase.getInstance().getReference("Job").child(uid.toString())
-
-    interface OnJobDeletedListener {
-        fun onJobDeleted()
-    }
+    private val userInfoDb = FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString())
 
     fun fetchPostedJobs() {
         _isLoading.value = true
         database.get().addOnSuccessListener { dataSnapshot ->
             val postedJobList: MutableList<JobModel> = mutableListOf()
-            for (jobSnapshot in dataSnapshot.children) {
-                val jobModel = jobSnapshot.getValue(JobModel::class.java)
-                jobModel?.let {
-                    // Update status based on start time and end time
-                    it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
-                    // Add the updated jobModel to the list
-                    postedJobList.add(it)
+            userInfoDb.child("name").get().addOnSuccessListener { nameSnapshot ->
+                val userName = nameSnapshot.getValue(String::class.java).toString()
+                dataSnapshot.children.forEach { jobSnapshot ->
+                    val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                    jobModel?.let {
+                        it.BUserName = userName
+                        it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+                        postedJobList.add(it)
+                    }
                 }
+                // Sắp xếp danh sách công việc theo thời gian đăng
+                val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
+                _postedJobList.value = sortedPostedJobList
+                // Cập nhật trạng thái vào Firebase
+                updateStatusToFirebase(sortedPostedJobList)
+                _isLoading.value = false
+            }.addOnFailureListener {
+                _isLoading.value = false
+                // Xử lý lỗi
             }
-            val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
-            _postedJobList.value = sortedPostedJobList
-            // Update status to Firebase
-            updateStatusToFirebase(sortedPostedJobList)
+        }.addOnFailureListener {
             _isLoading.value = false
-        }.addOnFailureListener { error ->
-            _isLoading.value = false
-            // Handle error
+            // Xử lý lỗi
         }
     }
-
 
     fun deleteJob(jobId: String) {
         database.child(jobId).removeValue()
             .addOnSuccessListener {
             }
-            .addOnFailureListener { error ->
+            .addOnFailureListener {
             }
     }
 
     private fun updateStatusToFirebase(jobList: List<JobModel>) {
+        val updatesMap = mutableMapOf<String, Any?>()
         for (jobModel in jobList) {
-            database.child(jobModel.jobId.toString()).child("status").setValue(jobModel.status)
-                .addOnSuccessListener {
-                    // Status updated successfully
-                }
-                .addOnFailureListener { error ->
-                    // Handle error
-                }
+            updatesMap["/${jobModel.jobId}/buserName"] = jobModel.BUserName
+            updatesMap["/${jobModel.jobId}/status"] = jobModel.status
         }
+        database.updateChildren(updatesMap)
+            .addOnSuccessListener {
+                // Tất cả các trạng thái đã được cập nhật thành công
+            }
+            .addOnFailureListener {
+                // Xử lý lỗi
+            }
     }
-
 
 }

@@ -5,33 +5,33 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.R
-import com.example.jobfinder.Utils.FragmentHelper
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
-    private lateinit var viewModel: FindNewJobViewModel
-    lateinit var toggle: ActionBarDrawerToggle
+    private val viewModel: FindNewJobViewModel by viewModels()
+    private lateinit var adapter: NewJobsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        // Khởi tạo viewmodel
-        viewModel = ViewModelProvider(this)[FindNewJobViewModel::class.java]
-
 
         // nút back về home trên màn hình
         binding.backButton.setOnClickListener {
@@ -40,29 +40,29 @@ class NewJobActivity : AppCompatActivity() {
             finish()
         }
 
+        // chạy hàm lấy data các công việc
+        fetchJobs()
 
-        // gán data cứng vào viewmodel và adapter
-
-        viewModel.addJobsData(JobModel("1", "Intern Javascript", "2", "", "", "3", "30000", "", "", "", "01/4/2024", "2", "Công ty TNHH Hoàng Hàu", "", "", "", ""));
-        viewModel.addJobsData(JobModel("2", "Senior Java", "2", "", "", "3", "45000", "", "", "", "02/4/2024", "1", "Công ty Nguyên Nguyễn", "", "", "", ""));
-        viewModel.addJobsData(JobModel("3", "Intent SQL", "2", "", "", "3", "5000", "", "", "", "03/4/2024", "0", "Tập đoàn Mai Đào", "", "", "", ""));
-        viewModel.addJobsData(JobModel("4", "Nhân viên lau bàn", "2", "", "", "3", "2000", "", "", "", "03/4/2024", "1", "Công ty Dũng hót boi", "", "", "", ""));
-        viewModel.addJobsData(JobModel("5", "Senior đánh giày", "2", "", "", "3", "123000", "", "", "", "05/4/2024", "2", "Công ty TNHH 10 thành viên", "", "", "", ""));
-        viewModel.addJobsData(JobModel("6", "Tạp vụ", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng", "", "", "", ""));
-        viewModel.addJobsData(JobModel("7", "Tạp vụ 2", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 2", "", "", "", ""));
-        viewModel.addJobsData(JobModel("8", "Tạp vụ 3", "2", "", "", "3", "900000", "", "", "", "08/4/2024", "0", "Công ty Cầu vồng 3", "", "", "", ""))
-
-
-
-        // Gán danh sách dữ liệu từ ViewModel cho adapter
-        val JobsListData = viewModel.getJobsList()
-        val adapter = NewJobsAdapter(JobsListData, binding.noDataImage)
+        // gán data vào adapter sau khi fetch
+        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
 
+        viewModel.jobsListLiveData.observe(this) { newItem ->
+            newItem?.let {
+                adapter.updateData(newItem) // Cập nhật adapter khi có dữ liệu mới từ ViewModel
+            }
+        }
+
+        // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
+        viewModel._isLoading.observe(this) { isLoading ->
+            binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+
         // lắng nghe event được gửi về từ activity đích (activity jobDetail của nhà tuyển dụng (làm sau))
-        val startJobDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        val startJobDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 // Xử lí dữ liệu nhận về nếu cần thiết
             }
@@ -70,7 +70,7 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // Click vào từng item trong recycler
-        adapter.setOnItemClickListener(object : NewJobsAdapter.onItemClickListener{
+        adapter.setOnItemClickListener(object : NewJobsAdapter.onItemClickListener {
             override fun onItemClicked(position: Int) {
 //                val intent = Intent(this, JobDetails::class.java)
 //                startConfeDetail.launch(intent)
@@ -80,7 +80,7 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // mục search
-        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(submitInput: String?): Boolean {
                 // Ẩn bàn phím
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -95,10 +95,12 @@ class NewJobActivity : AppCompatActivity() {
             override fun onQueryTextChange(dataInput: String): Boolean {
                 // Nếu không nhập text vào
                 return if (dataInput.isEmpty()) {
+//                    adapter.resetOriginalList(viewModel.postedJobList)
                     adapter.resetOriginalList()
                     false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
+//                    adapter.updateFiltteredData(viewModel.filteredJobList)
                     true
                 }
             }
@@ -107,26 +109,52 @@ class NewJobActivity : AppCompatActivity() {
 
         // nút close của searchView
         binding.searchView.setOnCloseListener {
+//            adapter.resetOriginalList(viewModel.postedJobList)
             adapter.resetOriginalList()
             false
         }
 
-        binding.rootNewJob.setOnClickListener{
+        binding.rootNewJob.setOnClickListener {
             binding.searchView.clearFocus()
         }
 
 
-
         // nút filter
-        binding.filterIcon.setOnClickListener{
+        binding.filterIcon.setOnClickListener {
             // mở drawer
             binding.rootNewJob.openDrawer(GravityCompat.END)
 
         }
 
-
-
     }
 
+
+    private fun fetchJobs() {
+        viewModel._isLoading.value = true
+        FirebaseDatabase.getInstance().getReference("Job")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                    for (userSnapshot in dataSnapshot.children) {
+                        for (jobSnapshot in userSnapshot.children) {
+                            val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                            jobModel?.let {
+                                // fetch dc data gán vào viewmodel
+                                viewModel.addJobsToJobsList(it)
+                            }
+                        }
+                    }
+                    // Sắp xếp danh sách công việc theo thời gian đăng
+//                    val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
+//                    viewModel.addJobsData(sortedPostedJobList)
+
+                    viewModel._isLoading.value = false
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    viewModel._isLoading.value = false
+                }
+            })
+    }
 
 }
