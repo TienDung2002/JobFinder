@@ -83,7 +83,7 @@ class SettingsMenuFragment : Fragment() {
                             }else{
                                 Toast.makeText(
                                     requireContext(),
-                                    "Re-authentication failed. Please try again.",
+                                    R.string.re_authen_failed,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }

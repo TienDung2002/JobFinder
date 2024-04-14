@@ -1,5 +1,7 @@
 package com.example.jobfinder.UI.UsersProfile
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -61,7 +63,9 @@ class ChangePasswordFragment : Fragment() {
                     currentUser.updatePassword(newPassword).addOnCompleteListener { updateTask ->
                         if (updateTask.isSuccessful) {
                             Toast.makeText(requireContext(),R.string.Change_newpass_success,Toast.LENGTH_SHORT).show()
-                            requireActivity().onBackPressed() // Go back after successful password change
+                            val resultIntent = Intent()
+                            requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                            requireActivity().finish()
                         } else {
                             Toast.makeText(requireContext(),R.string.Change_newpass_failed,Toast.LENGTH_SHORT).show()
                         }
