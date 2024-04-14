@@ -80,6 +80,12 @@ class UserProfileMenuFragment : Fragment() {
 
         }
 
+        //settings
+        binding.profileSettings.setOnClickListener(){
+            val intent = Intent(requireContext(),SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
         //logout
         binding.profileLogout.setOnClickListener {
             auth.signOut()
@@ -90,6 +96,7 @@ class UserProfileMenuFragment : Fragment() {
             requireActivity().finishAffinity()
 
         }
+
 
 
 
