@@ -174,11 +174,11 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
                 // Gán danh sách lọc trực tiếp vào RecyclerView adapter
                 viewModel.updateFilteredJobList(filteredList)
 
-//                if (filteredList.isEmpty()) {
-//                    showNoDataFoundImg()
-//                } else {
-//                    hideNoDataFoundImg()
-//                }
+                if (filteredList.isEmpty()) {
+                    showNoDataFoundImg()
+                } else {
+                    hideNoDataFoundImg()
+                }
             }
         }
     }

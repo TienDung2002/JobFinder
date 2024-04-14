@@ -110,7 +110,7 @@ class NewJobActivity : AppCompatActivity() {
                     false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
-                    adapter.updateFiltteredData(viewModel.filteredJobList)
+//                    adapter.updateFiltteredData(viewModel.filteredJobList)
                     true
                 }
             }
