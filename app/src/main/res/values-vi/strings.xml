@@ -235,8 +235,8 @@
     <string name="sort_Rec_All">Tất cả</string>
     <string name="sort_Rec_AtoZ">Thứ tự A-Z</string>
     <string name="sort_postedTime">Thời gian đăng</string>
-    <string name="sort_PT_newest">Bất cứ khi nào</string>
-    <string name="sort_PT_Today">Hôm nay</string>
+    <string name="sort_PT_Anytime">Bất cứ khi nào</string>
+    <string name="sort_PT_Newest">Mới nhất</string>
     <string name="sort_PT_thisMonth">Tháng này</string>
     <string name="sort_workShift">Giờ làm</string>
     <string name="sort_salary">Mức lương</string>

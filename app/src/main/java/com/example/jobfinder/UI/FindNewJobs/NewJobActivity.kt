@@ -10,7 +10,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
@@ -23,7 +25,7 @@ import com.google.firebase.database.ValueEventListener
 
 class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
-    private lateinit var viewModel: FindNewJobViewModel
+    private val viewModel: FindNewJobViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,29 +40,20 @@ class NewJobActivity : AppCompatActivity() {
             finish()
         }
 
-        viewModel = ViewModelProvider(this).get(FindNewJobViewModel::class.java)
+        // chạy hàm lấy data các công việc
         fetchJobs()
 
-        // gán vào adapter
+        // gán data vào adapter sau khi fetch
         adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
-        // Quan sát tổng công việc có thay đổi không
-        viewModel.jobsListLiveData.observe(this) { newList ->
-            newList?.let {
-                adapter.updateData(newList) // Cập nhật adapter khi có dữ liệu mới từ ViewModel
+
+        viewModel.jobsListLiveData.observe(this) { newItem ->
+            newItem?.let {
+                adapter.updateData(newItem) // Cập nhật adapter khi có dữ liệu mới từ ViewModel
             }
         }
-//        viewModel.postedJobList.observe(this) { updatedList ->
-//            updatedList?.let {
-//                adapter.updateData(it)
-//            }
-//        }
-        // Quan sát bộ lọc khi search để thay đổi recycler
-//        viewModel.filteredJobList.observe(this) { filteredList ->
-//            adapter.updateFiltteredData(viewModel.filteredJobList)
-//        }
 
         // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
         viewModel._isLoading.observe(this) { isLoading ->
@@ -69,12 +62,11 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // lắng nghe event được gửi về từ activity đích (activity jobDetail của nhà tuyển dụng (làm sau))
-        val startJobDetails =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    // Xử lí dữ liệu nhận về nếu cần thiết
-                }
+        val startJobDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // Xử lí dữ liệu nhận về nếu cần thiết
             }
+        }
 
 
         // Click vào từng item trong recycler
@@ -147,6 +139,7 @@ class NewJobActivity : AppCompatActivity() {
                         for (jobSnapshot in userSnapshot.children) {
                             val jobModel = jobSnapshot.getValue(JobModel::class.java)
                             jobModel?.let {
+                                // fetch dc data gán vào viewmodel
                                 viewModel.addJobsToJobsList(it)
                             }
                         }
@@ -154,7 +147,6 @@ class NewJobActivity : AppCompatActivity() {
                     // Sắp xếp danh sách công việc theo thời gian đăng
 //                    val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
 //                    viewModel.addJobsData(sortedPostedJobList)
-
 
                     viewModel._isLoading.value = false
                 }
