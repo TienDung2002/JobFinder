@@ -10,30 +10,18 @@ import com.google.firebase.database.*
 
 class FindNewJobViewModel : ViewModel() {
     private val JobsList: MutableList<JobModel> = mutableListOf()
-    private val JobsFilteredFindJob: MutableList<JobModel> = mutableListOf()
-    private var _filteredJobList = MutableLiveData<List<JobModel>>()
-    private var _postedJobList = MutableLiveData<List<JobModel>>()
+    private val _jobsListLiveData = MutableLiveData<List<JobModel>>()
     var _isLoading = MutableLiveData<Boolean>()
 
-
-    val postedJobList: LiveData<List<JobModel>> get() = _postedJobList
-    val filteredJobList: LiveData<List<JobModel>> get() = _filteredJobList
+    val jobsListLiveData: LiveData<List<JobModel>> get() = _jobsListLiveData
 
 
-
-    fun addJobsData(jobsData: List<JobModel>) {
-        JobsList.clear()
-        JobsList.addAll(jobsData)
-        _postedJobList.value = JobsList
+    fun getJobsList(): List<JobModel> {
+        return JobsList
     }
-
-    fun updateFilteredJobList(filteredList: List<JobModel>) {
-//        _filteredJobList.value = filteredList
-        JobsList.clear()
-        JobsList.addAll(filteredList)
-        _postedJobList.value = JobsFilteredFindJob
+    fun addJobsToJobsList(JobsData: JobModel) {
+        JobsList.add(JobsData)
+        _jobsListLiveData.value = JobsList
     }
-
-
 
 }

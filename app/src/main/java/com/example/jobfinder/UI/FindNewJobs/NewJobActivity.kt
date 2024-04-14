@@ -42,28 +42,25 @@ class NewJobActivity : AppCompatActivity() {
         fetchJobs()
 
         // gán vào adapter
-        adapter = NewJobsAdapter(emptyList(), binding.noDataImage, viewModel)
+        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
         // Quan sát tổng công việc có thay đổi không
-        viewModel.postedJobList.observe(this) { updatedList ->
-            updatedList?.let {
-                adapter.updateData(it)
+        viewModel.jobsListLiveData.observe(this) { newList ->
+            newList?.let {
+                adapter.updateData(newList) // Cập nhật adapter khi có dữ liệu mới từ ViewModel
             }
         }
+//        viewModel.postedJobList.observe(this) { updatedList ->
+//            updatedList?.let {
+//                adapter.updateData(it)
+//            }
+//        }
         // Quan sát bộ lọc khi search để thay đổi recycler
-        viewModel.filteredJobList.observe(this) { filteredList ->
-            filteredList?.let {
-                adapter.updateData(it)
-                if (it.isEmpty()) {
-                    adapter.showNoDataFoundImg()
-                } else {
-                    adapter.updateData(it)
-                    adapter.hideNoDataFoundImg()
-                }
-            }
-        }
+//        viewModel.filteredJobList.observe(this) { filteredList ->
+//            adapter.updateFiltteredData(viewModel.filteredJobList)
+//        }
 
         // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
         viewModel._isLoading.observe(this) { isLoading ->
@@ -106,7 +103,8 @@ class NewJobActivity : AppCompatActivity() {
             override fun onQueryTextChange(dataInput: String): Boolean {
                 // Nếu không nhập text vào
                 return if (dataInput.isEmpty()) {
-                    adapter.resetOriginalList(viewModel.postedJobList)
+//                    adapter.resetOriginalList(viewModel.postedJobList)
+                    adapter.resetOriginalList()
                     false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
@@ -119,7 +117,8 @@ class NewJobActivity : AppCompatActivity() {
 
         // nút close của searchView
         binding.searchView.setOnCloseListener {
-            adapter.resetOriginalList(viewModel.postedJobList)
+//            adapter.resetOriginalList(viewModel.postedJobList)
+            adapter.resetOriginalList()
             false
         }
 
@@ -137,32 +136,26 @@ class NewJobActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        fetchJobs()
-    }
 
     private fun fetchJobs() {
         viewModel._isLoading.value = true
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val postedJobList: MutableList<JobModel> = mutableListOf()
 
                     for (userSnapshot in dataSnapshot.children) {
                         for (jobSnapshot in userSnapshot.children) {
                             val jobModel = jobSnapshot.getValue(JobModel::class.java)
                             jobModel?.let {
-                                postedJobList.add(it)
+                                viewModel.addJobsToJobsList(it)
                             }
                         }
                     }
                     // Sắp xếp danh sách công việc theo thời gian đăng
-                    val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
-                    viewModel.addJobsData(sortedPostedJobList)
+//                    val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
+//                    viewModel.addJobsData(sortedPostedJobList)
 
-                    // không sắp xếp
-//                    viewModel.addJobsData(postedJobList)
+
                     viewModel._isLoading.value = false
                 }
 

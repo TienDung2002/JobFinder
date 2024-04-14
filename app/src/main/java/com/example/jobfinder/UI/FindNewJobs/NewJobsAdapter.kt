@@ -94,55 +94,6 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
 
 
     // Lọc data khi search
-//    override fun getFilter(): Filter {
-//        return object: Filter() {
-//            // logic lọc data và trả về kết quả lọc
-//            override fun performFiltering(constraint: CharSequence?): FilterResults {
-//                Log.d("Filterádfa", "performFiltering is called with constraint: $constraint")
-//
-//                val queryInput = constraint?.toString()?.trim()?.lowercase() ?: ""
-//                val filteredList = mutableListOf<JobModel>()
-//
-//                if (queryInput.isEmpty()) {
-//                    filteredList.addAll(originalData)
-//                    Log.d("list1", originalData.toString())
-//                    Log.d("list2", filteredList.toString())
-//
-//                } else {
-//                    for (item in originalData) {
-//                        val recName = item.BUserName?.lowercase() ?: ""
-//                        val jobTitle = item.jobTitle?.lowercase() ?: ""
-//                        if (recName.contains(queryInput) || jobTitle.contains(queryInput)) {
-//                            filteredList.add(item)
-//                        }
-//                    }
-//                }
-//
-//                val filterResults = FilterResults()
-//                filterResults.count = filteredList.size
-//                filterResults.values = filteredList
-//
-//                return filterResults
-//            }
-//
-//            // Cập nhật dữ liệu với kết quả sau khi lọc đã sẵn sàng
-//            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-//                Log.d("Filterqưer", "publishResults is called with results: $results")
-//                val filteredList = results?.values as? List<JobModel> ?: emptyList()
-//
-//                list = filteredList
-//                notifyDataSetChanged()
-//
-//                if (list.isEmpty()) {
-//                    showNoDataFoundImg()
-//                } else {
-//                    hideNoDataFoundImg()
-//                }
-//
-//            }
-//        }
-//    }
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -171,8 +122,8 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 val filteredList = results?.values as? List<JobModel> ?: emptyList()
 
-                // Gán danh sách lọc trực tiếp vào RecyclerView adapter
-                viewModel.updateFilteredJobList(filteredList)
+                list = filteredList
+                notifyDataSetChanged()
 
                 if (filteredList.isEmpty()) {
                     showNoDataFoundImg()
@@ -184,9 +135,10 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
     }
 
 
-    fun resetOriginalList(defaultLiveDataList: LiveData<List<JobModel>>) {
-        val defaultList = defaultLiveDataList.value ?: emptyList()
-        list = defaultList
+
+
+    fun resetOriginalList() {
+        list = originalData
         hideNoDataFoundImg()
         notifyDataSetChanged()
     }
@@ -196,11 +148,6 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
         notifyDataSetChanged()
     }
 
-    fun updateFiltteredData(newList: LiveData<List<JobModel>>){
-        val filteredList = newList.value ?: emptyList()
-        list = filteredList
-        notifyDataSetChanged()
-    }
 
     fun showNoDataFoundImg() {
         noDataImage.visibility = View.VISIBLE
