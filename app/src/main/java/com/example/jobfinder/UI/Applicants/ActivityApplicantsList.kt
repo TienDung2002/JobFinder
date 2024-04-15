@@ -24,7 +24,7 @@ class ActivityApplicantsList : AppCompatActivity() {
 
 
         // Tạo danh sách mẫu các ứng viên
-        val applicantList = listOf(
+        val applicantList = mutableListOf(
             ApplicantsModel("2xcDUDAkHkXB6Hhcj1uCX2fLTEV2", "Applicant 1's description","", job_id.toString()),
             ApplicantsModel("3MpbWhQQPAZSC6xkAGVndW6I3SB2", "Applicant 2's description", "","Stand Smith"),
             ApplicantsModel("3", "Applicant 3's description Applicant 3's description Applicant 3's description Applicant 3's description", "","Jane Smith"),
