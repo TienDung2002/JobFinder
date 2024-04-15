@@ -97,6 +97,7 @@
     <string name="grid_job_applied">Jobs applied</string>
     <string name="grid_job_checkin">Jobs check in</string>
     <string name="grid_reports">Reports</string>
+    <string name="grid_saveJob">Saved</string>
     <!--    Buser-->
     <string name="grid_recruit">Recruit</string>
     <string name="grid_recruit_posted">Recruit posted</string>

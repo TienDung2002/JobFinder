@@ -98,6 +98,8 @@
     <string name="grid_job_applied">Công việc ứng tuyển</string>
     <string name="grid_job_checkin">Điểm danh</string>
     <string name="grid_reports">Báo cáo</string>
+    <string name="grid_saveJob">Đã lưu</string>
+
     <!--    Buser-->
     <string name="grid_recruit">Tuyển dụng</string>
     <string name="grid_recruit_posted">Bài đã đăng</string>

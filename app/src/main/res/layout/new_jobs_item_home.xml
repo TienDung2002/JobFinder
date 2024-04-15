@@ -126,7 +126,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/layoutmiddleSection1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="2dp">
                 <TextView
                     android:id="@+id/Ji_recruited"
                     android:layout_width="wrap_content"
@@ -154,6 +155,32 @@
                     android:textSize="17sp"
                     android:text="@string/Ji_sub"/>
             </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/layoutmiddleSection3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/layoutmiddleSection2"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:id="@+id/Ji_recruited"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="17sp"-->
+<!--                    android:text="@string/Ji_recruited1"/>-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/NumOfRecruited"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="italic"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:textSize="17sp"-->
+<!--                    android:text="@string/Ji_num_of_recruits"/>-->
+<!--            </LinearLayout>-->
+
         </RelativeLayout>
 
         <RelativeLayout

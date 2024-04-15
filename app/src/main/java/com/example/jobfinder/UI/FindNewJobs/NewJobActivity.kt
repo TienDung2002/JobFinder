@@ -41,7 +41,8 @@ class NewJobActivity : AppCompatActivity() {
         }
 
         // chạy hàm lấy data các công việc
-        fetchJobs()
+        if (viewModel.getJobsList().isEmpty()) { fetchJobs() }
+
 
         // gán data vào adapter sau khi fetch
         adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
@@ -73,7 +74,7 @@ class NewJobActivity : AppCompatActivity() {
         adapter.setOnItemClickListener(object : NewJobsAdapter.onItemClickListener {
             override fun onItemClicked(position: Int) {
 //                val intent = Intent(this, JobDetails::class.java)
-//                startConfeDetail.launch(intent)
+//                startJobDetails.launch(intent)
                 Toast.makeText(this@NewJobActivity, "Click", Toast.LENGTH_SHORT).show()
             }
         })
