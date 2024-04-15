@@ -79,12 +79,12 @@
                             app:cardElevation="0dp"
                             android:layout_margin="2dp">
 
-                            <ImageButton
+                            <ImageView
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:scaleType="fitCenter"
-                                android:src="@drawable/app_icon"
-                                android:background="@null"
+                                android:background="@drawable/image_loading_80px"
+                                android:id="@+id/buser_logo"
                                 tools:ignore="ContentDescription"/>
 
                         </androidx.cardview.widget.CardView>

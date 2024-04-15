@@ -6,12 +6,16 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Applicants.ActivityApplicantsList
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
+import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
+import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.GetData
+import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivityRecruiterJobDetailBinding
 import com.google.firebase.database.*
 
@@ -24,7 +28,6 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
         binding = ActivityRecruiterJobDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val job = intent.getParcelableExtra<JobModel>("job")
-
 
         binding.animationView.visibility = View.VISIBLE
         binding.detailJobScrollView.visibility = View.GONE
@@ -43,6 +46,8 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.jobDetailAddress.text= job.address
             binding.jobDetailDes.text= job.jobDes
 
+            RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
+
             binding.detailJobScrollView.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
 
@@ -59,6 +64,12 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.appliedListBtn.setOnClickListener {
                 val intent = Intent(this, ActivityApplicantsList::class.java)
                 intent.putExtra("job_id", job.jobId)
+                startActivity(intent)
+            }
+
+            binding.buserLogo.setOnClickListener{
+                val intent = Intent(this, BUserDetailInfoActivity::class.java)
+                intent.putExtra("uid", job.BUserId)
                 startActivity(intent)
             }
         }
