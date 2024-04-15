@@ -32,7 +32,6 @@ class PostedJobActivity : AppCompatActivity() {
         adapter = PostedJobAdapter(this, listOf())
         binding.recyclerPostedJob.adapter = adapter
         binding.recyclerPostedJob.layoutManager = LinearLayoutManager(this)
-        binding.animationView.visibility = View.GONE
 
         adapter.setOnItemClickListener(object : PostedJobAdapter.OnItemClickListener {
             override fun onItemClick(job: JobModel) {
@@ -55,6 +54,8 @@ class PostedJobActivity : AppCompatActivity() {
 
         // Khi Activity được tạo, gọi phương thức để tải danh sách công việc đã đăng
         viewModel.fetchPostedJobs()
+
+        binding.animationView.visibility = View.VISIBLE
     }
 
     @Deprecated("Deprecated in Java")
@@ -69,8 +70,10 @@ class PostedJobActivity : AppCompatActivity() {
     private fun checkEmptyAdapter(list: List<JobModel>) {
         if (list.isEmpty()) {
             binding.noJob.visibility = View.VISIBLE
+            binding.animationView.visibility = View.GONE
         } else {
             binding.noJob.visibility = View.GONE
+            binding.animationView.visibility = View.GONE
         }
     }
 }

@@ -56,7 +56,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/no_job"
+            android:id="@+id/no_applicant"
             android:visibility="invisible">
 
             <LinearLayout
@@ -76,7 +76,6 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:id="@+id/no_applicant"
                     android:src="@drawable/no_applicant"
                     android:layout_gravity="center_horizontal"
                     android:orientation="vertical"/>

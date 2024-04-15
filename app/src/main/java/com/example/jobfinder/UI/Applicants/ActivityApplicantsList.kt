@@ -18,6 +18,7 @@ class ActivityApplicantsList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityApplicantsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.animationView.visibility = View.VISIBLE
 
         val job_id = intent.getStringExtra("job_id")
 
@@ -29,6 +30,8 @@ class ActivityApplicantsList : AppCompatActivity() {
             ApplicantsModel("3", "Applicant 3's description Applicant 3's description Applicant 3's description Applicant 3's description", "","Jane Smith"),
             ApplicantsModel("4", "Applicant 4's description", "","Jane Mary"),
             )
+
+        checkEmptyAdapter(applicantList)
 
         // Tạo adapter và gán vào RecyclerView
         val adapter = ApplicantAdapter(applicantList)
@@ -59,6 +62,16 @@ class ActivityApplicantsList : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
             isActivityOpened = false
+        }
+    }
+
+    private fun checkEmptyAdapter(list: List<ApplicantsModel>) {
+        if (list.isEmpty()) {
+            binding.noApplicant.visibility = View.VISIBLE
+            binding.animationView.visibility = View.GONE
+        } else {
+            binding.noApplicant.visibility = View.GONE
+            binding.animationView.visibility = View.GONE
         }
     }
 }
