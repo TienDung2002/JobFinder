@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
+import com.example.jobfinder.Utils.RetriveImg
 import java.util.Locale
 
 class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView, private val viewModel: FindNewJobViewModel) :
@@ -72,6 +73,7 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
         val formattedSalary = NumberFormat.getNumberInstance(Locale("vi", "VN")).format(salaryValue)
 
 //        holder.avatar.setImageResource(list[position].avatar)
+        RetriveImg.retrieveImage(list[position].BUserId.toString(), holder.avatar)
         holder.rec_nameNJ.text = list[position].BUserName
         holder.jobTitle.text = list[position].jobTitle
         holder.numOfRecruits.text = list[position].empAmount
