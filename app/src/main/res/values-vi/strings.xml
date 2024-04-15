@@ -141,7 +141,7 @@
     <string name="choose_Bank">Chọn ngân hàng</string>
     <string name="all_card">Tất cả thẻ</string>
     <string name="withdraw">Rút tiền</string>
-    <string name="deposit">Nạp tiền</string>
+    <string name="deposit">Nạp tiền vào ví</string>
     <string name="withdraw_success">Rút tiền thành công</string>
     <string name="deposit_success">Nạp tiền thành công</string>
     <string name="no_amount">Số tiền trống</string>
@@ -152,9 +152,9 @@
 
 
     <!--    Button-->
-    <string name="delete">Xóa</string>
+    <string name="delete">Xóa thẻ</string>
     <string name="cancel">Hủy</string>
-    <string name="add_cash">Thêm tiền</string>
+    <string name="add_cash">Thêm tiền vào thẻ</string>
     <string name="add_card">Thêm thẻ</string>
 
 
