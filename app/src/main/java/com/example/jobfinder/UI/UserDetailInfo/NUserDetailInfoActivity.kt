@@ -93,6 +93,14 @@ class NUserDetailInfoActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
+
+        binding.approveBtn.setOnClickListener {
+
+        }
+
+        binding.rejectBtn.setOnClickListener {
+
+        }
     }
 
     override fun onResume() {

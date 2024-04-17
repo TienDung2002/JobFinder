@@ -10,13 +10,15 @@
         app:cardElevation="5dp"
         android:elevation="5dp"
         app:cardCornerRadius="15dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        >
 
         <FrameLayout
             android:id="@+id/rowWallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/wallet_blue_bg">
+            android:background="@drawable/wallet_blue_bg"
+            android:foreground="?android:attr/selectableItemBackground">
 
             <ImageView
                 android:id="@+id/imageMainWalletImage"

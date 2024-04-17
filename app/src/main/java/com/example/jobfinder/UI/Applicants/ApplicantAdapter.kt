@@ -3,15 +3,17 @@ package com.example.jobfinder.UI.Applicants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.RetriveImg
 
-class ApplicantAdapter(private val applicantList: List<ApplicantsModel>) :
+class ApplicantAdapter(private val applicantList: MutableList<ApplicantsModel>) :
     RecyclerView.Adapter<ApplicantAdapter.ApplicantViewHolder>() {
 
     interface OnItemClickListener {
@@ -28,6 +30,8 @@ class ApplicantAdapter(private val applicantList: List<ApplicantsModel>) :
         val textViewName: TextView = itemView.findViewById(R.id.applicant_username)
         val textViewDescription: TextView = itemView.findViewById(R.id.applicant_des)
         val imgView :ImageView = itemView.findViewById(R.id.applicant_user_avt)
+        val approveBtn :Button = itemView.findViewById(R.id.approve_btn)
+        val rejectBtn : Button= itemView.findViewById(R.id.reject_btn)
     }
 
 
@@ -47,6 +51,28 @@ class ApplicantAdapter(private val applicantList: List<ApplicantsModel>) :
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(currentItem)
+        }
+
+        holder.approveBtn.setOnClickListener {
+            val position = holder.adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                applicantList.removeAt(position)
+                // Thông báo cho RecyclerView biết một mục đã bị xóa
+                notifyItemRemoved(position)
+                // Cập nhật lại vị trí của các mục còn lại trong danh sách
+                notifyItemRangeChanged(position, applicantList.size - position)
+            }
+        }
+
+        holder.rejectBtn.setOnClickListener {
+            val position = holder.adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                applicantList.removeAt(position)
+                // Thông báo cho RecyclerView biết một mục đã bị xóa
+                notifyItemRemoved(position)
+                // Cập nhật lại vị trí của các mục còn lại trong danh sách
+                notifyItemRangeChanged(position, applicantList.size - position)
+            }
         }
     }
 
