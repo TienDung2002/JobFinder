@@ -77,7 +77,7 @@ class NewJobActivity : AppCompatActivity() {
             override fun onItemClicked(Job: JobModel) {
                 val intent = Intent(this@NewJobActivity, SeekerJobDetailActivity::class.java)
                 intent.putExtra("job", Job)
-                startActivityForResult(intent, 100)
+                startActivity(intent)
             }
         })
 
@@ -98,12 +98,10 @@ class NewJobActivity : AppCompatActivity() {
             override fun onQueryTextChange(dataInput: String): Boolean {
                 // Nếu không nhập text vào
                 return if (dataInput.isEmpty()) {
-//                    adapter.resetOriginalList(viewModel.postedJobList)
                     adapter.resetOriginalList()
                     false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
-//                    adapter.updateFiltteredData(viewModel.filteredJobList)
                     true
                 }
             }
@@ -112,7 +110,6 @@ class NewJobActivity : AppCompatActivity() {
 
         // nút close của searchView
         binding.searchView.setOnCloseListener {
-//            adapter.resetOriginalList(viewModel.postedJobList)
             adapter.resetOriginalList()
             false
         }

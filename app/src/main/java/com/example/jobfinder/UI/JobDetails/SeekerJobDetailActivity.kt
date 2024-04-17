@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
+import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivitySeekerJobDetailBinding
 
 class SeekerJobDetailActivity : AppCompatActivity() {
@@ -37,6 +38,8 @@ class SeekerJobDetailActivity : AppCompatActivity() {
             binding.jobDetailAddress.text= job.address
             binding.jobDetailDes.text= job.jobDes
 
+            RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
+
             binding.detailJobScrollView.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
 
@@ -60,5 +63,5 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         }
 
     }
-    
+
 }
