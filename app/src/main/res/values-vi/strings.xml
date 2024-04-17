@@ -98,6 +98,8 @@
     <string name="grid_job_applied">Công việc ứng tuyển</string>
     <string name="grid_job_checkin">Điểm danh</string>
     <string name="grid_reports">Báo cáo</string>
+    <string name="grid_saveJob">Đã lưu</string>
+
     <!--    Buser-->
     <string name="grid_recruit">Tuyển dụng</string>
     <string name="grid_recruit_posted">Bài đã đăng</string>
@@ -263,11 +265,11 @@
     <!--    List job item-->
     <string name="Ji_recName">Tên nhà tuyển dụng</string>
     <string name="Ji_recAdd">Địa chỉ làm việc</string>
-    <string name="Ji_position1">Vị trí:</string>
-    <string name="Ji_position2">Intern Java</string>
+    <string name="Ji_position">Intern Java</string>
     <string name="Ji_num_of_rec_title">Số lượng:</string>
     <string name="Ji_num_of_recruits">3</string>
     <string name="Ji_sub">Người</string>
+    <string name="Ji_workTime">Giờ làm:</string>
     <string name="Ji_recruited1">Đã tuyển:</string>
     <string name="Ji_recruited2">0</string>
     <string name="Ji_posttime">45 phút trước</string>

@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.UI.JobDetails.RecruiterJobDetailActivity
+import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 import com.google.firebase.database.DataSnapshot
@@ -41,7 +43,8 @@ class NewJobActivity : AppCompatActivity() {
         }
 
         // chạy hàm lấy data các công việc
-        fetchJobs()
+        if (viewModel.getJobsList().isEmpty()) { fetchJobs() }
+
 
         // gán data vào adapter sau khi fetch
         adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
@@ -71,10 +74,10 @@ class NewJobActivity : AppCompatActivity() {
 
         // Click vào từng item trong recycler
         adapter.setOnItemClickListener(object : NewJobsAdapter.onItemClickListener {
-            override fun onItemClicked(position: Int) {
-//                val intent = Intent(this, JobDetails::class.java)
-//                startConfeDetail.launch(intent)
-                Toast.makeText(this@NewJobActivity, "Click", Toast.LENGTH_SHORT).show()
+            override fun onItemClicked(Job: JobModel) {
+                val intent = Intent(this@NewJobActivity, SeekerJobDetailActivity::class.java)
+                intent.putExtra("job", Job)
+                startActivityForResult(intent, 100)
             }
         })
 
