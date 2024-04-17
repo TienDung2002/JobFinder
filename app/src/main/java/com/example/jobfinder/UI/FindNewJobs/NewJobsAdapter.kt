@@ -24,7 +24,7 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
     private var originalData: List<JobModel> = list
 
     interface onItemClickListener {
-        fun onItemClicked(position: Int) {}
+        fun onItemClicked(Job: JobModel) {}
     }
 
     // Click vào từng item
@@ -38,6 +38,8 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
         val jobTitle: TextView
         val numOfRecruits: TextView
         val numOfRecruited: TextView
+        val workTimeStart: TextView
+        val workTimeEnd: TextView
         val postedTime: TextView
         val salary: TextView
 
@@ -51,12 +53,18 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
             jobTitle = view.findViewById(R.id.JiPosition2)
             numOfRecruits = view.findViewById(R.id.NumOfRecruits)
             numOfRecruited = view.findViewById(R.id.NumOfRecruited)
+            workTimeStart = view.findViewById(R.id.timeStart)
+            workTimeEnd = view.findViewById(R.id.timeEnd)
             postedTime = view.findViewById(R.id.posttime)
             salary = view.findViewById(R.id.salary)
             bookmarkButton = view.findViewById(R.id.bookmark_btn)
 
             view.setOnClickListener {
-                listener.onItemClicked(layoutPosition)
+                val position = bindingAdapterPosition // Lấy vị trí của item trong danh sách
+                if (position != RecyclerView.NO_POSITION) {
+                    val job = list[position] // Lấy JobModel tương ứng với vị trí
+                    listener.onItemClicked(job) // Gọi phương thức onItemClicked với JobModel
+                }
             }
         }
     }
@@ -74,10 +82,12 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
 
 //        holder.avatar.setImageResource(list[position].avatar)
         RetriveImg.retrieveImage(list[position].BUserId.toString(), holder.avatar)
-        holder.rec_nameNJ.text = list[position].BUserName
+        holder.rec_nameNJ.text = list[position].BUserName?.uppercase(Locale.getDefault())
         holder.jobTitle.text = list[position].jobTitle
         holder.numOfRecruits.text = list[position].empAmount
         holder.numOfRecruited.text = list[position].numOfRecruited
+        holder.workTimeStart.text = list[position].startHr
+        holder.workTimeEnd.text = list[position].endHr
         holder.postedTime.text = GetData.getDateFromString(list[position].postDate.toString())
         holder.salary.text = formattedSalary.toString()
 

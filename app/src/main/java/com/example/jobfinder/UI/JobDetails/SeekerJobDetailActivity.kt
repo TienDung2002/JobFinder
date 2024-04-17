@@ -60,13 +60,5 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         }
 
     }
-
-    private fun shift(shift: String): String{
-        return if(shift == "1"){
-            resources.getString(R.string.jdetail_shift_1)
-        }else{
-            resources.getString(R.string.jdetail_shift_2)
-        }
-
-    }
+    
 }
