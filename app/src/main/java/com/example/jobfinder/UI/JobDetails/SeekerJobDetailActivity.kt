@@ -15,7 +15,7 @@ class SeekerJobDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySeekerJobDetailBinding.inflate(layoutInflater)
-
+        setContentView(binding.root)
         val job = intent.getParcelableExtra<JobModel>("job")
         val uid = job?.BUserId
 
