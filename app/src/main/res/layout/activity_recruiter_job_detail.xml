@@ -434,13 +434,15 @@
             android:orientation="horizontal"
             android:background="@color/primary_color4"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:id="@+id/applicant_btn">
 
                 <Button
                     android:layout_width="match_parent"
