@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.JobDetails
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +23,8 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecruiterJobDetailBinding
     private val viewModel: PostedJobViewModel by viewModels()
 
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         val resultIntent = Intent()
         setResult(Activity.RESULT_OK, resultIntent)
