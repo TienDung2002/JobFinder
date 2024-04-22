@@ -1,21 +1,28 @@
 package com.example.jobfinder.UI.JobDetails
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.jobfinder.Datas.Model.ApplicantsModel
+import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.FindNewJobs.FindNewJobViewModel
-import com.example.jobfinder.UI.FindNewJobs.NewJobsAdapter
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivitySeekerJobDetailBinding
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.Firebase
+import com.google.firebase.database.FirebaseDatabase
 import java.util.Locale
 
 class SeekerJobDetailActivity : AppCompatActivity() {
@@ -27,6 +34,9 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySeekerJobDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val dialog = Dialog(binding.root.context)
+        dialog.setContentView(R.layout.dialog_apply_job_des)
 
         // Khởi tạo viewmodel
         viewModel = ViewModelProvider(this).get(FindNewJobViewModel::class.java)
@@ -40,6 +50,10 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         if (job != null) {
             // Gán data
             assignData(job)
+
+            if(job.status.toString() != "recruiting"){
+                binding.detailJobBtnHolder.visibility = View.GONE
+            }
 
             binding.jobDetailBuserName.setOnClickListener {
                 val intent = Intent(this, BUserDetailInfoActivity::class.java)
@@ -63,19 +77,61 @@ class SeekerJobDetailActivity : AppCompatActivity() {
 
             // Nút apply
             binding.applyBtn.setOnClickListener {
-                val userID = GetData.getCurrentUserId()
-                if (userID != null) {
-                    GetData.getUsernameFromUserId(userID) { username ->
-                        if (username != null) {
-                            val userName = username
-                        } else {
-                            println("Không thể lấy được username.")
-                        }
-                    }
-                } else {
-                    println("Không thể lấy được userID.")
+
+                val cancel = dialog.findViewById<Button>(R.id.cancel_btn)
+                val send = dialog.findViewById<Button>(R.id.send)
+                val description = dialog.findViewById<TextInputEditText>(R.id.description)
+
+                val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(job.BUserId.toString())
+
+                cancel.setOnClickListener {
+                    dialog.dismiss()
                 }
-                val curTime = GetData.getCurrentDateTime()
+
+                send.setOnClickListener {
+                    val userID = GetData.getCurrentUserId()
+                    if (userID != null) {
+                        Log.d("sdfsdfsdfsdf", userID.toString())
+                        GetData.getUsernameFromUserId(userID.toString()) { username ->
+                            if (username != null) {
+                                val curTime = GetData.getCurrentDateTime()
+                                val des = description.text.toString()
+
+                                val applicant = ApplicantsModel(userID.toString(), des, curTime, username)
+                                val appliedJob = AppliedJobModel(job.BUserId.toString(), job.jobId.toString(), curTime,
+                                    job.jobTitle.toString(), job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString())
+
+                                val notiId = notiRef.push().key.toString()
+                                val notification = NotificationsRowModel(notiId, job.jobTitle.toString(),
+                                    username + " ${getString(R.string.applied)}."
+                                    ,curTime)
+
+                                FirebaseDatabase.getInstance().getReference("Applicant").child(job.jobId.toString()).child(userID.toString()).setValue(applicant)
+                                FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID.toString()).child(job.jobId.toString()).setValue(appliedJob)
+                                notiRef.child(notiId).setValue(notification)
+
+                                Toast.makeText(
+                                    binding.root.context,
+                                    getString(R.string.applied_success),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                dialog.dismiss()
+
+                                val resultIntent = Intent()
+                                setResult(Activity.RESULT_OK, resultIntent)
+                                finish()
+
+                            } else {
+                                println("Không thể lấy được username.")
+                            }
+                        }
+                    } else {
+                        println("Không thể lấy được userID.")
+                    }
+                }
+                dialog.show()
+
             }
         }
 

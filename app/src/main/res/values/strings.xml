@@ -114,6 +114,7 @@
     <string name="to_wallet">to wallet</string>
     <string name="refund">Refund</string>
     <string name="from_job">From job:</string>
+    <string name="applied">applied to your job</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -253,6 +254,9 @@
     <string name="sort_PT_thisMonth">This month</string>
     <string name="sort_workShift">Work shift</string>
     <string name="sort_salary">Salary</string>
+    <string name="send">Send</string>
+    <string name="applied_success">Apply success</string>
+
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
     <string name="Ji_recAdd">Recruiter address</string>
