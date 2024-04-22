@@ -61,7 +61,7 @@
                     android:gravity="center"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="10dp">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/imgWrap"
@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:scrollbars="none"
                             android:layout_toEndOf="@id/job_title_icon"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="20dp"
                             android:layout_centerVertical="true"
                             >
                             <TextView
@@ -118,7 +118,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/post_job_title"
-                                android:textSize="24sp"
+                                android:textSize="26sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/primary_color2"
                                 android:maxLines="1"/>

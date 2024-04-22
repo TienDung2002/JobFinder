@@ -9,7 +9,9 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
@@ -17,11 +19,15 @@ import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import java.util.Locale
 
-class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView, private val viewModel: FindNewJobViewModel) :
-    RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
+class NewJobsAdapter(
+    private var list: List<JobModel>,
+    private val noDataImage: ImageView,
+    private val viewModel: FindNewJobViewModel,
+) : RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
     private var originalData: List<JobModel> = list
+    private val bookmarkStatusList = mutableMapOf<String, Boolean>() // Lưu trữ trạng thái bookmark cho từng item
 
     interface onItemClickListener {
         fun onItemClicked(Job: JobModel) {}
@@ -67,6 +73,7 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
                 }
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewJobsAdapter.NewJobViewHolder {
@@ -93,13 +100,12 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
 
         // nút bookmark
         holder.bookmarkButton.setOnClickListener {
-            if (holder.isBookmarked) {
-                holder.bookmarkButton.setImageResource(R.drawable.ic_bookmark_grey30px)
-            } else {
-                holder.bookmarkButton.setImageResource(R.drawable.ic_bookmark_orange30px)
-            }
+            holder.bookmarkButton.setImageResource(
+                if (holder.isBookmarked) R.drawable.ic_bookmark_orange30px else R.drawable.ic_bookmark_grey30px
+            )
             holder.isBookmarked = !holder.isBookmarked
         }
+
     }
 
     override fun getItemCount(): Int = list.size

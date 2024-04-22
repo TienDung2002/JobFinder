@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="10dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/imgWrap"
@@ -90,7 +90,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/BUsername"
                     android:textColor="@color/black"
-                    android:textSize="21sp"
+                    android:textSize="20sp"
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:layout_centerHorizontal="true"
@@ -125,14 +125,14 @@
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
                     android:layout_toEndOf="@id/job_title_icon"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_centerVertical="true">
                     <TextView
                         android:id="@+id/job_detail_job_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/post_job_title"
-                        android:textSize="24sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/primary_color2"
                         android:maxLines="1"/>
@@ -447,6 +447,7 @@
             android:background="@color/primary_color4">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/saveJobBtnCardView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
@@ -471,13 +472,12 @@
                 android:gravity="center">
 
                 <Button
+                    android:id="@+id/apply_btn"
                     android:layout_width="218dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/wallet_btn_shape"
                     android:text="@string/apply"
-                    android:id="@+id/apply_btn"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    />
+                    android:foreground="?android:attr/selectableItemBackground" />
 
             </LinearLayout>
 
