@@ -1,19 +1,19 @@
 package com.example.jobfinder.UI.JobDetails
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Applicants.ActivityApplicantsList
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
-import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivityRecruiterJobDetailBinding
@@ -22,6 +22,14 @@ import com.google.firebase.database.*
 class RecruiterJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecruiterJobDetailBinding
     private val viewModel: PostedJobViewModel by viewModels()
+
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val resultIntent = Intent()
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +41,9 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
         binding.detailJobScrollView.visibility = View.GONE
 
         if (job != null) {
+            if(job.status.toString()== "closed"){
+                binding.applicantBtn.visibility = View.GONE
+            }
             val emp = "${job.numOfRecruited}/${job.empAmount}"
             val salaryTxt = "$${job.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
             val shift = "${job.startHr}-${job.endHr}"
@@ -75,7 +86,8 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener {
-            setResult(RESULT_OK)
+            val resultIntent = Intent()
+            setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }
 
@@ -122,4 +134,5 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             }
         })
     }
+
 }

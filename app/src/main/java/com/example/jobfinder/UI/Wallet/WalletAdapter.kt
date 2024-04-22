@@ -30,6 +30,8 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                     private val depositWithdrawListener: (newAmount: String) -> Unit
 ) : RecyclerView.Adapter<WalletAdapter.WalletViewHolder>() {
 
+    var isDialogShown = false
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalletViewHolder {
         val binding = RowWalletCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return WalletViewHolder(binding)
@@ -55,7 +57,9 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 rowWallet.setBackgroundResource(getGradientDrawable(wallet.cardColor))
                 // Thiết lập onClickListener cho thẻ
                 rowWallet.setOnClickListener {
-                    showOptionsDialog(wallet)
+                    if (!isDialogShown) { // Kiểm tra trạng thái của dialog
+                        showOptionsDialog(wallet)
+                    }
                 }
 
             }
@@ -71,6 +75,12 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             }
         }
 
+        fun closeDialog() {
+            // Đóng dialog và cập nhật trạng thái của biến isDialogShown
+            // Ví dụ: dialog.dismiss()
+            isDialogShown = false
+        }
+
         // Hiển thị dialog với các chức năng
         private fun showOptionsDialog(wallet: WalletRowModel) {
             val dialog = Dialog(binding.root.context)
@@ -82,6 +92,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             val walletHistoryRef= FirebaseDatabase.getInstance().getReference("WalletHistory").child(uid).child(wallet.cardId.toString())
 
             dialog.setContentView(R.layout.dialog_wallet_data)
+            isDialogShown = true
 
             // Tìm kiếm các nút trong dialog
             val amountEditTxt = dialog.findViewById<TextInputEditText>(R.id.amount)
@@ -151,6 +162,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                     .setValue(walletHistoryModel)
 
                                 dialog.dismiss()
+                                isDialogShown = false
                             } else {
                                 // Số dư trong ví không đủ
                                 Toast.makeText(binding.root.context, getString(binding.root.context, R.string.not_enough_money), Toast.LENGTH_SHORT).show()
@@ -218,6 +230,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                                     .setValue(walletHistoryModel)
 
                                 dialog.dismiss()
+                                isDialogShown = false
                             } else {
                                 // Số dư trong ví không đủ
                                 Toast.makeText(binding.root.context, getString(binding.root.context, R.string.not_enough_money), Toast.LENGTH_SHORT).show()
@@ -236,11 +249,13 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                 // Xóa thẻ
                 deleteWallet(wallet)
                 dialog.dismiss() // Đóng dialog
+                isDialogShown = false
             }
 
             // Xử lý khi nhấn vào nút Hủy
             cancelButton.setOnClickListener {
                 dialog.dismiss() // Đóng dialog
+                isDialogShown = false
             }
 
             // Xử lý khi nhấn vào nút Thêm
@@ -283,6 +298,12 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             Log.e("Add Money", "Error adding money to Firebase", exception)
                         }
                 dialog.dismiss() // Đóng dialog // Đóng dialog
+                isDialogShown = false
+
+            }
+
+            dialog.setOnDismissListener {
+                isDialogShown = false
             }
 
             dialog.show() // Hiển thị dialog
