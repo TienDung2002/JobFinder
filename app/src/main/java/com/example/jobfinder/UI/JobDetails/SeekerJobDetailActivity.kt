@@ -10,6 +10,7 @@ import com.example.jobfinder.R
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivitySeekerJobDetailBinding
+import java.util.Locale
 
 class SeekerJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySeekerJobDetailBinding
@@ -17,6 +18,7 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySeekerJobDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val job = intent.getParcelableExtra<JobModel>("job")
         val uid = job?.BUserId
 
@@ -26,9 +28,9 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         if (job != null) {
             val emp = job.numOfRecruited+"/"+ job.empAmount
             val salaryTxt = "$"+job.salaryPerEmp+resources.getString(R.string.Ji_unit3)
-            val shift = job.startHr+"-"+job.endHr
+            val shift = job.startHr+" - "+job.endHr
             binding.jobDetailJobTitle.text = job.jobTitle
-            binding.jobDetailBuserName.text= job.BUserName
+            binding.jobDetailBuserName.text= job.BUserName?.uppercase(Locale.getDefault())
             binding.jobDetailJobType.text= job.jobType
             binding.jobDetailSalary.text= salaryTxt
             binding.jobDetailEmpAmount.text= emp
@@ -49,7 +51,7 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            binding.btnRecLogo.setOnClickListener {
+            binding.buserLogo.setOnClickListener {
                 val intent = Intent(this, BUserDetailInfoActivity::class.java)
                 intent.putExtra("uid", uid)
                 startActivity(intent)

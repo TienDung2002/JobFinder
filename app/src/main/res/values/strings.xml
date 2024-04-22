@@ -272,7 +272,7 @@
     <!--    post job-->
     <string name="post_job_title">Job title</string>
     <string name="job_des">Job description</string>
-    <string name="salary">Salary (per hour)</string>
+    <string name="salary">Salary (/hour)</string>
     <string name="employee_amount">Employee amount</string>
     <string name="start_time">Start date</string>
     <string name="end_time">End date</string>

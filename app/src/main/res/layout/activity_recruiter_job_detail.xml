@@ -55,43 +55,36 @@
                 android:gravity="center_vertical">
 
 <!--                img and rec_name-->
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/imgWrap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="40dp"
+                        android:layout_margin="2dp"
                         app:cardElevation="0dp"
-                        android:padding="2dp"
-                        app:cardBackgroundColor="@color/primary_color1"
-                        android:id="@+id/btn_rec_logo">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:cardCornerRadius="40dp"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardElevation="0dp"
-                            android:layout_margin="2dp">
-
-                            <ImageView
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:scaleType="fitCenter"
-                                android:background="@drawable/image_loading_80px"
-                                android:id="@+id/buser_logo"
-                                tools:ignore="ContentDescription"/>
-
-                        </androidx.cardview.widget.CardView>
-
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        android:layout_centerHorizontal="true">
+                        <ImageButton
+                            android:id="@+id/buserLogo"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/app_icon"
+                            android:background="@null"
+                            tools:ignore="ContentDescription"/>
                     </androidx.cardview.widget.CardView>
 
-                </LinearLayout>
+
+                </RelativeLayout>
                 <!--            input title-->
 
                     <RelativeLayout
@@ -116,7 +109,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:scrollbars="none"
-                            android:layout_toEndOf="@id/job_title_icon">
+                            android:layout_toEndOf="@id/job_title_icon"
+                            android:layout_marginBottom="10dp"
+                            android:layout_centerVertical="true"
+                            >
                             <TextView
                                 android:id="@+id/job_detail_job_title"
                                 android:layout_width="wrap_content"
@@ -124,7 +120,7 @@
                                 android:text="@string/post_job_title"
                                 android:textSize="24sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/primary_color1"
+                                android:textColor="@color/primary_color2"
                                 android:maxLines="1"/>
 
                         </HorizontalScrollView>
@@ -142,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/job_type"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textColor="@color/primary_color1"
                         android:textStyle="bold"/>
 
@@ -152,7 +148,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/job_type"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         android:textColor="@color/black"
                         android:id="@+id/job_detail_job_type"/>
 
@@ -175,7 +171,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/salary"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/primary_color1"
                             android:textStyle="bold"/>
                         
@@ -192,7 +188,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/salary"
-                            android:textSize="24sp"
+                            android:textSize="17sp"
                             android:textColor="@color/income_color"
                             android:id="@+id/job_detail_salary"
                             android:textStyle="bold"/>
@@ -220,7 +216,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/employee_amount"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/primary_color1"
                             android:textStyle="bold"/>
 
@@ -230,13 +226,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="end">
+                        android:gravity="end"
+                        android:layout_marginEnd="40dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/employee_amount"
-                            android:textSize="20sp"
+                            android:textSize="17sp"
                             android:textColor="@color/black"
                             android:id="@+id/job_detail_emp_amount" />
                     </LinearLayout>
@@ -259,7 +256,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/start_time"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/primary_color1"
                             android:textStyle="bold"/>
 
@@ -277,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/start_time"
                             android:textColor="@color/black"
-                            android:textSize="20sp"
+                            android:textSize="17sp"
                             android:id="@+id/job_detail_start_time" />
 
                     </LinearLayout>
@@ -300,7 +297,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/end_time"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textColor="@color/primary_color1"
                             android:textStyle="bold"/>
                     </LinearLayout>
@@ -318,7 +315,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/end_time"
-                            android:textSize="20sp"
+                            android:textSize="17sp"
                             android:textColor="@color/black"
                             android:id="@+id/job_detail_end_time" />
                     </LinearLayout>
@@ -336,7 +333,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/shift"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textColor="@color/primary_color1"
                         android:textStyle="bold"/>
 
@@ -344,7 +341,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/shift"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         android:textColor="@color/black"
                         android:id="@+id/job_detail_work_shift"
                         android:paddingStart="10dp"
@@ -363,7 +360,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/rec_address"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textColor="@color/primary_color1"
                         android:textStyle="bold"/>
 
@@ -379,7 +376,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/rec_address"
                             android:textColor="@color/black"
-                            android:textSize="20sp"
+                            android:textSize="17sp"
                             android:maxLines="2"
                             android:id="@+id/job_detail_address" />
 
@@ -398,7 +395,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/job_des"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textColor="@color/primary_color1"
                         android:textStyle="bold"/>
 
@@ -406,7 +403,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/job_des"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         android:textColor="@color/black"
                         android:id="@+id/job_detail_des"
                         android:paddingStart="10dp"
@@ -451,7 +448,9 @@
                     android:text="@string/applicant"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:id="@+id/applied_list_btn" />
+                    android:id="@+id/applied_list_btn"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    />
 
             </LinearLayout>
 
@@ -468,7 +467,9 @@
                     android:text="@string/delete"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:id="@+id/delete_btn"/>
+                    android:id="@+id/delete_btn"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    />
 
             </LinearLayout>
 

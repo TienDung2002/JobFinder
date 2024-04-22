@@ -57,7 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/ic_filter_background">
+                android:background="@drawable/ic_filter_background"
+                android:foreground="?android:attr/selectableItemBackground">
 
                 <ImageButton
                     android:id="@+id/filterIcon"

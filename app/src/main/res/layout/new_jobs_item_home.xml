@@ -54,7 +54,7 @@
                     android:id="@+id/rec_nameNJ"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxWidth="270dp"
+                    android:maxWidth="250dp"
                     android:textColor="@color/gray"
                     android:maxLines="1"
                     android:ellipsize="end"
