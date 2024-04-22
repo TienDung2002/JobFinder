@@ -44,6 +44,9 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             if(job.status.toString()== "closed"){
                 binding.applicantBtn.visibility = View.GONE
             }
+            if(job.status.toString()== "working"){
+                binding.detailJobBtnHolder.visibility = View.GONE
+            }
             val emp = "${job.numOfRecruited}/${job.empAmount}"
             val salaryTxt = "$${job.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
             val shift = "${job.startHr}-${job.endHr}"
