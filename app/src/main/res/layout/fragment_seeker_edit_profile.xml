@@ -12,6 +12,7 @@
        >
 
         <RelativeLayout
+            android:id="@+id/top_nav_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -52,7 +53,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
+            android:layout_above="@+id/btn_save_wrapper"
+            android:layout_below="@+id/top_nav_wrapper"
             android:scrollbars="none"
             android:paddingLeft="30dp"
             android:paddingTop="20dp"
@@ -322,6 +324,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     >
                     <TextView
                         android:layout_width="wrap_content"
@@ -365,30 +368,34 @@
                 </RelativeLayout>
 
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
 
-                    >
-
-                    <Button
-                        android:id="@+id/edit_profile_save_change"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/btn_wrapper_pcolor2"
-                        android:text="@string/edit_profile_save"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:visibility="invisible" />
-
-                </RelativeLayout>
 
 
             </LinearLayout>
 
         </ScrollView>
+        <LinearLayout
+            android:id="@+id/btn_save_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:background="@drawable/transparent_background"
+            >
+
+            <Button
+                android:id="@+id/editProfileSaveChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile_save"
+                android:textColor="@color/black"
+                android:background="@drawable/btn_wrapper_pcolor2"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                />
+
+        </LinearLayout>
 
 
 
