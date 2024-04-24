@@ -210,4 +210,23 @@ object GetData {
         return result // Di chuyển lệnh return ra khỏi khối try-catch
     }
 
+    fun getCurrentUserId(): String? {
+        val currentUser = auth.currentUser
+        return currentUser?.uid
+    }
+
+    fun getUsernameFromUserId(userId: String, callback: (String?) -> Unit) {
+        val database = FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(userId)
+
+        database.child("name").get()
+            .addOnSuccessListener { snapshot ->
+                val username = snapshot.getValue(String::class.java)
+                callback(username)
+            }
+            .addOnFailureListener {
+                callback(null)
+            }
+    }
+
+
 }

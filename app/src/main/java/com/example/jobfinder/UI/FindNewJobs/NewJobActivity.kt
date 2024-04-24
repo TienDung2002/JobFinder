@@ -8,17 +8,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.UI.JobDetails.RecruiterJobDetailActivity
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
-import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -77,7 +72,7 @@ class NewJobActivity : AppCompatActivity() {
             override fun onItemClicked(Job: JobModel) {
                 val intent = Intent(this@NewJobActivity, SeekerJobDetailActivity::class.java)
                 intent.putExtra("job", Job)
-                startActivityForResult(intent, 100)
+                startActivity(intent)
             }
         })
 
@@ -98,12 +93,10 @@ class NewJobActivity : AppCompatActivity() {
             override fun onQueryTextChange(dataInput: String): Boolean {
                 // Nếu không nhập text vào
                 return if (dataInput.isEmpty()) {
-//                    adapter.resetOriginalList(viewModel.postedJobList)
                     adapter.resetOriginalList()
                     false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
-//                    adapter.updateFiltteredData(viewModel.filteredJobList)
                     true
                 }
             }
@@ -112,7 +105,6 @@ class NewJobActivity : AppCompatActivity() {
 
         // nút close của searchView
         binding.searchView.setOnCloseListener {
-//            adapter.resetOriginalList(viewModel.postedJobList)
             adapter.resetOriginalList()
             false
         }

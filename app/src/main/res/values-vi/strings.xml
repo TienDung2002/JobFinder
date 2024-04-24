@@ -115,6 +115,7 @@
     <string name="to_wallet">đến ví</string>
     <string name="refund">Hoàn trả</string>
     <string name="from_job">Từ công việc:</string>
+    <string name="applied">đã ứng tuyển việc bạn đăng</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Ví</string>
@@ -239,12 +240,6 @@
     <string name="account_deleted">Đã xóa tài khoản</string>
     <string name="delete_account_failed">Xóa tài khoản không thành công. Vui lòng thử lại.</string>
 
-
-
-
-
-
-
     <!--    Find new job-->
     <string name="hint_search">Tìm kiếm</string>
     <string name="open">Mở</string>
@@ -262,6 +257,8 @@
     <string name="sort_PT_thisMonth">Tháng này</string>
     <string name="sort_workShift">Giờ làm</string>
     <string name="sort_salary">Mức lương</string>
+    <string name="send">Nộp</string>
+    <string name="applied_success">Ứng tuyển thành công</string>
     <!--    List job item-->
     <string name="Ji_recName">Tên nhà tuyển dụng</string>
     <string name="Ji_recAdd">Địa chỉ làm việc</string>
@@ -281,7 +278,7 @@
     <!--    post job-->
     <string name="post_job_title">Tên công việc</string>
     <string name="job_des">Mô tả công việc</string>
-    <string name="salary">Mức lương (mỗi giờ)</string>
+    <string name="salary">Mức lương (/giờ)</string>
     <string name="employee_amount">Số người</string>
     <string name="start_time">Ngày bắt đầu</string>
     <string name="end_time">Ngày kết thúc</string>
