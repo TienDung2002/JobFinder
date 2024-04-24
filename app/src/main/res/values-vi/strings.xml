@@ -97,7 +97,7 @@
     <string name="grid_wallet">Ví</string>
     <string name="grid_job_applied">Công việc ứng tuyển</string>
     <string name="grid_job_checkin">Điểm danh</string>
-    <string name="grid_reports">Báo cáo</string>
+    <string name="grid_reports">Hỗ trợ</string>
     <!--    Buser-->
     <string name="grid_recruit">Tuyển dụng</string>
     <string name="grid_recruit_posted">Bài đã đăng</string>
@@ -342,5 +342,47 @@
     <string name="approve">Phê duyệt</string>
     <string name="reject">Từ chối</string>
     <string name="blank_age">Tuổi trống</string>
+
+    <!--    applied job-->
+    <string name="approved">Đã phê duyệt</string>
+    <string name="rejected">Đã từ chối</string>
+
+    <!--    Report-->
+    <string name="create_request">Tạo yêu cầu</string>
+    <string name="technical_report">Kỹ thuật</string>
+    <string name="feedback_report">Góp ý</string>
+    <string name="user_report">Báo cáo</string>
+    <string name="create_technical_report">Tạo báo cáo kỹ thuật</string>
+    <string name="create_feedback">Tạo góp ý</string>
+    <string name="create_user_report">Tạo báo cáo người dùng</string>
+    <string name="send_request">gửi yêu cầu</string>
+    <string name="note">Ghi chú</string>
+    <string name="enter_note">Nhập ghi chú</string>
+    <string name="report_status">Tình trạng</string>
+    <string name="your_condition">Tình trạng của Quý khách</string>
+    <string name="request_sent">Đã gửi yêu cầu</string>
+    <string name="request_sent_error">Không có yêu cầu nào được gửi</string>
+
+    <string-array name="technical_array">
+        <item>technical1</item>
+        <item>technical2</item>
+        <item>technical3</item>
+    </string-array>
+
+    <string-array name="feedback_array">
+        <item>feedback1</item>
+        <item>feedback2</item>
+        <item>feedback3</item>
+    </string-array>
+
+    <string-array name="report_array">
+        <item>report1</item>
+        <item>report2</item>
+        <item>report3</item>
+    </string-array>
+
+
+
+
 
 </resources>

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.jobfinder.UI.JobPosts.JobpostsActivity
 import com.example.jobfinder.UI.PostedJob.PostedJobActivity
-import com.example.jobfinder.UI.Report.Report
+import com.example.jobfinder.UI.Report.SupportActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.databinding.FragmentHomeBuserBinding
 
@@ -40,7 +40,7 @@ class HomeFragmentBuser : Fragment() {
         }
 
         binding.reportsBtn.setOnClickListener(){
-            startActivity(Intent(requireContext(), Report::class.java))
+            startActivity(Intent(requireContext(), SupportActivity::class.java))
         }
 
         return binding.root

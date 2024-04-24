@@ -96,7 +96,7 @@
     <string name="grid_wallet">Wallet</string>
     <string name="grid_job_applied">Jobs applied</string>
     <string name="grid_job_checkin">Jobs check in</string>
-    <string name="grid_reports">Report</string>
+    <string name="grid_reports">Support</string>
     <!--    Buser-->
     <string name="grid_recruit">Recruit</string>
     <string name="grid_recruit_posted">Recruit posted</string>
@@ -346,9 +346,32 @@
     <string name="user_report">Report</string>
     <string name="create_technical_report">Create technical report</string>
     <string name="create_feedback">Create Feedback</string>
+    <string name="create_user_report">Create user report</string>
     <string name="send_request">send request</string>
     <string name="note">Note</string>
     <string name="enter_note">Enter description</string>
     <string name="report_status">Status</string>
     <string name="your_condition">Your status</string>
+    <string name="request_sent">Request sent</string>
+    <string name="request_sent_error">No requests have been submitted</string>
+
+
+    <string-array name="technical_array">
+        <item>technical1</item>
+        <item>technical2</item>
+        <item>technical3</item>
+    </string-array>
+
+    <string-array name="feedback_array">
+        <item>feedback1</item>
+        <item>feedback2</item>
+        <item>feedback3</item>
+    </string-array>
+
+    <string-array name="report_array">
+        <item>report1</item>
+        <item>report2</item>
+        <item>report3</item>
+    </string-array>
+
 </resources>

@@ -17,13 +17,17 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
+            android:name=".UI.Report.SupportActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
+        <activity
             android:name=".UI.UserDetailInfo.NUserDetailInfoActivity"
             android:exported="false"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.Applicants.ActivityApplicantsList"
             android:exported="false"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.UsersProfile.ProfileForgotPasswordActivity"
             android:exported="false"
