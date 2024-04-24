@@ -3,7 +3,9 @@ package com.example.jobfinder.UI.Applicants
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.ApplicantsModel
@@ -14,41 +16,39 @@ class ActivityApplicantsList : AppCompatActivity() {
     private lateinit var binding: ActivityApplicantsListBinding
     private val REQUEST_CODE = 1002
     private var isActivityOpened = false
+    private val viewModel: ApplicantViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityApplicantsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.animationView.visibility = View.VISIBLE
 
-        val job_id = intent.getStringExtra("job_id")
-
-
-        // Tạo danh sách mẫu các ứng viên
-        val applicantList = mutableListOf(
-            ApplicantsModel("2xcDUDAkHkXB6Hhcj1uCX2fLTEV2", "Applicant 1's description","", job_id.toString()),
-            ApplicantsModel("3MpbWhQQPAZSC6xkAGVndW6I3SB2", "Applicant 2's description", "","Stand Smith"),
-            ApplicantsModel("3", "Applicant 3's description Applicant 3's description Applicant 3's description Applicant 3's description", "","Jane Smith"),
-            ApplicantsModel("4", "Applicant 4's description", "","Jane Mary"),
-            )
-
-        checkEmptyAdapter(applicantList)
+        val jobId = intent.getStringExtra("job_id")
 
         // Tạo adapter và gán vào RecyclerView
-        val adapter = ApplicantAdapter(applicantList)
+        val adapter = ApplicantAdapter(mutableListOf(),jobId.toString(), viewModel)
         binding.recyclerApplicantList.adapter = adapter
         binding.recyclerApplicantList.layoutManager = LinearLayoutManager(this)
         binding.animationView.visibility = View.GONE
 
         adapter.setOnItemClickListener(object : ApplicantAdapter.OnItemClickListener {
             override fun onItemClick(applicant: ApplicantsModel) {
-                if (!isActivityOpened){
-                    val intent = Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
+                if (!isActivityOpened) {
+                    val intent =
+                        Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
                     intent.putExtra("nuser_applicant", applicant)
                     startActivityForResult(intent, REQUEST_CODE)
                     isActivityOpened = true
                 }
             }
         })
+
+        viewModel.applicantList.observe(this) { updatedList ->
+            adapter.updateData(updatedList)
+            checkEmptyAdapter(updatedList)
+        }
+
+        viewModel.fetchApplicant(jobId.toString())
 
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()
@@ -65,7 +65,8 @@ class ActivityApplicantsList : AppCompatActivity() {
         }
     }
 
-    private fun checkEmptyAdapter(list: List<ApplicantsModel>) {
+    private fun checkEmptyAdapter(list: MutableList<ApplicantsModel>) {
+        Log.d("dfkjhdfkjgjkhkj", "List size: ${list.size}")
         if (list.isEmpty()) {
             binding.noApplicant.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE

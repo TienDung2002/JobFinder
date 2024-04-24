@@ -1,19 +1,20 @@
 package com.example.jobfinder.UI.Applicants
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.RetriveImg
 
-class ApplicantAdapter(private val applicantList: MutableList<ApplicantsModel>) :
+class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
+                       private val jobId :String,
+                       private val viewModel: ApplicantViewModel) :
     RecyclerView.Adapter<ApplicantAdapter.ApplicantViewHolder>() {
 
     interface OnItemClickListener {
@@ -56,25 +57,29 @@ class ApplicantAdapter(private val applicantList: MutableList<ApplicantsModel>) 
         holder.approveBtn.setOnClickListener {
             val position = holder.adapterPosition
             if (position != RecyclerView.NO_POSITION) {
+                viewModel.deleteApplicant(jobId ,currentItem.userId.toString())
                 applicantList.removeAt(position)
-                // Thông báo cho RecyclerView biết một mục đã bị xóa
                 notifyItemRemoved(position)
-                // Cập nhật lại vị trí của các mục còn lại trong danh sách
-                notifyItemRangeChanged(position, applicantList.size - position)
             }
         }
 
         holder.rejectBtn.setOnClickListener {
             val position = holder.adapterPosition
             if (position != RecyclerView.NO_POSITION) {
+                viewModel.deleteApplicant(jobId ,currentItem.userId.toString())
                 applicantList.removeAt(position)
-                // Thông báo cho RecyclerView biết một mục đã bị xóa
                 notifyItemRemoved(position)
-                // Cập nhật lại vị trí của các mục còn lại trong danh sách
-                notifyItemRangeChanged(position, applicantList.size - position)
             }
         }
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newList: MutableList<ApplicantsModel>) {
+        applicantList = newList
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = applicantList.size
+
 }
