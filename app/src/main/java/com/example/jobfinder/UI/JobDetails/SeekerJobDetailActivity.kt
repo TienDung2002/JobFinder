@@ -35,8 +35,6 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         binding = ActivitySeekerJobDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dialog = Dialog(binding.root.context)
-        dialog.setContentView(R.layout.dialog_apply_job_des)
 
         // Khởi tạo viewmodel
         viewModel = ViewModelProvider(this).get(FindNewJobViewModel::class.java)
@@ -51,9 +49,11 @@ class SeekerJobDetailActivity : AppCompatActivity() {
             // Gán data
             assignData(job)
 
-            if(job.status.toString() != "recruiting"){
-                binding.detailJobBtnHolder.visibility = View.GONE
-            }
+            // job nào đang trạng thái hoạt động thì hiện nút apply
+//            if(job.status.toString() != "recruiting"){
+//                binding.detailJobBtnHolder.visibility = View.GONE
+//            }
+
 
             binding.jobDetailBuserName.setOnClickListener {
                 val intent = Intent(this, BUserDetailInfoActivity::class.java)
@@ -75,9 +75,11 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                 this.isBookmarked = !isBookmarked
             }
 
+
+            val dialog = Dialog(binding.root.context)
+            dialog.setContentView(R.layout.dialog_apply_job_des)
             // Nút apply
             binding.applyBtn.setOnClickListener {
-
                 val cancel = dialog.findViewById<Button>(R.id.cancel_btn)
                 val send = dialog.findViewById<Button>(R.id.send)
                 val description = dialog.findViewById<TextInputEditText>(R.id.description)
@@ -91,13 +93,12 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                 send.setOnClickListener {
                     val userID = GetData.getCurrentUserId()
                     if (userID != null) {
-                        Log.d("sdfsdfsdfsdf", userID.toString())
                         GetData.getUsernameFromUserId(userID.toString()) { username ->
                             if (username != null) {
                                 val curTime = GetData.getCurrentDateTime()
-                                val des = description.text.toString()
+                                val desc = description.text.toString()
 
-                                val applicant = ApplicantsModel(userID.toString(), des, curTime, username)
+                                val applicant = ApplicantsModel(userID.toString(), desc, curTime, username)
                                 val appliedJob = AppliedJobModel(job.BUserId.toString(), job.jobId.toString(), curTime,
                                     job.jobTitle.toString(), job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString())
 
@@ -110,18 +111,12 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                                 FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID.toString()).child(job.jobId.toString()).setValue(appliedJob)
                                 notiRef.child(notiId).setValue(notification)
 
-                                Toast.makeText(
-                                    binding.root.context,
-                                    getString(R.string.applied_success),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(binding.root.context, getString(R.string.applied_success), Toast.LENGTH_SHORT).show()
 
                                 dialog.dismiss()
 
-                                val resultIntent = Intent()
-                                setResult(Activity.RESULT_OK, resultIntent)
+                                setResult(Activity.RESULT_OK, Intent())
                                 finish()
-
                             } else {
                                 println("Không thể lấy được username.")
                             }
@@ -171,7 +166,4 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         binding.animationView.visibility = View.GONE
     }
 
-    private fun appliedData(){
-
-    }
 }

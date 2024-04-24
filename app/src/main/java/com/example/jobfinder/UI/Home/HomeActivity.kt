@@ -23,9 +23,9 @@ import com.google.firebase.auth.FirebaseAuth
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var viewModel: HomeViewModel
     private var backPressedCount = 0
     private var addingFragmentInProgress = false
+    private lateinit var viewModel: HomeViewModel
     private val jobViewModel: PostedJobViewModel by viewModels()
 
 

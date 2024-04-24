@@ -53,6 +53,7 @@
     <string name="rec_taxcode">Mã số thuế</string>
     <string name="rec_hotline">Hotline</string>
     <string name="rec_description">Mô tả</string>
+    <string name="rec_description_title">Gửi lời chào và giới thiệu ngắn gọn về bản thân tới nhà tuyển dụng!</string>
     <string name="rec_foundationDay">Ngày thành lập</string>
     <string name="rec_typeOfBusiness">Loại hình kinh doanh</string>
     <string name="rec_TOB_private">Tư nhân</string>
@@ -270,6 +271,8 @@
     <string name="Ji_recruited1">Đã tuyển:</string>
     <string name="Ji_recruited2">0</string>
     <string name="Ji_posttime">45 phút trước</string>
+    <string name="Ji_appliDeadlineTitle">Hạn ứng tuyển:</string>
+    <string name="Ji_appliDeadline">dd/mm/yyyy</string>
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>

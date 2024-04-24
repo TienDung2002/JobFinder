@@ -22,12 +22,10 @@ import java.util.Locale
 class NewJobsAdapter(
     private var list: List<JobModel>,
     private val noDataImage: ImageView,
-    private val viewModel: FindNewJobViewModel,
 ) : RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
     private var originalData: List<JobModel> = list
-    private val bookmarkStatusList = mutableMapOf<String, Boolean>() // Lưu trữ trạng thái bookmark cho từng item
 
     interface onItemClickListener {
         fun onItemClicked(Job: JobModel) {}
@@ -46,6 +44,7 @@ class NewJobsAdapter(
         val numOfRecruited: TextView
         val workTimeStart: TextView
         val workTimeEnd: TextView
+        val appliDeadline: TextView
         val postedTime: TextView
         val salary: TextView
 
@@ -61,6 +60,7 @@ class NewJobsAdapter(
             numOfRecruited = view.findViewById(R.id.NumOfRecruited)
             workTimeStart = view.findViewById(R.id.timeStart)
             workTimeEnd = view.findViewById(R.id.timeEnd)
+            appliDeadline = view.findViewById(R.id.appliDeadline)
             postedTime = view.findViewById(R.id.posttime)
             salary = view.findViewById(R.id.salary)
             bookmarkButton = view.findViewById(R.id.bookmark_btn)
@@ -95,6 +95,7 @@ class NewJobsAdapter(
         holder.numOfRecruited.text = list[position].numOfRecruited
         holder.workTimeStart.text = list[position].startHr
         holder.workTimeEnd.text = list[position].endHr
+        holder.appliDeadline.text = list[position].endTime
         holder.postedTime.text = GetData.getDateFromString(list[position].postDate.toString())
         holder.salary.text = formattedSalary.toString()
 

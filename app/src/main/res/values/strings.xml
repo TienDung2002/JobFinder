@@ -51,6 +51,7 @@
     <string name="rec_taxcode">Tax code</string>
     <string name="rec_hotline">Hotline</string>
     <string name="rec_description">Description</string>
+    <string name="rec_description_title">Say hi and briefly introduce yourself!</string>
     <string name="rec_foundationDay">Foundation day</string>
     <string name="rec_typeOfBusiness">Type of business</string>
     <string name="rec_TOB_private">Private enterprise</string>
@@ -66,6 +67,7 @@
     <string name="rec_sec_finance">Financial Business</string>
     <string name="rec_sec_tourism">Tourism </string>
     <string name="rec_sec_other">Other services</string>
+
     <!--    Người tìm việc-->
     <string name="register_title_seek1">Prepare to find</string>
     <string name="register_title_seek2">your dream jobs</string>
@@ -268,6 +270,8 @@
     <string name="Ji_recruited1">Recruited:</string>
     <string name="Ji_recruited2">0</string>
     <string name="Ji_posttime">45 minutes ago</string>
+    <string name="Ji_appliDeadlineTitle">Application deadline:</string>
+    <string name="Ji_appliDeadline">dd/mm/yyyy</string>
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>

@@ -42,7 +42,7 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // gán data vào adapter sau khi fetch
-        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
+        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
@@ -126,16 +126,19 @@ class NewJobActivity : AppCompatActivity() {
 
     private fun fetchJobs() {
         viewModel._isLoading.value = true
+        val tempList: MutableList<JobModel> = mutableListOf()
+
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                     for (userSnapshot in dataSnapshot.children) {
                         for (jobSnapshot in userSnapshot.children) {
                             val jobModel = jobSnapshot.getValue(JobModel::class.java)
                             jobModel?.let {
-                                // fetch dc data gán vào viewmodel
-                                viewModel.addJobsToJobsList(it)
+                                if (it.status == "recruiting") { // check trạng thái công việc
+                                    tempList.add(it)
+//                                    viewModel.addJobsToJobsList(it)
+                                }
                             }
                         }
                     }
@@ -143,6 +146,11 @@ class NewJobActivity : AppCompatActivity() {
 //                    val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
 //                    viewModel.addJobsData(sortedPostedJobList)
 
+                    // Chuyển item trong từ tempList vào ViewModel
+                    tempList.forEach { job ->
+                        viewModel.addJobsToJobsList(job)
+                    }
+//                    viewModel.updateStatusToFirebase(tempList)
                     viewModel._isLoading.value = false
                 }
 
