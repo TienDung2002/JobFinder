@@ -71,8 +71,8 @@ class SeekerJobDetailActivity : AppCompatActivity() {
 
             // Bookmark
             binding.saveJobBtn.setOnClickListener {
-                this.isBookmarked = !isBookmarked
                 updateBookmarkedUI(isBookmarked)
+                this.isBookmarked = !isBookmarked
             }
 
             // Nút apply
