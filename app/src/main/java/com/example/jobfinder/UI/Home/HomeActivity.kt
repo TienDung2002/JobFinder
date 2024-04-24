@@ -26,7 +26,6 @@ class HomeActivity : AppCompatActivity() {
     private var backPressedCount = 0
     private var addingFragmentInProgress = false
     private lateinit var viewModel: HomeViewModel
-    private val jobViewModel: PostedJobViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,6 @@ class HomeActivity : AppCompatActivity() {
         // Khởi tạo viewmodel
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        jobViewModel.fetchPostedJobs()
 
         // Chỉ add fragment vào home khi trạng thái hiện tại là null (tránh xoay màn hình lại add lại gây lỗi)
         if (savedInstanceState == null) {

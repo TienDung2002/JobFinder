@@ -6,15 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.example.jobfinder.UI.JobPosts.JobpostsActivity
 import com.example.jobfinder.UI.PostedJob.PostedJobActivity
+import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.databinding.FragmentHomeBuserBinding
 
 class HomeFragmentBuser : Fragment() {
     private lateinit var binding: FragmentHomeBuserBinding
+    private val jobViewModel: PostedJobViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        jobViewModel.fetchPostedJobs()
     }
 
     override fun onCreateView(

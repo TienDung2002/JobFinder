@@ -28,6 +28,10 @@ class FindNewJobViewModel : ViewModel() {
         _jobsListLiveData.value = JobsList
     }
 
+    fun clearJobsList() {
+        JobsList.clear()
+        _jobsListLiveData.value = JobsList
+    }
     fun updateStatusToFirebase(jobList: List<JobModel>) {
         val updatesMap = mutableMapOf<String, Any?>()
         for (jobModel in jobList) {

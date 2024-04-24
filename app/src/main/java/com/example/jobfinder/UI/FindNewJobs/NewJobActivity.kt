@@ -128,6 +128,8 @@ class NewJobActivity : AppCompatActivity() {
         viewModel._isLoading.value = true
         val tempList: MutableList<JobModel> = mutableListOf()
 
+        viewModel.clearJobsList() // xóa item cũ đi trước khi fetch lại
+
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
