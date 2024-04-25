@@ -26,8 +26,12 @@ object Calendar {
             day
         )
 
+        // Cộng thêm 2 ngày vào ngày hiện tại để đặt minDate
+        calendar.add(java.util.Calendar.DAY_OF_MONTH, 2)
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+
         // Set the minimum date to the current date
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        //datePickerDialog.datePicker.minDate = System.currentTimeMillis()
 
         datePickerDialog.show()
     }

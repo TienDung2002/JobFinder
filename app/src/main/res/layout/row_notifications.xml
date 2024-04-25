@@ -14,7 +14,8 @@
         <LinearLayout android:id="@+id/linearRowlogogoogle"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:foreground="?android:attr/selectableItemBackground">
             <ImageButton
                 android:background="@drawable/app_icon_bg"
                 android:id="@+id/btnLogo"

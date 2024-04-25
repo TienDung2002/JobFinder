@@ -51,6 +51,7 @@
     <string name="rec_taxcode">Tax code</string>
     <string name="rec_hotline">Hotline</string>
     <string name="rec_description">Description</string>
+    <string name="rec_description_title">Say hi and briefly introduce yourself!</string>
     <string name="rec_foundationDay">Foundation day</string>
     <string name="rec_typeOfBusiness">Type of business</string>
     <string name="rec_TOB_private">Private enterprise</string>
@@ -66,6 +67,7 @@
     <string name="rec_sec_finance">Financial Business</string>
     <string name="rec_sec_tourism">Tourism </string>
     <string name="rec_sec_other">Other services</string>
+
     <!--    Người tìm việc-->
     <string name="register_title_seek1">Prepare to find</string>
     <string name="register_title_seek2">your dream jobs</string>
@@ -96,7 +98,9 @@
     <string name="grid_wallet">Wallet</string>
     <string name="grid_job_applied">Jobs applied</string>
     <string name="grid_job_checkin">Jobs check in</string>
-    <string name="grid_reports">Support</string>
+    <string name="grid_reports">Reports</string>
+    <string name="grid_saveJob">Saved</string>
+
     <!--    Buser-->
     <string name="grid_recruit">Recruit</string>
     <string name="grid_recruit_posted">Recruit posted</string>
@@ -113,6 +117,11 @@
     <string name="to_wallet">to wallet</string>
     <string name="refund">Refund</string>
     <string name="from_job">From job:</string>
+    <string name="applied">applied to your job</string>
+    <string name="reject_from">You have been rejected from</string>
+    <string name="approve_from">You have been approved from</string>
+    <string name="reject_success">Rejected</string>
+    <string name="approve_success">Approved</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -252,17 +261,22 @@
     <string name="sort_PT_thisMonth">This month</string>
     <string name="sort_workShift">Work shift</string>
     <string name="sort_salary">Salary</string>
+    <string name="send">Send</string>
+    <string name="applied_success">Apply success</string>
+
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
     <string name="Ji_recAdd">Recruiter address</string>
-    <string name="Ji_position1">Position:</string>
-    <string name="Ji_position2">Intern Java</string>
+    <string name="Ji_position">Intern Java</string>
     <string name="Ji_num_of_rec_title">Number of Recruits:</string>
     <string name="Ji_num_of_recruits">3</string>
     <string name="Ji_sub">Employees</string>
+    <string name="Ji_workTime">Worktime:</string>
     <string name="Ji_recruited1">Recruited:</string>
     <string name="Ji_recruited2">0</string>
     <string name="Ji_posttime">45 minutes ago</string>
+    <string name="Ji_appliDeadlineTitle">Application deadline:</string>
+    <string name="Ji_appliDeadline">dd/mm/yyyy</string>
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>
@@ -271,7 +285,7 @@
     <!--    post job-->
     <string name="post_job_title">Job title</string>
     <string name="job_des">Job description</string>
-    <string name="salary">Salary (per hour)</string>
+    <string name="salary">Salary (/hour)</string>
     <string name="employee_amount">Employee amount</string>
     <string name="start_time">Start date</string>
     <string name="end_time">End date</string>
@@ -374,4 +388,5 @@
         <item>report3</item>
     </string-array>
 
+    <string name="enough_Emp">Job is full</string>
 </resources>

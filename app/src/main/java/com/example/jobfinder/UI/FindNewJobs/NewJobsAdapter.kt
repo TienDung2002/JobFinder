@@ -9,7 +9,9 @@ import android.widget.Filterable
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
@@ -17,14 +19,16 @@ import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import java.util.Locale
 
-class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: ImageView, private val viewModel: FindNewJobViewModel) :
-    RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
+class NewJobsAdapter(
+    private var list: List<JobModel>,
+    private val noDataImage: ImageView,
+) : RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
     private var originalData: List<JobModel> = list
 
     interface onItemClickListener {
-        fun onItemClicked(position: Int) {}
+        fun onItemClicked(Job: JobModel) {}
     }
 
     // Click vào từng item
@@ -38,6 +42,9 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
         val jobTitle: TextView
         val numOfRecruits: TextView
         val numOfRecruited: TextView
+        val workTimeStart: TextView
+        val workTimeEnd: TextView
+        val appliDeadline: TextView
         val postedTime: TextView
         val salary: TextView
 
@@ -51,14 +58,22 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
             jobTitle = view.findViewById(R.id.JiPosition2)
             numOfRecruits = view.findViewById(R.id.NumOfRecruits)
             numOfRecruited = view.findViewById(R.id.NumOfRecruited)
+            workTimeStart = view.findViewById(R.id.timeStart)
+            workTimeEnd = view.findViewById(R.id.timeEnd)
+            appliDeadline = view.findViewById(R.id.appliDeadline)
             postedTime = view.findViewById(R.id.posttime)
             salary = view.findViewById(R.id.salary)
             bookmarkButton = view.findViewById(R.id.bookmark_btn)
 
             view.setOnClickListener {
-                listener.onItemClicked(layoutPosition)
+                val position = bindingAdapterPosition // Lấy vị trí của item trong danh sách
+                if (position != RecyclerView.NO_POSITION) {
+                    val job = list[position] // Lấy JobModel tương ứng với vị trí
+                    listener.onItemClicked(job) // Gọi phương thức onItemClicked với JobModel
+                }
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewJobsAdapter.NewJobViewHolder {
@@ -74,22 +89,24 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
 
 //        holder.avatar.setImageResource(list[position].avatar)
         RetriveImg.retrieveImage(list[position].BUserId.toString(), holder.avatar)
-        holder.rec_nameNJ.text = list[position].BUserName
+        holder.rec_nameNJ.text = list[position].BUserName?.uppercase(Locale.getDefault())
         holder.jobTitle.text = list[position].jobTitle
         holder.numOfRecruits.text = list[position].empAmount
         holder.numOfRecruited.text = list[position].numOfRecruited
+        holder.workTimeStart.text = list[position].startHr
+        holder.workTimeEnd.text = list[position].endHr
+        holder.appliDeadline.text = list[position].endTime
         holder.postedTime.text = GetData.getDateFromString(list[position].postDate.toString())
         holder.salary.text = formattedSalary.toString()
 
         // nút bookmark
         holder.bookmarkButton.setOnClickListener {
-            if (holder.isBookmarked) {
-                holder.bookmarkButton.setImageResource(R.drawable.ic_bookmark_grey30px)
-            } else {
-                holder.bookmarkButton.setImageResource(R.drawable.ic_bookmark_orange30px)
-            }
+            holder.bookmarkButton.setImageResource(
+                if (holder.isBookmarked) R.drawable.ic_bookmark_orange30px else R.drawable.ic_bookmark_grey30px
+            )
             holder.isBookmarked = !holder.isBookmarked
         }
+
     }
 
     override fun getItemCount(): Int = list.size
@@ -146,7 +163,16 @@ class NewJobsAdapter(private var list: List<JobModel>, private val noDataImage: 
     }
 
     fun updateData(newList: List<JobModel>) {
+//        list = newList
+//        notifyDataSetChanged()
+
         list = newList
+        // Kiểm tra nếu originalData trống thì hiển thị noDataImage
+        if (list.isEmpty()) {
+            showNoDataFoundImg()
+        } else {
+            hideNoDataFoundImg()
+        }
         notifyDataSetChanged()
     }
 

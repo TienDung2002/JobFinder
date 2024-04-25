@@ -23,10 +23,9 @@ import com.google.firebase.auth.FirebaseAuth
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var viewModel: HomeViewModel
     private var backPressedCount = 0
     private var addingFragmentInProgress = false
-    private val jobViewModel: PostedJobViewModel by viewModels()
+    private lateinit var viewModel: HomeViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,6 @@ class HomeActivity : AppCompatActivity() {
         // Khởi tạo viewmodel
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        jobViewModel.fetchPostedJobs()
 
         // Chỉ add fragment vào home khi trạng thái hiện tại là null (tránh xoay màn hình lại add lại gây lỗi)
         if (savedInstanceState == null) {

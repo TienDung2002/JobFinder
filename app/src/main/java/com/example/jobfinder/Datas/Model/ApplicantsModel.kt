@@ -3,12 +3,27 @@ package com.example.jobfinder.Datas.Model
 import android.os.Parcel
 import android.os.Parcelable
 
-class ApplicantsModel(
-    var userId: String?,
-    var applicantDes: String?,
-    var appliedDate: String?,
-    var userName: String?
-) : Parcelable {
+class ApplicantsModel : Parcelable {
+    var userId: String? = null
+    var applicantDes: String? = null
+    var appliedDate: String? = null
+    var userName: String? = null
+
+    constructor() {
+        // Constructor mặc định không làm gì cả
+    }
+
+    constructor(
+        userId: String?,
+        applicantDes: String?,
+        appliedDate: String?,
+        userName: String?
+    ) {
+        this.userId = userId
+        this.applicantDes = applicantDes
+        this.appliedDate = appliedDate
+        this.userName = userName
+    }
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),

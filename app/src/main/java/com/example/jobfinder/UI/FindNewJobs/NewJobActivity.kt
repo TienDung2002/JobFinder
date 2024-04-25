@@ -5,17 +5,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 import com.google.firebase.database.DataSnapshot
@@ -41,10 +40,11 @@ class NewJobActivity : AppCompatActivity() {
         }
 
         // chạy hàm lấy data các công việc
-        fetchJobs()
+        if (viewModel.getJobsList().isEmpty()) { fetchJobs() }
+
 
         // gán data vào adapter sau khi fetch
-        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
+        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
@@ -71,10 +71,10 @@ class NewJobActivity : AppCompatActivity() {
 
         // Click vào từng item trong recycler
         adapter.setOnItemClickListener(object : NewJobsAdapter.onItemClickListener {
-            override fun onItemClicked(position: Int) {
-//                val intent = Intent(this, JobDetails::class.java)
-//                startConfeDetail.launch(intent)
-                Toast.makeText(this@NewJobActivity, "Click", Toast.LENGTH_SHORT).show()
+            override fun onItemClicked(Job: JobModel) {
+                val intent = Intent(this@NewJobActivity, SeekerJobDetailActivity::class.java)
+                intent.putExtra("job", Job)
+                startActivity(intent)
             }
         })
 
@@ -95,12 +95,10 @@ class NewJobActivity : AppCompatActivity() {
             override fun onQueryTextChange(dataInput: String): Boolean {
                 // Nếu không nhập text vào
                 return if (dataInput.isEmpty()) {
-//                    adapter.resetOriginalList(viewModel.postedJobList)
                     adapter.resetOriginalList()
                     false
                 } else { // có nhập text
                     adapter.filter.filter(dataInput)
-//                    adapter.updateFiltteredData(viewModel.filteredJobList)
                     true
                 }
             }
@@ -109,7 +107,6 @@ class NewJobActivity : AppCompatActivity() {
 
         // nút close của searchView
         binding.searchView.setOnCloseListener {
-//            adapter.resetOriginalList(viewModel.postedJobList)
             adapter.resetOriginalList()
             false
         }
@@ -127,34 +124,40 @@ class NewJobActivity : AppCompatActivity() {
         }
 
     }
-
+    
 
     private fun fetchJobs() {
         viewModel._isLoading.value = true
+        val tempList: MutableList<JobModel> = mutableListOf()
+        viewModel.clearJobsList() // xóa item cũ đi trước khi fetch lại
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                     for (userSnapshot in dataSnapshot.children) {
-                        for (jobSnapshot in userSnapshot.children) {
-                            val jobModel = jobSnapshot.getValue(JobModel::class.java)
-                            jobModel?.let {
-                                // fetch dc data gán vào viewmodel
-                                viewModel.addJobsToJobsList(it)
+                        GetData.getUsernameFromUserId( userSnapshot.key.toString()) { username ->
+                            for (jobSnapshot in userSnapshot.children) {
+                                val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                                jobModel?.let {
+                                    it.BUserName = username.toString()
+                                    it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+
+                                    tempList.add(it) //Chứa full data toàn bộ các job
+
+                                    if (it.status == "recruiting") { // check trạng thái công việc cho vào viewmodel để hiển thị
+                                        viewModel.addJobsToJobsList(it)
+                                    }
+                                }
                             }
+                            viewModel.updateStatusToFirebase(userSnapshot.key.toString(),tempList)
                         }
                     }
-                    // Sắp xếp danh sách công việc theo thời gian đăng
-//                    val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
-//                    viewModel.addJobsData(sortedPostedJobList)
-
                     viewModel._isLoading.value = false
                 }
-
                 override fun onCancelled(databaseError: DatabaseError) {
                     viewModel._isLoading.value = false
                 }
             })
     }
+
 
 }

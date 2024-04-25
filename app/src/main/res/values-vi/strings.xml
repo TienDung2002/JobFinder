@@ -53,6 +53,7 @@
     <string name="rec_taxcode">Mã số thuế</string>
     <string name="rec_hotline">Hotline</string>
     <string name="rec_description">Mô tả</string>
+    <string name="rec_description_title">Gửi lời chào và giới thiệu ngắn gọn về bản thân tới nhà tuyển dụng!</string>
     <string name="rec_foundationDay">Ngày thành lập</string>
     <string name="rec_typeOfBusiness">Loại hình kinh doanh</string>
     <string name="rec_TOB_private">Tư nhân</string>
@@ -97,7 +98,9 @@
     <string name="grid_wallet">Ví</string>
     <string name="grid_job_applied">Công việc ứng tuyển</string>
     <string name="grid_job_checkin">Điểm danh</string>
-    <string name="grid_reports">Hỗ trợ</string>
+    <string name="grid_reports">Báo cáo</string>
+    <string name="grid_saveJob">Đã lưu</string>
+
     <!--    Buser-->
     <string name="grid_recruit">Tuyển dụng</string>
     <string name="grid_recruit_posted">Bài đã đăng</string>
@@ -113,6 +116,11 @@
     <string name="to_wallet">đến ví</string>
     <string name="refund">Hoàn trả</string>
     <string name="from_job">Từ công việc:</string>
+    <string name="applied">đã ứng tuyển việc bạn đăng</string>
+    <string name="reject_from">Bạn đã bị từ chối bởi việc</string>
+    <string name="approve_from">Bạn đã được thông qua bởi việc</string>
+    <string name="reject_success">Đã từ chối</string>
+    <string name="approve_success">Đã thông qua</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Ví</string>
@@ -237,12 +245,6 @@
     <string name="account_deleted">Đã xóa tài khoản</string>
     <string name="delete_account_failed">Xóa tài khoản không thành công. Vui lòng thử lại.</string>
 
-
-
-
-
-
-
     <!--    Find new job-->
     <string name="hint_search">Tìm kiếm</string>
     <string name="open">Mở</string>
@@ -260,17 +262,21 @@
     <string name="sort_PT_thisMonth">Tháng này</string>
     <string name="sort_workShift">Giờ làm</string>
     <string name="sort_salary">Mức lương</string>
+    <string name="send">Nộp</string>
+    <string name="applied_success">Ứng tuyển thành công</string>
     <!--    List job item-->
     <string name="Ji_recName">Tên nhà tuyển dụng</string>
     <string name="Ji_recAdd">Địa chỉ làm việc</string>
-    <string name="Ji_position1">Vị trí:</string>
-    <string name="Ji_position2">Intern Java</string>
+    <string name="Ji_position">Intern Java</string>
     <string name="Ji_num_of_rec_title">Số lượng:</string>
     <string name="Ji_num_of_recruits">3</string>
     <string name="Ji_sub">Người</string>
+    <string name="Ji_workTime">Giờ làm:</string>
     <string name="Ji_recruited1">Đã tuyển:</string>
     <string name="Ji_recruited2">0</string>
     <string name="Ji_posttime">45 phút trước</string>
+    <string name="Ji_appliDeadlineTitle">Hạn ứng tuyển:</string>
+    <string name="Ji_appliDeadline">dd/mm/yyyy</string>
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>
@@ -279,7 +285,7 @@
     <!--    post job-->
     <string name="post_job_title">Tên công việc</string>
     <string name="job_des">Mô tả công việc</string>
-    <string name="salary">Mức lương (mỗi giờ)</string>
+    <string name="salary">Mức lương (/giờ)</string>
     <string name="employee_amount">Số người</string>
     <string name="start_time">Ngày bắt đầu</string>
     <string name="end_time">Ngày kết thúc</string>
@@ -342,6 +348,7 @@
     <string name="approve">Phê duyệt</string>
     <string name="reject">Từ chối</string>
     <string name="blank_age">Tuổi trống</string>
+    <string name="enough_Emp">Đã tuyển đủ nhân viên</string>
 
     <!--    applied job-->
     <string name="approved">Đã phê duyệt</string>
@@ -381,8 +388,6 @@
         <item>report3</item>
     </string-array>
 
-
-
-
+    
 
 </resources>
