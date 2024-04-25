@@ -77,7 +77,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
 
             binding.appliedListBtn.setOnClickListener {
                 val intent = Intent(this, ActivityApplicantsList::class.java)
-                intent.putExtra("job_id", job.jobId.toString())
+                intent.putExtra("job", job)
                 startActivity(intent)
             }
 

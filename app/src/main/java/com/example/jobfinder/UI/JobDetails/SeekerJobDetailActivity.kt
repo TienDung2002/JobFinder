@@ -91,7 +91,6 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                 send.setOnClickListener {
                     val userID = GetData.getCurrentUserId()
                     if (userID != null) {
-                        Log.d("sdfsdfsdfsdf", userID.toString())
                         GetData.getUsernameFromUserId(userID.toString()) { username ->
                             if (username != null) {
                                 val curTime = GetData.getCurrentDateTime()

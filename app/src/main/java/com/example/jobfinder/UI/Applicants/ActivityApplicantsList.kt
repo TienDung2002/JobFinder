@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.ApplicantsModel
+import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.UI.UserDetailInfo.NUserDetailInfoActivity
 import com.example.jobfinder.databinding.ActivityApplicantsListBinding
 
@@ -23,32 +24,35 @@ class ActivityApplicantsList : AppCompatActivity() {
         setContentView(binding.root)
         binding.animationView.visibility = View.VISIBLE
 
-        val jobId = intent.getStringExtra("job_id")
+        val job = intent.getParcelableExtra<JobModel>("job")
 
-        // Tạo adapter và gán vào RecyclerView
-        val adapter = ApplicantAdapter(mutableListOf(),jobId.toString(), viewModel)
-        binding.recyclerApplicantList.adapter = adapter
-        binding.recyclerApplicantList.layoutManager = LinearLayoutManager(this)
-        binding.animationView.visibility = View.GONE
+        if(job!= null) {
 
-        adapter.setOnItemClickListener(object : ApplicantAdapter.OnItemClickListener {
-            override fun onItemClick(applicant: ApplicantsModel) {
-                if (!isActivityOpened) {
-                    val intent =
-                        Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
-                    intent.putExtra("nuser_applicant", applicant)
-                    startActivityForResult(intent, REQUEST_CODE)
-                    isActivityOpened = true
+            // Tạo adapter và gán vào RecyclerView
+            val adapter = ApplicantAdapter(mutableListOf(), job, binding.root.context, viewModel)
+            binding.recyclerApplicantList.adapter = adapter
+            binding.recyclerApplicantList.layoutManager = LinearLayoutManager(this)
+            binding.animationView.visibility = View.GONE
+
+            adapter.setOnItemClickListener(object : ApplicantAdapter.OnItemClickListener {
+                override fun onItemClick(applicant: ApplicantsModel) {
+                    if (!isActivityOpened) {
+                        val intent =
+                            Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
+                        intent.putExtra("nuser_applicant", applicant)
+                        startActivityForResult(intent, REQUEST_CODE)
+                        isActivityOpened = true
+                    }
                 }
+            })
+
+            viewModel.applicantList.observe(this) { updatedList ->
+                adapter.updateData(updatedList)
+                checkEmptyAdapter(updatedList)
             }
-        })
 
-        viewModel.applicantList.observe(this) { updatedList ->
-            adapter.updateData(updatedList)
-            checkEmptyAdapter(updatedList)
+            viewModel.fetchApplicant(job.jobId.toString())
         }
-
-        viewModel.fetchApplicant(jobId.toString())
 
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()
