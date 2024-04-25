@@ -163,11 +163,7 @@ class NewJobsAdapter(
     }
 
     fun updateData(newList: List<JobModel>) {
-//        list = newList
-//        notifyDataSetChanged()
-
         list = newList
-        // Kiểm tra nếu originalData trống thì hiển thị noDataImage
         if (list.isEmpty()) {
             showNoDataFoundImg()
         } else {
