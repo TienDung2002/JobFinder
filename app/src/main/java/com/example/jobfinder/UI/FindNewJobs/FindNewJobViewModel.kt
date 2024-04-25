@@ -12,7 +12,7 @@ class FindNewJobViewModel : ViewModel() {
     private val JobsList: MutableList<JobModel> = mutableListOf()
     private val _jobsListLiveData = MutableLiveData<List<JobModel>>()
     private val _bookmarkStatus = MutableLiveData<Map<String, Boolean>>()
-    private val database = FirebaseDatabase.getInstance().getReference("Job").child(FirebaseAuth.getInstance().currentUser?.uid.toString())
+    private val database = FirebaseDatabase.getInstance().getReference("Job")
     var _isLoading = MutableLiveData<Boolean>()
 
 
@@ -32,13 +32,14 @@ class FindNewJobViewModel : ViewModel() {
         JobsList.clear()
         _jobsListLiveData.value = JobsList
     }
-    fun updateStatusToFirebase(jobList: List<JobModel>) {
+
+    fun updateStatusToFirebase(userId :String,jobList: List<JobModel>) {
         val updatesMap = mutableMapOf<String, Any?>()
         for (jobModel in jobList) {
             updatesMap["/${jobModel.jobId}/buserName"] = jobModel.BUserName
             updatesMap["/${jobModel.jobId}/status"] = jobModel.status
         }
-        database.updateChildren(updatesMap)
+        database.child(userId).updateChildren(updatesMap)
             .addOnSuccessListener {
                 // Tất cả các trạng thái đã được cập nhật thành công
             }

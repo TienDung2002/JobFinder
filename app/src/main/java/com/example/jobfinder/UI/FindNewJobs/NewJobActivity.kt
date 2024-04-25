@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
@@ -14,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -127,39 +129,35 @@ class NewJobActivity : AppCompatActivity() {
     private fun fetchJobs() {
         viewModel._isLoading.value = true
         val tempList: MutableList<JobModel> = mutableListOf()
-
         viewModel.clearJobsList() // xóa item cũ đi trước khi fetch lại
-
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (userSnapshot in dataSnapshot.children) {
-                        for (jobSnapshot in userSnapshot.children) {
-                            val jobModel = jobSnapshot.getValue(JobModel::class.java)
-                            jobModel?.let {
-                                if (it.status == "recruiting") { // check trạng thái công việc
-                                    tempList.add(it)
-//                                    viewModel.addJobsToJobsList(it)
+                        GetData.getUsernameFromUserId( userSnapshot.key.toString()) { username ->
+                            for (jobSnapshot in userSnapshot.children) {
+                                val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                                jobModel?.let {
+                                    it.BUserName = username.toString()
+                                    it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+
+                                    tempList.add(it) //Chứa full data toàn bộ các job
+
+                                    if (it.status == "recruiting") { // check trạng thái công việc cho vào viewmodel để hiển thị
+                                        viewModel.addJobsToJobsList(it)
+                                    } // check trạng thái công việc
                                 }
                             }
+                            viewModel.updateStatusToFirebase(userSnapshot.key.toString(),tempList)
                         }
                     }
-                    // Sắp xếp danh sách công việc theo thời gian đăng
-//                    val sortedPostedJobList = postedJobList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
-//                    viewModel.addJobsData(sortedPostedJobList)
-
-                    // Chuyển item trong từ tempList vào ViewModel
-                    tempList.forEach { job ->
-                        viewModel.addJobsToJobsList(job)
-                    }
-//                    viewModel.updateStatusToFirebase(tempList)
                     viewModel._isLoading.value = false
                 }
-
                 override fun onCancelled(databaseError: DatabaseError) {
                     viewModel._isLoading.value = false
                 }
             })
     }
+
 
 }
