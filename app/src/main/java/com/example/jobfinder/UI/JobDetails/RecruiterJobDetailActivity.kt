@@ -66,7 +66,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.animationView.visibility = View.GONE
 
             binding.deleteBtn.setOnClickListener {
-                if (job.status == "recruiting") {
+                if (job.status.toString() == "recruiting") {
                     amountWorking(job)
                 }
                 viewModel.deleteJob(job.jobId.toString())
@@ -77,13 +77,13 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
 
             binding.appliedListBtn.setOnClickListener {
                 val intent = Intent(this, ActivityApplicantsList::class.java)
-                intent.putExtra("job_id", job.jobId)
+                intent.putExtra("job", job)
                 startActivity(intent)
             }
 
             binding.buserLogo.setOnClickListener{
                 val intent = Intent(this, BUserDetailInfoActivity::class.java)
-                intent.putExtra("uid", job.BUserId)
+                intent.putExtra("uid", job.BUserId.toString())
                 startActivity(intent)
             }
         }

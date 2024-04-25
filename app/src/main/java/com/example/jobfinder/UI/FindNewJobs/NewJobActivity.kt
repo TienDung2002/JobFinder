@@ -124,7 +124,7 @@ class NewJobActivity : AppCompatActivity() {
         }
 
     }
-
+    
 
     private fun fetchJobs() {
         viewModel._isLoading.value = true
@@ -145,7 +145,7 @@ class NewJobActivity : AppCompatActivity() {
 
                                     if (it.status == "recruiting") { // check trạng thái công việc cho vào viewmodel để hiển thị
                                         viewModel.addJobsToJobsList(it)
-                                    } // check trạng thái công việc
+                                    }
                                 }
                             }
                             viewModel.updateStatusToFirebase(userSnapshot.key.toString(),tempList)
