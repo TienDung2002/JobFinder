@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.jobfinder.UI.FindNewJobs.NewJobActivity
+import com.example.jobfinder.UI.Report.SupportActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.databinding.FragmentHomeNuserBinding
 
@@ -24,7 +25,6 @@ class HomeFragmentNuser : Fragment() {
     ): View {
         binding = FragmentHomeNuserBinding.inflate(inflater, container, false)
 
-
         // mở activity wallet
         binding.walletBtn.setOnClickListener{
             startActivity(Intent(requireContext(), WalletActivity::class.java))
@@ -33,6 +33,14 @@ class HomeFragmentNuser : Fragment() {
         // mở activity tìm job
         binding.JobsearchBtn.setOnClickListener{
             startActivity(Intent(requireContext(), NewJobActivity::class.java))
+        }
+
+        binding.JobappliedBtn.setOnClickListener(){
+//            startActivity(Intent(requireContext(), AppliedJobsActivity::class.java))
+        }
+
+        binding.reportsBtn.setOnClickListener(){
+            startActivity(Intent(requireContext(), SupportActivity::class.java))
         }
 
         return binding.root

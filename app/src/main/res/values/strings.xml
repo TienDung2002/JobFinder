@@ -147,7 +147,7 @@
     <string name="choose_Bank">Choose bank</string>
     <string name="all_card">All card</string>
     <string name="withdraw">Withdraw</string>
-    <string name="deposit">Deposit</string>
+    <string name="deposit">Deposit to wallet</string>
     <string name="withdraw_success">Withdraw success</string>
     <string name="deposit_success">Deposit success</string>
     <string name="no_amount">Amount blank</string>
@@ -156,9 +156,9 @@
     <string name="wallet_amount_title">Wallet amount:</string>
 
     <!--    Button-->
-    <string name="delete">Delete</string>
+    <string name="delete">Delete card</string>
     <string name="cancel">Cancel</string>
-    <string name="add_cash">Add cash</string>
+    <string name="add_cash">Add cash to card</string>
     <string name="add_card">Add card</string>
 
 
@@ -334,7 +334,7 @@
 
     <!--    buser detail info-->
     <string name="recruiter_info_title">Recruiter\'s information</string>
-<!--    nuser detail info-->
+    <!--    nuser detail info-->
     <string name="seeker_info_title">Seeker\'s information</string>
 
     <!--    applicants list-->
@@ -344,4 +344,43 @@
     <string name="reject">Reject</string>
     <string name="blank_age">Age is blank</string>
     <string name="enough_Emp">Job is full</string>
+
+    <!--    applied job-->
+    <string name="approved">Approved</string>
+    <string name="rejected">Rejected</string>
+
+    <!--    Report-->
+    <string name="create_request">Create request</string>
+    <string name="technical_report">Technical</string>
+    <string name="feedback_report">Feedback</string>
+    <string name="user_report">Report</string>
+    <string name="create_technical_report">Create technical report</string>
+    <string name="create_feedback">Create Feedback</string>
+    <string name="create_user_report">Create user report</string>
+    <string name="send_request">send request</string>
+    <string name="note">Note</string>
+    <string name="enter_note">Enter description</string>
+    <string name="report_status">Status</string>
+    <string name="your_condition">Your status</string>
+    <string name="request_sent">Request sent</string>
+    <string name="request_sent_error">No requests have been submitted</string>
+
+
+    <string-array name="technical_array">
+        <item>technical1</item>
+        <item>technical2</item>
+        <item>technical3</item>
+    </string-array>
+
+    <string-array name="feedback_array">
+        <item>feedback1</item>
+        <item>feedback2</item>
+        <item>feedback3</item>
+    </string-array>
+
+    <string-array name="report_array">
+        <item>report1</item>
+        <item>report2</item>
+        <item>report3</item>
+    </string-array>
 </resources>
