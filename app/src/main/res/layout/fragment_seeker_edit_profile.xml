@@ -310,6 +310,8 @@
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
                             android:background="@drawable/edit_text_blank"
+                            android:hint="@string/blank_age"
+                            android:textColorHint="@color/gray"
                             android:inputType="number"
                             android:maxLines="1"
                             android:textColor="@color/black"

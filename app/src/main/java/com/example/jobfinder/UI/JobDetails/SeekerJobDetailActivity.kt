@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.JobDetails
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
@@ -140,6 +141,15 @@ class SeekerJobDetailActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        val resultIntent = Intent()
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
     }
 
 

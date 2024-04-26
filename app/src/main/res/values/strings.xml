@@ -171,6 +171,7 @@
     <string name="profile">Profile</string>
     <string name="profile_edited">Profile edited</string>
     <string name="profile_logout_toast">Log out successfully</string>
+    <string name="blank_tax_code">Tax code is blank</string>
 
 
     <!-- Edit Profile -->
@@ -327,6 +328,7 @@
     <string name="status_closed">Closed</string>
     <string name="applicant">Applicant</string>
     <string name="deleted_job">Job deleted</string>
+    <string name="Jd_delete">delete</string>
 
     <!--    posted job-->
     <string name="posted_job_title">Posted job</string>

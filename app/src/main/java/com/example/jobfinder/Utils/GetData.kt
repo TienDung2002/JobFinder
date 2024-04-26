@@ -118,31 +118,36 @@ object GetData {
         val floatB = strB.toFloatOrNull()
 
         if (floatA != null && floatB != null) {
-            return floatA > floatB
+            return floatA >= floatB
         }
         return false
     }
 
     fun getStatus(startTime: String, endTime: String, empAmount: String, recruitedEmp: String): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val currentDate = sdf.format(Date())
+        try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val currentDate = sdf.format(Date())
 
-        val startDate = sdf.parse(startTime)
-        val endDate = sdf.parse(endTime)
-        val today = sdf.parse(currentDate)
+            val startDate = sdf.parse(startTime)
+            val endDate = sdf.parse(endTime)
+            val today = sdf.parse(currentDate)
 
-        val empAmountInt = empAmount.toIntOrNull()
-        val recruitedEmpInt = recruitedEmp.toIntOrNull()
+            val empAmountInt = empAmount.toIntOrNull()
+            val recruitedEmpInt = recruitedEmp.toIntOrNull()
 
-        if (empAmountInt != null && recruitedEmpInt != null) {
-            if (recruitedEmpInt >= empAmountInt) {
-                return "closed"
+            if (empAmountInt != null && recruitedEmpInt != null) {
+                if (recruitedEmpInt >= empAmountInt) {
+                    return "closed"
+                }
             }
-        }
-        return when {
-            today.after(endDate) -> "closed"
-            today.before(startDate) -> "recruiting"
-            else -> "working"
+            return when {
+                today.after(endDate) -> "closed"
+                today.before(startDate) -> "recruiting"
+                else -> "working"
+            }
+        }catch (e: Exception) {
+            e.printStackTrace()
+            return "null"
         }
     }
 

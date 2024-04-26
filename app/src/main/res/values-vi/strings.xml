@@ -174,6 +174,7 @@
     <string name="profile">Hồ sơ cá nhân</string>
     <string name="profile_edited">Hồ sơ cá nhân đã được chỉnh sửa</string>
     <string name="profile_logout_toast">Đăng xuất thành công</string>
+    <string name="blank_tax_code">Mã số thuế trống</string>
 
 
     <!-- Edit Profile -->
@@ -328,6 +329,7 @@
     <string name="status_recruiting">Đang tuyển</string>
     <string name="status_closed">Đã đóng</string>
     <string name="applicant">Ứng viên</string>
+    <string name="Jd_delete">xóa</string>
 
     <!--    posted job-->
     <string name="posted_job_title">Việc đã đăng</string>
