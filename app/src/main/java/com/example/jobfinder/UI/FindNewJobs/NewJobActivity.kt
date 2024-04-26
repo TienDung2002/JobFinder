@@ -26,6 +26,9 @@ class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
     private val viewModel: FindNewJobViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
+    private var isJobDetailActivityOpen = false
+    private val REQUEST_CODE_APPLY_JOB = 1003
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,15 +69,19 @@ class NewJobActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 // Xử lí dữ liệu nhận về nếu cần thiết
             }
+            isJobDetailActivityOpen = false
         }
 
 
         // Click vào từng item trong recycler
         adapter.setOnItemClickListener(object : NewJobsAdapter.onItemClickListener {
             override fun onItemClicked(Job: JobModel) {
-                val intent = Intent(this@NewJobActivity, SeekerJobDetailActivity::class.java)
-                intent.putExtra("job", Job)
-                startActivity(intent)
+                if (!isJobDetailActivityOpen) {
+                    isJobDetailActivityOpen = true
+                    val intent = Intent(this@NewJobActivity, SeekerJobDetailActivity::class.java)
+                    intent.putExtra("job", Job)
+                    startActivityForResult(intent, REQUEST_CODE_APPLY_JOB)
+                }
             }
         })
 
@@ -124,17 +131,17 @@ class NewJobActivity : AppCompatActivity() {
         }
 
     }
-    
 
     private fun fetchJobs() {
         viewModel._isLoading.value = true
-        val tempList: MutableList<JobModel> = mutableListOf()
         viewModel.clearJobsList() // xóa item cũ đi trước khi fetch lại
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (userSnapshot in dataSnapshot.children) {
-                        GetData.getUsernameFromUserId( userSnapshot.key.toString()) { username ->
+                        val buserId = userSnapshot.key.toString()
+                        val tempList: MutableList<JobModel> = mutableListOf()
+                        GetData.getUsernameFromUserId(buserId) { username ->
                             for (jobSnapshot in userSnapshot.children) {
                                 val jobModel = jobSnapshot.getValue(JobModel::class.java)
                                 jobModel?.let {
@@ -148,7 +155,8 @@ class NewJobActivity : AppCompatActivity() {
                                     }
                                 }
                             }
-                            viewModel.updateStatusToFirebase(userSnapshot.key.toString(),tempList)
+                            viewModel.updateStatusToFirebase(buserId,tempList)
+                            Log.d("sdkjdfhdkssd", buserId)
                         }
                     }
                     viewModel._isLoading.value = false
@@ -159,5 +167,12 @@ class NewJobActivity : AppCompatActivity() {
             })
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_APPLY_JOB && resultCode == Activity.RESULT_OK) {
+            isJobDetailActivityOpen = false
+        }
+    }
 
 }

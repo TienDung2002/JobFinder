@@ -100,7 +100,6 @@
     <string name="grid_job_checkin">Jobs check in</string>
     <string name="grid_reports">Reports</string>
     <string name="grid_saveJob">Saved</string>
-
     <!--    Buser-->
     <string name="grid_recruit">Recruit</string>
     <string name="grid_recruit_posted">Recruit posted</string>
@@ -174,6 +173,7 @@
     <string name="profile">Profile</string>
     <string name="profile_edited">Profile edited</string>
     <string name="profile_logout_toast">Log out successfully</string>
+    <string name="blank_tax_code">Tax code is blank</string>
 
 
     <!-- Edit Profile -->
@@ -332,6 +332,7 @@
     <string name="status_closed">Closed</string>
     <string name="applicant">Applicant</string>
     <string name="deleted_job">Job deleted</string>
+    <string name="Jd_delete">delete</string>
 
     <!--    posted job-->
     <string name="posted_job_title">Posted job</string>
@@ -348,6 +349,7 @@
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
     <string name="blank_age">Age is blank</string>
+    <string name="enough_Emp">Job is full</string>
 
     <!--    applied job-->
     <string name="approved">Approved</string>
@@ -387,6 +389,4 @@
         <item>report2</item>
         <item>report3</item>
     </string-array>
-
-    <string name="enough_Emp">Job is full</string>
 </resources>
