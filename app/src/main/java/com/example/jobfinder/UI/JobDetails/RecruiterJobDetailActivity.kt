@@ -47,23 +47,27 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             if(job.status.toString()== "working"){
                 binding.detailJobBtnHolder.visibility = View.GONE
             }
-            val emp = "${job.numOfRecruited}/${job.empAmount}"
-            val salaryTxt = "$${job.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
-            val shift = "${job.startHr}-${job.endHr}"
-            binding.jobDetailJobTitle.text = job.jobTitle
-            binding.jobDetailJobType.text= job.jobType
-            binding.jobDetailSalary.text= salaryTxt
-            binding.jobDetailEmpAmount.text= emp
-            binding.jobDetailStartTime.text= job.startTime
-            binding.jobDetailEndTime.text= job.endTime
-            binding.jobDetailWorkShift.text= shift
-            binding.jobDetailAddress.text= job.address
-            binding.jobDetailDes.text= job.jobDes
+
+            FirebaseDatabase.getInstance().getReference("Job").child(job.BUserId.toString()).child(job.jobId.toString()).get().addOnSuccessListener {
+                val recruitedAmount = it.child("numOfRecruited").getValue(String::class.java)
+                val emp = "${recruitedAmount}/${job.empAmount}"
+                val salaryTxt = "$${job.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
+                val shift = "${job.startHr}-${job.endHr}"
+                binding.jobDetailJobTitle.text = job.jobTitle
+                binding.jobDetailJobType.text= job.jobType
+                binding.jobDetailSalary.text= salaryTxt
+                binding.jobDetailEmpAmount.text= emp
+                binding.jobDetailStartTime.text= job.startTime
+                binding.jobDetailEndTime.text= job.endTime
+                binding.jobDetailWorkShift.text= shift
+                binding.jobDetailAddress.text= job.address
+                binding.jobDetailDes.text= job.jobDes
+
+                binding.detailJobScrollView.visibility = View.VISIBLE
+                binding.animationView.visibility = View.GONE
+            }
 
             RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
-
-            binding.detailJobScrollView.visibility = View.VISIBLE
-            binding.animationView.visibility = View.GONE
 
             binding.deleteBtn.setOnClickListener {
                 if (job.status.toString() == "recruiting") {
@@ -78,7 +82,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.appliedListBtn.setOnClickListener {
                 val intent = Intent(this, ActivityApplicantsList::class.java)
                 intent.putExtra("job", job)
-                startActivity(intent)
+                startActivityForResult(intent, 1000)
             }
 
             binding.buserLogo.setOnClickListener{
