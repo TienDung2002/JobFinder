@@ -258,13 +258,23 @@
     <string name="sort_Rec_All">Tất cả</string>
     <string name="sort_Rec_AtoZ">Thứ tự A-Z</string>
     <string name="sort_postedTime">Thời gian đăng</string>
-    <string name="sort_PT_Anytime">Bất cứ khi nào</string>
+    <string name="sort_PT_Anytime">Mọi lúc</string>
     <string name="sort_PT_Newest">Mới nhất</string>
     <string name="sort_PT_thisMonth">Tháng này</string>
     <string name="sort_workShift">Giờ làm</string>
-    <string name="sort_salary">Mức lương</string>
+    <string name="sort_wShiftAM">Sáng</string>
+    <string name="sort_wShiftPM">Chiều</string>
+    <string name="sort_salary">Khoảng lương(/giờ)</string>
     <string name="send">Nộp</string>
     <string name="applied_success">Ứng tuyển thành công</string>
+    <string-array name="initial_slider_values">
+        <item>20000.0</item>
+        <item>70000.0</item>
+    </string-array>
+    <string name="sort_resetCond">Đặt lại</string>
+    <string name="sort_applyCond">Áp dụng</string>
+
+
     <!--    List job item-->
     <string name="Ji_recName">Tên nhà tuyển dụng</string>
     <string name="Ji_recAdd">Địa chỉ làm việc</string>

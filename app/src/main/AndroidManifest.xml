@@ -59,7 +59,7 @@
         <activity
             android:name=".UI.FindNewJobs.NewJobActivity"
             android:exported="false"
-            android:theme="@style/FullScreenTheme" />
+            android:theme="@style/seekbar_filter" />
         <activity
             android:name=".UI.Wallet.WalletHistoryActivity"
             android:exported="false"
