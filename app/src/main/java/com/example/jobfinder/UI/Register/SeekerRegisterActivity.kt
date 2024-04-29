@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.example.jobfinder.Datas.Model.NUserInfo
 import com.example.jobfinder.Datas.Model.UserBasicInfoModel
 import com.example.jobfinder.Datas.Model.idAndRole
+import com.example.jobfinder.Datas.Model.walletAmountModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.Utils.PreventDoubleClick
@@ -59,6 +60,11 @@ class SeekerRegisterActivity : AppCompatActivity() {
                             val userBasicInfo = UserBasicInfoModel(uid, nameInput, emailInput, phoneInput,addressInput)
                             val nUserInfo = NUserInfo("","")
                             val userRole = idAndRole(uid, "NUser")
+                            val walletAmount = walletAmountModel("0.0")
+                            FirebaseDatabase.getInstance()
+                                .getReference("WalletAmount")
+                                .child(uid.toString())
+                                .setValue(walletAmount)
                             FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).setValue(userRole)
                             FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).setValue(userBasicInfo)
                             FirebaseDatabase.getInstance().getReference("NUserInfo").child(uid.toString()).setValue(nUserInfo)
