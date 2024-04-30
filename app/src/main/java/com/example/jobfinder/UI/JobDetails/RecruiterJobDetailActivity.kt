@@ -48,24 +48,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
                 binding.detailJobBtnHolder.visibility = View.GONE
             }
 
-            FirebaseDatabase.getInstance().getReference("Job").child(job.BUserId.toString()).child(job.jobId.toString()).get().addOnSuccessListener {
-                val recruitedAmount = it.child("numOfRecruited").getValue(String::class.java)
-                val emp = "${recruitedAmount}/${job.empAmount}"
-                val salaryTxt = "$${job.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
-                val shift = "${job.startHr}-${job.endHr}"
-                binding.jobDetailJobTitle.text = job.jobTitle
-                binding.jobDetailJobType.text= job.jobType
-                binding.jobDetailSalary.text= salaryTxt
-                binding.jobDetailEmpAmount.text= emp
-                binding.jobDetailStartTime.text= job.startTime
-                binding.jobDetailEndTime.text= job.endTime
-                binding.jobDetailWorkShift.text= shift
-                binding.jobDetailAddress.text= job.address
-                binding.jobDetailDes.text= job.jobDes
-
-                binding.detailJobScrollView.visibility = View.VISIBLE
-                binding.animationView.visibility = View.GONE
-            }
+            fetchJobData(job.jobId.toString(), job.BUserId.toString())
 
             RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
 
@@ -141,5 +124,42 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             }
         })
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
+            // Lấy jobId và bUserId từ Intent nếu cần
+            val jobId = data?.getStringExtra("jobId")
+            val bUserId = data?.getStringExtra("bUserId")
+            jobId?.let { fetchJobData(it, bUserId ?: "") }
+        }
+    }
+
+    private fun fetchJobData(jobId: String, bUserId: String) {
+        FirebaseDatabase.getInstance().getReference("Job").child(bUserId).child(jobId).get().addOnSuccessListener { dataSnapshot ->
+            val job = dataSnapshot.getValue(JobModel::class.java)
+            job?.let {
+                val recruitedAmount = it.numOfRecruited
+                val emp = "$recruitedAmount/${it.empAmount}"
+                val salaryTxt = "$${it.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
+                val shift = "${it.startHr}-${it.endHr}"
+
+                binding.jobDetailJobTitle.text = it.jobTitle
+                binding.jobDetailJobType.text = it.jobType
+                binding.jobDetailSalary.text = salaryTxt
+                binding.jobDetailEmpAmount.text = emp
+                binding.jobDetailStartTime.text = it.startTime
+                binding.jobDetailEndTime.text = it.endTime
+                binding.jobDetailWorkShift.text = shift
+                binding.jobDetailAddress.text = it.address
+                binding.jobDetailDes.text = it.jobDes
+
+                binding.detailJobScrollView.visibility = View.VISIBLE
+                binding.animationView.visibility = View.GONE
+            }
+        }
+    }
+
 
 }

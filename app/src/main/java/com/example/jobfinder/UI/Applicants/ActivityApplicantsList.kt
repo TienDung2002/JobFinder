@@ -52,14 +52,34 @@ class ActivityApplicantsList : AppCompatActivity() {
             }
 
             viewModel.fetchApplicant(job.jobId.toString())
+
+            binding.backButton.setOnClickListener {
+                sendResultAndFinish(job)
+            }
+
         }
 
-        binding.backButton.setOnClickListener {
-            val resultIntent = Intent()
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
+    }
+
+    private fun sendResultAndFinish(job: JobModel) {
+        val resultIntent = Intent()
+        resultIntent.putExtra("jobId", job.jobId.toString())
+        resultIntent.putExtra("bUserId", job.BUserId.toString())
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
+    }
+
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        val job = intent.getParcelableExtra<JobModel>("job")
+        if (job != null) {
+            sendResultAndFinish(job)
+        } else {
+            super.onBackPressed()
         }
     }
+
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
