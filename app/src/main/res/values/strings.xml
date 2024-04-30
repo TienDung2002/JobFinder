@@ -51,6 +51,7 @@
     <string name="rec_taxcode">Tax code</string>
     <string name="rec_hotline">Hotline</string>
     <string name="rec_description">Description</string>
+    <string name="rec_description_title">Say hi and briefly introduce yourself!</string>
     <string name="rec_foundationDay">Foundation day</string>
     <string name="rec_typeOfBusiness">Type of business</string>
     <string name="rec_TOB_private">Private enterprise</string>
@@ -66,6 +67,7 @@
     <string name="rec_sec_finance">Financial Business</string>
     <string name="rec_sec_tourism">Tourism </string>
     <string name="rec_sec_other">Other services</string>
+
     <!--    Người tìm việc-->
     <string name="register_title_seek1">Prepare to find</string>
     <string name="register_title_seek2">your dream jobs</string>
@@ -258,9 +260,18 @@
     <string name="sort_PT_Newest">Newest</string>
     <string name="sort_PT_thisMonth">This month</string>
     <string name="sort_workShift">Work shift</string>
-    <string name="sort_salary">Salary</string>
+    <string name="sort_wShiftAM">Morning</string>
+    <string name="sort_wShiftPM">Afternoon</string>
+    <string name="sort_salary">Salary range(/hour)</string>
     <string name="send">Send</string>
     <string name="applied_success">Apply success</string>
+    <string-array name="initial_slider_values">
+        <item>20000.0</item>
+        <item>70000.0</item>
+    </string-array>
+    <string name="sort_resetCond">Reset</string>
+    <string name="sort_applyCond">Apply</string>
+
 
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
@@ -273,6 +284,8 @@
     <string name="Ji_recruited1">Recruited:</string>
     <string name="Ji_recruited2">0</string>
     <string name="Ji_posttime">45 minutes ago</string>
+    <string name="Ji_appliDeadlineTitle">Application deadline:</string>
+    <string name="Ji_appliDeadline">dd/mm/yyyy</string>
     <string name="Ji_unit1">$</string>
     <string name="Ji_salary">20,000</string>
     <string name="Ji_unit2">VNĐ</string>
@@ -385,4 +398,6 @@
         <item>report2</item>
         <item>report3</item>
     </string-array>
+
+
 </resources>

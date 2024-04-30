@@ -47,7 +47,7 @@ class NewJobActivity : AppCompatActivity() {
 
 
         // gán data vào adapter sau khi fetch
-        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage, viewModel)
+        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
@@ -147,18 +147,18 @@ class NewJobActivity : AppCompatActivity() {
                                 jobModel?.let {
                                     it.BUserName = username.toString()
                                     it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
-                                    tempList.add(it)
-                                    if (it.status == "recruiting") { // check trạng thái công việc
+
+                                    tempList.add(it) //Chứa full data toàn bộ các job
+
+                                    if (it.status == "recruiting") { // check trạng thái công việc cho vào viewmodel để hiển thị
                                         viewModel.addJobsToJobsList(it)
-                                    } // check trạng thái công việc
+                                    }
                                 }
                             }
                             viewModel.updateStatusToFirebase(buserId,tempList)
                             Log.d("sdkjdfhdkssd", buserId)
                         }
-
                     }
-                    // Chuyển item trong từ tempList vào ViewModel
                     viewModel._isLoading.value = false
                 }
                 override fun onCancelled(databaseError: DatabaseError) {

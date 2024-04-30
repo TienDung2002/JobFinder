@@ -432,11 +432,11 @@
 
     <!--button holder-->
     <LinearLayout
+        android:id="@+id/detail_job_btn_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="bottom"
-        android:id="@+id/detail_job_btn_holder"
         android:layout_alignParentBottom="true">
 
         <LinearLayout
