@@ -236,21 +236,33 @@ class SeekerEditProfileFragment : Fragment() {
 
         //button back
         binding.editProfileBackbtn.setOnClickListener {
-            if( checkIfEdited() == true) {
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle(R.string.profile_cancle_edit_confirm)
-                builder.setMessage(R.string.profile_cancle_edit_confirm_noti)
-                builder.setPositiveButton(R.string.profile_image_delete_confim_yes) { dialog, which ->
-                    val resultIntent = Intent()
-                    requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                    requireActivity().finish()
-                }
-                builder.setNegativeButton(R.string.profile_image_delete_confim_no) { dialog, which ->
-                    dialog.dismiss()
+            if( checkIfEdited() == true && isEdited == true) {
+                val newAge = age.text.toString()
+                val newGender = gender.text.toString()
+                val isValidAge = VerifyField.isValidAge(newAge)
+                val isValidGender = newGender.isNotEmpty()
+                age.error = if (isValidAge) null else getString(R.string.error_invalid_Age)
+                gender.error = if (isValidGender) null else getString(R.string.error_invalid_Gender)
 
+                if (isValidAge && isValidGender) {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle(R.string.profile_cancle_edit_confirm)
+                    builder.setMessage(R.string.profile_cancle_edit_confirm_noti)
+                    builder.setPositiveButton(R.string.profile_image_delete_confim_yes) { dialog, which ->
+                        val resultIntent = Intent()
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                        requireActivity().finish()
+                    }
+                    builder.setNegativeButton(R.string.profile_image_delete_confim_no) { dialog, which ->
+                        dialog.dismiss()
+
+                    }
+                    val dialog = builder.create()
+                    dialog.show()
+                }else {
+                    println("error")
                 }
-                val dialog = builder.create()
-                dialog.show()
+
             }
             else{
                 val resultIntent = Intent()
@@ -324,7 +336,8 @@ class SeekerEditProfileFragment : Fragment() {
     private fun checkIfEdited(): Boolean {
         if( (binding.editProfileName.text.toString() != viewModel.name) || (binding.editProfileEmail.text.toString() != viewModel.email)
             || (binding.editProfilePhonenum.text.toString() != viewModel.phone) || (binding.editProfileAddress.text.toString() != viewModel.address)
-            || (binding.editProfileAge.text.toString() != viewModel.age) || (binding.editProfileGender.text.toString() != viewModel.gender)){
+            || (binding.editProfileAge.text.toString() != viewModel.age) || (binding.editProfileGender.text.toString() != viewModel.gender)
+            || (binding.editProfileAge.text.toString() == "") || (binding.editProfileGender.text.toString() == "")){
             return true
         } else {
             return false

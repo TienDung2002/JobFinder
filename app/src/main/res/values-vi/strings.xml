@@ -211,7 +211,7 @@
     <string name="edit_typeOfBusiness">Chọn loại hình kinh doanh</string>
 
     <string name="error_invalid_des">Mô tả thông tin nhà tuyển dụng trống</string>
-    <string name="error_invalid_BusType">lĩnh vực kinh doanh trống</string>
+    <string name="error_invalid_BusType">Lĩnh vực kinh doanh trống</string>
     <string name="error_invalid_BusSec">loại hình kinh doanh trống</string>
     <string name="error_invalid_Gender">Giới tính trống</string>
     <string name="error_invalid_Age">Tuổi trống hoặc tuổi ít hơn 18 hoặc lớn hơn 80</string>

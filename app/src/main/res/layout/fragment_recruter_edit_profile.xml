@@ -256,7 +256,7 @@
                             android:layout_marginStart="15dp"
                             />
                         <HorizontalScrollView
-                            android:layout_width="match_parent"
+                            android:layout_width="280dp"
                             android:layout_height="54dp"
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
@@ -308,7 +308,8 @@
                             android:id="@+id/edit_profile_taxnum"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:layout_centerVertical="true"                            android:textColor="@color/black"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/black"
                             android:textColorHint="@color/grey"
                             android:layout_marginStart="50dp"
                             android:layout_marginEnd="15dp"
@@ -348,19 +349,23 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="15dp"
                             />
+
                         <TextView
                             android:id="@+id/edit_profile_bustype"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
-                            android:textColorHint="#6b6b6b"
                             android:layout_marginStart="50dp"
-                            android:layout_marginEnd="15dp"
-                            android:maxLines="1"
-                            android:hint="@string/error_invalid_BusType"
-                            android:textSize="20sp"
-                            android:textColor="@color/black"
-                            android:background="@drawable/edit_text_blank"
                             android:layout_marginTop="14dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/edit_text_blank"
+                            android:hint="@string/error_invalid_BusType"
+                            android:maxLines="1"
+                            android:textColor="@color/black"
+                            android:textColorHint="#6b6b6b"
+                            android:textSize="20sp"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+
 
                             />
 
@@ -406,6 +411,9 @@
                             android:textColor="@color/black"
                             android:background="@drawable/edit_text_blank"
                             android:layout_marginTop="14dp"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+
                             />
 
                     </RelativeLayout>
