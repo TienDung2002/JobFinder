@@ -45,7 +45,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_alignParentStart="true"/>
 
-                    <RadioGroup
+                    <LinearLayout
                         android:id="@+id/JT_items"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                             android:textAllCaps="false"
                             android:layout_marginEnd="12dp"
                             android:foreground="?android:attr/selectableItemBackground"
-                            android:background="@drawable/custom_filter_btn_default"/>
+                            android:background="@drawable/custom_filter_btn_selected"/>
 
                         <Button
                             android:id="@+id/JT_AtoZ"
@@ -77,7 +77,7 @@
                             android:textAllCaps="false"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:background="@drawable/custom_filter_btn_default"/>
-                    </RadioGroup>
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -99,7 +99,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_alignParentStart="true"/>
 
-                    <RadioGroup
+                    <LinearLayout
                         android:id="@+id/recName_items"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                             android:textAllCaps="false"
                             android:layout_marginEnd="12dp"
                             android:foreground="?android:attr/selectableItemBackground"
-                            android:background="@drawable/custom_filter_btn_default"/>
+                            android:background="@drawable/custom_filter_btn_selected"/>
 
                         <Button
                             android:id="@+id/rec_AtoZ"
@@ -131,7 +131,7 @@
                             android:textAllCaps="false"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:background="@drawable/custom_filter_btn_default"/>
-                    </RadioGroup>
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -153,10 +153,11 @@
                         android:layout_marginBottom="10dp"
                         android:layout_alignParentStart="true"/>
 
-                    <RadioGroup
+                    <LinearLayout
                         android:id="@+id/postedTime_items"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:layout_below="@+id/sort_PT_Title"
                         android:layout_alignParentStart="true">
 
@@ -177,7 +178,7 @@
                                 android:textAllCaps="false"
                                 android:layout_marginEnd="12dp"
                                 android:foreground="?android:attr/selectableItemBackground"
-                                android:background="@drawable/custom_filter_btn_default"/>
+                                android:background="@drawable/custom_filter_btn_selected"/>
 
                             <Button
                                 android:id="@+id/PT_newest"
@@ -215,7 +216,7 @@
                                 android:textColor="@color/black"
                                 android:background="@drawable/transparent_background"/>
                         </LinearLayout>
-                    </RadioGroup>
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -237,39 +238,72 @@
                         android:layout_marginBottom="10dp"
                         android:layout_alignParentStart="true"/>
 
-                    <RadioGroup
-                        android:id="@+id/WS_items"
+                    <LinearLayout
+                        android:id="@+id/WorkShift_items"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_below="@+id/sort_workshift"
                         android:layout_alignParentStart="true">
 
-                        <Button
-                            android:id="@+id/WS_morning"
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:id="@+id/WS_items"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/sort_wShiftAM"
-                            android:textColor="@color/black"
-                            android:textSize="14.5sp"
-                            android:textAllCaps="false"
-                            android:layout_marginEnd="12dp"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:background="@drawable/custom_filter_btn_default"/>
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="10dp">
 
-                        <Button
-                            android:id="@+id/WS_afternoon"
-                            android:layout_width="0dp"
+                            <Button
+                                android:id="@+id/WS_All"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/sort_Rec_All"
+                                android:textColor="@color/black"
+                                android:textSize="14.5sp"
+                                android:textAllCaps="false"
+                                android:layout_marginEnd="12dp"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:background="@drawable/custom_filter_btn_selected"/>
+
+                            <Button
+                                android:id="@+id/WS_morning"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/sort_wShiftAM"
+                                android:textColor="@color/black"
+                                android:textSize="14.5sp"
+                                android:textAllCaps="false"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:background="@drawable/custom_filter_btn_default"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/sort_wShiftPM"
-                            android:textColor="@color/black"
-                            android:textSize="14.5sp"
-                            android:textAllCaps="false"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:background="@drawable/custom_filter_btn_default"/>
-                    </RadioGroup>
+                            android:orientation="horizontal">
+                            <Button
+                                android:id="@+id/WS_afternoon"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/sort_wShiftPM"
+                                android:textColor="@color/black"
+                                android:textSize="14.5sp"
+                                android:textAllCaps="false"
+                                android:layout_marginEnd="12dp"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:background="@drawable/custom_filter_btn_default"/>
+                            <Button
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:textColor="@color/black"
+                                android:background="@drawable/transparent_background"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <RelativeLayout

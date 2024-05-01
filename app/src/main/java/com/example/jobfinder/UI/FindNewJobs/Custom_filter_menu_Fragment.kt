@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.databinding.FragmentCustomFilterMenuBinding
 import com.example.jobfinder.databinding.FragmentForgotPassBinding
@@ -18,7 +19,6 @@ class Custom_filter_menu_Fragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
 
@@ -27,6 +27,46 @@ class Custom_filter_menu_Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCustomFilterMenuBinding.inflate(inflater, container, false)
+
+
+        defaultFilter()
+
+        val jtButtons = listOf(binding.JTAll, binding.JTAtoZ)
+        val recNameButtons = listOf(binding.recAll, binding.recAtoZ)
+        val postedTimeButtons = listOf(binding.PTAnytime, binding.PTNewest, binding.PTThisMonth)
+        val workShiftButtons = listOf(binding.WSAll, binding.WSMorning, binding.WSAfternoon)
+
+//        jtButtons.forEach { button ->
+//            button.setOnClickListener {
+//                handleButtonSelection(jtButtons, button)
+//            }
+//        }
+
+        binding.JTItems.setOnClickListener {
+            Toast.makeText(requireContext(), "Button clicked", Toast.LENGTH_SHORT).show()
+        }
+//        recNameButtons.forEach { button ->
+//            button.setOnClickListener {
+//                handleButtonSelection(recNameButtons, button)
+//            }
+//        }
+//
+//        postedTimeButtons.forEach { button ->
+//            button.setOnClickListener {
+//                handleButtonSelection(postedTimeButtons, button)
+//            }
+//        }
+//
+//        workShiftButtons.forEach { button ->
+//            button.setOnClickListener {
+//                handleButtonSelection(workShiftButtons, button)
+//            }
+//        }
+
+        binding.resetBtn.setOnClickListener {
+
+        }
+
         return binding.root
     }
 
@@ -34,48 +74,6 @@ class Custom_filter_menu_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) { //tương tác với UI sau khi onCreateView
         super.onViewCreated(view, savedInstanceState)
 
-        // Đặt các button về mặc định
-        selectedFilterDefault()
-
-        // Job title radio
-        binding.JTItems.setOnCheckedChangeListener { group, checkedId ->
-            val selectedButton = when (checkedId) {
-                binding.JTAll.id -> binding.JTAll
-                binding.JTAtoZ.id -> binding.JTAtoZ
-                else -> null
-            }
-            selectedButton?.setBackgroundResource(R.drawable.custom_filter_btn_selected)
-//            selectedButton?.setBackgroundResource(R.drawable.state_filter_btn)
-
-            // Đặt background cho các button còn lại thành mặc định
-            for (i in 0 until group.childCount) {
-                val button = group.getChildAt(i) as Button
-                if (button.id != checkedId) {
-                    button.setBackgroundResource(R.drawable.custom_filter_btn_default)
-                }
-            }
-        }
-
-
-        // recName radio
-        binding.recNameItems.setOnCheckedChangeListener { group, checkedId ->
-            // Xử lý sự kiện khi lựa chọn thay đổi trong recNameItemsGroup
-            // Bạn có thể thay đổi giao diện của các Button dựa trên checkedId
-        }
-
-
-        // postedTime radio
-        binding.postedTimeItems.setOnCheckedChangeListener { group, checkedId ->
-            // Xử lý sự kiện khi lựa chọn thay đổi trong PTItemsGroup
-            // Bạn có thể thay đổi giao diện của các Button dựa trên checkedId
-        }
-
-
-        // work time radio
-        binding.WSItems.setOnCheckedChangeListener { group, checkedId ->
-            // Xử lý sự kiện khi lựa chọn thay đổi trong PTItemsGroup
-            // Bạn có thể thay đổi giao diện của các Button dựa trên checkedId
-        }
 
 
         // seekbar slider
@@ -93,8 +91,26 @@ class Custom_filter_menu_Fragment : Fragment() {
         }
     }
 
-    private fun selectedFilterDefault(){
-        binding.JTItems.check(binding.JTAll.id)
-        Log.d("ádfaaw", "selectedFilterDefault hoạt động")
+    private fun handleButtonSelection(buttons: List<Button>, selectedButton: Button) {
+        // Cập nhật background của Button được chọn
+        selectedButton.setBackgroundResource(R.drawable.custom_filter_btn_selected)
+
+        // Lặp qua tất cả các Button trong danh sách
+        for (button in buttons) {
+            // Nếu Button không phải là Button được chọn, đặt background về mặc định
+            if (button != selectedButton) {
+                button.setBackgroundResource(R.drawable.custom_filter_btn_default)
+            }
+        }
     }
+
+    private fun defaultFilter() {
+        Log.d("adsfasdf", "đang hoạt động")
+        binding.JTAll.setBackgroundResource(R.drawable.custom_filter_btn_selected)
+        binding.recAll.setBackgroundResource(R.drawable.custom_filter_btn_selected)
+        binding.PTAnytime.setBackgroundResource(R.drawable.custom_filter_btn_selected)
+        binding.WSAll.setBackgroundResource(R.drawable.custom_filter_btn_selected)
+    }
+
+
 }
