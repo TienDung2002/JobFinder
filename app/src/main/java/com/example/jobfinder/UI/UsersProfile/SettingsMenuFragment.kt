@@ -14,6 +14,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.ForgotPassword.ForgotPassFragment
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
@@ -24,6 +27,12 @@ import com.example.jobfinder.databinding.FragmentSettingsMenuBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class SettingsMenuFragment : Fragment() {
@@ -34,6 +43,8 @@ class SettingsMenuFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+
+
 
     }
 
@@ -124,8 +135,13 @@ class SettingsMenuFragment : Fragment() {
                         val credential = EmailAuthProvider.getCredential(currentUser.email!!, currentPassword)
                         currentUser.reauthenticate(credential).addOnCompleteListener { reauthTask ->
                             if (reauthTask.isSuccessful) {
+                                val uid = auth.currentUser?.uid.toString()
                                 currentUser.delete().addOnCompleteListener { deleteTask ->
                                     if (deleteTask.isSuccessful) {
+                                        println("head DI")
+                                        deleteImage(uid)
+                                        println("Tail DI")
+                                        deleteUserData(uid)
                                         Toast.makeText(
                                             requireContext(),
                                             getString(R.string.account_deleted),
@@ -144,7 +160,6 @@ class SettingsMenuFragment : Fragment() {
                                         ).show()
                                     }
                                 }
-
                             }else{
                                 Toast.makeText(
                                     requireContext(),
@@ -155,10 +170,6 @@ class SettingsMenuFragment : Fragment() {
                         }
                     }
                 }
-
-
-
-
             }
             forgotPassword.setOnClickListener(){
                 val intent = Intent(requireContext(), ProfileForgotPasswordActivity::class.java)
@@ -173,6 +184,59 @@ class SettingsMenuFragment : Fragment() {
             requireActivity().finish()
         }
     }
+
+    fun deleteUserData(uid: String) {
+        val database = FirebaseDatabase.getInstance()
+        val reference = database.reference
+
+        val tableRefs = listOf(
+            "Applicant","Appliedjob", "Approvedjob", "BUserInfo", "Job", "NUserInfo", "Notifications",
+            "Support", "UserBasicInfo", "UserRole", "Wallet",
+            "WalletAmount", "WalletHistory"
+        )
+
+        // Lặp qua từng bảng dữ liệu trong tableRefs để xóa dữ liệu của uid
+        for (table in tableRefs) {
+            val tableReference = reference.child(table).child(uid)
+            tableReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        // Xóa dữ liệu của uid trong bảng hiện tại
+                        tableReference.removeValue()
+                            .addOnSuccessListener {
+                                println("Đã xóa dữ liệu của $uid từ bảng $table thành công")
+                            }
+                            .addOnFailureListener { e ->
+                                println("Lỗi khi xóa dữ liệu của $uid từ bảng $table: ${e.message}")
+                            }
+                    } else {
+                        println("Không có dữ liệu để xóa cho $uid từ bảng $table")
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    println("Đã xảy ra lỗi: ${error.message}")
+                }
+            })
+        }
+
+    }
+
+    private fun deleteImage(uid: String) {
+        val storageReference: StorageReference = FirebaseStorage.getInstance().getReference()
+        val imageRef: StorageReference = storageReference.child(uid)
+        imageRef.delete().addOnSuccessListener {
+
+            println("Đã xóa dữ liệu của $uid trong Firebase Storage thành công")
+
+        }.addOnFailureListener {e ->
+            println("Lỗi khi xóa dữ liệu của $uid trong Firebase Storage: ${e.message}")
+        }
+
+    }
+
+
+
 
 
 
