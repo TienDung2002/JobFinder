@@ -85,7 +85,7 @@
                         android:layout_width="0dp"
                         android:singleLine="true"
                         android:layout_marginStart="124dp"
-                        android:text="@string/delete"/>
+                        android:text="@string/Jd_delete"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -12,6 +12,7 @@ import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Applicants.ActivityApplicantsList
+import com.example.jobfinder.UI.Applicants.ApplicantViewModel
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.Utils.GetData
@@ -22,6 +23,7 @@ import com.google.firebase.database.*
 class RecruiterJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecruiterJobDetailBinding
     private val viewModel: PostedJobViewModel by viewModels()
+    private val applicantViewModel: ApplicantViewModel by viewModels()
 
     @Deprecated("Deprecated in Java")
     @SuppressLint("MissingSuperCall")
@@ -57,6 +59,10 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
                     amountWorking(job)
                 }
                 viewModel.deleteJob(job.jobId.toString())
+                applicantViewModel.deleteJobApplicant(job.jobId.toString())
+
+                // vao giờ làm viewModel cho alliedJob, savedJob và ApprovedJob thì sẽ thêm hàm xóa ở đây
+
                 Toast.makeText(this@RecruiterJobDetailActivity, getString(R.string.deleted_job), Toast.LENGTH_SHORT).show()
                 setResult(RESULT_OK)
                 finish()

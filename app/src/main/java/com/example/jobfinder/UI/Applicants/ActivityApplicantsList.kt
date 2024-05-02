@@ -90,7 +90,6 @@ class ActivityApplicantsList : AppCompatActivity() {
     }
 
     private fun checkEmptyAdapter(list: MutableList<ApplicantsModel>) {
-        Log.d("dfkjhdfkjgjkhkj", "List size: ${list.size}")
         if (list.isEmpty()) {
             binding.noApplicant.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
