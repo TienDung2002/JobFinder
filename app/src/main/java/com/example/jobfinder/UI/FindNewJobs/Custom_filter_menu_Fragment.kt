@@ -42,7 +42,7 @@ class Custom_filter_menu_Fragment : Fragment() {
 //            }
 //        }
 
-        binding.JTItems.setOnClickListener {
+        binding.JTAll.setOnClickListener {
             Toast.makeText(requireContext(), "Button clicked", Toast.LENGTH_SHORT).show()
         }
 //        recNameButtons.forEach { button ->

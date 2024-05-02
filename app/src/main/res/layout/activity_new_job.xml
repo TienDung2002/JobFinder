@@ -111,7 +111,7 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        layout="@layout/fragment_custom_filter_menu" />
+        layout="@layout/custom_filter_layout" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
