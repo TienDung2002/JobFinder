@@ -138,9 +138,7 @@ class SettingsMenuFragment : Fragment() {
                                 val uid = auth.currentUser?.uid.toString()
                                 currentUser.delete().addOnCompleteListener { deleteTask ->
                                     if (deleteTask.isSuccessful) {
-                                        println("head DI")
                                         deleteImage(uid)
-                                        println("Tail DI")
                                         deleteUserData(uid)
                                         Toast.makeText(
                                             requireContext(),
@@ -201,7 +199,6 @@ class SettingsMenuFragment : Fragment() {
             tableReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        // Xóa dữ liệu của uid trong bảng hiện tại
                         tableReference.removeValue()
                             .addOnSuccessListener {
                                 println("Đã xóa dữ liệu của $uid từ bảng $table thành công")

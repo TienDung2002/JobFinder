@@ -303,7 +303,6 @@
                             android:dropDownVerticalOffset="50dp"
                             android:padding="10dp"
                             android:background="@drawable/transparent_background"
-
                             />
 
 

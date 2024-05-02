@@ -57,23 +57,14 @@ class SupportActivity : AppCompatActivity() {
 
         binding.saveChange.setOnClickListener(){
             val note = binding.note.text.toString()
-            val report_form =  SupportUser(statusType,note)
 
-            if (check == "technical"){
-                val technicalId = FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child("Technical").push().key
-                FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child("Technical").child(technicalId.toString()).setValue(report_form)
+            if (check != ""){
+                val supportId = FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).push().key
+                val reportForm =  SupportUser(supportId, check, statusType, note)
+                FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child(supportId.toString()).setValue(reportForm)
                 Toast.makeText(this, getString(R.string.request_sent), Toast.LENGTH_SHORT).show()
                 binding.note.setText("")
-            } else if (check == "feedback"){
-                val feedbacklId = FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child("Feedback").push().key
-                FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child("Feedback").child(feedbacklId.toString()).setValue(report_form)
-                Toast.makeText(this, getString(R.string.request_sent), Toast.LENGTH_SHORT).show()
-                binding.note.setText("")
-            } else if (check == "report"){
-                val reportlId = FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child("Report").push().key
-                FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child("Report").child(reportlId.toString()).setValue(report_form)
-                Toast.makeText(this, getString(R.string.request_sent), Toast.LENGTH_SHORT).show()
-                binding.note.setText("")
+
             } else {
                 Toast.makeText(this, getString(R.string.request_sent_error), Toast.LENGTH_SHORT).show()
             }
