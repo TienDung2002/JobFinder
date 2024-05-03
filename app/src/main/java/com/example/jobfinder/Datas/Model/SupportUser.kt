@@ -1,7 +1,9 @@
 package com.example.jobfinder.Datas.Model
 
 class SupportUser (
-    var report_status: String? = null,
-    var report_description: String?= null
+    var supportId: String? = null,
+    var supportName: String? = null,
+    var status: String? = null,
+    var description: String?= null
 )
 

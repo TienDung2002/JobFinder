@@ -220,7 +220,7 @@
     <string name="edit_typeOfBusiness">Chọn loại hình kinh doanh</string>
 
     <string name="error_invalid_des">Mô tả thông tin nhà tuyển dụng trống</string>
-    <string name="error_invalid_BusType">lĩnh vực kinh doanh trống</string>
+    <string name="error_invalid_BusType">Lĩnh vực kinh doanh trống</string>
     <string name="error_invalid_BusSec">loại hình kinh doanh trống</string>
     <string name="error_invalid_Gender">Giới tính trống</string>
     <string name="error_invalid_Age">Tuổi trống hoặc tuổi ít hơn 18 hoặc lớn hơn 80</string>
@@ -361,33 +361,33 @@
     <string name="technical_report">Kỹ thuật</string>
     <string name="feedback_report">Góp ý</string>
     <string name="user_report">Báo cáo</string>
-    <string name="create_technical_report">Tạo báo cáo kỹ thuật</string>
+    <string name="create_technical_report">Tạo yêu cầu kỹ thuật</string>
     <string name="create_feedback">Tạo góp ý</string>
     <string name="create_user_report">Tạo báo cáo người dùng</string>
     <string name="send_request">gửi yêu cầu</string>
     <string name="note">Ghi chú</string>
     <string name="enter_note">Nhập ghi chú</string>
     <string name="report_status">Tình trạng</string>
+    <string name="your_status">Tình trạng của Quý khách</string>
     <string name="your_condition">Tình trạng của Quý khách</string>
     <string name="request_sent">Đã gửi yêu cầu</string>
     <string name="request_sent_error">Không có yêu cầu nào được gửi</string>
 
     <string-array name="technical_array">
-        <item>technical1</item>
-        <item>technical2</item>
-        <item>technical3</item>
+        <item>Lỗi kết nối thẻ ngân hàng</item>
+        <item>Không thể lưu thông tin hồ sơ</item>
+        <item>Khác</item>
     </string-array>
 
     <string-array name="feedback_array">
-        <item>feedback1</item>
-        <item>feedback2</item>
-        <item>feedback3</item>
+        <item>Góp ý ứng dụng</item>
+        <item>Góp ý phục vụ</item>
+        <item>Khác</item>
     </string-array>
 
     <string-array name="report_array">
-        <item>report1</item>
-        <item>report2</item>
-        <item>report3</item>
+        <item>Báo cáo người dùng</item>
+        <item>Báo cáo doanh nghiệp</item>
     </string-array>
 
 

@@ -39,6 +39,7 @@ class UserProfileMenuFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
+
         // hiển thị username
         val database = FirebaseDatabase.getInstance().reference
         val userId = auth.currentUser?.uid
