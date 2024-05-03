@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
@@ -146,6 +145,8 @@ class NewJobActivity : AppCompatActivity() {
         jtButtons.forEach { button ->
             button.setOnClickListener {
                 handleButtonSelection(jtButtons, button)
+                // Nếu đang chọn JTAtoZ không cho chọn recNameAtoZ
+                adjustButtonStateUI(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ)
             }
         }
 
@@ -153,6 +154,8 @@ class NewJobActivity : AppCompatActivity() {
         recNameButtons.forEach { button ->
             button.setOnClickListener {
                 handleButtonSelection(recNameButtons, button)
+                // Nếu đang chọn recNameAtoZ không cho chọn JTAtoZ
+                adjustButtonStateUI(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ)
             }
         }
 
@@ -255,14 +258,14 @@ class NewJobActivity : AppCompatActivity() {
 
     private fun defaultSelectionFilterUI() {
         // Các btn muốn đặt lại UI về default
-        val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTAnytime, cusBindingFilter.WSAll)
+        val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest, cusBindingFilter.WSAll)
         // Giá trị mặc định của RangeSlider
         val defaultValues = resources.getStringArray(R.array.initial_slider_values).map { it.toFloat() }
 
         val allButtons = listOf(
             // Job title buttons
             cusBindingFilter.JTAll, cusBindingFilter.JTAtoZ,
-            // Recruiter buttons
+            // Recruiter name buttons
             cusBindingFilter.recAll, cusBindingFilter.recAtoZ,
             // Posted time buttons
             cusBindingFilter.PTAnytime, cusBindingFilter.PTNewest, cusBindingFilter.PTThisMonth,
@@ -280,4 +283,15 @@ class NewJobActivity : AppCompatActivity() {
         // Đặt lại giá trị của RangeSlider về mặc định
         cusBindingFilter.rangeslider.setValues(defaultValues)
     }
+
+    // Hàm để điều chỉnh trạng thái của targetButton dựa trên trạng thái của selectedButton
+    private fun adjustButtonStateUI(curSelectedButton: Button, buttonToCheck: Button, targetButton: Button) {
+        val isButtonToCheckSelected = (curSelectedButton == buttonToCheck)
+        targetButton.apply {
+            alpha = if (isButtonToCheckSelected) 0.4F else 1.0F
+            isEnabled = !isButtonToCheckSelected
+        }
+    }
+
+    
 }
