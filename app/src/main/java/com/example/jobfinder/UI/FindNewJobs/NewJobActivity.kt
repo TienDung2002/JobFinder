@@ -293,5 +293,5 @@ class NewJobActivity : AppCompatActivity() {
         }
     }
 
-    
+
 }
