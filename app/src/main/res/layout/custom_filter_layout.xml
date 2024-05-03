@@ -343,6 +343,7 @@
                             android:valueTo="100000.0"
                             app:values="@array/initial_slider_values"
                             android:stepSize="5000.0"
+                            app:labelBehavior="withinBounds"
                             app:trackHeight="10dp"
                             app:thumbColor="@color/primary_color2"
                             app:tickColor="@color/primary_color2"/>

@@ -26,6 +26,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.NumberFormat
+import java.util.Currency
 
 class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
@@ -185,6 +187,14 @@ class NewJobActivity : AppCompatActivity() {
         // Responds to when slider's value is changed
         cusBindingFilter.rangeslider.addOnChangeListener { rangeSlider, value, fromUser ->
         }
+        // Format định dạng hiển thị của tiền việt trên label
+        cusBindingFilter.rangeslider.setLabelFormatter { value: Float ->
+            val format = NumberFormat.getCurrencyInstance()
+            format.maximumFractionDigits = 0
+            format.currency = Currency.getInstance("VND")
+            format.format(value.toDouble())
+        }
+
 
         // reset filter btn
         cusBindingFilter.resetBtn.setOnClickListener {
@@ -194,6 +204,7 @@ class NewJobActivity : AppCompatActivity() {
         // apply filter btn
         cusBindingFilter.applyBtn.setOnClickListener {
             Toast.makeText(this, "Áp dụng bộ lọc!", Toast.LENGTH_SHORT).show()
+            binding.rootNewJob.closeDrawer(GravityCompat.END)
         }
 
 
@@ -274,10 +285,13 @@ class NewJobActivity : AppCompatActivity() {
         )
 
         for (btn in allButtons) {
-            btn.setBackgroundResource(
+            btn.setBackgroundResource(  // Nếu ngoài ccacsbtn mặc định thì đổi tất cả về background default
                 if (btn in selectedButtons) R.drawable.custom_filter_btn_selected
                 else R.drawable.custom_filter_btn_default
             )
+            // Đặt alpha và isEnabled về mặc định
+            btn.alpha = 1.0F
+            btn.isEnabled = true
         }
 
         // Đặt lại giá trị của RangeSlider về mặc định
