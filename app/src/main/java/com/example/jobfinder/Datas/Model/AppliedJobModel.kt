@@ -9,4 +9,6 @@ class AppliedJobModel (
     var endHr: String?,
     var salary:String?,
     var postedDate: String?
-    )
+    ){
+    constructor() : this(null, null, null, null, null, null, null, null)
+}

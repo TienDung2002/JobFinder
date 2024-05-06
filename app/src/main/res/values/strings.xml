@@ -363,6 +363,8 @@
     <!--    applied job-->
     <string name="approved">Approved</string>
     <string name="rejected">Rejected</string>
+    <string name="Job_title">Job title:</string>
+    <string name="Applied_date">Applied time:</string>
 
     <!--    Report-->
     <string name="create_request">Create request</string>

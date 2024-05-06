@@ -365,6 +365,9 @@
     <!--    applied job-->
     <string name="approved">Đã phê duyệt</string>
     <string name="rejected">Đã từ chối</string>
+    <string name="Job_title">Tên công việc:</string>
+    <string name="Applied_date">Thời gian ứng tuyển:</string>
+
 
     <!--    Report-->
     <string name="create_request">Tạo yêu cầu</string>
