@@ -9,14 +9,17 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
+import com.example.jobfinder.databinding.CustomFilterLayoutBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,15 +27,19 @@ import com.google.firebase.database.ValueEventListener
 
 class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
+    lateinit var binding2: CustomFilterLayoutBinding
     private val viewModel: FindNewJobViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
     private var isJobDetailActivityOpen = false
     private val REQUEST_CODE_APPLY_JOB = 1003
+    private lateinit var drawerLayout: DrawerLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewJobBinding.inflate(layoutInflater)
+        binding2 = CustomFilterLayoutBinding.bind(binding.slideMenu.root)
+
         setContentView(binding.root)
 
         // nút back về home trên màn hình
@@ -125,10 +132,20 @@ class NewJobActivity : AppCompatActivity() {
 
         // nút filter
         binding.filterIcon.setOnClickListener {
-            // mở drawer
             binding.rootNewJob.openDrawer(GravityCompat.END)
 
         }
+
+        // nút của drawer
+
+        binding2.JTAll.setOnClickListener {
+            Toast.makeText(this, "Button clickedddddd", Toast.LENGTH_SHORT).show()
+        }
+
+        binding2.recAll.setOnClickListener {
+            Toast.makeText(this@NewJobActivity, "Button clickedddddd2222", Toast.LENGTH_SHORT).show()
+        }
+
 
     }
 

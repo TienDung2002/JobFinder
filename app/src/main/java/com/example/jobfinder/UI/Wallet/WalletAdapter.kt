@@ -261,7 +261,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             // Xử lý khi nhấn vào nút Thêm
             addCashToCardBtn.setOnClickListener {
                 addCashToCardBtn.isClickable= false
-                // Thêm 10000 vào amount của thẻ
+                // Thêm 1000000 vào amount của thẻ
                 addMoney(wallet)
                     walletRef.child("amount")
                         .setValue(wallet.amount)
@@ -270,7 +270,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             val walletHistoryId= walletHistoryRef.push().key.toString()
                             val walletHistoryModel= walletHistoryModel(
                                 walletHistoryId,
-                                "10000",
+                                "1000000",
                                 wallet.cardId.toString(),
                                 wallet.bankName.toString(),
                                 wallet.cardNumber.toString(),
@@ -279,7 +279,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             val notificationsRowModel= NotificationsRowModel(
                                 notiId,
                                 "Admin",
-                                "+ $10000\n" +
+                                "+ $1000000\n" +
                                         "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName}. ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
                                 today
                             )
@@ -347,8 +347,8 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
         private fun addMoney(wallet: WalletRowModel) {
             // Chuyển đổi giá trị amount từ string thành kiểu float
             val currentAmount = wallet.amount?.toFloatOrNull() ?: 0f
-            // Thêm 10000 vào giá trị hiện tại
-            val newAmount = currentAmount + 10000f
+            // Thêm 1000000 vào giá trị hiện tại
+            val newAmount = currentAmount + 1000000f
             // Cập nhật giá trị amount của thẻ thành chuỗi mới
             wallet.amount = newAmount.toString()
             // Cập nhật lại giao diện cho thẻ

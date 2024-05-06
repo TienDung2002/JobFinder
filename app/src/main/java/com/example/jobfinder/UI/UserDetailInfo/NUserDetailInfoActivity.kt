@@ -94,13 +94,13 @@ class NUserDetailInfoActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.approveBtn.setOnClickListener {
-
-        }
-
-        binding.rejectBtn.setOnClickListener {
-
-        }
+//        binding.approveBtn.setOnClickListener {
+//
+//        }
+//
+//        binding.rejectBtn.setOnClickListener {
+//
+//        }
     }
 
     override fun onResume() {

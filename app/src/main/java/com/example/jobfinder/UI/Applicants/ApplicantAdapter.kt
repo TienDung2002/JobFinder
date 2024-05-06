@@ -1,6 +1,8 @@
 package com.example.jobfinder.UI.Applicants
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.getString
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.ApplicantsModel
+import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
@@ -56,6 +59,7 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
         holder.textViewDescription.text = currentItem.applicantDes
 
         val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(currentItem.userId.toString())
+        val appliedJobRef = FirebaseDatabase.getInstance().getReference("AppliedJob").child(currentItem.userId.toString()).child(job.jobId.toString())
         val curTime = GetData.getCurrentDateTime()
 
         RetriveImg.retrieveImage(currentItem.userId.toString(), holder.imgView)
@@ -67,17 +71,26 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
         holder.approveBtn.setOnClickListener {
             val position = holder.adapterPosition
             if (position != RecyclerView.NO_POSITION) {
-                viewModel.deleteApplicant(job.jobId.toString() ,currentItem.userId.toString())
-                applicantList.removeAt(position)
-                notifyItemRemoved(position)
-
                 // add recruitedEmp
                 val jobRef = FirebaseDatabase.getInstance().getReference("Job").child(job.BUserId.toString()).child(job.jobId.toString())
                 jobRef.get().addOnSuccessListener { data ->
-                    var recruitedAmount = data.child("numOfRecruited").getValue(String::class.java).toString()
+                    val recruitedAmount = data.child("numOfRecruited").getValue(String::class.java).toString()
                     val empAmount = data.child("empAmount").getValue(String::class.java).toString()
-                    if(recruitedAmount.toInt() <= empAmount.toInt()){
+                    if(recruitedAmount.toInt() < empAmount.toInt()){
 
+                        viewModel.deleteApplicant(job.jobId.toString() ,currentItem.userId.toString())
+                        applicantList.removeAt(position)
+                        notifyItemRemoved(position)
+
+                        val newRecuitedAmount = (recruitedAmount.toInt() + 1).toString()
+
+                        jobRef.child("numOfRecruited").setValue(newRecuitedAmount)
+
+                        appliedJobRef.removeValue()
+
+                        val approvedJob = AppliedJobModel(job.BUserId.toString(), job.jobId.toString(), curTime, job.jobTitle.toString(), job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString())
+
+                        FirebaseDatabase.getInstance().getReference("ApprovedJob").child(currentItem.userId.toString()).child(job.jobId.toString()).setValue(approvedJob)
 
                         // notification
                         val notiId = notiRef.push().key.toString()
@@ -97,6 +110,27 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
                             getString( context,R.string.enough_Emp),
                             Toast.LENGTH_SHORT
                         ).show()
+
+                        //khi lấy đủ nhân viên tự xóa hết trong appliedJob của tất cả những ứng viên
+                        FirebaseDatabase.getInstance().getReference("AppliedJob").get().addOnSuccessListener {
+                            for( uid in it.children){
+
+                                viewModel.deleteApplicant(job.jobId.toString() ,uid.key.toString())
+                                applicantList.clear()
+                                FirebaseDatabase.getInstance().getReference("AppliedJob").child(uid.key.toString()).child(job.jobId.toString()).removeValue()
+
+                                val notiId = FirebaseDatabase.getInstance().getReference("Notifications").child(uid.key.toString()).push().key.toString()
+                                val notification = NotificationsRowModel(notiId, job.BUserName.toString(),
+                                    getString(context,R.string.reject_from) + " ${job.jobTitle.toString()}"
+                                    ,curTime)
+                                FirebaseDatabase.getInstance().getReference("Notifications").child(uid.key.toString()).child(notiId).setValue(notification)
+
+                            }
+                        }
+                        //xóa hết danh sách ứng viên khi đã full
+                        FirebaseDatabase.getInstance().getReference("Applicant").child(job.jobId.toString()).removeValue()
+                        notifyDataSetChanged()
+
                     }
 
                 }
@@ -117,6 +151,8 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
                     getString(context,R.string.reject_from) + " ${job.jobTitle.toString()}"
                     ,curTime)
                 notiRef.child(notiId).setValue(notification)
+
+                appliedJobRef.removeValue()
 
                 Toast.makeText(
                     context,
