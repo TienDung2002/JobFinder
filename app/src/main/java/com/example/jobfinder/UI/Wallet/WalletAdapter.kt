@@ -21,6 +21,8 @@ import com.example.jobfinder.databinding.RowWalletCardBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.text.NumberFormat
+import java.util.Currency
 import kotlin.random.Random
 
 class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
@@ -51,7 +53,13 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             binding.apply {
                 // Binding dữ liệu từ wallet vào các view tương ứng
                 txtWalletBankName.text = wallet.bankName
-                walletAmount.text ="$"+ wallet.amount
+
+                // Chuyển sang vnd (chỉ hiển thị còn tính toán như bth)
+                val format = NumberFormat.getCurrencyInstance()
+                format.maximumFractionDigits = 0
+                format.currency = Currency.getInstance("VND")
+                walletAmount.setText(format.format(wallet.amount?.toDouble()))
+
                 walletId.text = wallet.cardNumber
                 imageMainWalletImage.setImageResource(randomMaskGroup())
                 rowWallet.setBackgroundResource(getGradientDrawable(wallet.cardColor))
@@ -101,6 +109,8 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
             val deleteButton = dialog.findViewById<Button>(R.id.delete_card_button)
             val addCashToCardBtn = dialog.findViewById<Button>(R.id.add_cash_to_card)
             val cancelButton = dialog.findViewById<Button>(R.id.button_cancel)
+            val format = NumberFormat.getCurrencyInstance()
+            format.currency = Currency.getInstance("VND")
 
             addCashToCardBtn.isClickable= true
             depositBtn.isClickable= true
@@ -139,10 +149,11 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
 
                                 // noti
                                 val notiId = notiRef.push().key.toString()
+                                val amountConvertVnd = format.format(amountTxt.toDouble())
                                 val newNoti = NotificationsRowModel(notiId, "Admin",
-                                    "${getString(binding.root.context, R.string.withdraw)}\n." +
-                                            "$amountTxt \n" +
-                                            "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName}. ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
+                                    "${getString(binding.root.context, R.string.withdraw)}: $amountConvertVnd \n" +
+                                            "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName} \n " +
+                                            "${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
                                     today)
                                 notiRef
                                     .child(notiId)
@@ -207,10 +218,11 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
 
                                 // noti
                                 val notiId = notiRef.push().key.toString()
+                                val amountConvertVnd = format.format(amountTxt.toDouble())
                                 val newNoti = NotificationsRowModel(notiId, "Admin",
-                                    "${getString(binding.root.context, R.string.deposit)}.\n" +
-                                            "$amountTxt \n" +
-                                            "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName}. ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
+                                    "${getString(binding.root.context, R.string.deposit)} : ${amountConvertVnd} \n" +
+                                            "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName} \n" +
+                                            " ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
                                     today)
                                 notiRef
                                     .child(notiId)
