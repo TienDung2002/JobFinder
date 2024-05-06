@@ -26,9 +26,9 @@
             <Button
                 android:id="@+id/backButton"
                 android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_height="34dp"
                 android:background="@drawable/transparent_background"
-                android:drawableStart="@drawable/ic_back24px"/>
+                android:drawableStart="@drawable/ic_back24px" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,9 +109,9 @@
     <include
         android:id="@+id/slideMenu"
         android:layout_width="280dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="end"
-        layout="@layout/custom_filter_menu" />
+        layout="@layout/custom_filter_layout" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

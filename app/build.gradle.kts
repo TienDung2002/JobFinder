@@ -117,15 +117,9 @@ dependencies {
 //    implementation("com.github.bumptech.glide:glide:$glideVersion")
 //    ksp("androidx.room:room-compiler:2.6.1")
 
-    // dot indicator
-//    implementation("com.tbuonomo:dotsindicator:4.2")
-
-    // Timber log
-//    implementation("com.jakewharton.timber:timber:4.7.1")
-
     // splash screen animation
     implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("androidx.compose.animation:animation-core-android:1.6.4")
+    implementation("androidx.compose.animation:animation-core-android:1.6.6")
 
     // loading lib from LottieFile
     implementation("com.airbnb.android:lottie:$lottieVersion")
@@ -133,6 +127,5 @@ dependencies {
     //profile image
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
-
 
 }

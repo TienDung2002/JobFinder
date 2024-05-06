@@ -12,6 +12,7 @@ import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Applicants.ActivityApplicantsList
+import com.example.jobfinder.UI.Applicants.ApplicantViewModel
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.Utils.GetData
@@ -22,6 +23,7 @@ import com.google.firebase.database.*
 class RecruiterJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecruiterJobDetailBinding
     private val viewModel: PostedJobViewModel by viewModels()
+    private val applicantViewModel: ApplicantViewModel by viewModels()
 
     @Deprecated("Deprecated in Java")
     @SuppressLint("MissingSuperCall")
@@ -47,29 +49,20 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             if(job.status.toString()== "working"){
                 binding.detailJobBtnHolder.visibility = View.GONE
             }
-            val emp = "${job.numOfRecruited}/${job.empAmount}"
-            val salaryTxt = "$${job.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
-            val shift = "${job.startHr}-${job.endHr}"
-            binding.jobDetailJobTitle.text = job.jobTitle
-            binding.jobDetailJobType.text= job.jobType
-            binding.jobDetailSalary.text= salaryTxt
-            binding.jobDetailEmpAmount.text= emp
-            binding.jobDetailStartTime.text= job.startTime
-            binding.jobDetailEndTime.text= job.endTime
-            binding.jobDetailWorkShift.text= shift
-            binding.jobDetailAddress.text= job.address
-            binding.jobDetailDes.text= job.jobDes
+
+            fetchJobData(job.jobId.toString(), job.BUserId.toString())
 
             RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
-
-            binding.detailJobScrollView.visibility = View.VISIBLE
-            binding.animationView.visibility = View.GONE
 
             binding.deleteBtn.setOnClickListener {
                 if (job.status.toString() == "recruiting") {
                     amountWorking(job)
                 }
                 viewModel.deleteJob(job.jobId.toString())
+                applicantViewModel.deleteJobApplicant(job.jobId.toString())
+
+                // vao giờ làm viewModel cho alliedJob, savedJob và ApprovedJob thì sẽ thêm hàm xóa ở đây
+
                 Toast.makeText(this@RecruiterJobDetailActivity, getString(R.string.deleted_job), Toast.LENGTH_SHORT).show()
                 setResult(RESULT_OK)
                 finish()
@@ -78,7 +71,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             binding.appliedListBtn.setOnClickListener {
                 val intent = Intent(this, ActivityApplicantsList::class.java)
                 intent.putExtra("job", job)
-                startActivity(intent)
+                startActivityForResult(intent, 1000)
             }
 
             binding.buserLogo.setOnClickListener{
@@ -137,5 +130,42 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             }
         })
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
+            // Lấy jobId và bUserId từ Intent nếu cần
+            val jobId = data?.getStringExtra("jobId")
+            val bUserId = data?.getStringExtra("bUserId")
+            jobId?.let { fetchJobData(it, bUserId ?: "") }
+        }
+    }
+
+    private fun fetchJobData(jobId: String, bUserId: String) {
+        FirebaseDatabase.getInstance().getReference("Job").child(bUserId).child(jobId).get().addOnSuccessListener { dataSnapshot ->
+            val job = dataSnapshot.getValue(JobModel::class.java)
+            job?.let {
+                val recruitedAmount = it.numOfRecruited
+                val emp = "$recruitedAmount/${it.empAmount}"
+                val salaryTxt = "$${it.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
+                val shift = "${it.startHr}-${it.endHr}"
+
+                binding.jobDetailJobTitle.text = it.jobTitle
+                binding.jobDetailJobType.text = it.jobType
+                binding.jobDetailSalary.text = salaryTxt
+                binding.jobDetailEmpAmount.text = emp
+                binding.jobDetailStartTime.text = it.startTime
+                binding.jobDetailEndTime.text = it.endTime
+                binding.jobDetailWorkShift.text = shift
+                binding.jobDetailAddress.text = it.address
+                binding.jobDetailDes.text = it.jobDes
+
+                binding.detailJobScrollView.visibility = View.VISIBLE
+                binding.animationView.visibility = View.GONE
+            }
+        }
+    }
+
 
 }

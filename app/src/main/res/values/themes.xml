@@ -17,4 +17,11 @@
     <style name="NavTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <style name="seekbar_filter" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge" >
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/primary_color2</item>
+        <item name="colorOnPrimary">@color/primary_color2</item>
+        <item name="colorOnSurface">@color/primary_color2</item>
+    </style>
 </resources>

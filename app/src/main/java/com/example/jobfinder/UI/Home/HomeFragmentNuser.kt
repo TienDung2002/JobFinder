@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.jobfinder.UI.FindNewJobs.NewJobActivity
 import com.example.jobfinder.UI.Report.SupportActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
@@ -37,6 +38,7 @@ class HomeFragmentNuser : Fragment() {
 
         binding.JobappliedBtn.setOnClickListener(){
 //            startActivity(Intent(requireContext(), AppliedJobsActivity::class.java))
+            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
         }
 
         binding.reportsBtn.setOnClickListener(){

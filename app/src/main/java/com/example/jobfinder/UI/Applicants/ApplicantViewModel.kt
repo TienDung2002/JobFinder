@@ -45,6 +45,10 @@ class ApplicantViewModel: ViewModel() {
             }
     }
 
+    fun deleteJobApplicant(jobId :String){
+        database.child(jobId).removeValue()
+    }
+
     private fun updateApplicantListAfterDeletion(userId: String) {
         val currentList = _applicantList.value
         currentList?.let { list ->

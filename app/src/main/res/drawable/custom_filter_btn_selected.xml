@@ -2,7 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/filter_border_btn_selected" /> <!-- Màu nền trắng -->
     <corners android:radius="4dp" /> <!-- Độ cong của góc -->
-    <size android:height="42dp" /> <!-- Kích thước của Button -->
     <stroke
         android:width="2dp"
         android:color="@color/primary_color2" />

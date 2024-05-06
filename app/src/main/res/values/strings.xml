@@ -260,9 +260,18 @@
     <string name="sort_PT_Newest">Newest</string>
     <string name="sort_PT_thisMonth">This month</string>
     <string name="sort_workShift">Work shift</string>
-    <string name="sort_salary">Salary</string>
+    <string name="sort_wShiftAM">Morning</string>
+    <string name="sort_wShiftPM">Afternoon</string>
+    <string name="sort_salary">Salary range(/hour)</string>
     <string name="send">Send</string>
     <string name="applied_success">Apply success</string>
+    <string-array name="initial_slider_values">
+        <item>10000.0</item>
+        <item>50000.0</item>
+    </string-array>
+    <string name="sort_resetCond">Reset</string>
+    <string name="sort_applyCond">Apply</string>
+
 
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
@@ -389,4 +398,6 @@
         <item>Report a user</item>
         <item>Report a recruiter</item>
     </string-array>
+
+
 </resources>
