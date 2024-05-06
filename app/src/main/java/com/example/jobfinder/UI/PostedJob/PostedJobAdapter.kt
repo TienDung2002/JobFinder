@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
+import java.text.NumberFormat
+import java.util.Currency
 
 class PostedJobAdapter(private val context: Context, private var jobList: List<JobModel>) :
     RecyclerView.Adapter<PostedJobAdapter.PostedJobViewHolder>() {
@@ -36,12 +38,14 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
 
     override fun onBindViewHolder(holder: PostedJobViewHolder, position: Int) {
         val job = jobList[position]
+        val format = NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("VND")
 
         // Bind data to views
         holder.jobTitleTextView.text = job.jobTitle
         holder.numOfRecruitsTextView.text = job.empAmount
         holder.numOfRecruitedTxtView.text= job.numOfRecruited
-        holder.salaryTextView.text = job.salaryPerEmp
+        holder.salaryTextView.setText(format.format(job.salaryPerEmp?.toDouble()))
         holder.postTimeTextView.text = GetData.getDateFromString(job.postDate.toString())
         holder.status.setText(getStatus(job.status.toString()))
 

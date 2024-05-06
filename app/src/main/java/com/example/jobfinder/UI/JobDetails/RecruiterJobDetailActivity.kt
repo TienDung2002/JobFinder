@@ -19,6 +19,8 @@ import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivityRecruiterJobDetailBinding
 import com.google.firebase.database.*
+import java.text.NumberFormat
+import java.util.Currency
 
 class RecruiterJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecruiterJobDetailBinding
@@ -107,12 +109,17 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
                     val notiId = FirebaseDatabase.getInstance()
                         .getReference("Notifications")
                         .child(job.BUserId.toString()).push().key.toString()
+
+                    // format tiền
+                    val format = NumberFormat.getCurrencyInstance()
+                    format.currency = Currency.getInstance("VND")
+
                     val notificationsRowModel = NotificationsRowModel(
                         notiId,
                         "Admin",
                         "${getString(R.string.refund)}.\n" +
                                 "${getString(R.string.from_job)} ${job.jobTitle}.\n" +
-                                "+$${job.totalSalary} ${getString(R.string.to_wallet)}",
+                                "+${format.format(job.totalSalary?.toDouble())} ${getString(R.string.to_wallet)}",
                         date
                     )
                     FirebaseDatabase.getInstance()
