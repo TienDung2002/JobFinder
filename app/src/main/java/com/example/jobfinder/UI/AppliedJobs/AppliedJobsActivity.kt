@@ -54,16 +54,16 @@ class AppliedJobsActivity : AppCompatActivity() {
 
         binding.animationView.visibility = View.GONE
 //      click vào item applied job
-//        adapter.setOnItemClickListener(object : AppliedJobsAdapter.onItemClickListener {
-//            override fun onItemClicked(AppliedJob: AppliedJobModel) {
+        adapter.setOnItemClickListener(object : AppliedJobsAdapter.onItemClickListener {
+            override fun onItemClicked(AppliedJob: AppliedJobModel) {
 //                val intent = Intent(this@AppliedJobsActivity, SeekerJobDetailActivity::class.java)
 //                startActivity(intent)
-//                // Ẩn hoặc xóa bottom navigation SeekerJobDetailActivity
-//
-//
-//
-//            }
-//        })
+                // Ẩn hoặc xóa bottom navigation SeekerJobDetailActivity
+
+
+
+            }
+        })
 
     }
 
