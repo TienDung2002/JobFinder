@@ -267,8 +267,8 @@
     <string name="send">Send</string>
     <string name="applied_success">Apply success</string>
     <string-array name="initial_slider_values">
-        <item>20000.0</item>
-        <item>70000.0</item>
+        <item>10000.0</item>
+        <item>50000.0</item>
     </string-array>
     <string name="sort_resetCond">Reset</string>
     <string name="sort_applyCond">Apply</string>

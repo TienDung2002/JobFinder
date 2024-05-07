@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,30 +17,40 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.R
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 import com.example.jobfinder.databinding.CustomFilterLayoutBinding
+import com.google.android.material.slider.RangeSlider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.NumberFormat
+import java.util.Currency
+
+
 
 class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
-    lateinit var binding2: CustomFilterLayoutBinding
+    lateinit var cusBindingFilter: CustomFilterLayoutBinding
     private val viewModel: FindNewJobViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
     private var isJobDetailActivityOpen = false
-    private val REQUEST_CODE_APPLY_JOB = 1003
-    private lateinit var drawerLayout: DrawerLayout
+    private var isFirstApplyFilter = true
+
+    // Biến cho filter
+    private lateinit var jtButtons: List<Button>
+    private lateinit var recNameButtons: List<Button>
+    private lateinit var postedTimeButtons: List<Button>
+    private lateinit var workShiftButtons: List<Button>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewJobBinding.inflate(layoutInflater)
-        binding2 = CustomFilterLayoutBinding.bind(binding.slideMenu.root)
-
+        cusBindingFilter = CustomFilterLayoutBinding.bind(binding.slideMenu.root)
         setContentView(binding.root)
 
         // nút back về home trên màn hình
@@ -52,16 +63,15 @@ class NewJobActivity : AppCompatActivity() {
         // chạy hàm lấy data các công việc
         if (viewModel.getJobsList().isEmpty()) { fetchJobs() }
 
-
         // gán data vào adapter sau khi fetch
         adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
-
+        // Cập nhật adapter khi có dữ liệu mới từ ViewModel
         viewModel.jobsListLiveData.observe(this) { newItem ->
             newItem?.let {
-                adapter.updateData(newItem) // Cập nhật adapter khi có dữ liệu mới từ ViewModel
+                adapter.updateData(newItem)
             }
         }
 
@@ -69,7 +79,6 @@ class NewJobActivity : AppCompatActivity() {
         viewModel._isLoading.observe(this) { isLoading ->
             binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
-
 
         // lắng nghe event được gửi về từ activity đích (activity jobDetail của nhà tuyển dụng (làm sau))
         val startJobDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -79,7 +88,6 @@ class NewJobActivity : AppCompatActivity() {
             isJobDetailActivityOpen = false
         }
 
-
         // Click vào từng item trong recycler
         adapter.setOnItemClickListener(object : NewJobsAdapter.onItemClickListener {
             override fun onItemClicked(Job: JobModel) {
@@ -87,11 +95,10 @@ class NewJobActivity : AppCompatActivity() {
                     isJobDetailActivityOpen = true
                     val intent = Intent(this@NewJobActivity, SeekerJobDetailActivity::class.java)
                     intent.putExtra("job", Job)
-                    startActivityForResult(intent, REQUEST_CODE_APPLY_JOB)
+                    startActivityForResult(intent, 1003)
                 }
             }
         })
-
 
         // mục search
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -105,7 +112,6 @@ class NewJobActivity : AppCompatActivity() {
                 adapter.filter.filter(submitInput)
                 return true
             }
-
             override fun onQueryTextChange(dataInput: String): Boolean {
                 // Nếu không nhập text vào
                 return if (dataInput.isEmpty()) {
@@ -118,7 +124,6 @@ class NewJobActivity : AppCompatActivity() {
             }
         })
 
-
         // nút close của searchView
         binding.searchView.setOnCloseListener {
             adapter.resetOriginalList()
@@ -130,24 +135,110 @@ class NewJobActivity : AppCompatActivity() {
         }
 
 
-        // nút filter
+
+
+
+
+
+        // PHẦN CUSTOM FILTER--------------------------------------------------------------------
+        jtButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.JTAtoZ)
+        recNameButtons = listOf(cusBindingFilter.recAll, cusBindingFilter.recAtoZ)
+        postedTimeButtons = listOf(cusBindingFilter.PTAnytime, cusBindingFilter.PTNewest, cusBindingFilter.PTThisMonth)
+        workShiftButtons = listOf(cusBindingFilter.WSAll, cusBindingFilter.WSMorning, cusBindingFilter.WSAfternoon)
+
+        // nút mở filter drawer
         binding.filterIcon.setOnClickListener {
             binding.rootNewJob.openDrawer(GravityCompat.END)
+            defaultSelectionFilterUI()
+        }
+        binding.rootNewJob.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerOpened(drawerView: View) {
+                // Nếu đã nhấn apply ít nhất một lần, khôi phục trạng thái từ SharedPreferences
+                if (!isFirstApplyFilter) {
+                    restoreButtonState()
+                } else {
+                    // Nếu chưa nhấn apply lần đầu tiên, sử dụng UI mặc định
+                    defaultSelectionFilterUI()
+                }
+            }
+            // Các hàm khác khi ngăn kéo được đóng hoặc mở, dùng nếu cần thiết
+            override fun onDrawerClosed(drawerView: View) {}
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+            override fun onDrawerStateChanged(newState: Int) {}
+        })
 
+
+        // Jobtitle btn list
+        jtButtons.forEach { button ->
+            button.setOnClickListener {
+                handleButtonSelection(jtButtons, button)
+                // Nếu đang chọn JTAtoZ không cho chọn recNameAtoZ
+                adjustButtonStateUI(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ)
+            }
         }
 
-        // nút của drawer
-
-        binding2.JTAll.setOnClickListener {
-            Toast.makeText(this, "Button clickedddddd", Toast.LENGTH_SHORT).show()
+        // Recruiter btn list
+        recNameButtons.forEach { button ->
+            button.setOnClickListener {
+                handleButtonSelection(recNameButtons, button)
+                // Nếu đang chọn recNameAtoZ không cho chọn JTAtoZ
+                adjustButtonStateUI(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ)
+            }
         }
 
-        binding2.recAll.setOnClickListener {
-            Toast.makeText(this@NewJobActivity, "Button clickedddddd2222", Toast.LENGTH_SHORT).show()
+        // Posttime btn list
+        postedTimeButtons.forEach { button ->
+            button.setOnClickListener {
+                handleButtonSelection(postedTimeButtons, button)
+            }
+        }
+
+        // Workshift btn list
+        workShiftButtons.forEach { button ->
+            button.setOnClickListener {
+                handleButtonSelection(workShiftButtons, button)
+            }
+        }
+
+        // Seekbar slider
+        cusBindingFilter.rangeslider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+            // Responds to when slider's touch event is being started
+            override fun onStartTrackingTouch(slider: RangeSlider) {
+            }
+            // Responds to when slider's touch event is being stopped
+            override fun onStopTrackingTouch(slider: RangeSlider) {
+            }
+        })
+        // Responds to when slider's value is changed
+        cusBindingFilter.rangeslider.addOnChangeListener { rangeSlider, value, fromUser ->
+        }
+        // Format định dạng hiển thị của tiền việt trên label
+        cusBindingFilter.rangeslider.setLabelFormatter { value: Float ->
+            val format = NumberFormat.getCurrencyInstance()
+            format.maximumFractionDigits = 0
+            format.currency = Currency.getInstance("VND")
+            format.format(value.toDouble())
         }
 
 
-    }
+        // reset filter btn
+        cusBindingFilter.resetBtn.setOnClickListener {
+            defaultSelectionFilterUI()
+            saveButtonState()
+        }
+
+        // apply filter btn
+        cusBindingFilter.applyBtn.setOnClickListener {
+            Toast.makeText(this, "Áp dụng bộ lọc!", Toast.LENGTH_SHORT).show()
+            isFirstApplyFilter = false
+            saveButtonState()
+            binding.rootNewJob.closeDrawer(GravityCompat.END)
+        }
+
+
+
+    } // end of onCreate()
+
 
     private fun fetchJobs() {
         viewModel._isLoading.value = true
@@ -184,12 +275,136 @@ class NewJobActivity : AppCompatActivity() {
             })
     }
 
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_APPLY_JOB && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1003 && resultCode == Activity.RESULT_OK) {
             isJobDetailActivityOpen = false
         }
+    }
+
+
+    private fun handleButtonSelection(buttonList: List<Button>, selectedButton: Button) {
+        // Cập nhật background của Button được chọn
+        selectedButton.setBackgroundResource(R.drawable.custom_filter_btn_selected)
+        for (btn in buttonList) {
+            if (btn != selectedButton) {
+                btn.setBackgroundResource(R.drawable.custom_filter_btn_default)
+            }
+        }
+    }
+
+    private fun defaultSelectionFilterUI() {
+        // Các btn muốn đặt lại UI về default
+        val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest, cusBindingFilter.WSAll)
+        // Giá trị mặc định của RangeSlider
+        val defaultValues = resources.getStringArray(R.array.initial_slider_values).map { it.toFloat() }
+
+        val allButtons = listOf(
+            // Job title buttons
+            cusBindingFilter.JTAll, cusBindingFilter.JTAtoZ,
+            // Recruiter name buttons
+            cusBindingFilter.recAll, cusBindingFilter.recAtoZ,
+            // Posted time buttons
+            cusBindingFilter.PTAnytime, cusBindingFilter.PTNewest, cusBindingFilter.PTThisMonth,
+            // Work shift buttons
+            cusBindingFilter.WSAll, cusBindingFilter.WSMorning, cusBindingFilter.WSAfternoon
+        )
+
+        for (btn in allButtons) {
+            btn.setBackgroundResource(  // Nếu ngoài ccacsbtn mặc định thì đổi tất cả về background default
+                if (btn in selectedButtons) R.drawable.custom_filter_btn_selected
+                else R.drawable.custom_filter_btn_default
+            )
+            // Đặt alpha và isEnabled về mặc định
+            btn.alpha = 1.0F
+            btn.isEnabled = true
+        }
+
+        // Đặt lại giá trị của RangeSlider về mặc định
+        cusBindingFilter.rangeslider.setValues(defaultValues)
+    }
+
+    // Hàm để điều chỉnh trạng thái của targetButton dựa trên trạng thái của selectedButton
+    private fun adjustButtonStateUI(curSelectedButton: Button, buttonToCheck: Button, targetButton: Button) {
+        val isButtonToCheckSelected = (curSelectedButton == buttonToCheck)
+        targetButton.apply {
+            alpha = if (isButtonToCheckSelected) 0.4F else 1.0F
+            isEnabled = !isButtonToCheckSelected
+        }
+    }
+
+    // Lưu trạng thái các nút đã dc chọn trong drawerable vào sharedPreferences
+    private fun saveButtonState() {
+        val sharedPreferences = getSharedPreferences("filter_preferences", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        // Lưu trạng thái của các nút
+        for (button in jtButtons + recNameButtons + postedTimeButtons + workShiftButtons) {
+            val isSelected = button.background.constantState == resources.getDrawable(R.drawable.custom_filter_btn_selected, null).constantState
+            editor.putBoolean(button.id.toString(), isSelected)
+        }
+        // Lưu giá trị của slider
+        val sliderValues = cusBindingFilter.rangeslider.values
+        editor.putFloat("slider_start_value", sliderValues[0])
+        editor.putFloat("slider_end_value", sliderValues[1])
+
+        editor.apply()
+    }
+
+    // Khôi phục trạng thái btn từ sharedPreferences
+    private fun restoreButtonState() {
+        val sharedPreferences = getSharedPreferences("filter_preferences", MODE_PRIVATE)
+
+        // Khôi phục trạng thái của các nút
+        for (button in jtButtons + recNameButtons + postedTimeButtons + workShiftButtons) {
+            val isSelected = sharedPreferences.getBoolean(button.id.toString(), false)
+            button.apply {
+                setBackgroundResource(if (isSelected) R.drawable.custom_filter_btn_selected else R.drawable.custom_filter_btn_default)
+                if (isSelected) {
+                    alpha = 1.0F
+                    isEnabled = true
+                }
+            }
+        }
+        // Điều chỉnh trạng thái nếu một trong hai AtoZ của list jtButton và recNameButton
+        val isJTAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.JTAtoZ.id.toString(), false)
+        val isRecAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.recAtoZ.id.toString(), false)
+
+        if (isJTAtoZSelected && !isRecAtoZSelected) {
+            cusBindingFilter.recAtoZ.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_default)
+                alpha = 0.4F
+                isEnabled = false
+            }
+            cusBindingFilter.recAll.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_selected)
+                alpha = 1.0F
+                isEnabled = true
+            }
+        } else if (!isJTAtoZSelected && isRecAtoZSelected) {
+            cusBindingFilter.JTAtoZ.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_default)
+                alpha = 0.4F
+                isEnabled = false
+            }
+            cusBindingFilter.JTAll.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_selected)
+                alpha = 1.0F
+                isEnabled = true
+            }
+        }
+
+        // Khôi phục giá trị của slider
+        val startValue = sharedPreferences.getFloat("slider_start_value", cusBindingFilter.rangeslider.values[0])
+        val endValue = sharedPreferences.getFloat("slider_end_value", cusBindingFilter.rangeslider.values[1])
+        cusBindingFilter.rangeslider.values = listOf(startValue, endValue)
+    }
+
+    // Khi activity ở trạng thái dừng cũng lưu trạng thái filter lại
+    override fun onPause() {
+        super.onPause()
+        saveButtonState()
     }
 
 }
