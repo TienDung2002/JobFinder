@@ -38,7 +38,6 @@ class HomeFragmentNuser : Fragment() {
         }
 
         binding.JobappliedBtn.setOnClickListener(){
-            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
             startActivity(Intent(requireContext(), AppliedJobsActivity::class.java))
         }
 
