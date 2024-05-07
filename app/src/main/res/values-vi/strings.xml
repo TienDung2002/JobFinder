@@ -121,6 +121,7 @@
     <string name="approve_from">Bạn đã được thông qua bởi việc</string>
     <string name="reject_success">Đã từ chối</string>
     <string name="approve_success">Đã thông qua</string>
+    <string name="delete_all">Xóa tất cả</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Ví</string>
