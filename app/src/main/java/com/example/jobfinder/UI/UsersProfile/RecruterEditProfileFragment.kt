@@ -270,21 +270,38 @@ class RecruterEditProfileFragment : Fragment() {
 
         //button back
         binding.editProfileBackbtn.setOnClickListener {
-            if( checkIfEdited() == true) {
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle(R.string.profile_cancle_edit_confirm)
-                builder.setMessage(R.string.profile_cancle_edit_confirm_noti)
-                builder.setPositiveButton(R.string.profile_image_delete_confim_yes) { dialog, which ->
-                    val resultIntent = Intent()
-                    requireActivity().setResult(Activity.RESULT_OK, resultIntent)
-                    requireActivity().finish()
-                }
-                builder.setNegativeButton(R.string.profile_image_delete_confim_no) { dialog, which ->
-                    dialog.dismiss()
+            if( checkIfEdited() == true && isEdited == true) {
+                val newDes = description.text.toString()
+                val newTax = tax.text.toString()
+                val newBusType = busType.text.toString()
+                val newBusSec = busSec.text.toString()
+                val isValidDes = newDes.isNotEmpty()
+                val isValidTax = VerifyField.isValidTaxCode(newTax)
+                val isValidBusType = newBusType.isNotEmpty()
+                val isValidBusSec = newBusSec.isNotEmpty()
+                description.error = if (isValidDes) null else getString(R.string.error_invalid_des)
+                busType.error = if (isValidBusType) null else getString(R.string.error_invalid_BusType)
+                busSec.error = if (isValidBusSec) null else getString(R.string.error_invalid_BusSec)
+                tax.error = if (isValidTax) null else getString(R.string.error_invalid_Tax)
+                if(isValidDes && isValidBusType && isValidBusSec && isValidTax){
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle(R.string.profile_cancle_edit_confirm)
+                    builder.setMessage(R.string.profile_cancle_edit_confirm_noti)
+                    builder.setPositiveButton(R.string.profile_image_delete_confim_yes) { dialog, which ->
+                        val resultIntent = Intent()
+                        requireActivity().setResult(Activity.RESULT_OK, resultIntent)
+                        requireActivity().finish()
+                    }
+                    builder.setNegativeButton(R.string.profile_image_delete_confim_no) { dialog, which ->
+                        dialog.dismiss()
 
+                    }
+                    val dialog = builder.create()
+                    dialog.show()
+                }else {
+                    println("error")
                 }
-                val dialog = builder.create()
-                dialog.show()
+
             }
             else{
                 val resultIntent = Intent()
@@ -349,7 +366,9 @@ class RecruterEditProfileFragment : Fragment() {
         if( (binding.editProfileName.text.toString() != viewModel.name) || (binding.editProfileEmail.text.toString() != viewModel.email)
             || (binding.editProfilePhonenum.text.toString() != viewModel.phone) || (binding.editProfileAddress.text.toString() != viewModel.address)
             || (binding.editProfileTaxnum.text.toString() != viewModel.tax) || (binding.editProfileDescription.text.toString() != viewModel.des)
-            || (binding.editProfileBusSec.text.toString() != viewModel.busSec) || (binding.editProfileBustype.text.toString() != viewModel.busType)){
+            || (binding.editProfileBusSec.text.toString() != viewModel.busSec) || (binding.editProfileBustype.text.toString() != viewModel.busType)
+            || (binding.editProfileTaxnum.text.toString() == "") || (binding.editProfileDescription.text.toString() == "")
+            || (binding.editProfileBusSec.text.toString() == "") || (binding.editProfileBustype.text.toString() == "")){
                 return true
         } else {
             return false

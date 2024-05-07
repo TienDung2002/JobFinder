@@ -364,40 +364,42 @@
     <!--    applied job-->
     <string name="approved">Approved</string>
     <string name="rejected">Rejected</string>
+    <string name="Job_title">Job title:</string>
+    <string name="Applied_date">Applied time:</string>
 
     <!--    Report-->
     <string name="create_request">Create request</string>
     <string name="technical_report">Technical</string>
     <string name="feedback_report">Feedback</string>
     <string name="user_report">Report</string>
-    <string name="create_technical_report">Create technical report</string>
+    <string name="create_technical_report">Create technical support</string>
     <string name="create_feedback">Create Feedback</string>
     <string name="create_user_report">Create user report</string>
     <string name="send_request">send request</string>
     <string name="note">Note</string>
     <string name="enter_note">Enter description</string>
     <string name="report_status">Status</string>
+    <string name="your_status">Your status</string>
     <string name="your_condition">Your status</string>
     <string name="request_sent">Request sent</string>
     <string name="request_sent_error">No requests have been submitted</string>
 
 
     <string-array name="technical_array">
-        <item>technical1</item>
-        <item>technical2</item>
-        <item>technical3</item>
+        <item>Bank card connection error</item>
+        <item>Cannot save profile changes</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="feedback_array">
-        <item>feedback1</item>
-        <item>feedback2</item>
-        <item>feedback3</item>
+        <item>App feedback</item>
+        <item>Service feedback</item>
+        <item>Other</item>
     </string-array>
 
     <string-array name="report_array">
-        <item>report1</item>
-        <item>report2</item>
-        <item>report3</item>
+        <item>Report a user</item>
+        <item>Report a recruiter</item>
     </string-array>
 
 
