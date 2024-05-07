@@ -104,7 +104,7 @@ class NewJobsAdapter(
         // nút bookmark
         holder.bookmarkButton.setOnClickListener {
             holder.bookmarkButton.setImageResource(
-                if (holder.isBookmarked) R.drawable.ic_bookmark_orange30px else R.drawable.ic_bookmark_grey30px
+                if (!holder.isBookmarked) R.drawable.ic_bookmark_orange30px else R.drawable.ic_bookmark_grey30px
             )
             holder.isBookmarked = !holder.isBookmarked
         }
