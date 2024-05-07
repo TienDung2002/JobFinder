@@ -26,6 +26,7 @@ class NotificationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -35,6 +36,15 @@ class NotificationsFragment : Fragment() {
         // Khởi tạo viewmodel nếu fragment đã dc add vào activity
         if (isAdded) {
             viewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
+        }
+
+        binding.deleteAll.setOnClickListener{
+            val uid = auth.currentUser?.uid
+
+            FirebaseDatabase.getInstance()
+                .getReference("Notifications")
+                .child(uid.toString()).removeValue()
+            fetchNotificationsFromFirebase()
         }
 
         // Quan sát dữ liệu trong ViewModel và cập nhật giao diện khi có thay đổi
