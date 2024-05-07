@@ -24,6 +24,7 @@ import com.example.jobfinder.databinding.ActivitySeekerJobDetailBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
+import java.text.NumberFormat
 import java.util.Currency
 import java.util.Locale
 
@@ -157,7 +158,7 @@ class SeekerJobDetailActivity : AppCompatActivity() {
     }
 
     private fun assignData(job: JobModel){
-        val format = java.text.NumberFormat.getCurrencyInstance()
+        val format = NumberFormat.getCurrencyInstance()
         format.currency = Currency.getInstance("VND")
         val salaryTxt = format.format(job.salaryPerEmp?.toDouble()) + resources.getString(R.string.Ji_unit3)
 
