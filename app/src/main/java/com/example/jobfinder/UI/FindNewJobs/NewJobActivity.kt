@@ -45,6 +45,10 @@ class NewJobActivity : AppCompatActivity() {
     private lateinit var recNameButtons: List<Button>
     private lateinit var postedTimeButtons: List<Button>
     private lateinit var workShiftButtons: List<Button>
+    private var ftJobTitle =0
+    private var ftRecTitle =0
+    private var ftPostTime =1
+    private var ftShift =0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -176,7 +180,7 @@ class NewJobActivity : AppCompatActivity() {
         // Jobtitle btn list
         jtButtons.forEach { button ->
             button.setOnClickListener {
-                handleButtonSelection(jtButtons, button)
+                handleButtonSelection(jtButtons, button, "job")
                 // Nếu đang chọn JTAtoZ không cho chọn recNameAtoZ
                 adjustButtonUIState(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ)
             }
@@ -185,7 +189,7 @@ class NewJobActivity : AppCompatActivity() {
         // Recruiter btn list
         recNameButtons.forEach { button ->
             button.setOnClickListener {
-                handleButtonSelection(recNameButtons, button)
+                handleButtonSelection(recNameButtons, button,"rec")
                 // Nếu đang chọn recNameAtoZ không cho chọn JTAtoZ
                 adjustButtonUIState(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ)
             }
@@ -194,14 +198,14 @@ class NewJobActivity : AppCompatActivity() {
         // Posttime btn list
         postedTimeButtons.forEach { button ->
             button.setOnClickListener {
-                handleButtonSelection(postedTimeButtons, button)
+                handleButtonSelection(postedTimeButtons, button,"time")
             }
         }
 
         // Workshift btn list
         workShiftButtons.forEach { button ->
             button.setOnClickListener {
-                handleButtonSelection(workShiftButtons, button)
+                handleButtonSelection(workShiftButtons, button,"shift")
             }
         }
 
@@ -225,7 +229,6 @@ class NewJobActivity : AppCompatActivity() {
             format.format(value.toDouble())
         }
 
-
         // reset filter btn
         cusBindingFilter.resetBtn.setOnClickListener {
             defaultSelectionUIFilter()
@@ -238,7 +241,7 @@ class NewJobActivity : AppCompatActivity() {
             isFirstApplyFilter = false
             saveButtonUIState()
 
-            viewModel.sortByJobTitle()
+            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime)
 
             binding.rootNewJob.closeDrawer(GravityCompat.END)
         }
@@ -272,6 +275,7 @@ class NewJobActivity : AppCompatActivity() {
                                 }
                             }
                             viewModel.updateStatusToFirebase(buserId,tempList)
+                            viewModel.sortByPostDate()
                         }
                     }
                     viewModel._isLoading.value = false
@@ -292,13 +296,31 @@ class NewJobActivity : AppCompatActivity() {
     }
 
 
-    private fun handleButtonSelection(buttonList: List<Button>, selectedButton: Button) {
+    private fun handleButtonSelection(buttonList: List<Button>, selectedButton: Button, Type:String) {
         // Cập nhật background của Button được chọn
         selectedButton.setBackgroundResource(R.drawable.custom_filter_btn_selected)
         for (btn in buttonList) {
             if (btn != selectedButton) {
                 btn.setBackgroundResource(R.drawable.custom_filter_btn_default)
             }
+        }
+
+        val selectedIndex = buttonList.indexOf(selectedButton)
+
+        if(Type == "job"){
+            ftJobTitle = selectedIndex
+        }
+
+        if(Type == "rec"){
+            ftRecTitle = selectedIndex
+        }
+
+        if(Type == "time"){
+            ftPostTime = selectedIndex
+        }
+
+        if(Type == "shift"){
+            ftShift = selectedIndex
         }
     }
 

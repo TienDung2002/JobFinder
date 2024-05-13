@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.*
+import java.text.Collator
+import java.util.Locale
 
 class FindNewJobViewModel : ViewModel() {
     private val OriginJobsList: MutableList<JobModel> = mutableListOf()
@@ -35,7 +38,27 @@ class FindNewJobViewModel : ViewModel() {
         _jobsListLiveData.value = OriginJobsList
     }
 
+    fun sortFilter(ftJobTitle: Int, ftRecTitle: Int, ftPostTime: Int) {
+        val copyList = OriginJobsList.toMutableList()
 
+        val collator = Collator.getInstance(Locale("vi", "VN"))
+
+        val sortedList = if (ftJobTitle == 1 && ftPostTime == 1) {
+            copyList.sortedWith(compareBy({ collator.compare(it.jobTitle, it.jobTitle) }, { GetData.getDateFromString(it.postDate.toString()) }))
+        } else if (ftRecTitle == 1 && ftPostTime == 1) {
+            copyList.sortedWith(compareBy({ collator.compare(it.BUserName, it.BUserName) }, { GetData.getDateFromString(it.postDate.toString()) }))
+        } else if (ftJobTitle == 1 && ftPostTime == 0) {
+            copyList.sortedWith(compareBy(collator) { it.jobTitle ?: "default jobTitle" })
+        } else if (ftRecTitle == 1 && ftPostTime == 0) {
+            copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.BUserName ?: "default BUserName" })
+        } else if ( ftJobTitle == 0 && ftRecTitle == 0 && ftPostTime == 1) {
+            copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
+        }else {
+            copyList
+        }
+
+        _sortedJobsLiveData.value = sortedList
+    }
 
     // Các hàm Sort
     fun resetOriginAdapData(){
@@ -43,13 +66,21 @@ class FindNewJobViewModel : ViewModel() {
     }
     fun sortByJobTitle() {
         val copyList = OriginJobsList.toMutableList()
-        val sortedList = copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.jobTitle ?: "default jobTitle" })
+        val collator = Collator.getInstance(Locale("vi", "VN"))
+        val sortedList = copyList.sortedWith(compareBy(collator) { it.jobTitle ?: "default jobTitle" })
         _sortedJobsLiveData.value = sortedList
     }
+
     fun sortByBuserName() {
         val copyList = OriginJobsList.toMutableList()
         val sortedList = copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.BUserName ?: "default BUserName" })
         _jobsListLiveData.value = sortedList
+    }
+
+    fun sortByPostDate(){
+        var copyList = OriginJobsList.toMutableList().toList()
+        copyList = copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
+        _sortedJobsLiveData.value = copyList
     }
     fun sortByPTMonth(){}
     fun sortByWorkShift(){}
