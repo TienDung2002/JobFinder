@@ -15,6 +15,8 @@ import com.example.jobfinder.Datas.Model.walletAmountModel
 import com.example.jobfinder.databinding.FragmentWalletBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.text.NumberFormat
+import java.util.Currency
 
 class WalletFragment : Fragment() {
     private lateinit var binding: FragmentWalletBinding
@@ -59,16 +61,20 @@ class WalletFragment : Fragment() {
             .addOnSuccessListener { data ->
                 if (data.exists()) {
                     val amount = data.child("amount").getValue(String::class.java)
-                        binding.amountInWalletAmount.text = "$"+ amount.toString()
+                        // Chuyển sang vnd (chỉ hiển thị còn tính toán như bth)
+                        val format = NumberFormat.getCurrencyInstance()
+                        format.maximumFractionDigits = 0
+                        format.currency = Currency.getInstance("VND")
+                        binding.amountInWalletAmount.setText(format.format(amount?.toDouble()))
                 } else {
-                    val walletAmount = walletAmountModel("0.0")
+                    val walletAmount = walletAmountModel("0.0đ")
                     FirebaseDatabase.getInstance()
                         .getReference("WalletAmount")
                         .child(uid.toString())
                         .setValue(walletAmount)
                         .addOnSuccessListener {
                             // Xử lý khi tạo giá trị mới thành công
-                            binding.amountInWalletAmount.text= "$0.0"
+                            binding.amountInWalletAmount.text= "0.0đ"
                         }
                         .addOnFailureListener {
                             // Xử lý khi tạo giá trị mới không thành công
@@ -128,7 +134,10 @@ class WalletFragment : Fragment() {
             binding.noWalletCard,
             viewModel
         ) { newAmount ->
-            binding.amountInWalletAmount.text = "$$newAmount"
+            val format = NumberFormat.getCurrencyInstance()
+            format.maximumFractionDigits = 0
+            format.currency = Currency.getInstance("VND")
+            binding.amountInWalletAmount.setText(format.format(newAmount.toDouble()))
         }
 
         binding.recyclerWalletList.layoutManager = LinearLayoutManager(requireContext())

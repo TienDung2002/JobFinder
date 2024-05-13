@@ -4,34 +4,61 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.Utils.GetData
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class FindNewJobViewModel : ViewModel() {
-    private val JobsList: MutableList<JobModel> = mutableListOf()
+    private val OriginJobsList: MutableList<JobModel> = mutableListOf()
     private val _jobsListLiveData = MutableLiveData<List<JobModel>>()
+    private val _sortedJobsLiveData = MutableLiveData<List<JobModel>>()
     private val _bookmarkStatus = MutableLiveData<Map<String, Boolean>>()
     private val database = FirebaseDatabase.getInstance().getReference("Job")
     var _isLoading = MutableLiveData<Boolean>()
 
 
     val jobsListLiveData: LiveData<List<JobModel>> get() = _jobsListLiveData
+    val sortedJobsLiveData: LiveData<List<JobModel>> get() = _sortedJobsLiveData
     val bookmarkStatus: LiveData<Map<String, Boolean>> get() = _bookmarkStatus
 
 
+    // Coppy list origin sang list khác và sắp xếp để tạo list có các việc theo ngày đăng mới nhất
+//    val sortedOriJobsListByPostDate = OriginJobsList.toMutableList().sortedByDescending { it.postDate }
     fun getJobsList(): List<JobModel> {
-        return JobsList
+        return OriginJobsList
     }
     fun addJobsToJobsList(JobsData: JobModel) {
-        JobsList.add(JobsData)
-        _jobsListLiveData.value = JobsList
+        OriginJobsList.add(JobsData)
+        _jobsListLiveData.value = OriginJobsList
     }
 
     fun clearJobsList() {
-        JobsList.clear()
-        _jobsListLiveData.value = JobsList
+        OriginJobsList.clear()
+        _jobsListLiveData.value = OriginJobsList
     }
+
+
+
+    // Các hàm Sort
+    fun resetOriginAdapData(){
+        _sortedJobsLiveData.value = OriginJobsList
+    }
+    fun sortByJobTitle() {
+        val copyList = OriginJobsList.toMutableList()
+        val sortedList = copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.jobTitle ?: "default jobTitle" })
+        _sortedJobsLiveData.value = sortedList
+    }
+    fun sortByBuserName() {
+        val copyList = OriginJobsList.toMutableList()
+        val sortedList = copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.BUserName ?: "default BUserName" })
+        _jobsListLiveData.value = sortedList
+    }
+    fun sortByPTMonth(){}
+    fun sortByWorkShift(){}
+    fun sortBySalaryRange(){}
+
+
+
+
+
 
     fun updateStatusToFirebase(userId :String,jobList: List<JobModel>) {
         val updatesMap = mutableMapOf<String, Any?>()
@@ -48,6 +75,9 @@ class FindNewJobViewModel : ViewModel() {
             }
     }
 
+
+
+
     // Cập nhật trạng thái bookmark
     fun updateBookmarkStatus(jobId: String, isBookmarked: Boolean) {
         val newStatus = _bookmarkStatus.value?.toMutableMap() ?: mutableMapOf()
@@ -57,4 +87,6 @@ class FindNewJobViewModel : ViewModel() {
     fun getBookmarkStatus(jobId: String): Boolean {
         return _bookmarkStatus.value?.get(jobId) ?: false
     }
+
 }
+

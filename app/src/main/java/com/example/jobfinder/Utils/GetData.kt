@@ -101,6 +101,16 @@ object GetData {
         }
         return null
     }
+    // Chuyển chuỗi ngày tháng từ String thành kiểu Date
+    fun convertStringToDATE(dateTimeString: String): Date? {
+        val parts = dateTimeString.split(" ")
+        if (parts.isNotEmpty()) {
+            val dateString = parts[0]
+            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return format.parse(dateString)
+        }
+        return null
+    }
 
     fun multiplyStrings(string1: String, string2: String): String {
         // Chuyển đổi chuỗi thành số float

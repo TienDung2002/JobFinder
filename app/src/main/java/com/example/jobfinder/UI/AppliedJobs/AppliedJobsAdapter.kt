@@ -11,6 +11,7 @@ import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData.getDateFromString
 import com.example.jobfinder.Utils.RetriveImg
+import java.util.Currency
 import java.util.Locale
 
 class AppliedJobsAdapter(
@@ -37,15 +38,17 @@ class AppliedJobsAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val salaryValue = appliedList[position].salary?.toDouble() ?: 0.0
-        val formattedSalary = NumberFormat.getNumberInstance(Locale("vi", "VN")).format(salaryValue)
+        // Định dạng giá trị salary với dấu phẩy VNĐ
+        val format = java.text.NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("VND")
+
         println("${appliedList[position].buserId}")
         RetriveImg.retrieveImage(appliedList[position].buserId.toString(), holder.avatar)
         holder.jobTitle.text = appliedList[position].jobTitle?.uppercase(Locale.getDefault())
         holder.appliedDate.text = getDateFromString(appliedList[position].appliedDate.toString())
         holder.startHr.text = appliedList[position].startHr
         holder.endHr.text = appliedList[position].endHr
-        holder.salary.text = formattedSalary.toString()
+        holder.salary.text = format.format(appliedList[position].salary?.toDouble())
     }
 
     inner class MyViewHolder(view: View, listener: AppliedJobsAdapter.onItemClickListener) : RecyclerView.ViewHolder(view){

@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.walletHistoryModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
+import java.text.NumberFormat
+import java.util.Currency
 
 class WalletHistoryAdapter(private val historyList: List<walletHistoryModel>) :
     RecyclerView.Adapter<WalletHistoryAdapter.ViewHolder>() {
@@ -27,7 +29,12 @@ class WalletHistoryAdapter(private val historyList: List<walletHistoryModel>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = historyList[position]
 
-        holder.amountTextView.text = "$" + currentItem.amount
+        // Chuyển sang vnd (chỉ hiển thị còn tính toán như bth)
+        val format = NumberFormat.getCurrencyInstance()
+        format.maximumFractionDigits = 0
+        format.currency = Currency.getInstance("VND")
+        holder.amountTextView.setText(format.format(currentItem.amount?.toDouble()))
+
         holder.bankNameTextView.text = currentItem.bankName
         holder.cardNumTextView.text= currentItem.cardNum
         holder.dateTextView.text = GetData.getDateFromString(currentItem.date.toString()).toString()

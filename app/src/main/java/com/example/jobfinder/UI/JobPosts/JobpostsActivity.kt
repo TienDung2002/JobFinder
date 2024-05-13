@@ -19,6 +19,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.util.Log
+import java.text.NumberFormat
+import java.util.Currency
 
 
 class JobpostsActivity : AppCompatActivity() {
@@ -59,7 +61,6 @@ class JobpostsActivity : AppCompatActivity() {
         }
 
         //end time shift
-
         binding.postJobEndHr.setOnClickListener{
             Calendar.showTimePickerDialog(binding.root.context, binding.postJobEndHr)
         }
@@ -85,6 +86,8 @@ class JobpostsActivity : AppCompatActivity() {
             val salary = binding.postJobSalary.text.toString()
             val address = binding.postJobAddress.text.toString()
             val jobDes= binding.postJobDes.text.toString()
+            val format = NumberFormat.getCurrencyInstance()
+            format.currency = Currency.getInstance("VND")
 
             //field check
             val isValidStartTime = VerifyField.isEmpty(startTime.trim())
@@ -186,12 +189,13 @@ class JobpostsActivity : AppCompatActivity() {
                                                     .getInstance()
                                                     .getReference("Notifications")
                                                     .child(uid.toString()).push().key.toString()
+                                                val convertSalaryVnd = format.format(totalSalary.toDouble())
                                                 val notificationsRowModel = NotificationsRowModel(
                                                     notiId,
                                                     "Admin",
                                                     "${getString(R.string.post_job_success)}.\n" +
                                                             "${getString(R.string.post_job_title)}: $title.\n" +
-                                                            "-$$totalSalary ${getString(R.string.from_wallet)}",
+                                                            "-$convertSalaryVnd ${getString(R.string.from_wallet)}",
                                                     date
                                                 )
                                                 FirebaseDatabase.getInstance()

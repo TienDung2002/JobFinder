@@ -71,8 +71,13 @@ class NewJobActivity : AppCompatActivity() {
         // Cập nhật adapter khi có dữ liệu mới từ ViewModel
         viewModel.jobsListLiveData.observe(this) { newItem ->
             newItem?.let {
-                adapter.updateData(newItem)
+                val sortedByPostDate = newItem.toMutableList().sortedByDescending { GetData.convertStringToDATE(it.postDate.toString()) }
+                adapter.updateData(sortedByPostDate)
             }
+        }
+        // Cập nhật adapter khi sử dụng filter để sắp xếp
+        viewModel.sortedJobsLiveData.observe(this) { sortedList ->
+            adapter.updateData(sortedList)
         }
 
         // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
@@ -80,7 +85,7 @@ class NewJobActivity : AppCompatActivity() {
             binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        // lắng nghe event được gửi về từ activity đích (activity jobDetail của nhà tuyển dụng (làm sau))
+        // lắng nghe event được gửi về từ activity đích (activity jobDetail của nhà tuyển dụng)
         val startJobDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 // Xử lí dữ liệu nhận về nếu cần thiết
@@ -149,16 +154,16 @@ class NewJobActivity : AppCompatActivity() {
         // nút mở filter drawer
         binding.filterIcon.setOnClickListener {
             binding.rootNewJob.openDrawer(GravityCompat.END)
-            defaultSelectionFilterUI()
+            defaultSelectionUIFilter()
         }
         binding.rootNewJob.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerOpened(drawerView: View) {
                 // Nếu đã nhấn apply ít nhất một lần, khôi phục trạng thái từ SharedPreferences
                 if (!isFirstApplyFilter) {
-                    restoreButtonState()
+                    restoreButtonUIState()
                 } else {
                     // Nếu chưa nhấn apply lần đầu tiên, sử dụng UI mặc định
-                    defaultSelectionFilterUI()
+                    defaultSelectionUIFilter()
                 }
             }
             // Các hàm khác khi ngăn kéo được đóng hoặc mở, dùng nếu cần thiết
@@ -173,7 +178,7 @@ class NewJobActivity : AppCompatActivity() {
             button.setOnClickListener {
                 handleButtonSelection(jtButtons, button)
                 // Nếu đang chọn JTAtoZ không cho chọn recNameAtoZ
-                adjustButtonStateUI(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ)
+                adjustButtonUIState(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ)
             }
         }
 
@@ -182,7 +187,7 @@ class NewJobActivity : AppCompatActivity() {
             button.setOnClickListener {
                 handleButtonSelection(recNameButtons, button)
                 // Nếu đang chọn recNameAtoZ không cho chọn JTAtoZ
-                adjustButtonStateUI(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ)
+                adjustButtonUIState(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ)
             }
         }
 
@@ -223,15 +228,18 @@ class NewJobActivity : AppCompatActivity() {
 
         // reset filter btn
         cusBindingFilter.resetBtn.setOnClickListener {
-            defaultSelectionFilterUI()
-            saveButtonState()
+            defaultSelectionUIFilter()
+            saveButtonUIState()
         }
 
         // apply filter btn
         cusBindingFilter.applyBtn.setOnClickListener {
-            Toast.makeText(this, "Áp dụng bộ lọc!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.sort_applyFilterToast), Toast.LENGTH_SHORT).show()
             isFirstApplyFilter = false
-            saveButtonState()
+            saveButtonUIState()
+
+            viewModel.sortByJobTitle()
+
             binding.rootNewJob.closeDrawer(GravityCompat.END)
         }
 
@@ -264,7 +272,6 @@ class NewJobActivity : AppCompatActivity() {
                                 }
                             }
                             viewModel.updateStatusToFirebase(buserId,tempList)
-                            Log.d("sdkjdfhdkssd", buserId)
                         }
                     }
                     viewModel._isLoading.value = false
@@ -295,7 +302,7 @@ class NewJobActivity : AppCompatActivity() {
         }
     }
 
-    private fun defaultSelectionFilterUI() {
+    private fun defaultSelectionUIFilter() {
         // Các btn muốn đặt lại UI về default
         val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest, cusBindingFilter.WSAll)
         // Giá trị mặc định của RangeSlider
@@ -327,7 +334,7 @@ class NewJobActivity : AppCompatActivity() {
     }
 
     // Hàm để điều chỉnh trạng thái của targetButton dựa trên trạng thái của selectedButton
-    private fun adjustButtonStateUI(curSelectedButton: Button, buttonToCheck: Button, targetButton: Button) {
+    private fun adjustButtonUIState(curSelectedButton: Button, buttonToCheck: Button, targetButton: Button) {
         val isButtonToCheckSelected = (curSelectedButton == buttonToCheck)
         targetButton.apply {
             alpha = if (isButtonToCheckSelected) 0.4F else 1.0F
@@ -336,7 +343,7 @@ class NewJobActivity : AppCompatActivity() {
     }
 
     // Lưu trạng thái các nút đã dc chọn trong drawerable vào sharedPreferences
-    private fun saveButtonState() {
+    private fun saveButtonUIState() {
         val sharedPreferences = getSharedPreferences("filter_preferences", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         // Lưu trạng thái của các nút
@@ -353,7 +360,7 @@ class NewJobActivity : AppCompatActivity() {
     }
 
     // Khôi phục trạng thái btn từ sharedPreferences
-    private fun restoreButtonState() {
+    private fun restoreButtonUIState() {
         val sharedPreferences = getSharedPreferences("filter_preferences", MODE_PRIVATE)
 
         // Khôi phục trạng thái của các nút
@@ -404,7 +411,8 @@ class NewJobActivity : AppCompatActivity() {
     // Khi activity ở trạng thái dừng cũng lưu trạng thái filter lại
     override fun onPause() {
         super.onPause()
-        saveButtonState()
+        saveButtonUIState()
     }
 
 }
+
