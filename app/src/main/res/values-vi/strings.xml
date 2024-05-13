@@ -274,6 +274,8 @@
     </string-array>
     <string name="sort_resetCond">Đặt lại</string>
     <string name="sort_applyCond">Áp dụng</string>
+    <string name="sort_applyFilterToast">Áp dụng bộ lọc</string>
+
 
 
     <!--    List job item-->
