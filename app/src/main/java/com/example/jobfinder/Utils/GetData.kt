@@ -243,5 +243,9 @@ object GetData {
             }
     }
 
-
+    fun formatLabelHoursSlider(value: Float): String {  // Ví dụ convert 1.5 sẽ trở thành "01:30"
+        val hours = value.toInt()
+        val minutes = ((value - hours) * 60).toInt()
+        return String.format("%02d:%02d", hours, minutes)
+    }
 }

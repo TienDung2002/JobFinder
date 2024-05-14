@@ -44,7 +44,6 @@ class NewJobActivity : AppCompatActivity() {
     private lateinit var jtButtons: List<Button>
     private lateinit var recNameButtons: List<Button>
     private lateinit var postedTimeButtons: List<Button>
-    private lateinit var workShiftButtons: List<Button>
     private var ftJobTitle =0
     private var ftRecTitle =0
     private var ftPostTime =1
@@ -153,7 +152,6 @@ class NewJobActivity : AppCompatActivity() {
         jtButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.JTAtoZ)
         recNameButtons = listOf(cusBindingFilter.recAll, cusBindingFilter.recAtoZ)
         postedTimeButtons = listOf(cusBindingFilter.PTAnytime, cusBindingFilter.PTNewest, cusBindingFilter.PTThisMonth)
-        workShiftButtons = listOf(cusBindingFilter.WSAll, cusBindingFilter.WSMorning, cusBindingFilter.WSAfternoon)
 
         // nút mở filter drawer
         binding.filterIcon.setOnClickListener {
@@ -212,14 +210,7 @@ class NewJobActivity : AppCompatActivity() {
             }
         }
 
-        // Workshift btn list
-        workShiftButtons.forEach { button ->
-            button.setOnClickListener {
-                handleButtonSelection(workShiftButtons, button,"shift")
-            }
-        }
-
-        // Seekbar slider
+        // Seekbar lương slider
         cusBindingFilter.rangeslider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
             // Responds to when slider's touch event is being started
             override fun onStartTrackingTouch(slider: RangeSlider) {
@@ -238,6 +229,27 @@ class NewJobActivity : AppCompatActivity() {
             format.currency = Currency.getInstance("VND")
             format.format(value.toDouble())
         }
+
+        // Seekbar giờ làm slider
+        cusBindingFilter.workshiftSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+            // Responds to when slider's touch event is being started
+            override fun onStartTrackingTouch(slider: RangeSlider) {
+            }
+            // Responds to when slider's touch event is being stopped
+            override fun onStopTrackingTouch(slider: RangeSlider) {
+            }
+        })
+        // Responds to when slider's value is changed
+        cusBindingFilter.workshiftSlider.addOnChangeListener { rangeSlider, value, fromUser ->
+        }
+        // Format định dạng hiển thị giờ trên label
+        cusBindingFilter.workshiftSlider.setLabelFormatter { value: Float ->
+            // Ví dụ convert 1.5 sẽ trở thành "01:30"
+            val hours = value.toInt()
+            val minutes = ((value - hours) * 60).toInt()
+            String.format("%02d:%02d", hours, minutes)
+        }
+
 
         // reset filter btn
         cusBindingFilter.resetBtn.setOnClickListener {
@@ -325,7 +337,8 @@ class NewJobActivity : AppCompatActivity() {
 
     private fun defaultSelectionUIFilter() {
         // Các btn muốn đặt lại UI về default
-        val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest, cusBindingFilter.WSAll)
+//        val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest, cusBindingFilter.WSAll)
+        val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest)
         // Giá trị mặc định của RangeSlider
         val defaultValues = resources.getStringArray(R.array.initial_slider_values).map { it.toFloat() }
 
@@ -337,7 +350,7 @@ class NewJobActivity : AppCompatActivity() {
             // Posted time buttons
             cusBindingFilter.PTAnytime, cusBindingFilter.PTNewest, cusBindingFilter.PTThisMonth,
             // Work shift buttons
-            cusBindingFilter.WSAll, cusBindingFilter.WSMorning, cusBindingFilter.WSAfternoon
+//            cusBindingFilter.WSAll, cusBindingFilter.WSMorning, cusBindingFilter.WSAfternoon
         )
 
         for (btn in allButtons) {
@@ -393,7 +406,7 @@ class NewJobActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("filter_preferences", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         // Lưu trạng thái của các nút
-        for (button in jtButtons + recNameButtons + postedTimeButtons + workShiftButtons) {
+        for (button in jtButtons + recNameButtons + postedTimeButtons) {
             val isSelected = button.background.constantState == resources.getDrawable(R.drawable.custom_filter_btn_selected, null).constantState
             editor.putBoolean(button.id.toString(), isSelected)
         }
@@ -410,7 +423,7 @@ class NewJobActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("filter_preferences", MODE_PRIVATE)
 
         // Khôi phục trạng thái của các nút
-        for (button in jtButtons + recNameButtons + postedTimeButtons + workShiftButtons) {
+        for (button in jtButtons + recNameButtons + postedTimeButtons) {
             val isSelected = sharedPreferences.getBoolean(button.id.toString(), false)
             button.apply {
                 setBackgroundResource(if (isSelected) R.drawable.custom_filter_btn_selected else R.drawable.custom_filter_btn_default)
