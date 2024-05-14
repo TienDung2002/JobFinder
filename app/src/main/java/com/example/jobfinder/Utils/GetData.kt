@@ -101,7 +101,7 @@ object GetData {
         }
         return null
     }
-    // Chuyển chuỗi ngày tháng từ String thành kiểu Date
+    // Chuyển chuỗi ngày tháng từ String thành kiểu Date - Lấy dd/MM/yyyy
     fun convertStringToDATE(dateTimeString: String): Date? {
         val parts = dateTimeString.split(" ")
         if (parts.isNotEmpty()) {

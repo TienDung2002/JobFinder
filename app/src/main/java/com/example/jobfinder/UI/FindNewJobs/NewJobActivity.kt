@@ -75,8 +75,8 @@ class NewJobActivity : AppCompatActivity() {
         // Cập nhật adapter khi có dữ liệu mới từ ViewModel
         viewModel.jobsListLiveData.observe(this) { newItem ->
             newItem?.let {
-                val sortedByPostDate = newItem.toMutableList().sortedByDescending { GetData.convertStringToDATE(it.postDate.toString()) }
-                adapter.updateData(sortedByPostDate)
+//                val sortedByPostDate = newItem.toMutableList().sortedByDescending { GetData.convertStringToDATE(it.postDate.toString()) }
+                adapter.updateData(newItem)
             }
         }
         // Cập nhật adapter khi sử dụng filter để sắp xếp
@@ -181,8 +181,8 @@ class NewJobActivity : AppCompatActivity() {
         jtButtons.forEach { button ->
             button.setOnClickListener {
                 handleButtonSelection(jtButtons, button, "job")
-                // Nếu đang chọn JTAtoZ không cho chọn recNameAtoZ
-                adjustButtonUIState(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ)
+                // Nếu đang chọn JTAtoZ không cho chọn recNameAtoZ và postime newest
+                adjustButtonUIState(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ, cusBindingFilter.PTNewest, cusBindingFilter.PTAnytime)
             }
         }
 
@@ -190,8 +190,8 @@ class NewJobActivity : AppCompatActivity() {
         recNameButtons.forEach { button ->
             button.setOnClickListener {
                 handleButtonSelection(recNameButtons, button,"rec")
-                // Nếu đang chọn recNameAtoZ không cho chọn JTAtoZ
-                adjustButtonUIState(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ)
+                // Nếu đang chọn recNameAtoZ không cho chọn JTAtoZ và postime newest
+                adjustButtonUIState(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ, cusBindingFilter.PTNewest, cusBindingFilter.PTAnytime)
             }
         }
 
@@ -306,22 +306,11 @@ class NewJobActivity : AppCompatActivity() {
         }
 
         val selectedIndex = buttonList.indexOf(selectedButton)
+        if(Type == "job") ftJobTitle = selectedIndex
+        if(Type == "rec") ftRecTitle = selectedIndex
+        if(Type == "time") ftPostTime = selectedIndex
+        if(Type == "shift") ftShift = selectedIndex
 
-        if(Type == "job"){
-            ftJobTitle = selectedIndex
-        }
-
-        if(Type == "rec"){
-            ftRecTitle = selectedIndex
-        }
-
-        if(Type == "time"){
-            ftPostTime = selectedIndex
-        }
-
-        if(Type == "shift"){
-            ftShift = selectedIndex
-        }
     }
 
     private fun defaultSelectionUIFilter() {
@@ -342,7 +331,7 @@ class NewJobActivity : AppCompatActivity() {
         )
 
         for (btn in allButtons) {
-            btn.setBackgroundResource(  // Nếu ngoài ccacsbtn mặc định thì đổi tất cả về background default
+            btn.setBackgroundResource(  // Nếu ngoài các btn mặc định thì đổi tất cả về background default
                 if (btn in selectedButtons) R.drawable.custom_filter_btn_selected
                 else R.drawable.custom_filter_btn_default
             )
@@ -356,11 +345,25 @@ class NewJobActivity : AppCompatActivity() {
     }
 
     // Hàm để điều chỉnh trạng thái của targetButton dựa trên trạng thái của selectedButton
-    private fun adjustButtonUIState(curSelectedButton: Button, buttonToCheck: Button, targetButton: Button) {
+    private fun adjustButtonUIState(curSelectedButton: Button, buttonToCheck: Button, targetButton: Button, PTnewest: Button, PTanytime: Button) {
         val isButtonToCheckSelected = (curSelectedButton == buttonToCheck)
         targetButton.apply {
             alpha = if (isButtonToCheckSelected) 0.4F else 1.0F
             isEnabled = !isButtonToCheckSelected
+        }
+        PTnewest.apply {
+            alpha = if (isButtonToCheckSelected) 0.4F else 1.0F
+            isEnabled = !isButtonToCheckSelected
+            setBackgroundResource(
+                if (isButtonToCheckSelected) R.drawable.custom_filter_btn_default
+                else R.drawable.custom_filter_btn_selected
+            )
+        }
+        PTanytime.apply {
+            setBackgroundResource(
+                if (isButtonToCheckSelected) R.drawable.custom_filter_btn_selected
+                else R.drawable.custom_filter_btn_default
+            )
         }
     }
 
@@ -399,9 +402,15 @@ class NewJobActivity : AppCompatActivity() {
         // Điều chỉnh trạng thái nếu một trong hai AtoZ của list jtButton và recNameButton
         val isJTAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.JTAtoZ.id.toString(), false)
         val isRecAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.recAtoZ.id.toString(), false)
+        val isPTnewestSelected = sharedPreferences.getBoolean(cusBindingFilter.PTNewest.id.toString(), false)
 
-        if (isJTAtoZSelected && !isRecAtoZSelected) {
+        if (isJTAtoZSelected && !isRecAtoZSelected && !isPTnewestSelected) {
             cusBindingFilter.recAtoZ.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_default)
+                alpha = 0.4F
+                isEnabled = false
+            }
+            cusBindingFilter.PTNewest.apply {
                 setBackgroundResource(R.drawable.custom_filter_btn_default)
                 alpha = 0.4F
                 isEnabled = false
@@ -411,11 +420,32 @@ class NewJobActivity : AppCompatActivity() {
                 alpha = 1.0F
                 isEnabled = true
             }
-        } else if (!isJTAtoZSelected && isRecAtoZSelected) {
+        } else if (!isJTAtoZSelected && isRecAtoZSelected && !isPTnewestSelected) {
             cusBindingFilter.JTAtoZ.apply {
                 setBackgroundResource(R.drawable.custom_filter_btn_default)
                 alpha = 0.4F
                 isEnabled = false
+            }
+            cusBindingFilter.PTNewest.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_default)
+                alpha = 0.4F
+                isEnabled = false
+            }
+            cusBindingFilter.JTAll.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_selected)
+                alpha = 1.0F
+                isEnabled = true
+            }
+        } else if (!isJTAtoZSelected && !isRecAtoZSelected && isPTnewestSelected) {
+            cusBindingFilter.JTAtoZ.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_default)
+                alpha = 1.0F
+                isEnabled = true
+            }
+            cusBindingFilter.PTNewest.apply {
+                setBackgroundResource(R.drawable.custom_filter_btn_selected)
+                alpha = 1.0F
+                isEnabled = true
             }
             cusBindingFilter.JTAll.apply {
                 setBackgroundResource(R.drawable.custom_filter_btn_selected)
