@@ -3,6 +3,7 @@ package com.example.jobfinder.UI.FindNewJobs
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,8 +50,12 @@ class NewJobActivity : AppCompatActivity() {
     private var ftRecTitle =0
     private var ftPostTime =1
     private var ftShift =0
+    private var ftMinSalary = 0.0f
+    private var ftMaxSalary = 50000.0f
 
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewJobBinding.inflate(layoutInflater)
@@ -220,7 +226,10 @@ class NewJobActivity : AppCompatActivity() {
             }
         })
         // Responds to when slider's value is changed
-        cusBindingFilter.rangeslider.addOnChangeListener { rangeSlider, value, fromUser ->
+        cusBindingFilter.rangeslider.addOnChangeListener { rangeSlider, values, fromUser ->
+            // Cập nhật giá trị của ftMinSalary và ftMaxSalary khi người dùng thay đổi giá trị của thanh trượt
+            ftMinSalary = rangeSlider.values[0]
+            ftMaxSalary = rangeSlider.values[1]
         }
         // Format định dạng hiển thị của tiền việt trên label
         cusBindingFilter.rangeslider.setLabelFormatter { value: Float ->
@@ -255,6 +264,13 @@ class NewJobActivity : AppCompatActivity() {
         cusBindingFilter.resetBtn.setOnClickListener {
             defaultSelectionUIFilter()
             saveButtonUIState()
+            ftJobTitle =0
+            ftRecTitle =0
+            ftPostTime =1
+            ftShift =0
+            ftMinSalary = 0.0f
+            ftMaxSalary = 50000.0f
+            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary)
         }
 
         // apply filter btn
@@ -263,7 +279,7 @@ class NewJobActivity : AppCompatActivity() {
             isFirstApplyFilter = false
             saveButtonUIState()
 
-            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime)
+            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary)
 
             binding.rootNewJob.closeDrawer(GravityCompat.END)
         }
@@ -278,6 +294,7 @@ class NewJobActivity : AppCompatActivity() {
         viewModel.clearJobsList() // xóa item cũ đi trước khi fetch lại
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
+                @RequiresApi(Build.VERSION_CODES.O)
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (userSnapshot in dataSnapshot.children) {
                         val buserId = userSnapshot.key.toString()
@@ -297,7 +314,7 @@ class NewJobActivity : AppCompatActivity() {
                                 }
                             }
                             viewModel.updateStatusToFirebase(buserId,tempList)
-                            viewModel.sortByPostDate()
+                            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary)
                         }
                     }
                     viewModel._isLoading.value = false

@@ -1,5 +1,7 @@
 package com.example.jobfinder.UI.FindNewJobs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +9,7 @@ import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.*
 import java.text.Collator
+import java.time.LocalDate
 import java.util.Locale
 
 class FindNewJobViewModel : ViewModel() {
@@ -38,23 +41,36 @@ class FindNewJobViewModel : ViewModel() {
         _jobsListLiveData.value = OriginJobsList
     }
 
-    fun sortFilter(ftJobTitle: Int, ftRecTitle: Int, ftPostTime: Int) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sortFilter(ftJobTitle: Int, ftRecTitle: Int, ftPostTime: Int, minSalary:Float, maxSalary:Float) {
         val copyList = OriginJobsList.toMutableList()
 
         val collator = Collator.getInstance(Locale("vi", "VN"))
 
-        val sortedList = if (ftJobTitle == 1 && ftPostTime == 1) {
-            copyList.sortedWith(compareBy({ collator.compare(it.jobTitle, it.jobTitle) }, { GetData.getDateFromString(it.postDate.toString()) }))
-        } else if (ftRecTitle == 1 && ftPostTime == 1) {
-            copyList.sortedWith(compareBy({ collator.compare(it.BUserName, it.BUserName) }, { GetData.getDateFromString(it.postDate.toString()) }))
-        } else if (ftJobTitle == 1 && ftPostTime == 0) {
-            copyList.sortedWith(compareBy(collator) { it.jobTitle ?: "default jobTitle" })
-        } else if (ftRecTitle == 1 && ftPostTime == 0) {
-            copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.BUserName ?: "default BUserName" })
-        } else if ( ftJobTitle == 0 && ftRecTitle == 0 && ftPostTime == 1) {
-            copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
-        }else {
-            copyList
+        var sortedList = when {
+            // a-z job title
+            ftJobTitle == 1 -> copyList.sortedWith(compareBy(collator) { it.jobTitle ?: "default jobTitle" })
+            // a-z BUserName
+            ftRecTitle == 1 -> copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.BUserName ?: "default BUserName" })
+            // new to old
+            ftPostTime == 1 -> copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
+            else -> copyList
+        }
+
+
+        //sort theo tháng
+        if (ftPostTime == 2) {
+            val currentMonth = LocalDate.now().monthValue
+            sortedList = sortedList.filter { job ->
+                val jobMonth = job.postDate.toString().split("/")[1].toIntOrNull() ?: -1
+                jobMonth == currentMonth
+            }
+        }
+
+        // sort theo lương
+        sortedList = sortedList.filter { job ->
+            val salary = job.salaryPerEmp.toString().toFloatOrNull()
+            salary != null && salary in minSalary..maxSalary
         }
 
         _sortedJobsLiveData.value = sortedList

@@ -273,7 +273,7 @@
     <string name="send">Nộp</string>
     <string name="applied_success">Ứng tuyển thành công</string>
     <string-array name="initial_slider_values">
-        <item>10000.0</item>
+        <item>0.0</item>
         <item>50000.0</item>
     </string-array>
     <string name="sort_resetCond">Đặt lại</string>
