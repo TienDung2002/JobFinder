@@ -26,8 +26,6 @@ class FindNewJobViewModel : ViewModel() {
     val bookmarkStatus: LiveData<Map<String, Boolean>> get() = _bookmarkStatus
 
 
-    // Coppy list origin sang list khác và sắp xếp để tạo list có các việc theo ngày đăng mới nhất
-//    val sortedOriJobsListByPostDate = OriginJobsList.toMutableList().sortedByDescending { it.postDate }
     fun getJobsList(): List<JobModel> {
         return OriginJobsList
     }

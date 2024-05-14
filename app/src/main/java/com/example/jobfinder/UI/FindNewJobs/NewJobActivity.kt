@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -219,11 +218,9 @@ class NewJobActivity : AppCompatActivity() {
         // Seekbar lương slider
         cusBindingFilter.rangeslider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
             // Responds to when slider's touch event is being started
-            override fun onStartTrackingTouch(slider: RangeSlider) {
-            }
+            override fun onStartTrackingTouch(slider: RangeSlider) {}
             // Responds to when slider's touch event is being stopped
-            override fun onStopTrackingTouch(slider: RangeSlider) {
-            }
+            override fun onStopTrackingTouch(slider: RangeSlider) {}
         })
         // Responds to when slider's value is changed
         cusBindingFilter.rangeslider.addOnChangeListener { rangeSlider, values, fromUser ->
@@ -354,10 +351,10 @@ class NewJobActivity : AppCompatActivity() {
 
     private fun defaultSelectionUIFilter() {
         // Các btn muốn đặt lại UI về default
-//        val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest, cusBindingFilter.WSAll)
         val selectedButtons = listOf(cusBindingFilter.JTAll, cusBindingFilter.recAll, cusBindingFilter.PTNewest)
         // Giá trị mặc định của RangeSlider
-        val defaultValues = resources.getStringArray(R.array.initial_slider_values).map { it.toFloat() }
+        val defaultValuesSalary = resources.getStringArray(R.array.initial_slider_values).map { it.toFloat() }
+        val defaultValueWS = resources.getStringArray(R.array.initial_WShift_Slider_values).map { it.toFloat() }
 
         val allButtons = listOf(
             // Job title buttons
@@ -366,8 +363,6 @@ class NewJobActivity : AppCompatActivity() {
             cusBindingFilter.recAll, cusBindingFilter.recAtoZ,
             // Posted time buttons
             cusBindingFilter.PTAnytime, cusBindingFilter.PTNewest, cusBindingFilter.PTThisMonth,
-            // Work shift buttons
-//            cusBindingFilter.WSAll, cusBindingFilter.WSMorning, cusBindingFilter.WSAfternoon
         )
 
         for (btn in allButtons) {
@@ -381,7 +376,8 @@ class NewJobActivity : AppCompatActivity() {
         }
 
         // Đặt lại giá trị của RangeSlider về mặc định
-        cusBindingFilter.rangeslider.setValues(defaultValues)
+        cusBindingFilter.rangeslider.setValues(defaultValuesSalary)
+        cusBindingFilter.workshiftSlider.setValues(defaultValueWS)
     }
 
     // Hàm để điều chỉnh trạng thái của targetButton dựa trên trạng thái của selectedButton
@@ -428,9 +424,13 @@ class NewJobActivity : AppCompatActivity() {
             editor.putBoolean(button.id.toString(), isSelected)
         }
         // Lưu giá trị của slider
-        val sliderValues = cusBindingFilter.rangeslider.values
-        editor.putFloat("slider_start_value", sliderValues[0])
-        editor.putFloat("slider_end_value", sliderValues[1])
+        val sliderValuesSalary = cusBindingFilter.rangeslider.values
+        val sliderValuesWS = cusBindingFilter.workshiftSlider.values
+        editor.putFloat("slider_start_value_Salary", sliderValuesSalary[0])
+        editor.putFloat("slider_end_value_Salary", sliderValuesSalary[1])
+        editor.putFloat("slider_start_value_WS", sliderValuesWS[0])
+        editor.putFloat("slider_end_value_WS", sliderValuesWS[1])
+
 
         editor.apply()
     }
@@ -454,7 +454,6 @@ class NewJobActivity : AppCompatActivity() {
         val isJTAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.JTAtoZ.id.toString(), false)
         val isRecAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.recAtoZ.id.toString(), false)
         val isPTnewestSelected = sharedPreferences.getBoolean(cusBindingFilter.PTNewest.id.toString(), false)
-        val isThisMontSelected = sharedPreferences.getBoolean(cusBindingFilter.PTThisMonth.id.toString(), false)
 
         if (isJTAtoZSelected && !isRecAtoZSelected && !isPTnewestSelected) {
             cusBindingFilter.recAtoZ.apply {
@@ -507,9 +506,13 @@ class NewJobActivity : AppCompatActivity() {
         }
 
         // Khôi phục giá trị của slider
-        val startValue = sharedPreferences.getFloat("slider_start_value", cusBindingFilter.rangeslider.values[0])
-        val endValue = sharedPreferences.getFloat("slider_end_value", cusBindingFilter.rangeslider.values[1])
-        cusBindingFilter.rangeslider.values = listOf(startValue, endValue)
+        val startValueSalary = sharedPreferences.getFloat("slider_start_value_Salary", cusBindingFilter.rangeslider.values[0])
+        val endValueSalary = sharedPreferences.getFloat("slider_end_value_Salary", cusBindingFilter.rangeslider.values[1])
+        cusBindingFilter.rangeslider.values = listOf(startValueSalary, endValueSalary)
+
+        val startValueWS = sharedPreferences.getFloat("slider_start_value_WS", cusBindingFilter.workshiftSlider.values[0])
+        val endValueWS = sharedPreferences.getFloat("slider_end_value_WS", cusBindingFilter.workshiftSlider.values[1])
+        cusBindingFilter.workshiftSlider.values = listOf(startValueWS, endValueWS)
     }
 
     // Khi activity ở trạng thái dừng cũng lưu trạng thái filter lại
