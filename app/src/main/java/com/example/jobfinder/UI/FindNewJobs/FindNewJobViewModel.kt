@@ -61,30 +61,11 @@ class FindNewJobViewModel : ViewModel() {
     }
 
     // Các hàm Sort
-    fun resetOriginAdapData(){
-        _sortedJobsLiveData.value = OriginJobsList
-    }
-    fun sortByJobTitle() {
-        val copyList = OriginJobsList.toMutableList()
-        val collator = Collator.getInstance(Locale("vi", "VN"))
-        val sortedList = copyList.sortedWith(compareBy(collator) { it.jobTitle ?: "default jobTitle" })
-        _sortedJobsLiveData.value = sortedList
-    }
-
-    fun sortByBuserName() {
-        val copyList = OriginJobsList.toMutableList()
-        val sortedList = copyList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.BUserName ?: "default BUserName" })
-        _jobsListLiveData.value = sortedList
-    }
-
     fun sortByPostDate(){
         var copyList = OriginJobsList.toMutableList().toList()
         copyList = copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
         _sortedJobsLiveData.value = copyList
     }
-    fun sortByPTMonth(){}
-    fun sortByWorkShift(){}
-    fun sortBySalaryRange(){}
 
 
 
