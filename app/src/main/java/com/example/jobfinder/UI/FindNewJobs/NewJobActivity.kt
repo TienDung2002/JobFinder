@@ -182,7 +182,12 @@ class NewJobActivity : AppCompatActivity() {
             button.setOnClickListener {
                 handleButtonSelection(jtButtons, button, "job")
                 // Nếu đang chọn JTAtoZ không cho chọn recNameAtoZ và postime newest
-                adjustButtonUIState(button, cusBindingFilter.JTAtoZ, cusBindingFilter.recAtoZ, cusBindingFilter.PTNewest, cusBindingFilter.PTAnytime)
+                adjustButtonUIState(button,
+                    cusBindingFilter.JTAtoZ,
+                    cusBindingFilter.recAtoZ,
+                    cusBindingFilter.PTNewest,
+                    cusBindingFilter.PTAnytime,
+                    cusBindingFilter.PTThisMonth)
             }
         }
 
@@ -191,7 +196,12 @@ class NewJobActivity : AppCompatActivity() {
             button.setOnClickListener {
                 handleButtonSelection(recNameButtons, button,"rec")
                 // Nếu đang chọn recNameAtoZ không cho chọn JTAtoZ và postime newest
-                adjustButtonUIState(button, cusBindingFilter.recAtoZ, cusBindingFilter.JTAtoZ, cusBindingFilter.PTNewest, cusBindingFilter.PTAnytime)
+                adjustButtonUIState(button,
+                    cusBindingFilter.recAtoZ,
+                    cusBindingFilter.JTAtoZ,
+                    cusBindingFilter.PTNewest,
+                    cusBindingFilter.PTAnytime,
+                    cusBindingFilter.PTThisMonth)
             }
         }
 
@@ -345,8 +355,16 @@ class NewJobActivity : AppCompatActivity() {
     }
 
     // Hàm để điều chỉnh trạng thái của targetButton dựa trên trạng thái của selectedButton
-    private fun adjustButtonUIState(curSelectedButton: Button, buttonToCheck: Button, targetButton: Button, PTnewest: Button, PTanytime: Button) {
+    private fun adjustButtonUIState(
+        curSelectedButton: Button,
+        buttonToCheck: Button,
+        targetButton: Button,
+        PTnewest: Button,
+        PTanytime: Button,
+        PTthismonth: Button) {
+
         val isButtonToCheckSelected = (curSelectedButton == buttonToCheck)
+
         targetButton.apply {
             alpha = if (isButtonToCheckSelected) 0.4F else 1.0F
             isEnabled = !isButtonToCheckSelected
@@ -364,6 +382,9 @@ class NewJobActivity : AppCompatActivity() {
                 if (isButtonToCheckSelected) R.drawable.custom_filter_btn_selected
                 else R.drawable.custom_filter_btn_default
             )
+        }
+        PTthismonth.apply {
+            setBackgroundResource(R.drawable.custom_filter_btn_default)
         }
     }
 
@@ -403,6 +424,7 @@ class NewJobActivity : AppCompatActivity() {
         val isJTAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.JTAtoZ.id.toString(), false)
         val isRecAtoZSelected = sharedPreferences.getBoolean(cusBindingFilter.recAtoZ.id.toString(), false)
         val isPTnewestSelected = sharedPreferences.getBoolean(cusBindingFilter.PTNewest.id.toString(), false)
+        val isThisMontSelected = sharedPreferences.getBoolean(cusBindingFilter.PTThisMonth.id.toString(), false)
 
         if (isJTAtoZSelected && !isRecAtoZSelected && !isPTnewestSelected) {
             cusBindingFilter.recAtoZ.apply {
