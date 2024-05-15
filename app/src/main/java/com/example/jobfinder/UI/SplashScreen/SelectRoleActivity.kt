@@ -21,9 +21,20 @@ class SelectRoleActivity : AppCompatActivity() {
 
         //firebase
         auth = FirebaseAuth.getInstance()
-        if (auth.getCurrentUser() != null) {
-            startActivity(Intent(applicationContext, HomeActivity::class.java))
-            finish()
+
+        auth.currentUser?.reload()?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val updatedUser = auth.currentUser
+                if (updatedUser != null) {
+                    // Người dùng vẫn đang đăng nhập
+                    // Thực hiện các hành động phù hợp
+                    startActivity(Intent(applicationContext, HomeActivity::class.java))
+                    finish()
+                }
+            } else {
+                // Xảy ra lỗi khi làm mới thông tin người dùng
+                // Xử lý lỗi nếu cần
+            }
         }
 
         // mở login role tuyển dụng
