@@ -251,7 +251,7 @@
                             android:id="@+id/workshiftSlider"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:valueFrom="0.0"
+                            android:valueFrom="0"
                             android:valueTo="24"
                             app:values="@array/initial_WShift_Slider_values"
                             android:stepSize="1"
