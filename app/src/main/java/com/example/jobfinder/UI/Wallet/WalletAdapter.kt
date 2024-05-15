@@ -291,7 +291,7 @@ class WalletAdapter(private val walletList: MutableList<WalletRowModel>,
                             val notificationsRowModel= NotificationsRowModel(
                                 notiId,
                                 "Admin",
-                                "+ $10000000\n" +
+                                "+ 10.000.000 đ\n" +
                                         "${getString(binding.root.context, R.string.bank_name)}: ${wallet.bankName}. ${getString(binding.root.context, R.string.card_number)}: ${wallet.cardNumber}",
                                 today
                             )
