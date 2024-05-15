@@ -27,6 +27,8 @@ class NewJobsAdapter(
 
     lateinit var mListener: onItemClickListener
     private var originalData: List<JobModel> = list
+    private var filteredData: List<JobModel> = list
+
 
     interface onItemClickListener {
         fun onItemClicked(Job: JobModel) {}
@@ -122,9 +124,9 @@ class NewJobsAdapter(
                 val filteredList = mutableListOf<JobModel>()
 
                 if (queryInput.isEmpty()) {
-                    filteredList.addAll(originalData)
+                    filteredList.addAll(filteredData)
                 } else {
-                    for (item in originalData) {
+                    for (item in filteredData) {
                         val recName = item.BUserName?.lowercase() ?: ""
                         val jobTitle = item.jobTitle?.lowercase() ?: ""
                         if (recName.contains(queryInput) || jobTitle.contains(queryInput)) {
@@ -142,7 +144,6 @@ class NewJobsAdapter(
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 val filteredList = results?.values as? List<JobModel> ?: emptyList()
-
                 list = filteredList
                 notifyDataSetChanged()
 
@@ -159,13 +160,14 @@ class NewJobsAdapter(
 
 
     fun resetOriginalList() {
-        list = originalData
+        list = filteredData
         hideNoDataFoundImg()
         notifyDataSetChanged()
     }
 
     fun updateData(newList: List<JobModel>) {
         list = newList
+        filteredData = newList
         if (list.isEmpty()) {
             showNoDataFoundImg()
         } else {
