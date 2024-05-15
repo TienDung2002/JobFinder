@@ -88,6 +88,10 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
 
                         appliedJobRef.removeValue()
 
+                        val EmpInJob = ApplicantsModel(currentItem.userId, currentItem.applicantDes, curTime, currentItem.userName)
+
+                        FirebaseDatabase.getInstance().getReference("EmpInJob").child(job.jobId.toString()).child(currentItem.userId.toString()).setValue(EmpInJob)
+
                         val approvedJob = AppliedJobModel(job.BUserId.toString(), job.jobId.toString(), curTime, job.jobTitle.toString(), job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString())
 
                         FirebaseDatabase.getInstance().getReference("ApprovedJob").child(currentItem.userId.toString()).child(job.jobId.toString()).setValue(approvedJob)

@@ -1,5 +1,6 @@
 package com.example.jobfinder.Utils
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.UI.FindNewJobs.FindNewJobViewModel
@@ -101,6 +102,26 @@ object GetData {
         }
         return null
     }
+    // Chuyển chuỗi ngày tháng từ String thành kiểu Date - Lấy dd/MM/yyyy
+    fun convertStringToDATE(dateTimeString: String): Date? {
+        val parts = dateTimeString.split(" ")
+        if (parts.isNotEmpty()) {
+            val dateString = parts[0]
+            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return format.parse(dateString)
+        }
+        return null
+    }
+
+
+    @SuppressLint("DefaultLocale")
+    fun formatIntToTime(hours: Int): String {
+        val totalMinutes = hours * 60
+        val hoursPart = totalMinutes / 60
+        val minutesPart = totalMinutes % 60
+        return String.format("%02d:%02d", hoursPart, minutesPart)
+    }
+
 
     fun multiplyStrings(string1: String, string2: String): String {
         // Chuyển đổi chuỗi thành số float
@@ -233,5 +254,9 @@ object GetData {
             }
     }
 
-
+    fun formatLabelHoursSlider(value: Float): String {  // Ví dụ convert 1.5 sẽ trở thành "01:30"
+        val hours = value.toInt()
+        val minutes = ((value - hours) * 60).toInt()
+        return String.format("%02d:%02d", hours, minutes)
+    }
 }

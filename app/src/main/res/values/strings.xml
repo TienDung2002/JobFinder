@@ -263,15 +263,20 @@
     <string name="sort_workShift">Work shift</string>
     <string name="sort_wShiftAM">Morning</string>
     <string name="sort_wShiftPM">Afternoon</string>
+    <string-array name="initial_WShift_Slider_values">
+        <item>0</item>
+        <item>24</item>
+    </string-array>
     <string name="sort_salary">Salary range(/hour)</string>
     <string name="send">Send</string>
     <string name="applied_success">Apply success</string>
     <string-array name="initial_slider_values">
-        <item>10000.0</item>
+        <item>0.0</item>
         <item>50000.0</item>
     </string-array>
     <string name="sort_resetCond">Reset</string>
     <string name="sort_applyCond">Apply</string>
+    <string name="sort_applyFilterToast">Filter Applied</string>
 
 
     <!--    List job item-->
