@@ -1,6 +1,7 @@
 package com.example.jobfinder.UI.FindNewJobs
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,8 @@ import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.*
 import java.text.Collator
 import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class FindNewJobViewModel : ViewModel() {
@@ -40,10 +43,27 @@ class FindNewJobViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun sortFilter(ftJobTitle: Int, ftRecTitle: Int, ftPostTime: Int, minSalary:Float, maxSalary:Float) {
+    fun sortFilter(ftJobTitle: Int, ftRecTitle: Int, ftPostTime: Int, minSalary:Float, maxSalary:Float, startHr:Int, endHr:Int) {
         val copyList = OriginJobsList.toMutableList()
 
         val collator = Collator.getInstance(Locale("vi", "VN"))
+
+        val startHrString = if(startHr == 24){
+            "23:59"
+        }else{
+            GetData.formatIntToTime(startHr)
+        }
+
+        val endHrString = if(endHr == 24){
+            "23:59"
+        }else{
+            GetData.formatIntToTime(endHr)
+        }
+
+        // Chuyển đổi các chuỗi thời gian thành LocalTime
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val startHrTime = LocalTime.parse(startHrString, formatter)
+        val endHrTime = LocalTime.parse(endHrString, formatter)
 
         var sortedList = when {
             // a-z job title
@@ -69,6 +89,14 @@ class FindNewJobViewModel : ViewModel() {
         sortedList = sortedList.filter { job ->
             val salary = job.salaryPerEmp.toString().toFloatOrNull()
             salary != null && salary in minSalary..maxSalary
+        }
+
+        //sort theo gio lam
+        sortedList = sortedList.filter { job ->
+            val startTime = LocalTime.parse(job.startHr, formatter)
+            val endTime = LocalTime.parse(job.endHr, formatter)
+            startTime in startHrTime..endHrTime && endTime in startHrTime..endHrTime
+
         }
 
         _sortedJobsLiveData.value = sortedList

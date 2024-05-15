@@ -1,5 +1,6 @@
 package com.example.jobfinder.Utils
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.UI.FindNewJobs.FindNewJobViewModel
@@ -111,6 +112,16 @@ object GetData {
         }
         return null
     }
+
+
+    @SuppressLint("DefaultLocale")
+    fun formatIntToTime(hours: Int): String {
+        val totalMinutes = hours * 60
+        val hoursPart = totalMinutes / 60
+        val minutesPart = totalMinutes % 60
+        return String.format("%02d:%02d", hoursPart, minutesPart)
+    }
+
 
     fun multiplyStrings(string1: String, string2: String): String {
         // Chuyển đổi chuỗi thành số float

@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.FindNewJobs
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -51,9 +52,12 @@ class NewJobActivity : AppCompatActivity() {
     private var ftShift =0
     private var ftMinSalary = 0.0f
     private var ftMaxSalary = 50000.0f
+    private var ftStartHr = 0
+    private var ftEndHr = 24
 
 
 
+    @SuppressLint("DefaultLocale")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -247,6 +251,8 @@ class NewJobActivity : AppCompatActivity() {
         })
         // Responds to when slider's value is changed
         cusBindingFilter.workshiftSlider.addOnChangeListener { rangeSlider, value, fromUser ->
+            ftStartHr = rangeSlider.values[0].toInt()
+            ftEndHr = rangeSlider.values[1].toInt()
         }
         // Format định dạng hiển thị giờ trên label
         cusBindingFilter.workshiftSlider.setLabelFormatter { value: Float ->
@@ -267,7 +273,9 @@ class NewJobActivity : AppCompatActivity() {
             ftShift =0
             ftMinSalary = 0.0f
             ftMaxSalary = 50000.0f
-            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary)
+            ftStartHr = 0
+            ftEndHr = 24
+            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr)
         }
 
         // apply filter btn
@@ -276,7 +284,7 @@ class NewJobActivity : AppCompatActivity() {
             isFirstApplyFilter = false
             saveButtonUIState()
 
-            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary)
+            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr)
 
             binding.rootNewJob.closeDrawer(GravityCompat.END)
         }
@@ -311,7 +319,7 @@ class NewJobActivity : AppCompatActivity() {
                                 }
                             }
                             viewModel.updateStatusToFirebase(buserId,tempList)
-                            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary)
+                            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr)
                         }
                     }
                     viewModel._isLoading.value = false
@@ -415,6 +423,7 @@ class NewJobActivity : AppCompatActivity() {
     }
 
     // Lưu trạng thái các nút đã dc chọn trong drawerable vào sharedPreferences
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun saveButtonUIState() {
         val sharedPreferences = getSharedPreferences("filter_preferences", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
