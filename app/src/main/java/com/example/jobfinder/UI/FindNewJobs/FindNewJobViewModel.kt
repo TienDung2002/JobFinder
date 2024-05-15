@@ -102,18 +102,6 @@ class FindNewJobViewModel : ViewModel() {
         _sortedJobsLiveData.value = sortedList
     }
 
-    // Các hàm Sort
-    fun sortByPostDate(){
-        var copyList = OriginJobsList.toMutableList().toList()
-        copyList = copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
-        _sortedJobsLiveData.value = copyList
-    }
-
-
-
-
-
-
     fun updateStatusToFirebase(userId :String,jobList: List<JobModel>) {
         val updatesMap = mutableMapOf<String, Any?>()
         for (jobModel in jobList) {
