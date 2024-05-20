@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -22,7 +21,6 @@ import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivitySeekerJobDetailBinding
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
 import java.util.Currency
 import java.util.Locale
@@ -42,33 +40,23 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(FindNewJobViewModel::class.java)
 
         val job = intent.getParcelableExtra<JobModel>("job")
-        val uid = job?.BUserId
+        val job_id = intent.getStringExtra("job_id")
+        val buser_id = intent.getStringExtra("buser_id")
+        var uid = ""
 
-        binding.animationView.visibility = View.VISIBLE
-        binding.detailJobScrollView.visibility = View.GONE
-
-        if (job != null) {
+        if(job_id!= null && buser_id !=null){
+            binding.detailJobBtnHolder.visibility = View.GONE
+            fetchJobData(job_id, buser_id)
+            uid = buser_id
+        }else if (job != null) {
+            uid = job.BUserId.toString()
             // Gán data
-            assignData(job)
+            fetchJobData(job.jobId.toString(), job.BUserId.toString())
 
             // job nào đang trạng thái hoạt động thì hiện nút apply
 //            if(job.status.toString() != "recruiting"){
 //                binding.detailJobBtnHolder.visibility = View.GONE
 //            }
-
-
-            binding.jobDetailBuserName.setOnClickListener {
-                val intent = Intent(this, BUserDetailInfoActivity::class.java)
-                intent.putExtra("uid", uid)
-                startActivity(intent)
-            }
-
-
-            binding.buserLogo.setOnClickListener {
-                val intent = Intent(this, BUserDetailInfoActivity::class.java)
-                intent.putExtra("uid", uid)
-                startActivity(intent)
-            }
 
 
             // Bookmark
@@ -132,6 +120,22 @@ class SeekerJobDetailActivity : AppCompatActivity() {
             }
         }
 
+        binding.animationView.visibility = View.VISIBLE
+        binding.detailJobScrollView.visibility = View.GONE
+
+        binding.jobDetailBuserName.setOnClickListener {
+            val intent = Intent(this, BUserDetailInfoActivity::class.java)
+            intent.putExtra("uid", uid)
+            startActivity(intent)
+        }
+
+
+        binding.buserLogo.setOnClickListener {
+            val intent = Intent(this, BUserDetailInfoActivity::class.java)
+            intent.putExtra("uid", uid)
+            startActivity(intent)
+        }
+
         binding.backButton.setOnClickListener {
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
@@ -156,29 +160,62 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         )
     }
 
-    private fun assignData(job: JobModel){
-        val format = java.text.NumberFormat.getCurrencyInstance()
-        format.currency = Currency.getInstance("VND")
-        val salaryTxt = format.format(job.salaryPerEmp?.toDouble()) + resources.getString(R.string.Ji_unit3)
+//    private fun assignData(job: JobModel){
+//        val format = java.text.NumberFormat.getCurrencyInstance()
+//        format.currency = Currency.getInstance("VND")
+//        val salaryTxt = format.format(job.salaryPerEmp?.toDouble()) + resources.getString(R.string.Ji_unit3)
+//
+//        val emp = job.numOfRecruited+"/"+ job.empAmount
+//        val shift = job.startHr+" - "+ job.endHr
+//
+//        binding.jobDetailJobTitle.text = job.jobTitle
+//        binding.jobDetailBuserName.text= job.BUserName?.uppercase(Locale.getDefault())
+//        binding.jobDetailJobType.text= job.jobType
+//        binding.jobDetailSalary.text= salaryTxt
+//        binding.jobDetailEmpAmount.text= emp
+//        binding.jobDetailStartTime.text= job.startTime
+//        binding.jobDetailEndTime.text= job.endTime
+//        binding.jobDetailWorkShift.text= shift
+//        binding.jobDetailAddress.text= job.address
+//        binding.jobDetailDes.text= job.jobDes
+//
+//        RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
+//
+//        binding.detailJobScrollView.visibility = View.VISIBLE
+//        binding.animationView.visibility = View.GONE
+//    }
 
-        val emp = job.numOfRecruited+"/"+ job.empAmount
-        val shift = job.startHr+" - "+ job.endHr
+    private fun fetchJobData(jobId: String, bUserId: String) {
+        FirebaseDatabase.getInstance().getReference("Job").child(bUserId).child(jobId).get().addOnSuccessListener { dataSnapshot ->
+            val job = dataSnapshot.getValue(JobModel::class.java)
+            job?.let {
+                val recruitedAmount = it.numOfRecruited
+                val emp = "$recruitedAmount/${it.empAmount}"
+                val format = java.text.NumberFormat.getCurrencyInstance()
+                format.currency = Currency.getInstance("VND")
+                val salaryTxt = format.format(job.salaryPerEmp?.toDouble()) + resources.getString(R.string.Ji_unit3)
+                val shift = "${it.startHr} - ${it.endHr}"
 
-        binding.jobDetailJobTitle.text = job.jobTitle
-        binding.jobDetailBuserName.text= job.BUserName?.uppercase(Locale.getDefault())
-        binding.jobDetailJobType.text= job.jobType
-        binding.jobDetailSalary.text= salaryTxt
-        binding.jobDetailEmpAmount.text= emp
-        binding.jobDetailStartTime.text= job.startTime
-        binding.jobDetailEndTime.text= job.endTime
-        binding.jobDetailWorkShift.text= shift
-        binding.jobDetailAddress.text= job.address
-        binding.jobDetailDes.text= job.jobDes
+                binding.jobDetailBuserName.text= it.BUserName?.uppercase(Locale.getDefault())
+                binding.jobDetailJobTitle.text = it.jobTitle
+                binding.jobDetailJobType.text = it.jobType
+                binding.jobDetailSalary.text = salaryTxt
+                binding.jobDetailEmpAmount.text = emp
+                binding.jobDetailStartTime.text = it.startTime
+                binding.jobDetailEndTime.text = it.endTime
+                binding.jobDetailWorkShift.text = shift
+                binding.jobDetailAddress.text = it.address
+                binding.jobDetailDes.text = it.jobDes
 
-        RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
+                binding.detailJobScrollView.visibility = View.VISIBLE
+                binding.animationView.visibility = View.GONE
 
-        binding.detailJobScrollView.visibility = View.VISIBLE
-        binding.animationView.visibility = View.GONE
+                RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
+
+                binding.detailJobScrollView.visibility = View.VISIBLE
+                binding.animationView.visibility = View.GONE
+            }
+        }
     }
 
 }

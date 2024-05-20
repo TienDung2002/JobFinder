@@ -4,19 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
-import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.R
-import com.example.jobfinder.UI.FindNewJobs.FindNewJobViewModel
-import com.example.jobfinder.UI.FindNewJobs.NewJobsAdapter
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
-import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityAppliedJobsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -56,8 +48,10 @@ class AppliedJobsActivity : AppCompatActivity() {
 //      click vào item applied job
         adapter.setOnItemClickListener(object : AppliedJobsAdapter.onItemClickListener {
             override fun onItemClicked(AppliedJob: AppliedJobModel) {
-//                val intent = Intent(this@AppliedJobsActivity, SeekerJobDetailActivity::class.java)
-//                startActivity(intent)
+                val intent = Intent(this@AppliedJobsActivity, SeekerJobDetailActivity::class.java)
+                intent.putExtra("job_id", AppliedJob.jobId)
+                intent.putExtra("buser_id", AppliedJob.buserId)
+                startActivity(intent)
                 // Ẩn hoặc xóa bottom navigation SeekerJobDetailActivity
 
 

@@ -155,7 +155,9 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             job?.let {
                 val recruitedAmount = it.numOfRecruited
                 val emp = "$recruitedAmount/${it.empAmount}"
-                val salaryTxt = "$${it.salaryPerEmp}${resources.getString(R.string.Ji_unit3)}"
+                val format = NumberFormat.getCurrencyInstance()
+                format.currency = Currency.getInstance("VND")
+                val salaryTxt = format.format(job.salaryPerEmp?.toDouble()) + resources.getString(R.string.Ji_unit3)
                 val shift = "${it.startHr}-${it.endHr}"
 
                 binding.jobDetailJobTitle.text = it.jobTitle
