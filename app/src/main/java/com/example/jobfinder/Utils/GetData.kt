@@ -1,9 +1,7 @@
 package com.example.jobfinder.Utils
 
 import android.annotation.SuppressLint
-import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.Datas.Model.idAndRole
-import com.example.jobfinder.UI.FindNewJobs.FindNewJobViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.ParseException
@@ -254,6 +252,7 @@ object GetData {
             }
     }
 
+    @SuppressLint("DefaultLocale")
     fun formatLabelHoursSlider(value: Float): String {  // Ví dụ convert 1.5 sẽ trở thành "01:30"
         val hours = value.toInt()
         val minutes = ((value - hours) * 60).toInt()
