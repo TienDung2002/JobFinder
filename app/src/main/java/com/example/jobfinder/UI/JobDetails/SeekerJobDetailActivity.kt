@@ -21,7 +21,10 @@ import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivitySeekerJobDetailBinding
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.Currency
 import java.util.Locale
 
@@ -29,6 +32,7 @@ class SeekerJobDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySeekerJobDetailBinding
     private lateinit var viewModel: FindNewJobViewModel
     var isBookmarked: Boolean = false
+    var isApplied: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,58 +69,19 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                 this.isBookmarked = !isBookmarked
             }
 
+            // Kiểm tra nếu công việc đã được apply
+            checkIfApplied(job.jobId.toString())
+
 
             val dialog = Dialog(binding.root.context)
             dialog.setContentView(R.layout.dialog_apply_job_des)
             // Nút apply
             binding.applyBtn.setOnClickListener {
-                val cancel = dialog.findViewById<Button>(R.id.cancel_btn)
-                val send = dialog.findViewById<Button>(R.id.send)
-                val description = dialog.findViewById<TextInputEditText>(R.id.description)
-
-                val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(job.BUserId.toString())
-
-                cancel.setOnClickListener {
-                    dialog.dismiss()
+                if (isApplied) {
+                    unapplyJob(job.jobId.toString(), job.BUserId.toString())
+                } else {
+                    applyJob(job)
                 }
-
-                send.setOnClickListener {
-                    val userID = GetData.getCurrentUserId()
-                    if (userID != null) {
-                        GetData.getUsernameFromUserId(userID.toString()) { username ->
-                            if (username != null) {
-                                val curTime = GetData.getCurrentDateTime()
-                                val desc = description.text.toString()
-
-                                val applicant = ApplicantsModel(userID.toString(), desc, curTime, username)
-                                val appliedJob = AppliedJobModel(job.BUserId.toString(), job.jobId.toString(), curTime,
-                                    job.jobTitle.toString(), job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString())
-
-                                val notiId = notiRef.push().key.toString()
-                                val notification = NotificationsRowModel(notiId, job.jobTitle.toString(),
-                                    username + " ${getString(R.string.applied)}."
-                                    ,curTime)
-
-                                FirebaseDatabase.getInstance().getReference("Applicant").child(job.jobId.toString()).child(userID.toString()).setValue(applicant)
-                                FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID.toString()).child(job.jobId.toString()).setValue(appliedJob)
-                                notiRef.child(notiId).setValue(notification)
-
-                                Toast.makeText(binding.root.context, getString(R.string.applied_success), Toast.LENGTH_SHORT).show()
-
-                                dialog.dismiss()
-
-                                setResult(Activity.RESULT_OK, Intent())
-                                finish()
-                            } else {
-                                println("Không thể lấy được username.")
-                            }
-                        }
-                    } else {
-                        println("Không thể lấy được userID.")
-                    }
-                }
-                dialog.show()
-
             }
         }
 
@@ -160,31 +125,6 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         )
     }
 
-//    private fun assignData(job: JobModel){
-//        val format = java.text.NumberFormat.getCurrencyInstance()
-//        format.currency = Currency.getInstance("VND")
-//        val salaryTxt = format.format(job.salaryPerEmp?.toDouble()) + resources.getString(R.string.Ji_unit3)
-//
-//        val emp = job.numOfRecruited+"/"+ job.empAmount
-//        val shift = job.startHr+" - "+ job.endHr
-//
-//        binding.jobDetailJobTitle.text = job.jobTitle
-//        binding.jobDetailBuserName.text= job.BUserName?.uppercase(Locale.getDefault())
-//        binding.jobDetailJobType.text= job.jobType
-//        binding.jobDetailSalary.text= salaryTxt
-//        binding.jobDetailEmpAmount.text= emp
-//        binding.jobDetailStartTime.text= job.startTime
-//        binding.jobDetailEndTime.text= job.endTime
-//        binding.jobDetailWorkShift.text= shift
-//        binding.jobDetailAddress.text= job.address
-//        binding.jobDetailDes.text= job.jobDes
-//
-//        RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
-//
-//        binding.detailJobScrollView.visibility = View.VISIBLE
-//        binding.animationView.visibility = View.GONE
-//    }
-
     private fun fetchJobData(jobId: String, bUserId: String) {
         FirebaseDatabase.getInstance().getReference("Job").child(bUserId).child(jobId).get().addOnSuccessListener { dataSnapshot ->
             val job = dataSnapshot.getValue(JobModel::class.java)
@@ -218,4 +158,100 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkIfApplied(jobId: String) {
+        val userId = GetData.getCurrentUserId()
+        userId?.let {
+            FirebaseDatabase.getInstance().getReference("AppliedJob")
+                .child(it)
+                .child(jobId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        isApplied = snapshot.exists()
+                        updateApplyButton()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
+        }
+    }
+
+    private fun updateApplyButton() {
+        binding.applyBtn.text = if (isApplied) {
+            getString(R.string.unapply)
+        } else {
+            getString(R.string.apply)
+        }
+    }
+
+    private fun applyJob(job: JobModel) {
+        val dialog = Dialog(binding.root.context)
+        dialog.setContentView(R.layout.dialog_apply_job_des)
+
+        val cancel = dialog.findViewById<Button>(R.id.cancel_btn)
+        val send = dialog.findViewById<Button>(R.id.send)
+        val description = dialog.findViewById<TextInputEditText>(R.id.description)
+        val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(job.BUserId.toString())
+
+        cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        send.setOnClickListener {
+            val userID = GetData.getCurrentUserId()
+            if (userID != null) {
+                GetData.getUsernameFromUserId(userID.toString()) { username ->
+                    if (username != null) {
+                        val curTime = GetData.getCurrentDateTime()
+                        val desc = description.text.toString()
+
+                        val applicant = ApplicantsModel(userID.toString(), desc, curTime, username)
+                        val appliedJob = AppliedJobModel(job.BUserId.toString(), job.jobId.toString(), curTime,
+                            job.jobTitle.toString(), job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString())
+
+                        val notiId = notiRef.push().key.toString()
+                        val notification = NotificationsRowModel(notiId, job.jobTitle.toString(),
+                            "$username ${getString(R.string.applied)}.", curTime)
+
+                        FirebaseDatabase.getInstance().getReference("Applicant").child(job.jobId.toString()).child(userID.toString()).setValue(applicant)
+                        FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID.toString()).child(job.jobId.toString()).setValue(appliedJob)
+                        notiRef.child(notiId).setValue(notification)
+
+                        Toast.makeText(binding.root.context, getString(R.string.applied_success), Toast.LENGTH_SHORT).show()
+
+                        dialog.dismiss()
+
+                        isApplied = true
+                        updateApplyButton()
+                    } else {
+                        println("Không thể lấy được username.")
+                    }
+                }
+            } else {
+                println("Không thể lấy được userID.")
+            }
+        }
+        dialog.show()
+    }
+
+    private fun unapplyJob(jobId: String, bUserId: String) {
+        val userID = GetData.getCurrentUserId()
+        if (userID != null) {
+            FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID).child(jobId).removeValue().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    FirebaseDatabase.getInstance().getReference("Applicant").child(jobId).child(userID).removeValue().addOnCompleteListener { task2 ->
+                        if (task2.isSuccessful) {
+                            Toast.makeText(this, getString(R.string.unapplied_success), Toast.LENGTH_SHORT).show()
+                            isApplied = false
+                            updateApplyButton()
+                        } else {
+                            Toast.makeText(this, getString(R.string.unapply_failed), Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, getString(R.string.unapply_failed), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 }

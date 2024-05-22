@@ -337,6 +337,9 @@
 
     <!--    job detail-->
     <string name="apply">Apply</string>
+    <string name="unapply">Unapply</string>
+    <string name="unapplied_success">Unapplied Success</string>
+    <string name="unapply_failed">Unapply Failed</string>
     <string name="job_detail_title">Job detail</string>
     <string name="jdetail_shift_1">7:30-14:30</string>
     <string name="jdetail_shift_2">14:30-21:30</string>

@@ -76,6 +76,7 @@ class AppliedJobsActivity : AppCompatActivity() {
                             }
                         }
                     }
+                    viewModel.sortByNewestApplied()
                 }
                 override fun onCancelled(databaseError: DatabaseError) {
                 }

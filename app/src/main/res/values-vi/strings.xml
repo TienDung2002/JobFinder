@@ -340,6 +340,9 @@
 
     <!--    job detail-->
     <string name="apply">Ứng tuyển</string>
+    <string name="unapply">Hủy ứng tuyển</string>
+    <string name="unapplied_success">Hủy thành công</string>
+    <string name="unapply_failed">Hủy thất bại</string>
     <string name="job_detail_title">Chi tiết công việc</string>
     <string name="jdetail_shift_1">7:30-14:30</string>
     <string name="jdetail_shift_2">14:30-21:30</string>
