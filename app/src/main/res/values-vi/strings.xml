@@ -410,6 +410,8 @@
         <item>Báo cáo doanh nghiệp</item>
     </string-array>
 
-
+    <!--    working job-->
+    <string name="working_job_title">Việc đang hoạt động</string>
+    <string name="no_wkJob">Không có việc nào đang hoạt động</string>
 
 </resources>

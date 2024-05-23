@@ -407,5 +407,9 @@
         <item>Report a recruiter</item>
     </string-array>
 
+<!--    working job-->
+    <string name="working_job_title">Working Job</string>
+    <string name="no_wkJob">No job is working</string>
+
 
 </resources>
