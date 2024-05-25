@@ -47,13 +47,4 @@ class WorkingJobViewModel : ViewModel() {
         }
     }
 
-    fun deleteJob(jobId: String) {
-        database.child(jobId).removeValue()
-            .addOnSuccessListener {
-            }
-            .addOnFailureListener {
-            }
-    }
-
-
 }
