@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.JobDetails.RecruiterJobDetailActivity
+import com.example.jobfinder.UI.JobEmpList.JobEmpListActivity
 import com.example.jobfinder.UI.PostedJob.PostedJobAdapter
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.Wallet.WalletFragment
@@ -43,7 +44,7 @@ class WorkingJobActivity : AppCompatActivity() {
             override fun onItemClick(job: JobModel) {
                 if (!isActivityOpened) {
                     // Mở activity chỉ khi activity chưa được mở
-                    val intent = Intent(this@WorkingJobActivity, RecruiterJobDetailActivity::class.java)
+                    val intent = Intent(this@WorkingJobActivity, JobEmpListActivity::class.java)
                     intent.putExtra("job", job)
                     startActivityForResult(intent, 1004)
                     // Đặt biến kiểm tra là đã mở

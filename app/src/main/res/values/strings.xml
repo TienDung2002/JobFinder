@@ -407,9 +407,13 @@
         <item>Report a recruiter</item>
     </string-array>
 
-<!--    working job-->
+    <!--    working job-->
     <string name="working_job_title">Working Job</string>
     <string name="no_wkJob">No job is working</string>
+    <string name="no_emp">No employee in job</string>
+    <string name="empListTitle">Employee list</string>
+    <string name="check_in">Check in</string>
+    <string name="checked">Checked</string>
 
 
 </resources>
