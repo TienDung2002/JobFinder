@@ -1,7 +1,7 @@
 package com.example.jobfinder.Datas.Model
 
 class AppliedJobModel (
-    var  buserId :String?,
+    var buserId :String?,
     var jobId :String?,
     var appliedDate: String?,
     var jobTitle: String?,

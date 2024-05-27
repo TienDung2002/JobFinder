@@ -43,25 +43,32 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         // Khởi tạo viewmodel
         viewModel = ViewModelProvider(this).get(FindNewJobViewModel::class.java)
 
+        var uid = ""
         val job = intent.getParcelableExtra<JobModel>("job")
         val job_id = intent.getStringExtra("job_id")
         val buser_id = intent.getStringExtra("buser_id")
-        var uid = ""
+        // Nhận trạng thái (btn apply) từ AppliedJobActivity
+        isApplied = intent.getBooleanExtra("is_applied", false)
+        updateApplyButton()     // cập nhật text cho btn sau khi nhận trạng thái từ AppliedJobActivity
 
-        if(job_id!= null && buser_id !=null){
-            binding.detailJobBtnHolder.visibility = View.GONE
+
+        if (job_id != null && buser_id != null) {
+            binding.saveJobBtnCardView.visibility = View.GONE
             fetchJobData(job_id, buser_id)
             uid = buser_id
-        }else if (job != null) {
+
+            // Nút apply (logic nhận từ AppliedJob)
+            binding.applyBtn.setOnClickListener {
+                if (isApplied) {
+                    unapplyJob(job_id, buser_id)
+                } else {
+                    // Logic apply job nếu cần thiết
+                }
+            }
+        } else if (job != null) {
             uid = job.BUserId.toString()
             // Gán data
             fetchJobData(job.jobId.toString(), job.BUserId.toString())
-
-            // job nào đang trạng thái hoạt động thì hiện nút apply
-//            if(job.status.toString() != "recruiting"){
-//                binding.detailJobBtnHolder.visibility = View.GONE
-//            }
-
 
             // Bookmark
             binding.saveJobBtn.setOnClickListener {
@@ -72,10 +79,10 @@ class SeekerJobDetailActivity : AppCompatActivity() {
             // Kiểm tra nếu công việc đã được apply
             checkIfApplied(job.jobId.toString())
 
-
             val dialog = Dialog(binding.root.context)
             dialog.setContentView(R.layout.dialog_apply_job_des)
-            // Nút apply
+
+            // Nút apply (logic nhận từ NewJobActivity)
             binding.applyBtn.setOnClickListener {
                 if (isApplied) {
                     unapplyJob(job.jobId.toString(), job.BUserId.toString())
@@ -244,6 +251,12 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                             Toast.makeText(this, getString(R.string.unapplied_success), Toast.LENGTH_SHORT).show()
                             isApplied = false
                             updateApplyButton()
+
+                            // Gửi kết quả về AppliedJobActivity (nếu hủy ứng tuyển từ AppliedJobActivity)
+                            val resultIntent = Intent()
+                            resultIntent.putExtra("job_id", jobId)
+                            setResult(Activity.RESULT_OK, resultIntent)
+                            finish()
                         } else {
                             Toast.makeText(this, getString(R.string.unapply_failed), Toast.LENGTH_SHORT).show()
                         }

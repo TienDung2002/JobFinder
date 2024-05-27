@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ class AppliedJobsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAppliedJobsBinding
     private val viewModel: AppliedJobsViewModel by viewModels()
     private lateinit var adapter: AppliedJobsAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,15 +53,25 @@ class AppliedJobsActivity : AppCompatActivity() {
                 val intent = Intent(this@AppliedJobsActivity, SeekerJobDetailActivity::class.java)
                 intent.putExtra("job_id", AppliedJob.jobId)
                 intent.putExtra("buser_id", AppliedJob.buserId)
-                startActivity(intent)
-                // Ẩn hoặc xóa bottom navigation SeekerJobDetailActivity
-
-
-
+                intent.putExtra("is_applied", true)
+                jobDetailActivityResultLauncher.launch(intent)
             }
         })
-
     }
+
+
+    // Biến để đăng ký cho kết quả activity (để xử lý kết quả trả về từ SeekerJobDetailActivity khi ấn hủy ứng tuyển)
+    private val jobDetailActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val jobId = result.data?.getStringExtra("job_id")
+            if (jobId != null) {
+                // Loại bỏ công việc khỏi danh sách đã ứng tuyển
+                viewModel.removeAppliedJob(jobId)
+            }
+        }
+    }
+
 
     private fun fetchAppliedJobs(){
         viewModel.clearAppliedList()

@@ -33,4 +33,17 @@ class AppliedJobsViewModel: ViewModel()  {
         appliedList.sortByDescending { GetData.convertStringToDate(it.appliedDate.toString()) }
         _appliedListLiveData.value = appliedList
     }
+
+    // Xóa job khỏi danh sách khi ấn hủy ứng tuyển
+    fun removeAppliedJob(jobId: String) {
+        val iterator = appliedList.iterator()
+        while (iterator.hasNext()) {
+            val job = iterator.next()
+            if (job.jobId == jobId) {
+                iterator.remove()
+                break
+            }
+        }
+        _appliedListLiveData.value = appliedList
+    }
 }
