@@ -11,11 +11,15 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.ApplicantsModel
+import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
+import com.google.firebase.database.FirebaseDatabase
 
 class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
-                        private val context: Context
+                        private val context: Context,
+                        private val job_id:String
 ) :
     RecyclerView.Adapter<JobEmpListAdapter.empInJobViewHolder>() {
 
@@ -35,14 +39,34 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
 
     @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: empInJobViewHolder, position: Int) {
+
         val currentItem = applicantList[position]
         holder.textViewName.text = currentItem.userName
 
         RetriveImg.retrieveImage(currentItem.userId.toString(), holder.imgView)
 
-        holder.checkBtn.setOnClickListener{
-            holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
-            holder.checkBtn.setText(R.string.checked)
+        val checkInDb = FirebaseDatabase.getInstance().getReference("CheckInFromBUser").child(job_id)
+        val today = GetData.getCurrentDateTime()
+        val currentDayString = GetData.getDateFromString(today)
+        val currentDay = GetData.formatDateForFirebase(currentDayString.toString())
+        checkInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener { dataSnapshot ->
+            if (dataSnapshot.exists()) {
+                holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
+                holder.checkBtn.setText(R.string.checked)
+                holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+            } else {
+                holder.checkBtn.setOnClickListener{
+                    holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
+                    holder.checkBtn.setText(R.string.checked)
+                    holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+
+                    val checkIn = CheckInFromBUserModel(currentItem.userId.toString(),today,"checked")
+
+                    checkInDb.child(currentDay).child(currentItem.userId.toString()).setValue(checkIn)
+                }
+            }
+        }.addOnFailureListener{
+            // Handle failure here if necessary
         }
     }
 

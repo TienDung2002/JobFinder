@@ -348,6 +348,7 @@
     <string name="status_working">Đang hoạt động</string>
     <string name="status_recruiting">Đang tuyển</string>
     <string name="status_closed">Đã đóng</string>
+    <string name="temporarily_closed">Tạm đóng</string>
     <string name="applicant">Ứng viên</string>
     <string name="Jd_delete">xóa</string>
 

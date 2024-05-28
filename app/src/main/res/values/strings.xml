@@ -345,6 +345,7 @@
     <string name="status_working">Working</string>
     <string name="status_recruiting">Recruiting</string>
     <string name="status_closed">Closed</string>
+    <string name="temporarily_closed">Temporarily closed</string>
     <string name="applicant">Applicant</string>
     <string name="deleted_job">Job deleted</string>
     <string name="Jd_delete">delete</string>

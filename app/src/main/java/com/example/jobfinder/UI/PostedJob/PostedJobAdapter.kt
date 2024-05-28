@@ -71,6 +71,7 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
         return when (status){
             "working" -> R.string.status_working
             "recruiting" -> R.string.status_recruiting
+            "closed2" -> R.string.temporarily_closed
             else -> R.string.status_closed
         }
     }

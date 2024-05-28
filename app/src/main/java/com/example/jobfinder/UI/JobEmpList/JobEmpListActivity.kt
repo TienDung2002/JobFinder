@@ -27,7 +27,7 @@ class JobEmpListActivity : AppCompatActivity() {
         if(job!= null) {
 
             // Tạo adapter và gán vào RecyclerView
-            val adapter = JobEmpListAdapter(mutableListOf(), binding.root.context)
+            val adapter = JobEmpListAdapter(mutableListOf(), binding.root.context, job.jobId.toString())
             binding.recyclerEmpInJobList.adapter = adapter
             binding.recyclerEmpInJobList.layoutManager = LinearLayoutManager(this)
             binding.animationView.visibility = View.GONE
