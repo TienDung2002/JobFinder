@@ -22,16 +22,6 @@ class SelectRoleActivity : AppCompatActivity() {
         //firebase
         auth = FirebaseAuth.getInstance()
 
-        auth.currentUser?.reload()?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val updatedUser = auth.currentUser
-                if (updatedUser != null) {
-                    // Người dùng vẫn đang đăng nhập
-                    startActivity(Intent(applicationContext, HomeActivity::class.java))
-                    finish()
-                }
-            }
-        }
 
         // mở login role tuyển dụng
         binding.loginasRecruiter.setOnClickListener {

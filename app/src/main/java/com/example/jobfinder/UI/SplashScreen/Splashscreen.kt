@@ -20,19 +20,25 @@ class Splashscreen : AppCompatActivity() {
 
         binding.iconSplash.alpha = 0f
         binding.iconSplash.animate().setDuration(2000).alpha(1f).withEndAction{
-//            val intent = Intent(this, SelectRoleActivity::class.java)
-//            startActivity(intent)
-
             // Kiểm tra trạng thái đăng nhập
             if (auth.currentUser != null) {
                 // Người dùng đã đăng nhập, chuyển thẳng tới HomeActivity
-                startActivity(Intent(this, HomeActivity::class.java))
+                auth.currentUser?.reload()?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        startActivity(Intent(this, HomeActivity::class.java))
+                        finish()
+                    } else {
+                        // Nếu có lỗi khi làm mới thông tin người dùng, chuyển tới SelectRoleActivity
+                        startActivity(Intent(this, SelectRoleActivity::class.java))
+                        finish()
+                    }
+                }
             } else {
                 // Người dùng chưa đăng nhập, chuyển tới SelectRoleActivity
                 startActivity(Intent(this, SelectRoleActivity::class.java))
+                finish()
             }
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()
         }.start()
     }
 }
