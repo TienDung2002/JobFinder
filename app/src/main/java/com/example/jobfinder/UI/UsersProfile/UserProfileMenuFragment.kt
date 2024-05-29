@@ -40,6 +40,18 @@ class UserProfileMenuFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
 
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentUserProfileMenuBinding.inflate(inflater,container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // hiển thị username
         val database = FirebaseDatabase.getInstance().reference
@@ -63,18 +75,6 @@ class UserProfileMenuFragment : Fragment() {
             retrieveImage(userId)
         }
 
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentUserProfileMenuBinding.inflate(inflater,container,false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         //account
         binding.profileAccount.setOnClickListener {
             val intent = Intent(requireContext(), AccountActivity::class.java)
@@ -104,28 +104,7 @@ class UserProfileMenuFragment : Fragment() {
 
     }
     private fun retrieveImage(userid : String) {
-//        RetriveImg.retrieveImage(userid, binding.profileImage)
-        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
-        val imageRef: StorageReference = storageReference.child(userid)
-        Log.d("SeekerEditProfileFragment", "ImageRef path: $imageRef")
-
-
-        imageRef.downloadUrl
-            .addOnSuccessListener { uri: Uri ->
-
-                binding.profileImage.setBackgroundResource(R.drawable.image_loading_80px)
-                viewModel.imageUri = uri
-                Glide.with(requireContext())
-                    .load(uri)
-                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
-                    .into(binding.profileImage)
-
-            }
-            .addOnFailureListener { exception ->
-                Log.e("UserProfileMenuFragment", "Failed to retrieve image: ${exception.message}")
-                binding.profileImage.setBackgroundResource(R.drawable.profile)
-
-            }
+        RetriveImg.retrieveImage(userid, binding.profileImage)
     }
 
 

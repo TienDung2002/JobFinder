@@ -58,8 +58,6 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
 
             fetchJobData(job.jobId.toString(), job.BUserId.toString())
 
-            RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
-
             binding.deleteBtn.setOnClickListener {
                 if (job.status.toString() == "recruiting") {
                     amountWorking(job)
@@ -158,31 +156,38 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
     }
 
     private fun fetchJobData(jobId: String, bUserId: String) {
-        FirebaseDatabase.getInstance().getReference("Job").child(bUserId).child(jobId).get().addOnSuccessListener { dataSnapshot ->
-            val job = dataSnapshot.getValue(JobModel::class.java)
-            job?.let {
-                val recruitedAmount = it.numOfRecruited
-                val emp = "$recruitedAmount/${it.empAmount}"
-                val shift = "${it.startHr}-${it.endHr}"
-
-                val format = NumberFormat.getCurrencyInstance()
                 format.currency = Currency.getInstance("VND")
-                val salaryTxt = "${format.format(it.salaryPerEmp?.toDouble())} ${resources.getString(R.string.Ji_unit3)}"
+        FirebaseDatabase.getInstance().getReference("Job").child(bUserId).child(jobId).get()
+            .addOnSuccessListener { dataSnapshot ->
+                val job = dataSnapshot.getValue(JobModel::class.java)
+                job?.let {
+                    val recruitedAmount = it.numOfRecruited
+                    val emp = "$recruitedAmount/${it.empAmount}"
+                    val format = NumberFormat.getCurrencyInstance()
+                    format.currency = Currency.getInstance("VND")
+                    val salaryTxt =
+                        format.format(job.salaryPerEmp?.toDouble()) + resources.getString(R.string.Ji_unit3)
+                    val shift = "${it.startHr} - ${it.endHr}"
 
-                binding.jobDetailJobTitle.text = it.jobTitle
-                binding.jobDetailJobType.text = it.jobType
-                binding.jobDetailSalary.text = salaryTxt
-                binding.jobDetailEmpAmount.text = emp
-                binding.jobDetailStartTime.text = it.startTime
-                binding.jobDetailEndTime.text = it.endTime
-                binding.jobDetailWorkShift.text = shift
-                binding.jobDetailAddress.text = it.address
-                binding.jobDetailDes.text = it.jobDes
+                    binding.jobDetailJobTitle.text = it.jobTitle
+                    binding.jobDetailJobType.text = it.jobType
+                    binding.jobDetailSalary.text = salaryTxt
+                    binding.jobDetailEmpAmount.text = emp
+                    binding.jobDetailStartTime.text = it.startTime
+                    binding.jobDetailEndTime.text = it.endTime
+                    binding.jobDetailWorkShift.text = shift
+                    binding.jobDetailAddress.text = it.address
+                    binding.jobDetailDes.text = it.jobDes
 
-                binding.detailJobScrollView.visibility = View.VISIBLE
-                binding.animationView.visibility = View.GONE
+                    binding.detailJobScrollView.visibility = View.VISIBLE
+                    binding.animationView.visibility = View.GONE
+
+                    RetriveImg.retrieveImage(job.BUserId.toString(), binding.buserLogo)
+
+                    binding.detailJobScrollView.visibility = View.VISIBLE
+                    binding.animationView.visibility = View.GONE
+                }
             }
-        }
     }
 
 

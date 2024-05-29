@@ -3,45 +3,69 @@ package com.example.jobfinder.Datas.Model
 import android.os.Parcel
 import android.os.Parcelable
 
-class JobModel(
-    var jobId: String? = null,
-    var jobTitle: String? = null,
-    var startTime: String? = null,
-    var endTime: String? = null,
-    var empAmount: String? = null,
-    var salaryPerEmp: String? = null,
-    var address: String? = null,
-    var jobDes: String? = null,
-    var totalSalary: String? = null,
-    var postDate: String? = null,
-    var numOfRecruited: String? = null,
-    var BUserName: String? = null,
-    var jobType: String? = null,
-    var BUserId: String? = null,
-    var status: String? = null,
-    var startHr: String? = null,
-    var endHr: String? = null
-) : Parcelable {
 
-    constructor(parcel: Parcel) : this(
-        jobId = parcel.readString(),
-        jobTitle = parcel.readString(),
-        startTime = parcel.readString(),
-        endTime = parcel.readString(),
-        empAmount = parcel.readString(),
-        salaryPerEmp = parcel.readString(),
-        address = parcel.readString(),
-        jobDes = parcel.readString(),
-        totalSalary = parcel.readString(),
-        postDate = parcel.readString(),
-        numOfRecruited = parcel.readString(),
-        BUserName = parcel.readString(),
-        jobType = parcel.readString(),
-        BUserId = parcel.readString(),
-        status = parcel.readString(),
-        startHr = parcel.readString(),
-        endHr = parcel.readString()
-    )
+class JobModel : Parcelable {
+    var jobId: String? = null
+    var jobTitle: String? = null
+    var startTime: String? = null
+    var endTime: String? = null
+    var empAmount: String? = null
+    var salaryPerEmp: String? = null
+    var address: String? = null
+    var jobDes: String? = null
+    var totalSalary: String? = null
+    var postDate: String? = null
+    var numOfRecruited: String? = null
+    var BUserName: String? = null
+    var jobType: String?=null
+    var BUserId: String? =null
+    var status:String? = null
+    var startHr: String?=null
+    var endHr:String? =null
+
+    constructor() {
+        // Default constructor required for Firebase
+    }
+
+    constructor(
+        jobId: String?,
+        jobTitle: String?,
+        startTime: String?,
+        endTime: String?,
+        empAmount: String?,
+        salaryPerEmp: String?,
+        address: String?,
+        jobDes: String?,
+        totalSalary: String?,
+        postDate: String?,
+        numOfRecruited: String?,
+        BUserName: String?,
+        jobType: String?,
+        BUserId: String?,
+        status: String?,
+        startHr:String?,
+        endHr:String?
+    ) {
+        this.jobId = jobId
+        this.jobTitle = jobTitle
+        this.startTime = startTime
+        this.endTime = endTime
+        this.empAmount = empAmount
+        this.salaryPerEmp = salaryPerEmp
+        this.address = address
+        this.jobDes = jobDes
+        this.totalSalary = totalSalary
+        this.postDate = postDate
+        this.numOfRecruited = numOfRecruited
+        this.BUserName = BUserName
+        this.jobType = jobType
+        this.BUserId = BUserId
+        this.status = status
+        this.startHr= startHr
+        this.endHr= endHr
+    }
+
+
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(jobId)
@@ -63,6 +87,26 @@ class JobModel(
         parcel.writeString(endHr)
     }
 
+    constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    )
+
     override fun describeContents(): Int {
         return 0
     }
@@ -76,4 +120,5 @@ class JobModel(
             return arrayOfNulls(size)
         }
     }
+
 }
