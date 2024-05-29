@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
+import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.FragmentUserProfileMenuBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -103,10 +104,11 @@ class UserProfileMenuFragment : Fragment() {
 
     }
     private fun retrieveImage(userid : String) {
+//        RetriveImg.retrieveImage(userid, binding.profileImage)
         val storageReference: StorageReference = FirebaseStorage.getInstance().reference
         val imageRef: StorageReference = storageReference.child(userid)
         Log.d("SeekerEditProfileFragment", "ImageRef path: $imageRef")
-        
+
 
         imageRef.downloadUrl
             .addOnSuccessListener { uri: Uri ->
