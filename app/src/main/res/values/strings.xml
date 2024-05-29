@@ -348,6 +348,7 @@
     <string name="status_working">Working</string>
     <string name="status_recruiting">Recruiting</string>
     <string name="status_closed">Closed</string>
+    <string name="temporarily_closed">Temporarily closed</string>
     <string name="applicant">Applicant</string>
     <string name="deleted_job">Job deleted</string>
     <string name="Jd_delete">delete</string>
@@ -409,6 +410,14 @@
         <item>Report a user</item>
         <item>Report a recruiter</item>
     </string-array>
+
+    <!--    working job-->
+    <string name="working_job_title">Working Job</string>
+    <string name="no_wkJob">No job is working</string>
+    <string name="no_emp">No employee in job</string>
+    <string name="empListTitle">Employee list</string>
+    <string name="check_in">Check in</string>
+    <string name="checked">Checked</string>
 
 
 </resources>

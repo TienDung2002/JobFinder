@@ -100,6 +100,11 @@ object GetData {
         }
         return null
     }
+
+    // chuyển dạng từ dd/MM/yyyy -> dd-MM-yyyy
+    fun formatDateForFirebase(date: String): String {
+        return date.replace("/", "-")
+    }
     // Chuyển chuỗi ngày tháng từ String thành kiểu Date - Lấy dd/MM/yyyy
     fun convertStringToDATE(dateTimeString: String): Date? {
         val parts = dateTimeString.split(" ")
@@ -154,16 +159,19 @@ object GetData {
             val empAmountInt = empAmount.toIntOrNull()
             val recruitedEmpInt = recruitedEmp.toIntOrNull()
 
-            if (empAmountInt != null && recruitedEmpInt != null) {
-                if (recruitedEmpInt >= empAmountInt) {
-                    return "closed"
+            if (empAmountInt != null && recruitedEmpInt != null && today!= null) {
+
+                return when {
+                    (!today.before(startDate) && !today.after(endDate)) && recruitedEmpInt != 0-> "working"
+                    recruitedEmpInt >= empAmountInt-> "closed2"
+                    today.after(endDate) -> "closed"
+                    today.before(startDate) -> "recruiting"
+                    else -> "closed"
                 }
             }
-            return when {
-                today.after(endDate) -> "closed"
-                today.before(startDate) -> "recruiting"
-                else -> "working"
-            }
+
+            return "closed"
+
         }catch (e: Exception) {
             e.printStackTrace()
             return "null"

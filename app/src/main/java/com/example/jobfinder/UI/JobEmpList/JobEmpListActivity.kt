@@ -1,26 +1,24 @@
-package com.example.jobfinder.UI.Applicants
+package com.example.jobfinder.UI.JobEmpList
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.Datas.Model.JobModel
-import com.example.jobfinder.UI.UserDetailInfo.NUserDetailInfoActivity
-import com.example.jobfinder.databinding.ActivityApplicantsListBinding
+import com.example.jobfinder.databinding.ActivityJobEmpListBinding
 
-class ActivityApplicantsList : AppCompatActivity() {
-    private lateinit var binding: ActivityApplicantsListBinding
+class JobEmpListActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityJobEmpListBinding
     private val REQUEST_CODE = 1002
     private var isActivityOpened = false
-    private val viewModel: ApplicantViewModel by viewModels()
+    private val viewModel: JobEmpListViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityApplicantsListBinding.inflate(layoutInflater)
+        binding = ActivityJobEmpListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.animationView.visibility = View.VISIBLE
 
@@ -29,30 +27,17 @@ class ActivityApplicantsList : AppCompatActivity() {
         if(job!= null) {
 
             // Tạo adapter và gán vào RecyclerView
-            val adapter = ApplicantAdapter(mutableListOf(), job, binding.root.context, viewModel)
-            binding.recyclerApplicantList.adapter = adapter
-            binding.recyclerApplicantList.layoutManager = LinearLayoutManager(this)
+            val adapter = JobEmpListAdapter(mutableListOf(), binding.root.context, job.jobId.toString())
+            binding.recyclerEmpInJobList.adapter = adapter
+            binding.recyclerEmpInJobList.layoutManager = LinearLayoutManager(this)
             binding.animationView.visibility = View.GONE
 
-            adapter.setOnItemClickListener(object : ApplicantAdapter.OnItemClickListener {
-                override fun onItemClick(applicant: ApplicantsModel) {
-                    if (!isActivityOpened) {
-                        val intent =
-                            Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
-                        intent.putExtra("nuser_applicant", applicant)
-                        intent.putExtra("job",job)
-                        startActivityForResult(intent, REQUEST_CODE)
-                        isActivityOpened = true
-                    }
-                }
-            })
-
-            viewModel.applicantList.observe(this) { updatedList ->
+            viewModel.EmployeeList.observe(this) { updatedList ->
                 adapter.updateData(updatedList)
                 checkEmptyAdapter(updatedList)
             }
 
-            viewModel.fetchApplicant(job.jobId.toString())
+            viewModel.fetchEmployee(job.jobId.toString())
 
             binding.backButton.setOnClickListener {
                 sendResultAndFinish(job)
@@ -87,20 +72,15 @@ class ActivityApplicantsList : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
             isActivityOpened = false
-            val jobId = data?.getStringExtra("jobId")
-            val change =data?.getStringExtra("change")
-            if(change =="true") {
-                viewModel.fetchApplicant(jobId.toString())
-            }
         }
     }
 
     private fun checkEmptyAdapter(list: MutableList<ApplicantsModel>) {
         if (list.isEmpty()) {
-            binding.noApplicant.visibility = View.VISIBLE
+            binding.noEmpInJob.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
         } else {
-            binding.noApplicant.visibility = View.GONE
+            binding.noEmpInJob.visibility = View.GONE
             binding.animationView.visibility = View.GONE
         }
     }

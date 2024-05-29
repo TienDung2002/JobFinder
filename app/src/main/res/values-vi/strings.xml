@@ -351,6 +351,7 @@
     <string name="status_working">Đang hoạt động</string>
     <string name="status_recruiting">Đang tuyển</string>
     <string name="status_closed">Đã đóng</string>
+    <string name="temporarily_closed">Tạm đóng</string>
     <string name="applicant">Ứng viên</string>
     <string name="Jd_delete">xóa</string>
 
@@ -413,6 +414,12 @@
         <item>Báo cáo doanh nghiệp</item>
     </string-array>
 
-
+    <!--    working job-->
+    <string name="working_job_title">Việc đang hoạt động</string>
+    <string name="no_wkJob">Không có việc nào đang hoạt động</string>
+    <string name="no_emp">Không có nhân viên</string>
+    <string name="empListTitle">Danh sách nhân viên</string>
+    <string name="check_in">Điểm danh</string>
+    <string name="checked">Đã điểm danh</string>
 
 </resources>

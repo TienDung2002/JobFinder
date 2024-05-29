@@ -1,5 +1,6 @@
-package com.example.jobfinder.UI.PostedJob
+package com.example.jobfinder.UI.WorkingJob
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
-import com.example.jobfinder.Utils.GetData
-import java.text.NumberFormat
-import java.util.Currency
 
-class PostedJobAdapter(private val context: Context, private var jobList: List<JobModel>) :
-    RecyclerView.Adapter<PostedJobAdapter.PostedJobViewHolder>() {
+class WorkingJobAdapter(private val context: Context, private var jobList: List<JobModel>) :
+    RecyclerView.Adapter<WorkingJobAdapter.PostedJobViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(job: JobModel)
@@ -26,28 +24,24 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
         this.listener = listener
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<JobModel>) {
         jobList = newList
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostedJobViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.row_posted_job, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.row_working_job, parent, false)
         return PostedJobViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: PostedJobViewHolder, position: Int) {
         val job = jobList[position]
-        val format = NumberFormat.getCurrencyInstance()
-        format.currency = Currency.getInstance("VND")
 
         // Bind data to views
         holder.jobTitleTextView.text = job.jobTitle
         holder.numOfRecruitsTextView.text = job.empAmount
         holder.numOfRecruitedTxtView.text= job.numOfRecruited
-        holder.salaryTextView.setText(format.format(job.salaryPerEmp?.toDouble()))
-        holder.postTimeTextView.text = GetData.getDateFromString(job.postDate.toString())
-        holder.status.setText(getStatus(job.status.toString()))
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(job)
@@ -62,18 +56,6 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
         val jobTitleTextView: TextView = itemView.findViewById(R.id.posted_job_job_title)
         val numOfRecruitsTextView: TextView = itemView.findViewById(R.id.NumOfRecruits)
         val numOfRecruitedTxtView: TextView = itemView.findViewById(R.id.NumOfRecruited)
-        val salaryTextView: TextView = itemView.findViewById(R.id.salary)
-        val postTimeTextView: TextView = itemView.findViewById(R.id.posttime)
-        val status: TextView = itemView.findViewById(R.id.posted_job_status)
-    }
-
-    private fun getStatus(status: String): Int{
-        return when (status){
-            "working" -> R.string.status_working
-            "recruiting" -> R.string.status_recruiting
-            "closed2" -> R.string.temporarily_closed
-            else -> R.string.status_closed
-        }
     }
 
 }

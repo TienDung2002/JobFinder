@@ -393,62 +393,62 @@
 
     </ScrollView>
 
-    <!--button holder-->
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:gravity="bottom"-->
-<!--        android:id="@+id/applicant_info_btn_holder"-->
-<!--        android:layout_alignParentBottom="true">-->
+    button holder
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:id="@+id/applicant_info_btn_holder"
+        android:layout_alignParentBottom="true">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:background="@color/primary_color4"-->
-<!--            android:paddingTop="10dp"-->
-<!--            android:paddingBottom="10dp"-->
-<!--            android:baselineAligned="false">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@color/primary_color4"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:baselineAligned="false">
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_weight="1">-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
 
-<!--                <Button-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/wallet_btn_shape"-->
-<!--                    android:text="@string/approve"-->
-<!--                    android:layout_marginStart="20dp"-->
-<!--                    android:layout_marginEnd="20dp"-->
-<!--                    android:id="@+id/approve_btn" />-->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/wallet_btn_shape"
+                    android:text="@string/approve"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/approve_btn" />
 
-<!--            </LinearLayout>-->
+            </LinearLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_weight="1">-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_weight="1">
 
-<!--                <Button-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:background="@drawable/wallet_btn_shape"-->
-<!--                    android:text="@string/reject"-->
-<!--                    android:layout_marginStart="20dp"-->
-<!--                    android:layout_marginEnd="20dp"-->
-<!--                    android:id="@+id/reject_btn"/>-->
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/wallet_btn_shape"
+                    android:text="@string/reject"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/reject_btn"/>
 
-<!--            </LinearLayout>-->
+            </LinearLayout>
 
-<!--        </LinearLayout>-->
+        </LinearLayout>
 
-<!--    </LinearLayout>-->
+    </LinearLayout>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
