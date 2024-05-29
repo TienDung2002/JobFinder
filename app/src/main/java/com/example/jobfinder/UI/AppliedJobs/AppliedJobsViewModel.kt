@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jobfinder.Datas.Model.AppliedJobModel
-import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.FirebaseDatabase
 

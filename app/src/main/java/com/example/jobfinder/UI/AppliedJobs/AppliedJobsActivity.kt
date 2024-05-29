@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityAppliedJobsBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -75,23 +76,17 @@ class AppliedJobsActivity : AppCompatActivity() {
 
     private fun fetchAppliedJobs(){
         viewModel.clearAppliedList()
-        FirebaseDatabase.getInstance().getReference("AppliedJob")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for (userSnapshot in dataSnapshot.children) {
-                        val tempList: MutableList<AppliedJobModel> = mutableListOf()
-                        for (AppliedJobSnapshot in userSnapshot.children) {
-                            val AppliedJobModel = AppliedJobSnapshot.getValue(AppliedJobModel::class.java)
-                            AppliedJobModel?.let {
-                                tempList.add(it)
-                                viewModel.addAppliedToAppliedList(it)
-                            }
-                        }
+        val userID = GetData.getCurrentUserId()
+        FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID.toString())
+            .get().addOnSuccessListener {datasnapshot ->
+                for (AppliedJobSnapshot in datasnapshot.children) {
+                    val AppliedJobModel = AppliedJobSnapshot.getValue(AppliedJobModel::class.java)
+                    AppliedJobModel?.let {
+                        viewModel.addAppliedToAppliedList(it)
                     }
-                    viewModel.sortByNewestApplied()
                 }
-                override fun onCancelled(databaseError: DatabaseError) {
-                }
-            })
+                viewModel.sortByNewestApplied()
+
+            }
     }
 }
