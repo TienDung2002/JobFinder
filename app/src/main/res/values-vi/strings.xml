@@ -25,6 +25,7 @@
     <string name="error_pass">Mật khẩu trống hoặc không chính xác (tối thiểu 6 kí tự)</string>
     <string name="error_email_pass">Vui lòng kiểm tra lại các trường</string>
     <string name="login_failed">Đăng nhập thất bại…Vui lòng kiểm tra lại</string>
+    <string name="error_wrong_passwordOrUsername">Email không tồn tại hoặc sai mật khẩu</string>
     <string name="wrong_role">Đăng nhập sai vai trò!</string>
     <string name="duplicate_phone">Trùng số điện thoại</string>
 

@@ -19,6 +19,7 @@ import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityLoginBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
@@ -103,8 +104,13 @@ class LoginActivity : AppCompatActivity() {
                             Log.e("Login button", "Something wrong while getting data", it)
                         }
                     }
-                }.addOnFailureListener {
-                    Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {exception ->
+                    // kiểm tra nếu lỗi là do mật khẩu sai
+                    if (exception is FirebaseAuthInvalidCredentialsException) {
+                        Toast.makeText(applicationContext, getString(R.string.error_wrong_passwordOrUsername), Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                    }
                     binding.animationView.visibility = View.GONE
                     checkToAutoFocus(isEmailValid, isPassValid)
                 }
