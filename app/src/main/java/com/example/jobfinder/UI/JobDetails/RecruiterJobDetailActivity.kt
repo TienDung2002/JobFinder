@@ -156,7 +156,6 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
     }
 
     private fun fetchJobData(jobId: String, bUserId: String) {
-                format.currency = Currency.getInstance("VND")
         FirebaseDatabase.getInstance().getReference("Job").child(bUserId).child(jobId).get()
             .addOnSuccessListener { dataSnapshot ->
                 val job = dataSnapshot.getValue(JobModel::class.java)
