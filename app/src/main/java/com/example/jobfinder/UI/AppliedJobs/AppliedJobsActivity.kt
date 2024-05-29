@@ -86,7 +86,6 @@ class AppliedJobsActivity : AppCompatActivity() {
                     }
                 }
                 viewModel.sortByNewestApplied()
-
             }
     }
 }
