@@ -78,7 +78,7 @@
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/app_icon"
+                            android:src="@drawable/image_loading_80px"
                             android:background="@null"
                             tools:ignore="ContentDescription"/>
                     </androidx.cardview.widget.CardView>
