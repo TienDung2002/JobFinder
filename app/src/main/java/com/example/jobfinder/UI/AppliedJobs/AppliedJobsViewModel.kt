@@ -49,6 +49,7 @@ class AppliedJobsViewModel: ViewModel()  {
             }
         }
         _appliedListLiveData.value = appliedList
+    }
 
     fun cancelAppliedJob(jobId: String, uid:String) {
         database.child(uid).child(jobId).removeValue()
