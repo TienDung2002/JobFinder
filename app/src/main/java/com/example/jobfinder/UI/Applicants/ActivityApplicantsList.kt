@@ -40,6 +40,7 @@ class ActivityApplicantsList : AppCompatActivity() {
                         val intent =
                             Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
                         intent.putExtra("nuser_applicant", applicant)
+                        intent.putExtra("job",job)
                         startActivityForResult(intent, REQUEST_CODE)
                         isActivityOpened = true
                     }
@@ -86,6 +87,11 @@ class ActivityApplicantsList : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
             isActivityOpened = false
+            val jobId = data?.getStringExtra("jobId")
+            val change =data?.getStringExtra("change")
+            if(change =="true") {
+                viewModel.fetchApplicant(jobId.toString())
+            }
         }
     }
 

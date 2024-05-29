@@ -53,10 +53,12 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
         return ApplicantViewHolder(itemView)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ApplicantViewHolder, position: Int) {
         val currentItem = applicantList[position]
         holder.textViewName.text = currentItem.userName
         holder.textViewDescription.text = currentItem.applicantDes
+        val position = holder.adapterPosition
 
         val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(currentItem.userId.toString())
         val appliedJobRef = FirebaseDatabase.getInstance().getReference("AppliedJob").child(currentItem.userId.toString()).child(job.jobId.toString())
@@ -69,7 +71,7 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
         }
 
         holder.approveBtn.setOnClickListener {
-            val position = holder.adapterPosition
+
             if (position != RecyclerView.NO_POSITION) {
                 // add recruitedEmp
                 val jobRef = FirebaseDatabase.getInstance().getReference("Job").child(job.BUserId.toString()).child(job.jobId.toString())
@@ -143,7 +145,6 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
         }
 
         holder.rejectBtn.setOnClickListener {
-            val position = holder.adapterPosition
             if (position != RecyclerView.NO_POSITION) {
                 viewModel.deleteApplicant(job.jobId.toString() ,currentItem.userId.toString())
                 applicantList.removeAt(position)
