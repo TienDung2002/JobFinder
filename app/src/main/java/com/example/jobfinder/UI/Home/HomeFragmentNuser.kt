@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.jobfinder.UI.AppliedJobs.AppliedJobsActivity
+import com.example.jobfinder.UI.CheckIn.Check_In_Activity
 import com.example.jobfinder.UI.FindNewJobs.NewJobActivity
 import com.example.jobfinder.UI.Report.SupportActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
@@ -42,6 +43,10 @@ class HomeFragmentNuser : Fragment() {
 
         binding.reportsBtn.setOnClickListener(){
             startActivity(Intent(requireContext(), SupportActivity::class.java))
+        }
+
+        binding.checkinBtn.setOnClickListener {
+            startActivity(Intent(requireContext(), Check_In_Activity::class.java))
         }
 
         return binding.root

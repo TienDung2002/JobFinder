@@ -20,18 +20,23 @@
         <RelativeLayout
             android:id="@+id/wrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            tools:ignore="UselessParent">
 
             <LinearLayout
                 android:id="@+id/topSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true">
                 <ImageView
                     android:id="@+id/emp_in_job_user_avt"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
+                    tools:ignore="contentDescription"
                     android:scaleType="centerCrop"
                     android:background="@drawable/image_loading_80px"/>
 
@@ -52,7 +57,9 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true">
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                tools:ignore="RelativeOverlap">
 
                 <Button
                     android:id="@+id/check_in_btn"

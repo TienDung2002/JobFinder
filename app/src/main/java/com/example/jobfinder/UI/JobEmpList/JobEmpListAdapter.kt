@@ -21,48 +21,67 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
                         private val context: Context,
                         private val job_id:String
 ) :
-    RecyclerView.Adapter<JobEmpListAdapter.empInJobViewHolder>() {
+    RecyclerView.Adapter<JobEmpListAdapter.EmpInJobViewHolder>() {
 
-    class empInJobViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class EmpInJobViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewName: TextView = itemView.findViewById(R.id.emp_in_job_username)
         val imgView :ImageView = itemView.findViewById(R.id.emp_in_job_user_avt)
         val checkBtn:Button = itemView.findViewById(R.id.check_in_btn)
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): empInJobViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmpInJobViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.row_emp_in_job_model, parent, false)
 
-        return empInJobViewHolder(itemView)
+        return EmpInJobViewHolder(itemView)
     }
 
     @SuppressLint("ResourceAsColor")
-    override fun onBindViewHolder(holder: empInJobViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EmpInJobViewHolder, position: Int) {
 
         val currentItem = applicantList[position]
         holder.textViewName.text = currentItem.userName
 
         RetriveImg.retrieveImage(currentItem.userId.toString(), holder.imgView)
 
+        val nUserCheckInDb = FirebaseDatabase.getInstance().getReference("NUserCheckIn").child(job_id)
         val checkInDb = FirebaseDatabase.getInstance().getReference("CheckInFromBUser").child(job_id)
         val today = GetData.getCurrentDateTime()
         val currentDayString = GetData.getDateFromString(today)
         val currentDay = GetData.formatDateForFirebase(currentDayString.toString())
-        checkInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener { dataSnapshot ->
-            if (dataSnapshot.exists()) {
-                holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
-                holder.checkBtn.setText(R.string.checked)
-                holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
-            } else {
-                holder.checkBtn.setOnClickListener{
-                    holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
+        nUserCheckInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener { dataSnapshot ->
+            checkInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener {
+                if (dataSnapshot.exists() && !it.exists()) {
+                    holder.checkBtn.setOnClickListener {
+                        holder.checkBtn.setBackgroundTintList(
+                            ContextCompat.getColorStateList(
+                                context,
+                                R.color.gray
+                            )
+                        )
+                        holder.checkBtn.setText(R.string.checked)
+                        holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+
+                        val checkIn =
+                            CheckInFromBUserModel(currentItem.userId.toString(), today, "confirm check in")
+
+                        checkInDb.child(currentDay).child(currentItem.userId.toString())
+                            .setValue(checkIn)
+                    }
+                }
+                if(dataSnapshot.exists() && it.exists()) {
+                    holder.checkBtn.setBackgroundTintList(
+                        ContextCompat.getColorStateList(
+                            context,
+                            R.color.gray
+                        )
+                    )
                     holder.checkBtn.setText(R.string.checked)
                     holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
-
-                    val checkIn = CheckInFromBUserModel(currentItem.userId.toString(),today,"checked")
-
-                    checkInDb.child(currentDay).child(currentItem.userId.toString()).setValue(checkIn)
+                }
+                if(!dataSnapshot.exists()){
+                    holder.checkBtn.visibility = View.GONE
                 }
             }
         }.addOnFailureListener{

@@ -14,6 +14,7 @@ import com.example.jobfinder.R
 import com.example.jobfinder.UI.Applicants.ActivityApplicantsList
 import com.example.jobfinder.UI.Applicants.ApplicantViewModel
 import com.example.jobfinder.UI.AppliedJobs.AppliedJobsViewModel
+import com.example.jobfinder.UI.CheckIn.CheckInViewModel
 import com.example.jobfinder.UI.JobEmpList.JobEmpListViewModel
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
@@ -30,6 +31,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
     private val applicantViewModel: ApplicantViewModel by viewModels()
     private val appliedJobViewModel: AppliedJobsViewModel by viewModels()
     private val empInJobViewModel: JobEmpListViewModel by viewModels()
+    private val approvedJobViewModel: CheckInViewModel by viewModels()
 
     @Deprecated("Deprecated in Java")
     @SuppressLint("MissingSuperCall")
@@ -66,7 +68,9 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
                 applicantViewModel.deleteJobApplicant(job.jobId.toString())
                 appliedJobViewModel.deleteAppliedJob(job.jobId.toString())
                 empInJobViewModel.deleteJobEmpInJob(job.jobId.toString())
+                approvedJobViewModel.deleteJob(job.jobId.toString())
                 FirebaseDatabase.getInstance().getReference("CheckInFromBUser").child(job.jobId.toString()).removeValue()
+                FirebaseDatabase.getInstance().getReference("NUserCheckIn").child(job.jobId.toString()).removeValue()
 
 
                 // bao giờ làm viewModel cho savedJob và ApprovedJob thì sẽ thêm hàm xóa ở đây

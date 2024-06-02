@@ -420,5 +420,8 @@
     <string name="check_in">Check in</string>
     <string name="checked">Checked</string>
 
+<!--    check in-->
+    <string name="check_in_title">Check In</string>
+
 
 </resources>

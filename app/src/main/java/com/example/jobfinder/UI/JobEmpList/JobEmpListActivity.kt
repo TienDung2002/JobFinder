@@ -30,7 +30,6 @@ class JobEmpListActivity : AppCompatActivity() {
             val adapter = JobEmpListAdapter(mutableListOf(), binding.root.context, job.jobId.toString())
             binding.recyclerEmpInJobList.adapter = adapter
             binding.recyclerEmpInJobList.layoutManager = LinearLayoutManager(this)
-            binding.animationView.visibility = View.GONE
 
             viewModel.EmployeeList.observe(this) { updatedList ->
                 adapter.updateData(updatedList)
