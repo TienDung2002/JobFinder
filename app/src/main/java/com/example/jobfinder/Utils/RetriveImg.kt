@@ -1,5 +1,6 @@
 package com.example.jobfinder.Utils
 
+import android.app.Activity
 import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
@@ -12,22 +13,46 @@ import com.google.firebase.storage.StorageReference
 
 object RetriveImg {
     fun retrieveImage(userId: String, imgView: ImageView) {
-        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
-        val imageRef: StorageReference = storageReference.child(userId)
+//        val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+//        val imageRef: StorageReference = storageReference.child(userId)
+//
+//        // Trước tiên tải URI của hình ảnh
+//        imageRef.downloadUrl
+//            .addOnSuccessListener { uri: Uri ->
+//                imgView.setBackgroundResource(R.drawable.image_loading_80px)
+//                // Sử dụng Glide để tải ảnh từ URI
+//                Glide.with(imgView.context)
+//                    .load(uri)
+//                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
+//                    .into(imgView)
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.e("RetriveImg", "Failed to retrieve image: ${exception.message}")
+//                imgView.setBackgroundResource(R.drawable.profile)
+//            }
 
-        // Trước tiên tải URI của hình ảnh
-        imageRef.downloadUrl
-            .addOnSuccessListener { uri: Uri ->
-                imgView.setBackgroundResource(R.drawable.image_loading_80px)
-                // Sử dụng Glide để tải ảnh từ URI
-                Glide.with(imgView.context)
-                    .load(uri)
-                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
-                    .into(imgView)
-            }
-            .addOnFailureListener { exception ->
-                Log.e("RetriveImg", "Failed to retrieve image: ${exception.message}")
-                imgView.setBackgroundResource(R.drawable.profile)
-            }
+        val context = imgView.context
+        if (context is Activity && !context.isDestroyed) {
+            // Tiếp tục tải ảnh nếu activity vẫn chưa bị phá hủy
+            // Còn không thì không làm gì cả
+            val storageReference: StorageReference = FirebaseStorage.getInstance().reference
+            val imageRef: StorageReference = storageReference.child(userId)
+
+            // Trước tiên tải URI của hình ảnh
+            imageRef.downloadUrl
+                .addOnSuccessListener { uri: Uri ->
+                    imgView.setBackgroundResource(R.drawable.image_loading_80px)
+                    // Sử dụng Glide để tải ảnh từ URI
+                    Glide.with(context)
+                        .load(uri)
+                        .apply(RequestOptions.bitmapTransform(CircleCrop()))
+                        .into(imgView)
+                }
+                .addOnFailureListener { exception ->
+                    Log.e("RetriveImg", "Failed to retrieve image: ${exception.message}")
+                    imgView.setBackgroundResource(R.drawable.profile)
+                }
+        }
+
     }
 }
