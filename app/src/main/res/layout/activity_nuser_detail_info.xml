@@ -11,32 +11,34 @@
     android:background="@color/home_bg">
 
     <!--    top nav-->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/applicant_info_top_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:background="@color/primary_color4">
+        android:paddingBottom="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp">
 
         <Button
             android:id="@+id/backButton"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/transparent_background"
-            android:drawableStart="@drawable/ic_back24px"
-            android:layout_marginStart="10dp"/>
+            android:drawableStart="@drawable/ic_back24px"/>
 
         <TextView
+            android:id="@+id/account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/job_detail_title"
+            android:textSize="24sp"
             android:text="@string/seeker_info_title"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
+            android:textColor="@color/primary_color1"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -393,7 +395,7 @@
 
     </ScrollView>
 
-    button holder
+<!--    button holder-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -407,7 +409,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="@color/primary_color4"
+            android:background="@color/white"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:baselineAligned="false">
