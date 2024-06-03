@@ -134,13 +134,6 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(Intent(this, UserDetailActivity::class.java))
                 return true
             }
-//            R.id.logout -> {
-//                auth.signOut()
-//                finish()
-//                startActivity(Intent(this, SelectRoleActivity::class.java))
-//                Toast.makeText(this, "Đăng xuất thành công", Toast.LENGTH_SHORT).show()
-//                return true
-//            }
             else -> {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                 return false

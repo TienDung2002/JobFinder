@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="grey">#EEEEEE</color>
     <color name="white">#FFFFFF</color>
+    <color name="bottom_nav_color">#636363</color>
     <color name="grey_hint_ForgotPass">#8C8C8C</color>
     <color name="filter_border_btn_default">#E4E4E4</color>
     <color name="filter_border_btn_selected">#FFD9B4</color>
@@ -12,7 +13,8 @@
     <color name="primary_color2">#FCA34D</color>
     <color name="primary_color3">#FFD6AD</color>
     <color name="primary_color4">#51C0DC</color>
-    <color name="home_bg">#8BC6DDE8</color>
+<!--    <color name="home_bg">#8BC6DDE8</color>-->
+    <color name="home_bg">#E1E1E1</color>
 
     <color name="click_link">#0872F6</color>
     <color name="profile_backfround">#F6F6F6</color>
