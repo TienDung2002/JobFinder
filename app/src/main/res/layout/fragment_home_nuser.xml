@@ -29,7 +29,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_checkin" />
+                android:src="@drawable/ic_grid_checkin50px" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_jobapplied50px" />
+                android:src="@drawable/ic_grid_checkin" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -187,9 +187,9 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_saved50px" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_grid_saved96px" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
