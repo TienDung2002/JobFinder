@@ -101,6 +101,7 @@
     <string name="grid_job_checkin">Điểm danh</string>
     <string name="grid_reports">Báo cáo</string>
     <string name="grid_saveJob">Đã lưu</string>
+    <string name="grid_statistical">Thống kê</string>
 
     <!--    Buser-->
     <string name="grid_recruit">Tuyển dụng</string>

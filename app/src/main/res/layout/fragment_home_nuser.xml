@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:columnCount="3"
-    android:rowCount="3"
+    android:rowCount="4"
     android:background="@color/home_bg">
 
     <!-- ImageButton 1 -->
@@ -19,7 +19,10 @@
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white"
-        android:layout_margin="20dp">
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,9 +30,9 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_checkin50px" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_grid_attendance64px" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,7 +51,10 @@
         android:layout_rowWeight="1"
         android:layout_column="1"
         android:layout_columnWeight="1"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white">
@@ -59,9 +65,9 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_wallet50px" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_grid_wallet96px" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +86,10 @@
         android:layout_rowWeight="1"
         android:layout_column="0"
         android:layout_columnWeight="1"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white">
@@ -91,9 +100,9 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_checkin" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_grid_jobapplied96px"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -112,7 +121,10 @@
         android:layout_rowWeight="1"
         android:layout_column="1"
         android:layout_columnWeight="1"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white">
@@ -123,9 +135,9 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_jobsearch50px" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_grid_jobsearch100px" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,7 +156,10 @@
         android:layout_rowWeight="1"
         android:layout_column="0"
         android:layout_columnWeight="1"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white">
@@ -155,9 +170,9 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_grid_reports" />
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_grid_reports100px" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +191,10 @@
         android:layout_rowWeight="1"
         android:layout_column="1"
         android:layout_columnWeight="1"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white">
@@ -187,14 +205,49 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
                 android:src="@drawable/ic_grid_saved96px" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/grid_saveJob"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- ImageButton 7 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/statisticalBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_row="3"
+        android:layout_rowWeight="1"
+        android:layout_column="0"
+        android:layout_columnWeight="1"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="12dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:foreground="?android:attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_grid_statistical96px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/grid_statistical"
                 android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
