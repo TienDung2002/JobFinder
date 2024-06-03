@@ -33,7 +33,12 @@ object RetriveImg {
                 }
                 .addOnFailureListener { exception ->
                     Log.e("RetriveImg", "Failed to retrieve image: ${exception.message}")
-                    imgView.setBackgroundResource(R.drawable.profile)
+                    if (exception is StorageException &&
+                        (exception.errorCode == StorageException.ERROR_OBJECT_NOT_FOUND ||
+                                exception.errorCode == StorageException.ERROR_BUCKET_NOT_FOUND)
+                    ) {
+                        imgView.setImageResource(R.drawable.profile)
+                    }
                 }
         }
     }
