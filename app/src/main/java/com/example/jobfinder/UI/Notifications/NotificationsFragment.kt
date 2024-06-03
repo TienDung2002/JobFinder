@@ -9,17 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
-import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.FragmentNotificationsBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 
 class NotificationsFragment : Fragment() {
     private lateinit var binding: FragmentNotificationsBinding
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var viewModel: NotificationViewModel
-    val uid = auth.currentUser?.uid
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,12 +34,9 @@ class NotificationsFragment : Fragment() {
         }
 
         binding.deleteAll.setOnClickListener{
-            val uid = auth.currentUser?.uid
 
-            FirebaseDatabase.getInstance()
-                .getReference("Notifications")
-                .child(uid.toString()).removeValue()
-            fetchNotificationsFromFirebase()
+            viewModel.deleteAllNoti()
+            viewModel.fetchNotificationsFromFirebase()
         }
 
         // Quan sát dữ liệu trong ViewModel và cập nhật giao diện khi có thay đổi
@@ -52,11 +44,10 @@ class NotificationsFragment : Fragment() {
             updateRecyclerView(list)
         }
 
-
         // Kiểm tra xem dữ liệu đã được lưu trong ViewModel chưa
         if (viewModel.notificationList.value == null) {
             // Nếu chưa có dữ liệu, thực hiện fetch từ Firebase
-            fetchNotificationsFromFirebase()
+            viewModel.fetchNotificationsFromFirebase()
         } else {
             // Nếu đã có dữ liệu, cập nhật RecyclerView trực tiếp
             updateRecyclerView(viewModel.notificationList.value!!)
@@ -80,40 +71,11 @@ class NotificationsFragment : Fragment() {
             ) {
                 if (view.id == R.id.txtDelete) {
                     adapter.removeItem(position)
-                    FirebaseDatabase.getInstance()
-                        .getReference("Notifications")
-                        .child(uid.toString())
-                        .child(item.notiId.toString()).removeValue()
+                    viewModel.deleteSingleNoti(item.notiId.toString())
                 }
             }
         })
         binding.animationView.visibility = View.GONE
     }
 
-
-    // Fetch data từ Firebase và cập nhật dữ liệu trong ViewModel
-    private fun fetchNotificationsFromFirebase() {
-        val uid = auth.currentUser?.uid
-
-        FirebaseDatabase.getInstance()
-            .getReference("Notifications")
-            .child(uid.toString())
-            .get()
-            .addOnSuccessListener { dataSnapshot ->
-                val notificationList = mutableListOf<NotificationsRowModel>()
-                for (notiSnapshot in dataSnapshot.children) {
-                    val notiId = notiSnapshot.child("notiId").getValue(String::class.java)
-                    val from = notiSnapshot.child("from").getValue(String::class.java)
-                    val detail = notiSnapshot.child("detail").getValue(String::class.java)
-                    val date = notiSnapshot.child("date").getValue(String::class.java)
-
-                    val notification = NotificationsRowModel(notiId, from, detail, date)
-                    notificationList.add(notification)
-                }
-                notificationList.sortByDescending { GetData.convertStringToDate(it.date.toString()) }
-
-                // Cập nhật danh sách thông báo trong ViewModel
-                viewModel.updateNotificationList(notificationList)
-            }
-    }
 }
