@@ -44,7 +44,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="15dp">
+            android:paddingTop="15dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:gravity="center_horizontal"
@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                tools:itemCount="6"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/row_notifications"/>
 

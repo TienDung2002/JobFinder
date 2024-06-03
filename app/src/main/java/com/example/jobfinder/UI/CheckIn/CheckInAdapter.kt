@@ -2,6 +2,7 @@ package com.example.jobfinder.UI.CheckIn
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
 
     class empInJobViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewJobTitle: TextView = itemView.findViewById(R.id.check_in_job_title)
+        val checkInTime: TextView = itemView.findViewById(R.id.check_in_time)
         val startTime:TextView =itemView.findViewById(R.id.check_in_timeStart)
         val endTime:TextView =itemView.findViewById(R.id.check_in_timeEnd)
         val checkBtn:Button = itemView.findViewById(R.id.check_in_btn)
@@ -43,6 +45,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         holder.startTime.text = currentItem.startHr
         holder.endTime.text = currentItem.endHr
         holder.textViewJobTitle.text = currentItem.jobTitle
+        holder.checkInTime.visibility = View.GONE
 
         val uid = GetData.getCurrentUserId()
 
@@ -52,6 +55,8 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         val currentDay = GetData.formatDateForFirebase(currentDayString.toString())
         checkInDb.child(currentDay).child(uid.toString()).get().addOnSuccessListener { dataSnapshot ->
             if (dataSnapshot.exists()) {
+                holder.checkInTime.text = dataSnapshot.child("checkInDate").getValue(String::class.java).toString()
+                holder.checkInTime.visibility = View.VISIBLE
                 holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
                 holder.checkBtn.setText(R.string.checked)
                 holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
