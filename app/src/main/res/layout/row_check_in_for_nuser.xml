@@ -92,11 +92,25 @@
                 >
 
                 <TextView
+                    android:id="@+id/status_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/check_in_status"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:textColor="@color/black"
+                    android:textSize="17sp"/>
+
+                <TextView
                     android:id="@+id/check_in_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey_hint_ForgotPass"
-                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
                     android:text="@string/Ji_posttime" />
 
 

@@ -423,6 +423,10 @@
 
 <!--    check in-->
     <string name="check_in_title">Check In</string>
+    <string name="late">Late</string>
+    <string name="in_time">In Time</string>
+    <string name="check_in_status">Check in status: </string>
+    <string name="minute">minutes</string>
 
 
 </resources>

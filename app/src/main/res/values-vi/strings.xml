@@ -426,4 +426,8 @@
 
     <!--    check in-->
     <string name="check_in_title">Điểm danh</string>
+    <string name="late">Muộn</string>
+    <string name="in_time">Đúng giờ</string>
+    <string name="check_in_status">Trạng thái điểm danh: </string>
+    <string name="minute">phút</string>
 </resources>
