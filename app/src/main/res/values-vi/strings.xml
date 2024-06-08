@@ -422,7 +422,10 @@
     <string name="no_emp">Không có nhân viên</string>
     <string name="empListTitle">Danh sách nhân viên</string>
     <string name="check_in">Điểm danh</string>
+    <string name="check_out">Kết thúc ca</string>
     <string name="checked">Đã điểm danh</string>
+    <string name="checked_in">Đã đến</string>
+    <string name="checked_out">Đã về</string>
 
     <!--    check in-->
     <string name="check_in_title">Điểm danh</string>
@@ -430,4 +433,7 @@
     <string name="in_time">Đúng giờ</string>
     <string name="check_in_status">Trạng thái điểm danh: </string>
     <string name="minute">phút</string>
+    <string name="confirm_check_in">Xác nhận</string>
+    <string name="confirmed">Đã xác nhận</string>
+    <string name="unconfirmed">Chưa xác nhận</string>
 </resources>

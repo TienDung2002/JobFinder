@@ -65,7 +65,7 @@
                     android:id="@+id/check_in_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/check_in"
+                    android:text="@string/confirm_check_in"
                     android:background="@drawable/wallet_btn_shape"
                     android:backgroundTint="@color/income_color"
                     android:paddingEnd="5dp"

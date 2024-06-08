@@ -2,7 +2,6 @@ package com.example.jobfinder.UI.CheckIn
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         val startTime:TextView =itemView.findViewById(R.id.check_in_timeStart)
         val endTime:TextView =itemView.findViewById(R.id.check_in_timeEnd)
         val checkBtn:Button = itemView.findViewById(R.id.check_in_btn)
-        val statusTitle:TextView = itemView.findViewById(R.id.status_title)
+        val confirmTxt:TextView = itemView.findViewById(R.id.check_in_confirm)
     }
 
 
@@ -48,8 +47,8 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         holder.endTime.text = currentItem.endHr
         holder.textViewJobTitle.text = currentItem.jobTitle
         holder.checkInTime.visibility = View.GONE
-        holder.statusTitle.visibility = View.GONE
         holder.checkBtn.visibility = View.GONE
+        holder.confirmTxt.visibility = View.GONE
 
         val uid = GetData.getCurrentUserId()
 
@@ -61,33 +60,73 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         // lấy dữ liệu từ fb về xem đã check in chưa
         checkInDb.child(currentDay).child(uid.toString()).get().addOnSuccessListener { dataSnapshot ->
             if (dataSnapshot.exists()) {
-//                có dữ liệu sẽ hiển thị nút check -> checked
-                val checkInTime = dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
-                setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
-                holder.statusTitle.visibility = View.VISIBLE
-                holder.checkBtn.visibility = View.VISIBLE
-                holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
-                holder.checkBtn.setText(R.string.checked)
-                holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
-                holder.checkBtn.isClickable = false
+
+                val checkInStatus =
+                    dataSnapshot.child("status").getValue(String::class.java).toString()
+                // kiểm tra buser đã xác nhận check in chưa
+                if(checkInStatus != "uncomfirmed checked in") {
+                    // hiện tại sau endTime thì sẽ mở check out
+                    if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime)>= 0) {
+
+                        val checkOutTime =
+                            dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
+                        // kiểm tra check out time có rỗng không
+                        if (checkOutTime == "") {
+                            holder.checkBtn.setText(R.string.check_out)
+                            holder.checkBtn.visibility = View.VISIBLE
+                            holder.checkBtn.setOnClickListener {
+                                // lấy thời gian lúc ấn nút đểm làm thời gian chấm công
+                                val currentTime =
+                                    GetData.getTimeFromString(GetData.getCurrentDateTime())
+                                setCheckedOutBtn(holder.checkBtn)
+
+                                val updateCheckOutTime = hashMapOf<String, Any>(
+                                    "checkOutTime" to currentTime,
+                                    "status" to "checked out"
+                                )
+
+                                checkInDb.child(currentDay).child(uid.toString())
+                                    .updateChildren(updateCheckOutTime)
+                            }
+                        } else {
+                            holder.checkBtn.visibility = View.VISIBLE
+                            setCheckedOutBtn(holder.checkBtn)
+                        }
+                    }else{
+                        // có dữ liệu sẽ hiển thị nút check -> checked
+                        val checkInTime =
+                            dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
+                        setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
+                        holder.confirmTxt.setText(R.string.confirmed)
+                        holder.confirmTxt.visibility = View.VISIBLE
+                        holder.checkBtn.visibility = View.VISIBLE
+                        setCheckedInBtn(holder.checkBtn)
+                    }
+                }else{
+                    // có dữ liệu sẽ hiển thị nút check -> checked nhưng chưa được xác nhận sẽ hiển thị unconfirm
+                    val checkInTime =
+                        dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
+                    setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
+                    holder.confirmTxt.setText(R.string.unconfirmed)
+                    holder.confirmTxt.visibility = View.VISIBLE
+                    holder.checkBtn.visibility = View.VISIBLE
+                    setCheckedInBtn(holder.checkBtn)
+                }
+
             } else {
+                // kiểm tra giờ hiện tại nêú trong khoảng trước startTime 15' đến sau startTime 30' thì sẽ hiên nút check in
                 if(CheckTime.calculateMinuteDiff(currentItem.startHr.toString(), todayTime) in -15.. 30) {
                     // khi không có dữ liệu sẽ cho phép ấn nút hoạt động
                     holder.checkBtn.visibility = View.VISIBLE
                     holder.checkBtn.setOnClickListener {
-                        holder.checkBtn.isClickable = false
-                        holder.checkBtn.setBackgroundTintList(
-                            ContextCompat.getColorStateList(
-                                context,
-                                R.color.gray
-                            )
-                        )
-                        holder.checkBtn.setText(R.string.checked)
-                        holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
-                        setCheckInTime(todayTime, currentItem.startHr.toString(), holder.checkInTime)
-                        holder.statusTitle.visibility = View.VISIBLE
+                        // lấy thời gian lúc ấn nút đểm làm thời gian điểm danh
+                        val currentTime = GetData.getTimeFromString(GetData.getCurrentDateTime())
+                        setCheckedInBtn(holder.checkBtn)
+                        setCheckInTime(currentTime, currentItem.startHr.toString(), holder.checkInTime)
+                        holder.confirmTxt.setText(R.string.unconfirmed)
+                        holder.confirmTxt.visibility = View.VISIBLE
 
-                        val checkIn = CheckInFromBUserModel(uid.toString(), today, todayTime, "", "checked")
+                        val checkIn = CheckInFromBUserModel(uid.toString(), today, currentTime, "", "uncomfirmed checked in")
 
                         checkInDb.child(currentDay).child(uid.toString()).setValue(checkIn)
                     }
@@ -115,6 +154,30 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
             checkTimeTxt.text = lateMessage
         }
         checkTimeTxt.visibility = View.VISIBLE
+    }
+
+    private fun setCheckedInBtn(checkBtn:Button){
+        checkBtn.isClickable = false
+        checkBtn.setBackgroundTintList(
+            ContextCompat.getColorStateList(
+                context,
+                R.color.gray
+            )
+        )
+        checkBtn.setText(R.string.checked_in)
+        checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+    }
+
+    private fun setCheckedOutBtn(checkBtn:Button){
+        checkBtn.isClickable = false
+        checkBtn.setBackgroundTintList(
+            ContextCompat.getColorStateList(
+                context,
+                R.color.gray
+            )
+        )
+        checkBtn.setText(R.string.checked_out)
+        checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
     }
 
 }

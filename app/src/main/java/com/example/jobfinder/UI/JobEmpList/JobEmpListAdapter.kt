@@ -50,9 +50,12 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         val today = GetData.getCurrentDateTime()
         val todayTime = GetData.getTimeFromString(today)
         val currentDayString = GetData.getDateFromString(today)
-        val currentDay = GetData.formatDateForFirebase(currentDayString.toString())
+        val currentDay = GetData.formatDateForFirebase(currentDayString)
+        // lấy dữ liệu điểm danh của nhân viên
         nUserCheckInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener { dataSnapshot ->
+            // kiểm tra xem đã xác nhận rằng nhân viên đã check in
             checkInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener {
+                // nếu nhân viên đã điểm danh nhưng buser chưa xác nhận thì sẽ hiện nút xác nhận điểm danh
                 if (dataSnapshot.exists() && !it.exists()) {
                     holder.checkBtn.setOnClickListener {
                         holder.checkBtn.setBackgroundTintList(
@@ -61,16 +64,23 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
                                 R.color.gray
                             )
                         )
-                        holder.checkBtn.setText(R.string.checked)
+                        holder.checkBtn.setText(R.string.confirmed)
                         holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
 
                         val checkIn = CheckInFromBUserModel(currentItem.userId.toString(), today, todayTime, "", "confirm check in")
 
-
                         checkInDb.child(currentDay).child(currentItem.userId.toString())
                             .setValue(checkIn)
+
+                        val updateConfirmStatus = hashMapOf<String, Any>(
+                            "status" to "comfirmed checked in"
+                        )
+
+                        nUserCheckInDb.child(currentDay).child(currentItem.userId.toString())
+                            .updateChildren(updateConfirmStatus)
                     }
                 }
+                // nếu đã xác nhận điểm danh thì hiển thị đã xác nhận điêm danh
                 if(dataSnapshot.exists() && it.exists()) {
                     holder.checkBtn.setBackgroundTintList(
                         ContextCompat.getColorStateList(
@@ -78,7 +88,7 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
                             R.color.gray
                         )
                     )
-                    holder.checkBtn.setText(R.string.checked)
+                    holder.checkBtn.setText(R.string.confirmed)
                     holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
                 }
                 if(!dataSnapshot.exists()){
