@@ -48,6 +48,7 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         val nUserCheckInDb = FirebaseDatabase.getInstance().getReference("NUserCheckIn").child(job_id)
         val checkInDb = FirebaseDatabase.getInstance().getReference("CheckInFromBUser").child(job_id)
         val today = GetData.getCurrentDateTime()
+        val todayTime = GetData.getTimeFromString(today)
         val currentDayString = GetData.getDateFromString(today)
         val currentDay = GetData.formatDateForFirebase(currentDayString.toString())
         nUserCheckInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener { dataSnapshot ->
@@ -63,8 +64,8 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
                         holder.checkBtn.setText(R.string.checked)
                         holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
 
-                        val checkIn =
-                            CheckInFromBUserModel(currentItem.userId.toString(), today, "confirm check in")
+                        val checkIn = CheckInFromBUserModel(currentItem.userId.toString(), today, todayTime, "", "confirm check in")
+
 
                         checkInDb.child(currentDay).child(currentItem.userId.toString())
                             .setValue(checkIn)

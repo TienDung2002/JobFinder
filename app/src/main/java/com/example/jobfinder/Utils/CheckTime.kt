@@ -12,32 +12,23 @@ object CheckTime {
         if (checkInTime.isEmpty() || startTime.isEmpty()) {
             return false
         } else {
-            val checkInDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
             val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
-            try {
-                // Parse checkInTime để lấy ra thời gian dưới dạng Date
-                val checkInDate = checkInDateFormat.parse(checkInTime)
-                if(checkInDate!= null) {
+            return try {
+                // Parse checkInTime và startTime để so sánh
+                val checkInTimeParsed = timeFormat.parse(checkInTime)
+                val startTimeParsed = timeFormat.parse(startTime)
 
-                    // Chuyển đổi checkInTime về dạng "HH:mm"
-                    val checkInTimeStr = timeFormat.format(checkInDate)
-
-                    // Parse startTime để so sánh
-                    val checkInTimeParsed = timeFormat.parse(checkInTimeStr)
-                    if(checkInTimeParsed != null) {
-                        val startTimeParsed = timeFormat.parse(startTime)
-
-
-                        // So sánh checkInTime và startTime
-                        return checkInTimeParsed.before(startTimeParsed) || checkInTimeParsed == startTimeParsed
-                    }
+                if (checkInTimeParsed != null && startTimeParsed != null) {
+                    // So sánh checkInTime và startTime
+                    checkInTimeParsed.before(startTimeParsed) || checkInTimeParsed == startTimeParsed
+                } else {
+                    false
                 }
-                return false
             } catch (e: Exception) {
                 // Xử lý nếu có lỗi khi parse
                 e.printStackTrace()
-                return false
+                false
             }
         }
     }
@@ -46,15 +37,12 @@ object CheckTime {
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
         return try {
-            // Parse startTime và endTime chỉ với phần giờ và phút
+            // Phân tích startTime và endTime với định dạng "HH:mm"
             val startFullDate = timeFormat.parse(startTime)!!
-
-            // Phân tích endTime để lấy phần giờ và phút
-            val endHourMinute = endTime.substring(11, 16)
-            val endHourMinuteDate = timeFormat.parse(endHourMinute)!!
+            val endFullDate = timeFormat.parse(endTime)!!
 
             // Tính sự chênh lệch ở dạng milliseconds
-            val diffInMillis = endHourMinuteDate.time - startFullDate.time
+            val diffInMillis = endFullDate.time - startFullDate.time
 
             // Chuyển đổi từ milliseconds sang phút
             val diffInMinutes = (diffInMillis / (1000 * 60)).toInt()
@@ -62,7 +50,7 @@ object CheckTime {
             diffInMinutes
         } catch (e: Exception) {
             e.printStackTrace()
-            0
+            -999
         }
     }
 

@@ -93,13 +93,32 @@ object GetData {
     }
 
     // lấy ngày theo dang dd/MM/yyyy từ String date
-    fun getDateFromString(dateTimeString: String): String? {
+    fun getDateFromString(dateTimeString: String): String {
         val parts = dateTimeString.split(" ")
         if (parts.isNotEmpty()) {
             return parts[0] // Trả về phần tử đầu tiên, chứa ngày tháng năm
         }
-        return null
+        return ""
     }
+
+    fun getTimeFromString(date: String): String {
+        return try {
+            // Định dạng ban đầu
+            val fullDateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+            // Định dạng giờ và phút
+            val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+            // Phân tích chuỗi ngày giờ thành đối tượng Date
+            val parsedDate = fullDateFormat.parse(date)
+
+            // Chuyển đối tượng Date thành chuỗi giờ và phút
+            timeFormat.format(parsedDate!!)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
+        }
+    }
+
 
     // chuyển dạng từ dd/MM/yyyy -> dd-MM-yyyy
     fun formatDateForFirebase(date: String): String {

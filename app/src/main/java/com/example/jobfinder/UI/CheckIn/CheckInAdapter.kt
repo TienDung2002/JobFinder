@@ -49,37 +49,48 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         holder.textViewJobTitle.text = currentItem.jobTitle
         holder.checkInTime.visibility = View.GONE
         holder.statusTitle.visibility = View.GONE
+        holder.checkBtn.visibility = View.GONE
 
         val uid = GetData.getCurrentUserId()
 
         val checkInDb = FirebaseDatabase.getInstance().getReference("NUserCheckIn").child(currentItem.jobId.toString())
         val today = GetData.getCurrentDateTime()
+        val todayTime = GetData.getTimeFromString(today)
         val currentDayString = GetData.getDateFromString(today)
-        val currentDay = GetData.formatDateForFirebase(currentDayString.toString())
+        val currentDay = GetData.formatDateForFirebase(currentDayString)
         // lấy dữ liệu từ fb về xem đã check in chưa
         checkInDb.child(currentDay).child(uid.toString()).get().addOnSuccessListener { dataSnapshot ->
             if (dataSnapshot.exists()) {
 //                có dữ liệu sẽ hiển thị nút check -> checked
-                val checkInTime = dataSnapshot.child("checkInDate").getValue(String::class.java).toString()
+                val checkInTime = dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
                 setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
                 holder.statusTitle.visibility = View.VISIBLE
+                holder.checkBtn.visibility = View.VISIBLE
                 holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
                 holder.checkBtn.setText(R.string.checked)
                 holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
                 holder.checkBtn.isClickable = false
             } else {
-                // khi không có dữ liệu sẽ cho phép ấn nút hoạt động
-                holder.checkBtn.setOnClickListener{
-                    holder.checkBtn.isClickable = false
-                    holder.checkBtn.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.gray))
-                    holder.checkBtn.setText(R.string.checked)
-                    holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
-                    setCheckInTime(today, currentItem.startHr.toString(), holder.checkInTime)
-                    holder.statusTitle.visibility = View.VISIBLE
+                if(CheckTime.calculateMinuteDiff(currentItem.startHr.toString(), todayTime) in -15.. 30) {
+                    // khi không có dữ liệu sẽ cho phép ấn nút hoạt động
+                    holder.checkBtn.visibility = View.VISIBLE
+                    holder.checkBtn.setOnClickListener {
+                        holder.checkBtn.isClickable = false
+                        holder.checkBtn.setBackgroundTintList(
+                            ContextCompat.getColorStateList(
+                                context,
+                                R.color.gray
+                            )
+                        )
+                        holder.checkBtn.setText(R.string.checked)
+                        holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+                        setCheckInTime(todayTime, currentItem.startHr.toString(), holder.checkInTime)
+                        holder.statusTitle.visibility = View.VISIBLE
 
-                    val checkIn = CheckInFromBUserModel(uid.toString(),today,"checked")
+                        val checkIn = CheckInFromBUserModel(uid.toString(), today, todayTime, "", "checked")
 
-                    checkInDb.child(currentDay).child(uid.toString()).setValue(checkIn)
+                        checkInDb.child(currentDay).child(uid.toString()).setValue(checkIn)
+                    }
                 }
             }
         }.addOnFailureListener{

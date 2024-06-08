@@ -2,8 +2,10 @@ package com.example.jobfinder.Datas.Model
 
 class CheckInFromBUserModel (
     var NUserId :String?,
-    var checkInDate: String?,
+    var date:String?,
+    var checkInTime: String?,
+    var checkOutTime:String?,
     var status: String?
 ){
-    constructor() : this( null, null, null)
+    constructor() : this( null, null,null, null, null)
 }
