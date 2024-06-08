@@ -380,6 +380,7 @@
     <string name="rejected">Đã từ chối</string>
     <string name="Job_title">Tên công việc:</string>
     <string name="Applied_date">Thời gian ứng tuyển:</string>
+    <string name="no_data_applied_msg">Chưa ứng tuyển công việc nào</string>
 
 
     <!--    Report-->
