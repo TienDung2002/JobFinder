@@ -34,7 +34,6 @@ class NotificationsFragment : Fragment() {
         }
 
         binding.deleteAll.setOnClickListener{
-
             viewModel.deleteAllNoti()
             viewModel.fetchNotificationsFromFirebase()
         }

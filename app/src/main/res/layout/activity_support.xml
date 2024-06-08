@@ -45,8 +45,8 @@
         android:orientation="vertical"
         android:background="@color/home_bg"
         android:paddingTop="10dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:paddingBottom="20dp"
         >
         <TextView
@@ -223,9 +223,9 @@
             android:id="@+id/request_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="Title here"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:layout_gravity="center_horizontal"
 
             />
@@ -245,7 +245,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp"
+            android:padding="15dp"
 
             >
             <androidx.cardview.widget.CardView
@@ -404,23 +404,25 @@
     </ScrollView>
     <LinearLayout
         android:id="@+id/btn_wrapper"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp"
+        android:padding="10dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@drawable/transparent_background"
         >
         <Button
             android:id="@+id/save_change"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_wrapper_pcolor2"
             android:text="@string/send_request"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_gravity="center"
-
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
             />
 
 
