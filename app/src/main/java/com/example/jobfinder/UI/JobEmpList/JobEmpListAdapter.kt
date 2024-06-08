@@ -27,6 +27,7 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         val textViewName: TextView = itemView.findViewById(R.id.emp_in_job_username)
         val imgView :ImageView = itemView.findViewById(R.id.emp_in_job_user_avt)
         val checkBtn:Button = itemView.findViewById(R.id.check_in_btn)
+        val checkInTime:TextView = itemView.findViewById(R.id.nuser_check_in_time)
     }
 
 
@@ -37,11 +38,12 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         return EmpInJobViewHolder(itemView)
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: EmpInJobViewHolder, position: Int) {
 
         val currentItem = applicantList[position]
         holder.textViewName.text = currentItem.userName
+        holder.checkInTime.visibility= View.GONE
 
         RetriveImg.retrieveImage(currentItem.userId.toString(), holder.imgView)
 
@@ -55,17 +57,16 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         nUserCheckInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener { dataSnapshot ->
             // kiểm tra xem đã xác nhận rằng nhân viên đã check in
             checkInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener {
+
+                val nUserCheckInTime =
+                    dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
                 // nếu nhân viên đã điểm danh nhưng buser chưa xác nhận thì sẽ hiện nút xác nhận điểm danh
                 if (dataSnapshot.exists() && !it.exists()) {
+                    holder.checkInTime.text = "${context.getText(R.string.checked_in)} ${context.getText(R.string.at)} $nUserCheckInTime"
+                    holder.checkInTime.visibility= View.VISIBLE
                     holder.checkBtn.setOnClickListener {
-                        holder.checkBtn.setBackgroundTintList(
-                            ContextCompat.getColorStateList(
-                                context,
-                                R.color.gray
-                            )
-                        )
-                        holder.checkBtn.setText(R.string.confirmed)
-                        holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+                        setConfirmBtn(holder.checkBtn)
+
 
                         val checkIn = CheckInFromBUserModel(currentItem.userId.toString(), today, todayTime, "", "confirm check in")
 
@@ -82,14 +83,9 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
                 }
                 // nếu đã xác nhận điểm danh thì hiển thị đã xác nhận điêm danh
                 if(dataSnapshot.exists() && it.exists()) {
-                    holder.checkBtn.setBackgroundTintList(
-                        ContextCompat.getColorStateList(
-                            context,
-                            R.color.gray
-                        )
-                    )
-                    holder.checkBtn.setText(R.string.confirmed)
-                    holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    holder.checkInTime.text = nUserCheckInTime
+                    holder.checkInTime.visibility= View.VISIBLE
+                    setConfirmBtn(holder.checkBtn)
                 }
                 if(!dataSnapshot.exists()){
                     holder.checkBtn.visibility = View.GONE
@@ -107,5 +103,17 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
     }
 
     override fun getItemCount() = applicantList.size
+
+    private fun setConfirmBtn(checkBtn:Button){
+        checkBtn.isClickable = false
+        checkBtn.setBackgroundTintList(
+            ContextCompat.getColorStateList(
+                context,
+                R.color.gray
+            )
+        )
+        checkBtn.setText(R.string.confirmed)
+        checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+    }
 
 }

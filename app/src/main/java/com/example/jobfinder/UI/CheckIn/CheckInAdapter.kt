@@ -53,6 +53,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         val uid = GetData.getCurrentUserId()
 
         val checkInDb = FirebaseDatabase.getInstance().getReference("NUserCheckIn").child(currentItem.jobId.toString())
+        val bUserCheckInDb = FirebaseDatabase.getInstance().getReference("CheckInFromBUser").child(currentItem.jobId.toString())
         val today = GetData.getCurrentDateTime()
         val todayTime = GetData.getTimeFromString(today)
         val currentDayString = GetData.getDateFromString(today)
@@ -86,6 +87,9 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                 )
 
                                 checkInDb.child(currentDay).child(uid.toString())
+                                    .updateChildren(updateCheckOutTime)
+
+                                bUserCheckInDb.child(currentDay).child(uid.toString())
                                     .updateChildren(updateCheckOutTime)
                             }
                         } else {

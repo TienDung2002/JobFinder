@@ -436,4 +436,5 @@
     <string name="confirm_check_in">Xác nhận</string>
     <string name="confirmed">Đã xác nhận</string>
     <string name="unconfirmed">Chưa xác nhận</string>
+    <string name="at">lúc</string>
 </resources>

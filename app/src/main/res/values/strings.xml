@@ -433,6 +433,7 @@
     <string name="confirmed">Confirmed</string>
     <string name="confirm_check_in">Confirm</string>
     <string name="unconfirmed">Unconfirmed</string>
+    <string name="at">at</string>
 
 
 </resources>
