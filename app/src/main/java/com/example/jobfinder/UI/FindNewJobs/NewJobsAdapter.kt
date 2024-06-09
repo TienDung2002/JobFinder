@@ -168,11 +168,11 @@ class NewJobsAdapter(
     fun updateData(newList: List<JobModel>) {
         list = newList
         filteredData = newList
-        if (list.isEmpty()) {
-            showNoDataFoundImg()
-        } else {
-            hideNoDataFoundImg()
-        }
+//        if (list.isEmpty()) {
+//            showNoDataFoundImg()
+//        } else {
+//            hideNoDataFoundImg()
+//        }
         notifyDataSetChanged()
     }
 
