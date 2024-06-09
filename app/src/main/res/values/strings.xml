@@ -377,6 +377,7 @@
     <string name="rejected">Rejected</string>
     <string name="Job_title">Job title:</string>
     <string name="Applied_date">Applied time:</string>
+    <string name="no_data_applied_msg">Haven\'t applied for any jobs yet</string>
 
     <!--    Report-->
     <string name="create_request">Create request</string>

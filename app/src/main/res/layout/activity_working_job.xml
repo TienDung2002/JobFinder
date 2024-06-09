@@ -41,9 +41,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="15dp">
-<!--        android:paddingStart="15dp"-->
-<!--        android:paddingEnd="15dp"-->
+        android:paddingTop="20dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:gravity="center_horizontal"

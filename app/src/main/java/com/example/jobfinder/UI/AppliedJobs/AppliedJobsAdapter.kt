@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.AppliedJobModel
@@ -16,7 +17,7 @@ import java.util.Locale
 
 class AppliedJobsAdapter(
     private var appliedList : List<AppliedJobModel>,
-    private var noDataImage: ImageView,
+    private var noDataImage: LinearLayout,
 ) : RecyclerView.Adapter<AppliedJobsAdapter.MyViewHolder>() {
 
     lateinit var mListener: AppliedJobsAdapter.onItemClickListener
