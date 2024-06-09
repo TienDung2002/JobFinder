@@ -121,6 +121,7 @@
                 android:backgroundTint="@color/income_color"
                 android:paddingEnd="5dp"
                 android:paddingStart="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
                 />
 
         </LinearLayout>
