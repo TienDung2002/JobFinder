@@ -431,8 +431,8 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:background="@color/white"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             >
 
             <LinearLayout
