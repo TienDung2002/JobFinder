@@ -234,8 +234,8 @@ class SeekerJobDetailActivity : AppCompatActivity() {
 
                         val notiId = notiRef.push().key.toString()
                         val notification = NotificationsRowModel(
-                            notiId, username,
-                            "${getString(R.string.applied)} ${job.jobTitle.toString()}.", curTime
+                            notiId, "Admin",
+                            "$username ${getString(R.string.applied)} ${job.jobTitle.toString()}.", curTime
                         )
 
                         FirebaseDatabase.getInstance().getReference("Applicant")

@@ -34,22 +34,22 @@
                 android:layout_weight="0.86"
                 android:layout_width="0dp"
                 android:orientation="vertical">
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtApplicationsen"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_width="wrap_content"
-                    android:singleLine="true"
-                    tools:text="Aplication sent"
-                    android:textSize="14sp"
-                    android:maxLines="1"
-                    android:textColor="#150b3d"/>
+<!--                <TextView android:ellipsize="end"-->
+<!--                    android:id="@+id/txtApplicationsen"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="10dp"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:singleLine="true"-->
+<!--                    tools:text="Aplication sent"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:maxLines="1"-->
+<!--                    android:textColor="#150b3d"/>-->
                 <TextView android:id="@+id/txtApplicationsfo"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginTop="5.27dp"
                     android:layout_width="match_parent"
-                    android:textSize="12sp"
+                    android:textSize="15sp"
                     android:textColor="#514a6b"
                     android:maxLines="2"
                     android:ellipsize="end"
@@ -65,7 +65,7 @@
                         android:layout_weight="0.68"
                         android:layout_width="0dp" android:singleLine="true"
                         tools:text="25 minutes ago"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textColor="#a9a5b8"
                         />
                     <TextView
@@ -73,7 +73,7 @@
                         android:id="@+id/txtDelete"
                         android:background="@color/white"
                         android:textColor="#ff4b4b"
-                        android:textSize="12sp"
+                        android:textSize="13sp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="1.32dp"
                         android:layout_weight="0.32"
