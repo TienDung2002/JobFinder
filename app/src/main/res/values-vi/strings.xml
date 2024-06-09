@@ -118,7 +118,7 @@
     <string name="to_wallet">đến ví</string>
     <string name="refund">Hoàn trả</string>
     <string name="from_job">Từ công việc:</string>
-    <string name="applied">đã ứng tuyển việc bạn đăng</string>
+    <string name="applied">đã ứng tuyển công việc</string>
     <string name="reject_from">Bạn đã bị từ chối bởi việc</string>
     <string name="approve_from">Bạn đã được thông qua bởi việc</string>
     <string name="reject_success">Đã từ chối</string>
