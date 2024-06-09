@@ -47,7 +47,7 @@
         android:paddingTop="10dp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="15dp"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
             android:id="@+id/request_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title here"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="22sp"
             android:layout_gravity="center_horizontal"
