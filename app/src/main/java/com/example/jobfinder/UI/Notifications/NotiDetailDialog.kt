@@ -15,7 +15,7 @@ class NotificationDetailDialog(context: Context, private val notificationDetail:
         // Kiểm tra xem có thông báo nào được chọn không
         notificationDetail?.let { notification ->
             // Hiển thị thông tin chi tiết thông báo
-            findViewById<TextView>(R.id.notiDetailUsername).text = notification.from
+//            findViewById<TextView>(R.id.notiDetailUsername).text = notification.from
             findViewById<TextView>(R.id.notiDetail).text = notification.detail
 
             // Đặt sự kiện cho nút hủy

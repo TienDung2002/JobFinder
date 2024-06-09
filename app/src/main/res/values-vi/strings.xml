@@ -118,7 +118,7 @@
     <string name="to_wallet">đến ví</string>
     <string name="refund">Hoàn trả</string>
     <string name="from_job">Từ công việc:</string>
-    <string name="applied">đã ứng tuyển việc bạn đăng</string>
+    <string name="applied">đã ứng tuyển công việc</string>
     <string name="reject_from">Bạn đã bị từ chối bởi việc</string>
     <string name="approve_from">Bạn đã được thông qua bởi việc</string>
     <string name="reject_success">Đã từ chối</string>
@@ -423,12 +423,20 @@
     <string name="no_emp">Không có nhân viên</string>
     <string name="empListTitle">Danh sách nhân viên</string>
     <string name="check_in">Điểm danh</string>
+    <string name="check_out">Kết thúc ca</string>
     <string name="checked">Đã điểm danh</string>
+    <string name="checked_in">Đã đến</string>
+    <string name="checked_out">Đã về</string>
 
     <!--    check in-->
     <string name="check_in_title">Điểm danh</string>
     <string name="late">Muộn</string>
     <string name="in_time">Đúng giờ</string>
-    <string name="check_in_status">Trạng thái điểm danh: </string>
+    <string name="check_in_status">Điểm danh lúc: </string>
+    <string name="check_out_status">Ra về lúc lúc: </string>
     <string name="minute">phút</string>
+    <string name="confirm_check_in">Xác nhận</string>
+    <string name="confirmed">Đã xác nhận</string>
+    <string name="unconfirmed">Chưa xác nhận</string>
+    <string name="at">lúc</string>
 </resources>

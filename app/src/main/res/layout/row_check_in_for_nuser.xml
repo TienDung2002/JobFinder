@@ -85,36 +85,23 @@
                     android:text="@string/Ji_num_of_recruits"/>
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/check_in_time"
+                android:layout_below="@id/layoutmiddleSection3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/layoutmiddleSection3"
-                >
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:text="@string/Ji_posttime" />
 
-                <TextView
-                    android:id="@+id/status_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/check_in_status"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textColor="@color/black"
-                    android:textSize="17sp"/>
-
-                <TextView
-                    android:id="@+id/check_in_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
-                    android:text="@string/Ji_posttime" />
-
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/check_in_confirm"
+                android:layout_below="@id/check_in_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="15sp"
+                android:text="@string/confirmed" />
 
         </RelativeLayout>
 
@@ -134,6 +121,7 @@
                 android:backgroundTint="@color/income_color"
                 android:paddingEnd="5dp"
                 android:paddingStart="5dp"
+                android:foreground="?android:attr/selectableItemBackground"
                 />
 
         </LinearLayout>

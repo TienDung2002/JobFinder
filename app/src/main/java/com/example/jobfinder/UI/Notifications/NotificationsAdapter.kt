@@ -96,7 +96,7 @@ class NotificationsAdapter(
 
     fun bind(item: NotificationsRowModel) {
       binding.apply {
-        txtApplicationsen.text = item.from
+//        txtApplicationsen.text = item.from
         txtApplicationsfo.text = item.detail
         txtDate.text = GetData.getDateFromString(item.date.toString()).toString()
       }

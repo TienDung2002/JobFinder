@@ -420,14 +420,22 @@
     <string name="no_emp">No employee in job</string>
     <string name="empListTitle">Employee list</string>
     <string name="check_in">Check in</string>
+    <string name="check_out">Check out</string>
     <string name="checked">Checked</string>
+    <string name="checked_in">Checked in</string>
+    <string name="checked_out">Checked out</string>
 
-<!--    check in-->
+    <!--    check in-->
     <string name="check_in_title">Check In</string>
     <string name="late">Late</string>
     <string name="in_time">In Time</string>
-    <string name="check_in_status">Check in status: </string>
+    <string name="check_in_status">Checked in at: </string>
+    <string name="check_out_status">Checked out at: </string>
     <string name="minute">minutes</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="confirm_check_in">Confirm</string>
+    <string name="unconfirmed">Unconfirmed</string>
+    <string name="at">at</string>
 
 
 </resources>

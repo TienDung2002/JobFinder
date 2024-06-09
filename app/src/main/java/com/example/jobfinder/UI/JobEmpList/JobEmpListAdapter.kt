@@ -27,6 +27,7 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         val textViewName: TextView = itemView.findViewById(R.id.emp_in_job_username)
         val imgView :ImageView = itemView.findViewById(R.id.emp_in_job_user_avt)
         val checkBtn:Button = itemView.findViewById(R.id.check_in_btn)
+        val checkInTime:TextView = itemView.findViewById(R.id.nuser_check_in_time)
     }
 
 
@@ -37,11 +38,12 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         return EmpInJobViewHolder(itemView)
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "SetTextI18n")
     override fun onBindViewHolder(holder: EmpInJobViewHolder, position: Int) {
 
         val currentItem = applicantList[position]
         holder.textViewName.text = currentItem.userName
+        holder.checkInTime.visibility= View.GONE
 
         RetriveImg.retrieveImage(currentItem.userId.toString(), holder.imgView)
 
@@ -50,41 +52,67 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
         val today = GetData.getCurrentDateTime()
         val todayTime = GetData.getTimeFromString(today)
         val currentDayString = GetData.getDateFromString(today)
-        val currentDay = GetData.formatDateForFirebase(currentDayString.toString())
+        val currentDay = GetData.formatDateForFirebase(currentDayString)
+        // lấy dữ liệu điểm danh của nhân viên
         nUserCheckInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener { dataSnapshot ->
+            // kiểm tra xem đã xác nhận rằng nhân viên đã check in
             checkInDb.child(currentDay).child(currentItem.userId.toString()).get().addOnSuccessListener {
-                if (dataSnapshot.exists() && !it.exists()) {
-                    holder.checkBtn.setOnClickListener {
-                        holder.checkBtn.setBackgroundTintList(
-                            ContextCompat.getColorStateList(
-                                context,
-                                R.color.gray
+
+                val nUserCheckInTime =
+                    dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
+
+                val nUserCheckOutTime =
+                    dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
+
+                val checkStatus = dataSnapshot.child("status").getValue(String::class.java).toString()
+
+                if(checkStatus!= "checked out") {
+                    // nếu nhân viên đã điểm danh nhưng buser chưa xác nhận thì sẽ hiện nút xác nhận điểm danh
+                    if (dataSnapshot.exists() && !it.exists()) {
+                        holder.checkInTime.text =
+                            "${context.getText(R.string.check_in_status)} $nUserCheckInTime"
+                        holder.checkInTime.visibility = View.VISIBLE
+                        holder.checkBtn.setOnClickListener {
+                            setConfirmBtn(holder.checkBtn)
+
+
+                            val checkIn = CheckInFromBUserModel(
+                                currentItem.userId.toString(),
+                                today,
+                                todayTime,
+                                "",
+                                "confirm check in"
                             )
-                        )
-                        holder.checkBtn.setText(R.string.checked)
-                        holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
 
-                        val checkIn = CheckInFromBUserModel(currentItem.userId.toString(), today, todayTime, "", "confirm check in")
+                            checkInDb.child(currentDay).child(currentItem.userId.toString())
+                                .setValue(checkIn)
 
+                            val updateConfirmStatus = hashMapOf<String, Any>(
+                                "status" to "comfirmed checked in"
+                            )
 
-                        checkInDb.child(currentDay).child(currentItem.userId.toString())
-                            .setValue(checkIn)
+                            nUserCheckInDb.child(currentDay).child(currentItem.userId.toString())
+                                .updateChildren(updateConfirmStatus)
+                        }
                     }
-                }
-                if(dataSnapshot.exists() && it.exists()) {
-                    holder.checkBtn.setBackgroundTintList(
-                        ContextCompat.getColorStateList(
-                            context,
-                            R.color.gray
-                        )
-                    )
-                    holder.checkBtn.setText(R.string.checked)
-                    holder.checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    // nếu đã xác nhận điểm danh thì hiển thị đã xác nhận điêm danh
+                    if (dataSnapshot.exists() && it.exists()) {
+                        holder.checkInTime.text =
+                            "${context.getText(R.string.check_in_status)} $nUserCheckInTime"
+                        holder.checkInTime.visibility = View.VISIBLE
+                        setConfirmBtn(holder.checkBtn)
+                    }
+                }else{
+                    holder.checkInTime.text =
+                        "${context.getText(R.string.check_out_status)} $nUserCheckOutTime"
+                    holder.checkInTime.visibility = View.VISIBLE
+                    setConfirmBtn(holder.checkBtn)
                 }
                 if(!dataSnapshot.exists()){
                     holder.checkBtn.visibility = View.GONE
                 }
             }
+
         }.addOnFailureListener{
             // Handle failure here if necessary
         }
@@ -97,5 +125,17 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
     }
 
     override fun getItemCount() = applicantList.size
+
+    private fun setConfirmBtn(checkBtn:Button){
+        checkBtn.isClickable = false
+        checkBtn.setBackgroundTintList(
+            ContextCompat.getColorStateList(
+                context,
+                R.color.gray
+            )
+        )
+        checkBtn.setText(R.string.confirmed)
+        checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+    }
 
 }
