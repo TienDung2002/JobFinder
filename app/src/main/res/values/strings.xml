@@ -118,7 +118,7 @@
     <string name="to_wallet">to wallet</string>
     <string name="refund">Refund</string>
     <string name="from_job">From job:</string>
-    <string name="applied">applied to your job</string>
+    <string name="applied">Applied to your job</string>
     <string name="reject_from">You have been rejected from</string>
     <string name="approve_from">You have been approved from</string>
     <string name="reject_success">Rejected</string>
