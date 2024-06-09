@@ -428,7 +428,8 @@
     <string name="check_in_title">Check In</string>
     <string name="late">Late</string>
     <string name="in_time">In Time</string>
-    <string name="check_in_status">Check in status: </string>
+    <string name="check_in_status">Checked in at: </string>
+    <string name="check_out_status">Checked out at: </string>
     <string name="minute">minutes</string>
     <string name="confirmed">Confirmed</string>
     <string name="confirm_check_in">Confirm</string>

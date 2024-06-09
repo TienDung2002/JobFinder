@@ -60,37 +60,59 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
 
                 val nUserCheckInTime =
                     dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
-                // nếu nhân viên đã điểm danh nhưng buser chưa xác nhận thì sẽ hiện nút xác nhận điểm danh
-                if (dataSnapshot.exists() && !it.exists()) {
-                    holder.checkInTime.text = "${context.getText(R.string.checked_in)} ${context.getText(R.string.at)} $nUserCheckInTime"
-                    holder.checkInTime.visibility= View.VISIBLE
-                    holder.checkBtn.setOnClickListener {
-                        setConfirmBtn(holder.checkBtn)
+
+                val nUserCheckOutTime =
+                    dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
+
+                val checkStatus = dataSnapshot.child("status").getValue(String::class.java).toString()
+
+                if(checkStatus!= "checked out") {
+                    // nếu nhân viên đã điểm danh nhưng buser chưa xác nhận thì sẽ hiện nút xác nhận điểm danh
+                    if (dataSnapshot.exists() && !it.exists()) {
+                        holder.checkInTime.text =
+                            "${context.getText(R.string.check_in_status)} $nUserCheckInTime"
+                        holder.checkInTime.visibility = View.VISIBLE
+                        holder.checkBtn.setOnClickListener {
+                            setConfirmBtn(holder.checkBtn)
 
 
-                        val checkIn = CheckInFromBUserModel(currentItem.userId.toString(), today, todayTime, "", "confirm check in")
+                            val checkIn = CheckInFromBUserModel(
+                                currentItem.userId.toString(),
+                                today,
+                                todayTime,
+                                "",
+                                "confirm check in"
+                            )
 
-                        checkInDb.child(currentDay).child(currentItem.userId.toString())
-                            .setValue(checkIn)
+                            checkInDb.child(currentDay).child(currentItem.userId.toString())
+                                .setValue(checkIn)
 
-                        val updateConfirmStatus = hashMapOf<String, Any>(
-                            "status" to "comfirmed checked in"
-                        )
+                            val updateConfirmStatus = hashMapOf<String, Any>(
+                                "status" to "comfirmed checked in"
+                            )
 
-                        nUserCheckInDb.child(currentDay).child(currentItem.userId.toString())
-                            .updateChildren(updateConfirmStatus)
+                            nUserCheckInDb.child(currentDay).child(currentItem.userId.toString())
+                                .updateChildren(updateConfirmStatus)
+                        }
                     }
-                }
-                // nếu đã xác nhận điểm danh thì hiển thị đã xác nhận điêm danh
-                if(dataSnapshot.exists() && it.exists()) {
-                    holder.checkInTime.text = nUserCheckInTime
-                    holder.checkInTime.visibility= View.VISIBLE
+                    // nếu đã xác nhận điểm danh thì hiển thị đã xác nhận điêm danh
+                    if (dataSnapshot.exists() && it.exists()) {
+                        holder.checkInTime.text =
+                            "${context.getText(R.string.check_in_status)} $nUserCheckInTime"
+                        holder.checkInTime.visibility = View.VISIBLE
+                        setConfirmBtn(holder.checkBtn)
+                    }
+                }else{
+                    holder.checkInTime.text =
+                        "${context.getText(R.string.check_out_status)} $nUserCheckOutTime"
+                    holder.checkInTime.visibility = View.VISIBLE
                     setConfirmBtn(holder.checkBtn)
                 }
                 if(!dataSnapshot.exists()){
                     holder.checkBtn.visibility = View.GONE
                 }
             }
+
         }.addOnFailureListener{
             // Handle failure here if necessary
         }

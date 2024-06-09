@@ -66,8 +66,8 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                     dataSnapshot.child("status").getValue(String::class.java).toString()
                 // kiểm tra buser đã xác nhận check in chưa
                 if(checkInStatus != "uncomfirmed checked in") {
-                    // hiện tại sau endTime thì sẽ mở check out
-                    if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime)>= 0) {
+                    // hiện tại sau endTime thì sẽ mở check out trong vòng 15 phút
+                    if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime) in 0..15) {
 
                         val checkOutTime =
                             dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
