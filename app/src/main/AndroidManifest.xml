@@ -17,6 +17,9 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
+            android:name=".UI.SalaryTracking.SalaryTrackingActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.CheckIn.Check_In_Activity"
             android:exported="false" />
         <activity

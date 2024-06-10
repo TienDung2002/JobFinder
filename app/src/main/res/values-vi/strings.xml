@@ -439,4 +439,7 @@
     <string name="confirmed">Đã xác nhận</string>
     <string name="unconfirmed">Chưa xác nhận</string>
     <string name="at">lúc</string>
+
+<!--    salary tracking-->
+    <string name="salary_tracking_title">Theo dõi lương</string>
 </resources>

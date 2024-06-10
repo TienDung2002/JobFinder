@@ -437,5 +437,6 @@
     <string name="unconfirmed">Unconfirmed</string>
     <string name="at">at</string>
 
-
+    <!--    salary tracking-->
+    <string name="salary_tracking_title">Salary tracking</string>
 </resources>
