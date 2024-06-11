@@ -10,68 +10,42 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.UI.CheckIn.CheckInViewModel
+import com.example.jobfinder.databinding.ActivityJobsmanagementBinding
+import com.example.jobfinder.databinding.ActivitySalaryTrackingBinding
 import com.example.jobfinder.databinding.ActivityWorkingJobBinding
 
 class SalaryTrackingActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityWorkingJobBinding
-    private val viewModel: CheckInViewModel by viewModels()
-    private lateinit var adapter: SalaryTrackingAdapter
-    private val REQUEST_CODE = 1002
-    private var isActivityOpened = false
+//    private lateinit var binding: ActivitySalaryTrackingBinding
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        binding = ActivitySalaryTrackingBinding.inflate(layoutInflater)
+//        setContentView(binding.root)
+//    }
+
+    private lateinit var binding: ActivityJobsmanagementBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWorkingJobBinding.inflate(layoutInflater)
+        binding = ActivityJobsmanagementBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.animationView.visibility = View.VISIBLE
 
-        // Tạo adapter và gán vào RecyclerView
-        adapter = SalaryTrackingAdapter(binding.root.context, mutableListOf())
-        binding.recyclerWorkingJob.adapter = adapter
-        binding.recyclerWorkingJob.layoutManager = LinearLayoutManager(this)
 
-        viewModel.ApprovedJobList.observe(this) { updatedList ->
-            adapter.updateData(updatedList)
-            checkEmptyAdapter(updatedList)
+        // back bằng nút trên màn hình
+        binding.backButton.setOnClickListener{
+            val resultIntent = Intent()
+            setResult(Activity.RESULT_OK, resultIntent)
+            finish()
         }
-
-        viewModel.fetchApprovedJob()
-
-        binding.backButton.setOnClickListener {
-            sendResultAndFinish()
-        }
-
-
     }
 
-    private fun sendResultAndFinish() {
+    // back bằng nút hoặc vuốt trên thiết bị
+    @Deprecated("Deprecated in Java")
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        // Khởi tạo Intent để quay lại HomeActivity
         val resultIntent = Intent()
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
     }
 
-
-    @Deprecated("Deprecated in Java")
-    @SuppressLint("MissingSuperCall")
-    override fun onBackPressed() {
-        sendResultAndFinish()
-    }
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
-            isActivityOpened = false
-        }
-    }
-
-    private fun checkEmptyAdapter(list: MutableList<AppliedJobModel>) {
-        if (list.isEmpty()) {
-            binding.noJob.visibility = View.VISIBLE
-            binding.animationView.visibility = View.GONE
-        } else {
-            binding.noJob.visibility = View.GONE
-            binding.animationView.visibility = View.GONE
-        }
-    }
 }

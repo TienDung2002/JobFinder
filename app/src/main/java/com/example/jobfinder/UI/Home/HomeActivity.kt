@@ -16,6 +16,8 @@ import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.SalaryTracking.SalaryTrackingActivity
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
+import com.example.jobfinder.UI.WorkingJob.NUserWorkingJobActivity
+import com.example.jobfinder.UI.WorkingJob.NUserWorkingJobAdapter
 import com.example.jobfinder.UI.WorkingJob.WorkingJobActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.GetData
@@ -123,7 +125,7 @@ class HomeActivity : AppCompatActivity() {
                 if (viewModel.userRole == "BUser") {
                     startActivity(Intent(this, WorkingJobActivity::class.java))
                 } else {
-                    startActivity(Intent(this, SalaryTrackingActivity::class.java))
+                    startActivity(Intent(this, NUserWorkingJobActivity::class.java))
                 }
                 return true
             }

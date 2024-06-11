@@ -29,6 +29,9 @@
             android:name=".UI.WorkingJob.WorkingJobActivity"
             android:exported="false" />
         <activity
+            android:name=".UI.WorkingJob.NUserWorkingJobActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.Report.SupportActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
