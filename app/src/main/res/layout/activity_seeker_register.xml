@@ -278,24 +278,25 @@
                             android:paddingRight="5dp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnRegister"
-                    android:layout_width="280dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
-                    android:alpha="0.9"
-                    android:background="@drawable/splash_btn1"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:gravity="center"
-                    android:text="@string/register_btn"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
             </LinearLayout>
         </ScrollView>
 
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.9"
+            android:background="@drawable/splash_btn1"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="@string/register_btn"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/returnTologinWrap"/>
+
         <LinearLayout
+            android:id="@+id/returnTologinWrap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

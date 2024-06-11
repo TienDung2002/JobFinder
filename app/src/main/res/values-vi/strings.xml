@@ -81,12 +81,13 @@
     <string name="FP_Title1">Kiểm tra email của bạn</string>
     <string name="FP_Title2">Thành công!</string>
     <string name="FP_subTitle1">Để đặt lại mật khẩu, bạn cần có email</string>
-    <string name="FP_subTitle1.1">có thể truy cập và xác thực được</string>
+    <string name="FP_subTitle1a">có thể truy cập và xác thực được</string>
     <string name="FP_subTitle2">Chúng tôi đã gửi liên kết để đặt lại mật khẩu tới email</string>
     <string name="FP_resetPassBtn">Đặt lại mật khẩu</string>
     <string name="FP_backToLoginBtn">Trở lại đăng nhập</string>
     <string name="FP_toast">Liên kết đặt lại mật khẩu đã được gửi</string>
-
+    <string name="FP_Emailnot_registered">Email chưa được đăng ký</string>
+    <string name="FP_error_unknown">Lỗi không xác định</string>
 
     <!--    Home-->
     <string name="backpress_ask">Chạm thêm lần nữa để thoát</string>
