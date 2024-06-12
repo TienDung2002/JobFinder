@@ -40,6 +40,7 @@ class ForgotPassFragment : Fragment() {
 
                 if (isValidEmail) {
                     binding.emailInput.error = null
+                    binding.animationView.visibility = View.VISIBLE
                     sendEmailResetPass(emailInput)
                 } else {
                     binding.emailInput.error = getString(R.string.error_invalid_email)
@@ -70,6 +71,7 @@ class ForgotPassFragment : Fragment() {
                     // Email tồn tại, tiến hành gửi yêu cầu đặt lại mật khẩu
                     auth.sendPasswordResetEmail(email)
                         .addOnCompleteListener { resetTask ->
+                            binding.animationView.visibility = View.GONE
                             if (resetTask.isSuccessful) {
                                 updateUIForSuccessfulReset(email)
                             } else {
@@ -81,10 +83,12 @@ class ForgotPassFragment : Fragment() {
                         }
                 } else {
                     // Email không tồn tại
+                    binding.animationView.visibility = View.GONE
                     resetUIToDefault()
                 }
             } else {
                 // Xử lý lỗi khi truy vấn dữ liệu
+                binding.animationView.visibility = View.GONE
                 Toast.makeText(requireContext(), getString(R.string.FP_error_unknown), Toast.LENGTH_SHORT).show()
             }
         }
