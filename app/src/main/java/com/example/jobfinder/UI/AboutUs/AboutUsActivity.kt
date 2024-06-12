@@ -38,10 +38,9 @@ class AboutUsActivity : AppCompatActivity() {
         // chấm tròn ở dưới
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             // Không cần đặt tiêu đề cho các tab
+            tab.customView = LayoutInflater.from(this).inflate(R.layout.custom_tab_layout, null)
         }.attach()
 
-        for (i in 0..4) {
-            val
-        }
+
     }
 }

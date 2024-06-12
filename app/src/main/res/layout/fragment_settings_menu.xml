@@ -46,12 +46,14 @@
                     android:textSize="24sp" />
 
             </RelativeLayout>
+            <!--                android:background="@drawable/wrapper_profile"-->
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/wrapper_profile">
+                app:cardCornerRadius="15dp"
+                >
 
                 <RelativeLayout
                     android:id="@+id/change_password"
@@ -64,9 +66,7 @@
                         android:layout_height="46dp"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="22dp"
-                        android:background="@drawable/ic_wrapper_profile"
-
-                        >
+                        android:background="@drawable/ic_wrapper_profile">
 
                         <RelativeLayout
                             android:layout_width="28dp"
@@ -74,7 +74,6 @@
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:background="@drawable/reset_password" />
-
                     </RelativeLayout>
 
                     <TextView
@@ -84,9 +83,7 @@
                         android:layout_marginStart="85dp"
                         android:text="@string/Change_pass"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-
-                        />
+                        android:textSize="16sp"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -101,9 +98,7 @@
                         android:layout_height="46dp"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="22dp"
-                        android:background="@drawable/ic_wrapper_profile_logout_32px"
-
-                        >
+                        android:background="@drawable/ic_wrapper_profile_logout_32px">
 
                         <RelativeLayout
                             android:layout_width="26dp"
@@ -111,7 +106,6 @@
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:background="@drawable/delete_user" />
-
                     </RelativeLayout>
 
                     <TextView
@@ -121,9 +115,7 @@
                         android:layout_marginStart="85dp"
                         android:text="@string/Delete_acc"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-
-                        />
+                        android:textSize="16sp"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -138,10 +130,7 @@
                         android:layout_height="46dp"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="22dp"
-                        android:background="@drawable/ic_wrapper_profile"
-
-
-                        >
+                        android:background="@drawable/ic_wrapper_profile">
 
                         <RelativeLayout
                             android:layout_width="26dp"
@@ -149,7 +138,6 @@
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:background="@drawable/information" />
-
                     </RelativeLayout>
 
                     <TextView
@@ -159,14 +147,10 @@
                         android:layout_marginStart="85dp"
                         android:text="@string/About_app"
                         android:textColor="@color/black"
-                        android:textSize="16sp"
-
-                        />
+                        android:textSize="16sp" />
                 </RelativeLayout>
 
-
-            </RelativeLayout>
-
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
