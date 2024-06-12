@@ -35,7 +35,7 @@ class AppliedJobsActivity : AppCompatActivity() {
             finish()
         }
 
-        if (viewModel.getAppliedList().isEmpty()){fetchAppliedJobs()}
+        if (viewModel.getAppliedList().isEmpty()){viewModel.fetchAppliedJobs()}
 
         adapter = AppliedJobsAdapter(viewModel.getAppliedList(),binding.noDataImage)
         binding.appliedJobRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -44,10 +44,32 @@ class AppliedJobsActivity : AppCompatActivity() {
         viewModel.appliedListLiveData.observe(this) { newItem ->
             newItem?.let {
                 adapter.updateData(newItem) // Cập nhật adapter khi có dữ liệu mới từ ViewModel
+                if (newItem.isEmpty()) {
+                    adapter.showNoDataFoundImg()
+                } else {
+                    adapter.hideNoDataFoundImg()
+                }
             }
         }
 
+        viewModel.isFetchingData.observe(this) { isFetching ->
+            if (isFetching) {
+                binding.animationView.visibility = View.VISIBLE
+                adapter.hideNoDataFoundImg()
+            } else {
+                binding.animationView.visibility = View.GONE
+                if (viewModel.getAppliedList().isEmpty()) {
+                    adapter.showNoDataFoundImg()
+                } else {
+                    adapter.hideNoDataFoundImg()
+                }
+            }
+        }
+
+        // Ẩn animationView ban đầu
         binding.animationView.visibility = View.GONE
+
+
 //      click vào item applied job
         adapter.setOnItemClickListener(object : AppliedJobsAdapter.onItemClickListener {
             override fun onItemClicked(AppliedJob: AppliedJobModel) {
@@ -74,18 +96,5 @@ class AppliedJobsActivity : AppCompatActivity() {
     }
 
 
-    private fun fetchAppliedJobs(){
-        viewModel.clearAppliedList()
-        val userID = GetData.getCurrentUserId()
-        FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID.toString())
-            .get().addOnSuccessListener {datasnapshot ->
-                for (AppliedJobSnapshot in datasnapshot.children) {
-                    val AppliedJobModel = AppliedJobSnapshot.getValue(AppliedJobModel::class.java)
-                    AppliedJobModel?.let {
-                        viewModel.addAppliedToAppliedList(it)
-                    }
-                }
-                viewModel.sortByNewestApplied()
-            }
-    }
+
 }
