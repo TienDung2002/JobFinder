@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.AboutUs.AboutUsActivity
 import com.example.jobfinder.UI.ForgotPassword.ForgotPassFragment
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.Utils.VerifyField
@@ -174,6 +175,11 @@ class SettingsMenuFragment : Fragment() {
                 startActivity(intent)
                 alertDialog.dismiss()
             }
+        }
+
+        binding.aboutApp.setOnClickListener {
+            val intent = Intent(requireContext(),AboutUsActivity::class.java)
+            startActivity(intent)
         }
 
         binding.backbtn.setOnClickListener(){
