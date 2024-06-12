@@ -40,6 +40,34 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/job_process_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/worked_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/worked_day"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:id="@+id/total_salary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:text="@string/total_salary"
+            android:layout_alignParentEnd="true"
+            tools:ignore="RelativeOverlap" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/title_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="5dp"

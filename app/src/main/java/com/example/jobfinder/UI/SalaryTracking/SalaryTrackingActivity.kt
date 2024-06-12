@@ -8,15 +8,26 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
+import com.example.jobfinder.Datas.Model.SalaryModel
+import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivitySalaryTrackingBinding
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.text.NumberFormat
+import java.util.Currency
+import kotlin.math.roundToInt
 
 class SalaryTrackingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySalaryTrackingBinding
     private var isActivityOpened = false
     private val viewModel: SalaryTrackingViewModel by viewModels()
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySalaryTrackingBinding.inflate(layoutInflater)
@@ -31,7 +42,12 @@ class SalaryTrackingActivity : AppCompatActivity() {
 
         val applied_job = intent.getParcelableExtra<AppliedJobModel>("applied_job")
 
-        if(applied_job!= null){
+        val format = NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("VND")
+
+
+        if(applied_job!= null ){
+
             val adapter = SalaryTrackingAdapter(binding.root.context, mutableListOf(), applied_job)
             binding.recyclerSalaryTrackingList.adapter = adapter
             binding.recyclerSalaryTrackingList.layoutManager = LinearLayoutManager(this)
@@ -41,7 +57,25 @@ class SalaryTrackingActivity : AppCompatActivity() {
                 checkEmptyAdapter(updatedList)
             }
 
+            viewModel.salaryModel.observe(this) { salaryModel ->
+                if (!isFinishing && !isDestroyed) {
+                    if(salaryModel!= null) {
+                        binding.workedDay.text =
+                            "${getText(R.string.worked_day)}: ${salaryModel.workedDay.toString()}/${salaryModel.totalWorkDay.toString()}"
+                        val totalSalaryFormatted = format.format(salaryModel.totalSalary)
+                        binding.totalSalary.text = "${getText(R.string.total_salary)}: $totalSalaryFormatted"
+                    }
+                    else {
+                        // Xử lý khi salaryModel null
+                        binding.workedDay.text = "${getText(R.string.worked_day)}: -/-"
+                        binding.totalSalary.text = "${getText(R.string.total_salary)}: -"
+                    }
+                }
+            }
+
             viewModel.fetchCheckIn(applied_job.jobId.toString())
+
+            viewModel.fetchSalary(applied_job.jobId.toString())
         }
     }
 
@@ -59,6 +93,7 @@ class SalaryTrackingActivity : AppCompatActivity() {
         if (list.isEmpty()) {
             binding.noSalaryTracking.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
+            binding.titleHolder.visibility = View.GONE
         } else {
             binding.noSalaryTracking.visibility = View.GONE
             binding.animationView.visibility = View.GONE

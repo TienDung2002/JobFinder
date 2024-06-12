@@ -16,6 +16,7 @@ import com.example.jobfinder.R
 import com.example.jobfinder.Utils.CheckTime
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.FirebaseDatabase
+import kotlin.math.roundToInt
 
 class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                         private val context: Context
@@ -94,7 +95,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                         val salaryPerHr = it.child("salaryPerEmp").getValue(String::class.java).toString()
                                         val salary = workHr*salaryPerHr.toFloat()
                                         // lấy 2 số sau dấy .
-                                        val stringSalary = String.format("%.2f", salary)
+                                        val stringSalary = salary.roundToInt().toString()
 
                                         val updateCheckOutTime = hashMapOf<String, Any>(
                                             "checkOutTime" to currentTime,
@@ -107,6 +108,28 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
 
                                         bUserCheckInDb.child(currentDay).child(uid.toString())
                                             .updateChildren(updateCheckOutTime)
+
+                                        FirebaseDatabase.getInstance().getReference("Salary")
+                                            .child(currentItem.jobId.toString())
+                                            .child(uid.toString()).get()
+                                            .addOnSuccessListener { salarySnapshot->
+                                                val totalSalary =salarySnapshot.child("totalSalary").getValue(Float::class.java)
+                                                val workedDay = salarySnapshot.child("workedDay").getValue(Int::class.java)
+                                                if(totalSalary!= null && workedDay!= null) {
+                                                    val newTotalSalary = totalSalary + stringSalary.toFloat()
+
+                                                    val newWorkedDay = workedDay +1
+
+                                                    val updateSalary = hashMapOf<String, Any>(
+                                                        "totalSalary" to newTotalSalary,
+                                                        "workedDay" to newWorkedDay
+                                                    )
+
+                                                    FirebaseDatabase.getInstance().getReference("Salary")
+                                                        .child(currentItem.jobId.toString())
+                                                        .child(uid.toString()).updateChildren(updateSalary)
+                                                }
+                                            }
                                     }
 
                             }

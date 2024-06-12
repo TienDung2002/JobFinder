@@ -16,6 +16,7 @@ import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
+import com.example.jobfinder.Datas.Model.SalaryModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
@@ -98,6 +99,13 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
 
                         FirebaseDatabase.getInstance().getReference("ApprovedJob").child(currentItem.userId.toString()).child(job.jobId.toString()).setValue(approvedJob)
 
+                        //salary
+                        val totalWorkDay = GetData.countDaysBetweenDates(job.startTime.toString(), job.endTime.toString())
+                        val salary = SalaryModel(totalWorkDay, 0, 0f)
+
+                        FirebaseDatabase.getInstance().getReference("Salary")
+                            .child(job.jobId.toString()).child(currentItem.userId.toString())
+                            .setValue(salary)
                         // notification
                         val notiId = notiRef.push().key.toString()
                         val notification = NotificationsRowModel(notiId, job.BUserName.toString(),

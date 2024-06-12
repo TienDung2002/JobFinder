@@ -12,6 +12,8 @@ import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.CheckTime
 import com.example.jobfinder.Utils.GetData
+import java.text.NumberFormat
+import java.util.Currency
 
 class SalaryTrackingAdapter(private val context: Context,
                             private var checkInList: List<CheckInFromBUserModel>,
@@ -33,11 +35,14 @@ class SalaryTrackingAdapter(private val context: Context,
     override fun onBindViewHolder(holder: PostedcheckInViewHolder, position: Int) {
         val checkIn = checkInList[position]
 
+        val format = NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("VND")
+
         // Bind data to views
         holder.checkInDate.text = GetData.getDateFromString(checkIn.date.toString())
         holder.checkTime.text = "${checkIn.checkInTime}-${checkIn.checkOutTime}"
         setNote(checkIn.checkInTime.toString(), holder.note)
-        holder.workDaySalary.text = checkIn.salary
+        holder.workDaySalary.text = format.format(checkIn.salary.toString().toInt())
     }
 
     override fun getItemCount(): Int {
