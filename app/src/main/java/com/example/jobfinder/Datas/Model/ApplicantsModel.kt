@@ -24,12 +24,13 @@ class ApplicantsModel : Parcelable {
         this.appliedDate = appliedDate
         this.userName = userName
     }
-    constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
-    )
+
+    private constructor(parcel: Parcel) {
+        userId = parcel.readString()
+        applicantDes = parcel.readString()
+        appliedDate = parcel.readString()
+        userName = parcel.readString()
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(userId)

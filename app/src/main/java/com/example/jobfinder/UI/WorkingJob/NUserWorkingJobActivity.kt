@@ -40,7 +40,7 @@ class NUserWorkingJobActivity : AppCompatActivity() {
                 if (!isActivityOpened) {
                     // Mở activity chỉ khi activity chưa được mở
                     val intent = Intent(this@NUserWorkingJobActivity, SalaryTrackingActivity::class.java)
-                    intent.putExtra("job_id", job.jobId)
+                    intent.putExtra("applied_job", job)
                     startActivityForResult(intent, REQUEST_CODE)
                     // Đặt biến kiểm tra là đã mở
                     isActivityOpened = true
