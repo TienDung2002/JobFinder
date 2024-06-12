@@ -49,6 +49,14 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
         holder.postTimeTextView.text = GetData.getDateFromString(job.postDate.toString())
         holder.status.setText(getStatus(job.status.toString()))
 
+        // Đặt màu chữ cho trạng thái
+        when (job.status) {
+            "working" -> holder.status.setTextColor(context.resources.getColor(R.color.green))
+            "recruiting" -> holder.status.setTextColor(context.resources.getColor(R.color.yellow))
+            "closed2" -> holder.status.setTextColor(context.resources.getColor(R.color.red))
+            else -> holder.status.setTextColor(context.resources.getColor(R.color.red)) // màu mặc định nếu không khớp
+        }
+
         holder.itemView.setOnClickListener {
             listener?.onItemClick(job)
         }

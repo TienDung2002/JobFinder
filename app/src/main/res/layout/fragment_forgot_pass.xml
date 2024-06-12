@@ -6,40 +6,43 @@
     android:layout_height="match_parent"
     tools:context=".UI.ForgotPassword.ForgotPassFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/wrapsection"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/forgotTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
+            android:layout_marginTop="10dp"
             android:text="@string/forgot_pass"
             android:textColor="@color/primary_color1"
             android:textSize="34sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/subTitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
             android:layout_marginTop="10dp"
             android:text="@string/FP_subTitle1"
             android:textColor="@color/grey_hint_ForgotPass"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:layout_below="@+id/forgotTitle"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/subTitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
-            android:text="@string/FP_subTitle1.1"
+            android:text="@string/FP_subTitle1a"
             android:textColor="@color/grey_hint_ForgotPass"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:layout_below="@+id/subTitle1"
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/image"
@@ -48,12 +51,14 @@
             android:layout_marginTop="50dp"
             android:layout_marginBottom="50dp"
             android:src="@drawable/ic_forgotfrag"
-            android:layout_gravity="center|top"/>
+            android:layout_below="@+id/subTitle2"
+            android:layout_centerHorizontal="true"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/image"
             android:hint="@string/hintUsername"
             app:boxStrokeColor="@color/black"
             app:boxStrokeErrorColor="@color/black"
@@ -82,15 +87,11 @@
                 android:paddingRight="5dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" /> <!-- View dummy để tạo khoảng trống -->
 
         <Button
             android:id="@+id/btnReset"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             android:layout_marginBottom="5dp"
             android:alpha="0.9"
             android:background="@drawable/splash_btn1"
@@ -99,7 +100,8 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:gravity="center"
-            android:layout_gravity="bottom|center_horizontal"/>
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 
 </FrameLayout>

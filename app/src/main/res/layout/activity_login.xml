@@ -163,8 +163,8 @@
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="280dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
             app:layout_constraintVertical_bias="0.8"
             android:layout_above="@+id/linearLayout"
             android:layout_centerHorizontal="true"
