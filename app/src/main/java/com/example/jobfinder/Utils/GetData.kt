@@ -238,12 +238,11 @@ object GetData {
 
     fun calculateHourDifference(timeA: String, timeB: String): Float {
         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-
-        var result = 0f // Khởi tạo giá trị mặc định nếu có lỗi xảy ra
+        var result = 0f
 
         try {
-            val dateA = sdf.parse(timeA)
-            val dateB = sdf.parse(timeB)
+            val dateA: Date = sdf.parse(timeA)!!
+            val dateB: Date = sdf.parse(timeB)!!
 
             val calendarA = Calendar.getInstance().apply { time = dateA }
             val calendarB = Calendar.getInstance().apply { time = dateB }
@@ -254,11 +253,11 @@ object GetData {
             val minutes = (timeDifference % (1000 * 60 * 60)).toFloat() / (1000 * 60)
 
             result = hours + (minutes / 60)
-        } catch (e: ParseException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return result // Di chuyển lệnh return ra khỏi khối try-catch
+        return result
     }
 
     fun isBetweenTime(startTime:String, endTime:String, today:String):Boolean{

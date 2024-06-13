@@ -110,7 +110,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                                 val totalSalary =salarySnapshot.child("totalSalary").getValue(Float::class.java)
                                                 val workedDay = salarySnapshot.child("workedDay").getValue(Int::class.java)
                                                 if(totalSalary!= null && workedDay!= null) {
-                                                    val newTotalSalary = totalSalary + stringSalary.toFloat()
+                                                    val newTotalSalary = totalSalary + salary
 
                                                     val newWorkedDay = workedDay +1
 

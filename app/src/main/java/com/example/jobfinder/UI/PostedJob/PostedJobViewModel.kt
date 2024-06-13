@@ -81,7 +81,7 @@ class PostedJobViewModel : ViewModel() {
     fun deleteAppliedJob(jobId:String){
         appliedJobDb.get().addOnSuccessListener {
             for(uid in it.children){
-                database.child(uid.key.toString()).child(jobId).removeValue()
+                appliedJobDb.child(uid.key.toString()).child(jobId).removeValue()
             }
         }
     }
@@ -89,7 +89,7 @@ class PostedJobViewModel : ViewModel() {
     fun deleteApprovedJob(jobId:String){
         approvedJobDb.get().addOnSuccessListener {
             for(uid in it.children){
-                database.child(uid.key.toString()).child(jobId).removeValue()
+                appliedJobDb.child(uid.key.toString()).child(jobId).removeValue()
             }
         }
     }
