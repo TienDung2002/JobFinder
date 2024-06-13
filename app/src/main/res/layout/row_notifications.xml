@@ -51,6 +51,7 @@
                     android:textSize="15sp"
                     android:textColor="#514a6b"
                     android:maxLines="2"
+                    android:lines="2"
                     android:ellipsize="end"
                     tools:text="Applications for Google companies have entered for company review"/>
                 <LinearLayout android:id="@+id/linearRowduration"

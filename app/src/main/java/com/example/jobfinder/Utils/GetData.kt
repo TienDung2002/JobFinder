@@ -166,7 +166,7 @@ object GetData {
         return false
     }
 
-    fun getStatus(startTime: String, endTime: String, empAmount: String, recruitedEmp: String): String {
+    fun setStatus(startTime: String, endTime: String, empAmount: String, recruitedEmp: String): String {
         try {
             val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val currentDate = sdf.format(Date())
@@ -238,12 +238,11 @@ object GetData {
 
     fun calculateHourDifference(timeA: String, timeB: String): Float {
         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-
-        var result = 0f // Khởi tạo giá trị mặc định nếu có lỗi xảy ra
+        var result = 0f
 
         try {
-            val dateA = sdf.parse(timeA)
-            val dateB = sdf.parse(timeB)
+            val dateA: Date = sdf.parse(timeA)!!
+            val dateB: Date = sdf.parse(timeB)!!
 
             val calendarA = Calendar.getInstance().apply { time = dateA }
             val calendarB = Calendar.getInstance().apply { time = dateB }
@@ -254,11 +253,32 @@ object GetData {
             val minutes = (timeDifference % (1000 * 60 * 60)).toFloat() / (1000 * 60)
 
             result = hours + (minutes / 60)
-        } catch (e: ParseException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return result // Di chuyển lệnh return ra khỏi khối try-catch
+        return result
+    }
+
+    fun isBetweenTime(startTime:String, endTime:String, today:String):Boolean{
+        try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val currentDate = sdf.format(Date())
+
+            val startDate = sdf.parse(startTime)
+            val endDate = sdf.parse(endTime)
+            val todayDate = sdf.parse(currentDate)
+
+
+
+            if(startDate!= null && endDate!= null && todayDate!= null ){
+                return !todayDate.before(startDate) && !todayDate.after(endDate)
+            }
+            return false
+        }catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
     }
 
     fun getCurrentUserId(): String? {

@@ -450,4 +450,14 @@
     <string name="confirmed">Đã xác nhận</string>
     <string name="unconfirmed">Chưa xác nhận</string>
     <string name="at">lúc</string>
+    <string name="not_working_yet">Việc chưa hoạt động</string>
+
+<!--    salary tracking-->
+    <string name="salary_tracking_title">Theo dõi lương</string>
+    <string name="no_working">Bạn chưa đi làm</string>
+    <string name="salary_title">Lương</string>
+    <string name="note_title">Ghi chú</string>
+    <string name="working_time">Ngày/Giờ làm</string>
+    <string name="total_salary">Tổng</string>
+    <string name="worked_day">Ngày làm</string>
 </resources>

@@ -449,6 +449,14 @@
     <string name="confirm_check_in">Confirm</string>
     <string name="unconfirmed">Unconfirmed</string>
     <string name="at">at</string>
+    <string name="not_working_yet">Job is not working yet</string>
 
-
+    <!--    salary tracking-->
+    <string name="salary_tracking_title">Salary tracking</string>
+    <string name="no_working">You haven\'t work</string>
+    <string name="salary_title">Salary</string>
+    <string name="note_title">Note</string>
+    <string name="working_time">Working day/time</string>
+    <string name="total_salary">Total</string>
+    <string name="worked_day">Work day</string>
 </resources>

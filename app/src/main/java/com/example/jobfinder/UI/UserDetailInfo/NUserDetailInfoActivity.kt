@@ -15,6 +15,7 @@ import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
+import com.example.jobfinder.Datas.Model.SalaryModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Applicants.ApplicantAdapter
 import com.example.jobfinder.UI.Applicants.ApplicantViewModel
@@ -153,6 +154,13 @@ class NUserDetailInfoActivity : AppCompatActivity() {
                             .child(applicant.userId.toString()).child(job.jobId.toString())
                             .setValue(approvedJob)
 
+                        //salary
+                        val totalWorkDay = GetData.countDaysBetweenDates(job.startTime.toString(), job.endTime.toString())
+                        val salary = SalaryModel(totalWorkDay, 0, 0f)
+
+                        FirebaseDatabase.getInstance().getReference("Salary")
+                            .child(job.jobId.toString()).child(applicant.userId.toString())
+                            .setValue(salary)
                         // notification
                         val notiId = notiRef.push().key.toString()
                         val notification = NotificationsRowModel(
@@ -175,6 +183,8 @@ class NUserDetailInfoActivity : AppCompatActivity() {
                             ContextCompat.getString(binding.root.context, R.string.enough_Emp),
                             Toast.LENGTH_SHORT
                         ).show()
+
+
 
                         //khi lấy đủ nhân viên tự xóa hết trong appliedJob của tất cả những ứng viên
                         FirebaseDatabase.getInstance().getReference("AppliedJob").get()

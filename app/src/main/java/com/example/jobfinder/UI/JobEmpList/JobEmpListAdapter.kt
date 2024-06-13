@@ -81,7 +81,8 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
                                 today,
                                 todayTime,
                                 "",
-                                "confirm check in"
+                                "confirm check in",
+                                "0"
                             )
 
                             checkInDb.child(currentDay).child(currentItem.userId.toString())
@@ -106,7 +107,7 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
                     holder.checkInTime.text =
                         "${context.getText(R.string.check_out_status)} $nUserCheckOutTime"
                     holder.checkInTime.visibility = View.VISIBLE
-                    setConfirmBtn(holder.checkBtn)
+                    setCheckOutBtn(holder.checkBtn)
                 }
                 if(!dataSnapshot.exists()){
                     holder.checkBtn.visibility = View.GONE
@@ -135,6 +136,18 @@ class JobEmpListAdapter(private var applicantList: MutableList<ApplicantsModel>,
             )
         )
         checkBtn.setText(R.string.confirmed)
+        checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
+    }
+
+    private fun setCheckOutBtn(checkBtn:Button){
+        checkBtn.isClickable = false
+        checkBtn.setBackgroundTintList(
+            ContextCompat.getColorStateList(
+                context,
+                R.color.gray
+            )
+        )
+        checkBtn.setText(R.string.checked_out)
         checkBtn.setTextColor(ContextCompat.getColor(context, R.color.white))
     }
 

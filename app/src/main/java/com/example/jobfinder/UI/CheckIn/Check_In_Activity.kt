@@ -15,8 +15,6 @@ class Check_In_Activity : AppCompatActivity() {
     private lateinit var binding: ActivityCheckInBinding
     private val viewModel: CheckInViewModel by viewModels()
     private lateinit var adapter: CheckInAdapter
-    private val REQUEST_CODE = 1002
-    private var isActivityOpened = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckInBinding.inflate(layoutInflater)
@@ -54,15 +52,6 @@ class Check_In_Activity : AppCompatActivity() {
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         sendResultAndFinish()
-    }
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
-            isActivityOpened = false
-        }
     }
 
     private fun checkEmptyAdapter(list: MutableList<AppliedJobModel>) {

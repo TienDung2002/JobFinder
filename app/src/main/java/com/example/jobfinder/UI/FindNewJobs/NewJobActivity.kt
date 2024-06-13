@@ -18,8 +18,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.AppliedJobs.AppliedJobsViewModel
+import com.example.jobfinder.UI.CheckIn.CheckInViewModel
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
@@ -38,6 +41,8 @@ class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
     lateinit var cusBindingFilter: CustomFilterLayoutBinding
     private val viewModel: FindNewJobViewModel by viewModels()
+    private val appliedJobViewModel: AppliedJobsViewModel by viewModels()
+    private val approvedJobViewModel: CheckInViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
     private var isJobDetailActivityOpen = false
     private var isFirstApplyFilter = true
@@ -309,7 +314,12 @@ class NewJobActivity : AppCompatActivity() {
                                 val jobModel = jobSnapshot.getValue(JobModel::class.java)
                                 jobModel?.let {
                                     it.BUserName = username.toString()
-                                    it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+                                    it.status = GetData.setStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+
+                                    if(it.status == "closed"){
+                                        appliedJobViewModel.deleteAppliedJob(it.jobId.toString())
+//                                        approvedJobViewModel.deleteJob(it.jobId.toString())
+                                    }
 
                                     tempList.add(it) //Chứa full data toàn bộ các job
 

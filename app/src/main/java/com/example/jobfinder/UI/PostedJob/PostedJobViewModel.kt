@@ -18,6 +18,8 @@ class PostedJobViewModel : ViewModel() {
     private val uid = auth.currentUser?.uid
     private val database = FirebaseDatabase.getInstance().getReference("Job").child(uid.toString())
     private val userInfoDb = FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString())
+    private val appliedJobDb = FirebaseDatabase.getInstance().getReference("AppliedJob")
+    private val approvedJobDb = FirebaseDatabase.getInstance().getReference("ApprovedJob")
 
     fun fetchPostedJobs() {
         _isLoading.value = true
@@ -29,7 +31,11 @@ class PostedJobViewModel : ViewModel() {
                     val jobModel = jobSnapshot.getValue(JobModel::class.java)
                     jobModel?.let {
                         it.BUserName = userName
-                        it.status = GetData.getStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+                        it.status = GetData.setStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+                        if(it.status == "closed"){
+                            deleteAppliedJob(it.jobId.toString())
+//                            deleteApprovedJob(it.jobId.toString())
+                        }
                         postedJobList.add(it)
                     }
                 }
@@ -70,6 +76,22 @@ class PostedJobViewModel : ViewModel() {
             .addOnFailureListener {
                 // Xử lý lỗi
             }
+    }
+
+    fun deleteAppliedJob(jobId:String){
+        appliedJobDb.get().addOnSuccessListener {
+            for(uid in it.children){
+                appliedJobDb.child(uid.key.toString()).child(jobId).removeValue()
+            }
+        }
+    }
+
+    fun deleteApprovedJob(jobId:String){
+        approvedJobDb.get().addOnSuccessListener {
+            for(uid in it.children){
+                appliedJobDb.child(uid.key.toString()).child(jobId).removeValue()
+            }
+        }
     }
 
 }

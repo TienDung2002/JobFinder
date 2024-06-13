@@ -43,4 +43,12 @@ class CheckInViewModel: ViewModel() {
         }
     }
 
+    fun removeApprovedJob(jobId: String, uid:String) {
+        database.child(uid).child(jobId).removeValue()
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener {
+            }
+    }
+
 }

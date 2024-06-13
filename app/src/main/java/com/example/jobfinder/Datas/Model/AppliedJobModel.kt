@@ -61,12 +61,12 @@ class AppliedJobModel: Parcelable {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ApplicantsModel> {
-        override fun createFromParcel(parcel: Parcel): ApplicantsModel {
-            return ApplicantsModel(parcel)
+    companion object CREATOR : Parcelable.Creator<AppliedJobModel> {
+        override fun createFromParcel(parcel: Parcel): AppliedJobModel {
+            return AppliedJobModel(parcel)
         }
 
-        override fun newArray(size: Int): Array<ApplicantsModel?> {
+        override fun newArray(size: Int): Array<AppliedJobModel?> {
             return arrayOfNulls(size)
         }
     }
