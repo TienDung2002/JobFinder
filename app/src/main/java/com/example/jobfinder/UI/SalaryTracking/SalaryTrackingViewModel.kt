@@ -64,7 +64,7 @@ class SalaryTrackingViewModel:ViewModel() {
 
                         _salaryModel.value = SalaryModel(totalWorkDay, workedDay, totalSalary)
                     } else {
-                        _salaryModel.value = null
+                        _salaryModel.value = SalaryModel(0, 0, 0f)
                     }
                 }.addOnFailureListener { exception ->
                     Log.d("fetchSalary", "Error fetching salary data: $exception")
