@@ -2,7 +2,6 @@ package com.example.jobfinder.UI.CheckIn
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,9 +20,9 @@ import kotlin.math.roundToInt
 class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                         private val context: Context
 ) :
-    RecyclerView.Adapter<CheckInAdapter.empInJobViewHolder>() {
+    RecyclerView.Adapter<CheckInAdapter.CheckInViewHolder>() {
 
-    class empInJobViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CheckInViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewJobTitle: TextView = itemView.findViewById(R.id.check_in_job_title)
         val checkInTime: TextView = itemView.findViewById(R.id.check_in_time)
         val startTime:TextView =itemView.findViewById(R.id.check_in_timeStart)
@@ -32,16 +31,15 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         val confirmTxt:TextView = itemView.findViewById(R.id.check_in_confirm)
     }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): empInJobViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckInViewHolder {
         val itemView = LayoutInflater.from(parent.context)
             .inflate(R.layout.row_check_in_for_nuser, parent, false)
 
-        return empInJobViewHolder(itemView)
+        return CheckInViewHolder(itemView)
     }
 
     @SuppressLint("ResourceAsColor", "NotifyDataSetChanged", "DefaultLocale")
-    override fun onBindViewHolder(holder: empInJobViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CheckInViewHolder, position: Int) {
 
         val currentItem = approvedJobList[position]
 
@@ -53,47 +51,43 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         holder.confirmTxt.visibility = View.GONE
 
         val uid = GetData.getCurrentUserId()
-
+        val jobDb = FirebaseDatabase.getInstance().getReference("Job")
         val checkInDb = FirebaseDatabase.getInstance().getReference("NUserCheckIn").child(currentItem.jobId.toString())
         val bUserCheckInDb = FirebaseDatabase.getInstance().getReference("CheckInFromBUser").child(currentItem.jobId.toString())
         val today = GetData.getCurrentDateTime()
         val todayTime = GetData.getTimeFromString(today)
         val currentDayString = GetData.getDateFromString(today)
         val currentDay = GetData.formatDateForFirebase(currentDayString)
-        // lấy dữ liệu từ fb về xem đã check in chưa
-        checkInDb.child(currentDay).child(uid.toString()).get().addOnSuccessListener { dataSnapshot ->
-            if (dataSnapshot.exists()) {
+        jobDb.child(currentItem.buserId.toString()).child(currentItem.jobId.toString()).get().addOnSuccessListener { jobSnapShot->
+            val jobStatus = jobSnapShot.child("status").getValue(String::class.java)
+            if(jobStatus!= null&&jobStatus=="working") {
+                // lấy dữ liệu từ fb về xem đã check in chưa
+                checkInDb.child(currentDay).child(uid.toString()).get().addOnSuccessListener { dataSnapshot ->
+                    if (dataSnapshot.exists()) {
+                        val checkInStatus =
+                            dataSnapshot.child("status").getValue(String::class.java).toString()
+                        val checkInTime =
+                            dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
+                        // kiểm tra buser đã xác nhận check in chưa
+                        if(checkInStatus != "uncomfirmed checked in") {
+                            // hiện tại sau endTime thì sẽ mở check out trong vòng 15 phút
+                            if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime) in 0..15) {
 
-                val checkInStatus =
-                    dataSnapshot.child("status").getValue(String::class.java).toString()
-                val checkInTime =
-                    dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
-                // kiểm tra buser đã xác nhận check in chưa
-                if(checkInStatus != "uncomfirmed checked in") {
-                    // hiện tại sau endTime thì sẽ mở check out trong vòng 15 phút
-                    if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime) in 0..15) {
+                                val checkOutTime =
+                                    dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
+                                // kiểm tra check out time có rỗng không
+                                if (checkOutTime == "") {
+                                    holder.checkBtn.setText(R.string.check_out)
+                                    holder.checkBtn.visibility = View.VISIBLE
+                                    holder.checkBtn.setOnClickListener {
+                                        // lấy thời gian lúc ấn nút đểm làm thời gian chấm công
+                                        val currentTime =
+                                            GetData.getTimeFromString(GetData.getCurrentDateTime())
+                                        setCheckedOutBtn(holder.checkBtn)
+                                        // lấy số giờ làm việc
+                                        val workHr = GetData.calculateHourDifference(checkInTime, currentItem.endHr.toString())
 
-                        val checkOutTime =
-                            dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
-                        // kiểm tra check out time có rỗng không
-                        if (checkOutTime == "") {
-                            holder.checkBtn.setText(R.string.check_out)
-                            holder.checkBtn.visibility = View.VISIBLE
-                            holder.checkBtn.setOnClickListener {
-                                // lấy thời gian lúc ấn nút đểm làm thời gian chấm công
-                                val currentTime =
-                                    GetData.getTimeFromString(GetData.getCurrentDateTime())
-                                setCheckedOutBtn(holder.checkBtn)
-                                // lấy số giờ làm việc
-                                val workHr = GetData.calculateHourDifference(checkInTime, currentItem.endHr.toString())
-                                //fetch ở bảng job để lấy lương theo giờ
-                                FirebaseDatabase.getInstance().getReference("Job")
-                                    .child(currentItem.buserId.toString())
-                                    .child(currentItem.jobId.toString()).get()
-                                    .addOnSuccessListener {
-
-                                        val salaryPerHr = it.child("salaryPerEmp").getValue(String::class.java).toString()
-                                        val salary = workHr*salaryPerHr.toFloat()
+                                        val salary = workHr*currentItem.salary.toString().toFloat()
                                         // lấy 2 số sau dấy .
                                         val stringSalary = salary.roundToInt().toString()
 
@@ -131,55 +125,59 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                                 }
                                             }
                                     }
+                                } else {
+                                    holder.checkBtn.visibility = View.VISIBLE
+                                    setCheckedOutBtn(holder.checkBtn)
+                                }
+                            }else{
+                                // có dữ liệu sẽ hiển thị nút check -> checked
 
+                                setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
+                                holder.confirmTxt.setText(R.string.confirmed)
+                                holder.confirmTxt.visibility = View.VISIBLE
+                                holder.checkBtn.visibility = View.VISIBLE
+                                setCheckedInBtn(holder.checkBtn)
                             }
-                        } else {
+                        }else{
+                            // có dữ liệu sẽ hiển thị nút check -> checked nhưng chưa được xác nhận sẽ hiển thị unconfirm
+                            setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
+                            holder.confirmTxt.setText(R.string.unconfirmed)
+                            holder.confirmTxt.visibility = View.VISIBLE
                             holder.checkBtn.visibility = View.VISIBLE
-                            setCheckedOutBtn(holder.checkBtn)
-                        }
-                    }else{
-                        // có dữ liệu sẽ hiển thị nút check -> checked
-
-                        setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
-                        holder.confirmTxt.setText(R.string.confirmed)
-                        holder.confirmTxt.visibility = View.VISIBLE
-                        holder.checkBtn.visibility = View.VISIBLE
-                        setCheckedInBtn(holder.checkBtn)
-                    }
-                }else{
-                    // có dữ liệu sẽ hiển thị nút check -> checked nhưng chưa được xác nhận sẽ hiển thị unconfirm
-                    setCheckInTime(checkInTime, currentItem.startHr.toString(), holder.checkInTime)
-                    holder.confirmTxt.setText(R.string.unconfirmed)
-                    holder.confirmTxt.visibility = View.VISIBLE
-                    holder.checkBtn.visibility = View.VISIBLE
-                    setCheckedInBtn(holder.checkBtn)
-                }
-
-            } else {
-                // kiểm tra giờ hiện tại nêú trong khoảng trước startTime 15' đến sau startTime 30' thì sẽ hiên nút check in
-                if(CheckTime.calculateMinuteDiff(currentItem.startHr.toString(), todayTime) in -15.. 30) {
-                    // khi không có dữ liệu sẽ cho phép ấn nút hoạt động
-                    holder.checkBtn.visibility = View.VISIBLE
-                    holder.checkBtn.setOnClickListener {
-                        // lấy thời gian lúc ấn nút đểm làm thời gian điểm danh
-                        var currentTime = GetData.getTimeFromString(GetData.getCurrentDateTime())
-                        setCheckedInBtn(holder.checkBtn)
-                        setCheckInTime(currentTime, currentItem.startHr.toString(), holder.checkInTime)
-                        holder.confirmTxt.setText(R.string.unconfirmed)
-                        holder.confirmTxt.visibility = View.VISIBLE
-
-                        if(CheckTime.checkTimeBefore(currentTime, currentItem.startHr.toString())){
-                            currentTime = currentItem.startHr.toString()
+                            setCheckedInBtn(holder.checkBtn)
                         }
 
-                        val checkIn = CheckInFromBUserModel(uid.toString(), today, currentTime, "", "uncomfirmed checked in","0")
+                    } else {
+                        // kiểm tra giờ hiện tại nêú trong khoảng trước startTime 15' đến sau startTime 30' thì sẽ hiên nút check in
+                        if(CheckTime.calculateMinuteDiff(currentItem.startHr.toString(), todayTime) in -15.. 30) {
+                            // khi không có dữ liệu sẽ cho phép ấn nút hoạt động
+                            holder.checkBtn.visibility = View.VISIBLE
+                            holder.checkBtn.setOnClickListener {
+                                // lấy thời gian lúc ấn nút đểm làm thời gian điểm danh
+                                var currentTime = GetData.getTimeFromString(GetData.getCurrentDateTime())
+                                setCheckedInBtn(holder.checkBtn)
+                                setCheckInTime(currentTime, currentItem.startHr.toString(), holder.checkInTime)
+                                holder.confirmTxt.setText(R.string.unconfirmed)
+                                holder.confirmTxt.visibility = View.VISIBLE
 
-                        checkInDb.child(currentDay).child(uid.toString()).setValue(checkIn)
+                                if(CheckTime.checkTimeBefore(currentTime, currentItem.startHr.toString())){
+                                    currentTime = currentItem.startHr.toString()
+                                }
+
+                                val checkIn = CheckInFromBUserModel(uid.toString(), today, currentTime, "", "uncomfirmed checked in","0")
+
+                                checkInDb.child(currentDay).child(uid.toString()).setValue(checkIn)
+                            }
+                        }
                     }
+                }.addOnFailureListener{
+                    // Handle failure here if necessary
                 }
+
+            }else{
+                holder.checkInTime.setText(R.string.not_working_yet)
+                holder.checkInTime.visibility= View.VISIBLE
             }
-        }.addOnFailureListener{
-            // Handle failure here if necessary
         }
     }
 

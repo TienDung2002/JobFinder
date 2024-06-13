@@ -166,7 +166,7 @@ object GetData {
         return false
     }
 
-    fun getStatus(startTime: String, endTime: String, empAmount: String, recruitedEmp: String): String {
+    fun setStatus(startTime: String, endTime: String, empAmount: String, recruitedEmp: String): String {
         try {
             val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val currentDate = sdf.format(Date())
@@ -259,6 +259,27 @@ object GetData {
         }
 
         return result // Di chuyển lệnh return ra khỏi khối try-catch
+    }
+
+    fun isBetweenTime(startTime:String, endTime:String, today:String):Boolean{
+        try {
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val currentDate = sdf.format(Date())
+
+            val startDate = sdf.parse(startTime)
+            val endDate = sdf.parse(endTime)
+            val todayDate = sdf.parse(currentDate)
+
+
+
+            if(startDate!= null && endDate!= null && todayDate!= null ){
+                return !todayDate.before(startDate) && !todayDate.after(endDate)
+            }
+            return false
+        }catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
     }
 
     fun getCurrentUserId(): String? {
