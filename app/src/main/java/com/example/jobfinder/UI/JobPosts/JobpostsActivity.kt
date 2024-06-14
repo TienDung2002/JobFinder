@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -27,6 +29,7 @@ class JobpostsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobpostsBinding
     private lateinit var auth: FirebaseAuth
     private var jobType: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJobpostsBinding.inflate(layoutInflater)
@@ -75,7 +78,7 @@ class JobpostsActivity : AppCompatActivity() {
             Calendar.setupDatePicker(binding.root.context, binding.postJobEndTime)
         }
 
-        //button
+        //button post job
         binding.postJobBtn.setOnClickListener {
             val title = binding.postJobTitle.text.toString()
             val workStartTime = binding.postJobStartHr.text.toString()
@@ -109,6 +112,7 @@ class JobpostsActivity : AppCompatActivity() {
             if(!isValidWorkShift && isValidWorkStartTime && isValidWorkEndTime){
                 Toast.makeText(binding.root.context, getString(R.string.end_shift_time_be4_start),Toast.LENGTH_SHORT).show()
             }
+
             binding.postJobTitle.error = if (isValidTitle) null else getString(R.string.no_post_job_title)
             binding.postJobEmpAmount.error = if(isValidEmpAmount) null else getString(R.string.no_emp_amount)
             binding.postJobSalary.error = if(isValidSalary) null else getString(R.string.no_salary)
@@ -119,115 +123,136 @@ class JobpostsActivity : AppCompatActivity() {
             binding.postJobStartHr.error= if(isValidWorkStartTime) null else getString(R.string.shift_start_blank)
             binding.postJobEndHr.error= if(isValidWorkEndTime) null else getString(R.string.shift_end_blank)
 
-            if(isValidTitle && isValidAddress && isValidEmpAmount && isValidSalary && isValidJobDes
+            // Nếu hợp lệ post job lên firebase
+            if (isValidTitle && isValidAddress && isValidEmpAmount && isValidSalary && isValidJobDes
                 && isValidStartTime && isValidEndTime && isValidWorkDate && isValidWorkShift && isValidWorkStartTime && isValidWorkEndTime){
-
-                binding.postJobTitle.isClickable = false
-                binding.postJobStartTime.isClickable = false
-                binding.postJobEndTime.isClickable = false
-                binding.postJobEmpAmount.isClickable = false
-                binding.postJobSalary.isClickable = false
-                binding.postJobAddress.isClickable = false
-                binding.postJobDes.isClickable = false
-                binding.postJobBtn.isClickable = false
-                binding.postJobStartHr.isClickable= false
-                binding.postJobEndHr.isClickable= false
-
-                val uid = auth.currentUser?.uid
-
-                val jobId= FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).push().key
-                val totalWorkDay = GetData.countDaysBetweenDates(startTime, endTime)
-                val hrWordPerDay = GetData.calculateHourDifference(workStartTime, workEndTime)
-                val totalWorkHour= totalWorkDay.toFloat() * hrWordPerDay
-                val oneEmpSalary = GetData.multiplyStrings(totalWorkHour.toString(), salary)
-                val totalSalary = GetData.multiplyStrings(empAmount, oneEmpSalary)
-                val date = GetData.getCurrentDateTime()
-
-                FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).get().addOnSuccessListener { data ->
-                    if(data.exists()) {
-                        val bUserName = data.child("name").getValue(String::class.java).toString()
-                        val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount").child(uid.toString())
-                        walletAmountRef.get().addOnSuccessListener { walletData ->
-                            if(walletData.exists()) {
-                                val walletAmount =
-                                    walletData.child("amount").getValue(String::class.java)
-                                        .toString()
-
-                                if(GetData.compareFloatStrings(walletAmount, totalSalary)) {
-                                    val newJob = JobModel(
-                                        jobId,
-                                        title,
-                                        startTime,
-                                        endTime,
-                                        empAmount,
-                                        salary,
-                                        address,
-                                        jobDes,
-                                        totalSalary,
-                                        date,
-                                        "0",
-                                        bUserName,
-                                        jobType,
-                                        uid,
-                                        "recruiting",
-                                        workStartTime,
-                                        workEndTime
-                                    )
-
-                                    //add to firebase
-                                    FirebaseDatabase
-                                        .getInstance()
-                                        .getReference("Job")
-                                        .child(uid.toString())
-                                        .child(jobId.toString())
-                                        .setValue(newJob)
-                                        .addOnCompleteListener {
-                                            if (it.isSuccessful) {
-                                                val newWalletAmount = walletAmountModel((walletAmount.toFloat()-totalSalary.toFloat()).toString())
-                                                walletAmountRef.setValue(newWalletAmount)
-                                                val notiId = FirebaseDatabase
-                                                    .getInstance()
-                                                    .getReference("Notifications")
-                                                    .child(uid.toString()).push().key.toString()
-                                                val convertSalaryVnd = format.format(totalSalary.toDouble())
-                                                val notificationsRowModel = NotificationsRowModel(
-                                                    notiId,
-                                                    "Admin",
-                                                    "${getString(R.string.post_job_success)}.\n" +
-                                                            "${getString(R.string.post_job_title)}: $title.\n" +
-                                                            "-$convertSalaryVnd ${getString(R.string.from_wallet)}",
-                                                    date
-                                                )
-                                                FirebaseDatabase.getInstance()
-                                                    .getReference("Notifications")
-                                                    .child(uid.toString())
-                                                    .child(notiId)
-                                                    .setValue(notificationsRowModel)
-                                                Toast.makeText(
-                                                    binding.root.context,
-                                                    getString(R.string.post_job_success),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                // back home page
-                                                val resultIntent = Intent()
-                                                setResult(Activity.RESULT_OK, resultIntent)
-                                                finish()
-                                            }
-                                        }
-                                }else{
-                                    Toast.makeText(binding.root.context, getString(R.string.not_enough_money),Toast.LENGTH_SHORT).show()
-                                    binding.postJobBtn.isClickable = true
-                                }
-                            }
-                        }
-                    }
-                }
+                disableInputs()
+                postJob(title, workStartTime, workEndTime, startTime, endTime, empAmount, salary, address, jobDes)
             }else{
                 checkToAutoFocus(isValidTitle,isValidStartTime, isValidEndTime , isValidEmpAmount, isValidSalary, isValidAddress, isValidJobDes)
             }
-
         }
 
+
+
+        // TextWatcher để theo dõi các thay đổi các trường cần thiết để tính chi phí
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val total = calculateTotalSalary()
+                displayTotalSalary(total)
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+        binding.postJobStartHr.addTextChangedListener(textWatcher)
+        binding.postJobEndHr.addTextChangedListener(textWatcher)
+        binding.postJobStartTime.addTextChangedListener(textWatcher)
+        binding.postJobEndTime.addTextChangedListener(textWatcher)
+        binding.postJobEmpAmount.addTextChangedListener(textWatcher)
+        binding.postJobSalary.addTextChangedListener(textWatcher)
+
+    }
+
+
+    private fun calculateTotalSalary(): String {
+        val empAmount = binding.postJobEmpAmount.text.toString().trim()
+        val salary = binding.postJobSalary.text.toString().trim()
+
+        // Kiểm tra có nhập đủ các trường thời gian để tính lương hay không
+        val isValidTimeFields = binding.postJobStartHr.text?.isNotEmpty() == true &&
+                binding.postJobEndHr.text?.isNotEmpty() == true &&
+                binding.postJobStartTime.text?.isNotEmpty() == true &&
+                binding.postJobEndTime.text?.isNotEmpty() == true
+
+        return if (empAmount.isNotEmpty() && salary.isNotEmpty() && isValidTimeFields) {
+            val workStartTime = binding.postJobStartHr.text.toString()
+            val workEndTime = binding.postJobEndHr.text.toString()
+            val startTime = binding.postJobStartTime.text.toString()
+            val endTime = binding.postJobEndTime.text.toString()
+
+            val totalWorkDay = GetData.countDaysBetweenDates(startTime, endTime)
+            val hrWorkPerDay = GetData.calculateHourDifference(workStartTime, workEndTime)
+            val totalWorkHour = totalWorkDay.toFloat() * hrWorkPerDay
+            val oneEmpSalary = GetData.multiplyStrings(totalWorkHour.toString(), salary)
+            val totalSalary = GetData.multiplyStrings(empAmount, oneEmpSalary)
+
+            totalSalary // String
+        } else {
+            "0" // k hợp lệ trả về 0
+        }
+    }
+
+    private fun displayTotalSalary(totalSalary: String) {
+        val format = NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("VND")
+        binding.totalTemp.text = format.format(totalSalary.toFloat())
+    }
+
+
+    private fun postJob(title: String, workStartTime: String, workEndTime: String, startTime: String, endTime: String, empAmount: String, salary: String, address: String, jobDes: String) {
+        val uid = auth.currentUser?.uid
+        val jobId= FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).push().key
+        val totalSalary = calculateTotalSalary()
+        val date = GetData.getCurrentDateTime()
+
+        FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).get().addOnSuccessListener { data ->
+            if(data.exists()) {
+                val bUserName = data.child("name").getValue(String::class.java).toString()
+                val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount").child(uid.toString())
+                walletAmountRef.get().addOnSuccessListener { walletData ->
+                    if(walletData.exists()) {
+                        val walletAmount = walletData.child("amount").getValue(String::class.java).toString()
+
+                        if(GetData.compareFloatStrings(walletAmount, totalSalary)) {
+                            val newJob = JobModel(jobId, title, startTime, endTime, empAmount, salary, address,
+                                jobDes, totalSalary, date,"0", bUserName, jobType, uid,"recruiting",
+                                workStartTime,workEndTime)
+
+                            //add to firebase
+                            FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).child(jobId.toString()).setValue(newJob).addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    val newWalletAmount = walletAmountModel((walletAmount.toFloat()-totalSalary.toFloat()).toString())
+                                    walletAmountRef.setValue(newWalletAmount)
+                                    val notiId = FirebaseDatabase.getInstance().getReference("Notifications").child(uid.toString()).push().key.toString()
+                                    val format = NumberFormat.getCurrencyInstance()
+                                    format.currency = Currency.getInstance("VND")
+                                    val convertSalaryVnd = format.format(totalSalary.toDouble())
+                                    val notificationsRowModel = NotificationsRowModel(
+                                        notiId,"Admin",
+                                        "${getString(R.string.post_job_success)}.\n" +
+                                                "${getString(R.string.post_job_title)}: $title.\n" +
+                                                "-$convertSalaryVnd ${getString(R.string.from_wallet)}",
+                                        date
+                                    )
+                                    FirebaseDatabase.getInstance().getReference("Notifications").child(uid.toString()).child(notiId).setValue(notificationsRowModel)
+                                    Toast.makeText(binding.root.context, getString(R.string.post_job_success), Toast.LENGTH_SHORT).show()
+                                    // back home page
+                                    val resultIntent = Intent()
+                                    setResult(Activity.RESULT_OK, resultIntent)
+                                    finish()
+                                }
+                            }
+                        } else {
+                            Toast.makeText(binding.root.context, getString(R.string.not_enough_money), Toast.LENGTH_SHORT).show()
+                            binding.postJobBtn.isClickable = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun disableInputs() {
+        binding.postJobTitle.isClickable = false
+        binding.postJobStartTime.isClickable = false
+        binding.postJobEndTime.isClickable = false
+        binding.postJobEmpAmount.isClickable = false
+        binding.postJobSalary.isClickable = false
+        binding.postJobAddress.isClickable = false
+        binding.postJobDes.isClickable = false
+        binding.postJobBtn.isClickable = false
+        binding.postJobStartHr.isClickable = false
+        binding.postJobEndHr.isClickable = false
     }
 
     private fun checkToAutoFocus(vararg isValidFields: Boolean) {

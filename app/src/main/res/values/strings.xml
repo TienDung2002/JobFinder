@@ -337,6 +337,7 @@
     <string name="no_end_time">No end date</string>
     <string name="end_time_be4_start">Start date must before end date</string>
     <string name="job_type">Job type</string>
+    <string name="total_cost">Total cost:</string>
     <string-array name="job_types_array">
         <item>Retail Sales Associate</item>
         <item>Food and Beverage Server</item>

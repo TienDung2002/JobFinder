@@ -338,6 +338,7 @@
     <string name="no_end_time">Ngày kết thúc trống</string>
     <string name="end_time_be4_start">Ngày kết thúc phải sau ngày bắt đầu</string>
     <string name="job_type">Loại công việc</string>
+    <string name="total_cost">Tổng chi phí:</string>
     <string-array name="job_types_array">
         <item>Nhân viên bán hàng</item>
         <item>Phục vụ</item>
