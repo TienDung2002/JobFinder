@@ -237,27 +237,19 @@ object GetData {
     }
 
     fun calculateHourDifference(timeA: String, timeB: String): Float {
-        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        var result = 0f
+        // Split the time strings into hours and minutes
+        val (hoursA, minutesA) = timeA.split(":").map { it.toInt() }
+        val (hoursB, minutesB) = timeB.split(":").map { it.toInt() }
 
-        try {
-            val dateA: Date = sdf.parse(timeA)!!
-            val dateB: Date = sdf.parse(timeB)!!
+        // Calculate the total minutes from the start of the day for both times
+        val totalMinutesA = hoursA * 60 + minutesA
+        val totalMinutesB = hoursB * 60 + minutesB
 
-            val calendarA = Calendar.getInstance().apply { time = dateA }
-            val calendarB = Calendar.getInstance().apply { time = dateB }
+        // Calculate the difference in minutes
+        val minuteDifference = totalMinutesB - totalMinutesA
 
-            val timeDifference = calendarB.timeInMillis - calendarA.timeInMillis
-
-            val hours = timeDifference / (1000 * 60 * 60).toFloat()
-            val minutes = (timeDifference % (1000 * 60 * 60)).toFloat() / (1000 * 60)
-
-            result = hours + (minutes / 60)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        return result
+        // Convert minute difference to hours
+        return minuteDifference / 60.0f
     }
 
     fun isBetweenTime(startTime:String, endTime:String, today:String):Boolean{

@@ -448,4 +448,5 @@
     <string name="working_time">Working day/time</string>
     <string name="total_salary">Total</string>
     <string name="worked_day">Work day</string>
+    <string name="end_job">End job</string>
 </resources>

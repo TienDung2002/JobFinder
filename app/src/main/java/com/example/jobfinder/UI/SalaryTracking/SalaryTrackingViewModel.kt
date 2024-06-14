@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
+import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.SalaryModel
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.DataSnapshot
@@ -22,11 +23,15 @@ class SalaryTrackingViewModel:ViewModel() {
 
     private val database = FirebaseDatabase.getInstance().getReference("NUserCheckIn")
     private val salaryDb = FirebaseDatabase.getInstance().getReference("Salary")
+    private val jobDb = FirebaseDatabase.getInstance().getReference("Job")
 
     private val uid = GetData.getCurrentUserId()
 
     private val _salaryModel = MutableLiveData<SalaryModel?>()
     val salaryModel: MutableLiveData<SalaryModel?> = _salaryModel
+
+    private val _JobModel = MutableLiveData<JobModel?>()
+    val jobModel: MutableLiveData<JobModel?> = _JobModel
 
     fun fetchCheckIn(jobId: String) {
         _isLoading.value = true
@@ -68,14 +73,22 @@ class SalaryTrackingViewModel:ViewModel() {
                     }
                 }.addOnFailureListener { exception ->
                     Log.d("fetchSalary", "Error fetching salary data: $exception")
-                    // Xử lý lỗi ở đây, ví dụ: thông báo cho người dùng hoặc gửi lỗi đến hệ thống
                 }
             } catch (e: Exception) {
                 Log.e("fetchSalary", "Exception occurred: $e")
-                // Xử lý ngoại lệ ở đây, ví dụ: thông báo cho người dùng hoặc gửi lỗi đến hệ thống
             }
         }
     }
 
+    fun fetchJob(jobId:String, bUserId:String){
+        jobDb.child(bUserId).child(jobId).get().addOnSuccessListener {jobSnapshot->
+            if(jobSnapshot.exists()){
+                val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                jobModel?.let {
+                    _JobModel.value = jobModel
+                }
+            }
+        }
+    }
 
 }

@@ -2,6 +2,7 @@ package com.example.jobfinder.UI.CheckIn
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,8 +87,9 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                         setCheckedOutBtn(holder.checkBtn)
                                         // lấy số giờ làm việc
                                         val workHr = GetData.calculateHourDifference(checkInTime, currentItem.endHr.toString())
-
+//                                        Log.d("salarydskhfkdshfkjds", workHr.toString())
                                         val salary = workHr*currentItem.salary.toString().toFloat()
+//                                        Log.d("salarydskhfkdshfkjds", salary.toString())
                                         // lấy 2 số sau dấy .
                                         val stringSalary = salary.roundToInt().toString()
 
@@ -110,7 +112,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                                 val totalSalary =salarySnapshot.child("totalSalary").getValue(Float::class.java)
                                                 val workedDay = salarySnapshot.child("workedDay").getValue(Int::class.java)
                                                 if(totalSalary!= null && workedDay!= null) {
-                                                    val newTotalSalary = totalSalary + salary
+                                                    val newTotalSalary = totalSalary + stringSalary.toFloat()
 
                                                     val newWorkedDay = workedDay +1
 
