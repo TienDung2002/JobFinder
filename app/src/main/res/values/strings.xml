@@ -417,6 +417,7 @@
     </string-array>
 
     <!--    working job-->
+    <string name="job_management_title">Job management</string>
     <string name="working_job_title">Working Job</string>
     <string name="no_wkJob">No job is working</string>
     <string name="no_emp">No employee in job</string>
@@ -449,4 +450,7 @@
     <string name="total_salary">Total</string>
     <string name="worked_day">Work day</string>
     <string name="end_job">End job</string>
+
+<!--    job history-->
+    <string name="job_history_title">Job history</string>
 </resources>
