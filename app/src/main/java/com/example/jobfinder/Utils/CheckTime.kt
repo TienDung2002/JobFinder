@@ -54,6 +54,19 @@ object CheckTime {
         }
     }
 
-
+    fun isDateAfter(today: String, endTime: String): Boolean {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return try {
+            val todayDate = sdf.parse(today)
+            val endTimeDate = sdf.parse(endTime)
+            if (todayDate != null && endTimeDate != null) {
+                !todayDate.before(endTimeDate)
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            false
+        }
+    }
 
 }

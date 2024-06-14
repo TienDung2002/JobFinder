@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +15,7 @@ import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
 import com.example.jobfinder.Datas.Model.SalaryModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.CheckTime
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivitySalaryTrackingBinding
 import com.google.firebase.database.FirebaseDatabase
@@ -25,8 +27,8 @@ import kotlin.math.roundToInt
 
 class SalaryTrackingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySalaryTrackingBinding
-    private var isActivityOpened = false
     private val viewModel: SalaryTrackingViewModel by viewModels()
+    private var isCliked = false
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,9 @@ class SalaryTrackingActivity : AppCompatActivity() {
 
         val format = NumberFormat.getCurrencyInstance()
         format.currency = Currency.getInstance("VND")
+
+        val today = GetData.getCurrentDateTime()
+        val todayDate = GetData.getDateFromString(today)
 
 
         if(applied_job!= null ){
@@ -73,9 +78,26 @@ class SalaryTrackingActivity : AppCompatActivity() {
                 }
             }
 
+            viewModel.jobModel.observe(this){jobModel ->
+                if(jobModel!= null) {
+                    if (CheckTime.isDateAfter(todayDate, jobModel.endTime.toString())){
+                        binding.confirmEndJobHolder.visibility=View.VISIBLE
+                    }
+                }
+            }
+
             viewModel.fetchCheckIn(applied_job.jobId.toString())
 
             viewModel.fetchSalary(applied_job.jobId.toString())
+
+            viewModel.fetchJob(applied_job.jobId.toString(), applied_job.buserId.toString())
+
+            binding.cfEndJobBtn.setOnClickListener {
+                Log.d("clicked cfEndJobBtn", "Clicked")
+                // xử lí hoàn tiền
+
+
+            }
         }
     }
 

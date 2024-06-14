@@ -460,4 +460,5 @@
     <string name="working_time">Ngày/Giờ làm</string>
     <string name="total_salary">Tổng</string>
     <string name="worked_day">Ngày làm</string>
+    <string name="end_job">Kết thúc việc</string>
 </resources>
