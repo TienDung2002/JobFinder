@@ -461,4 +461,12 @@
     <string name="total_salary">Total</string>
     <string name="worked_day">Work day</string>
     <string name="end_job">End job</string>
+
+    <!--    watch reviewed nuser-->
+    <string name="review_rating_Average">Rating:</string>
+    <string name="review_rating_sub_title_default">(Not rated yet)</string>
+    <string name="review_recycler_title">Reviews from employers</string>
+    <string name="review_recycler_no_reviewed">Candidate has no reviews yet</string>
+    <string name="review_ex_comp_jobtitle">Completed job:</string>
+
 </resources>
