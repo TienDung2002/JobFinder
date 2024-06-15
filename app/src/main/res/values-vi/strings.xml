@@ -125,6 +125,7 @@
     <string name="reject_success">Đã từ chối</string>
     <string name="approve_success">Đã thông qua</string>
     <string name="delete_all">Xóa tất cả</string>
+    <string name="from_job_text">từ công việc</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Ví</string>
@@ -442,6 +443,7 @@
     <string name="unconfirmed">Chưa xác nhận</string>
     <string name="at">lúc</string>
     <string name="not_working_yet">Việc chưa hoạt động</string>
+    <string name="check_out_notice">Nhận lương của bạn ở Quản lí công việc</string>
 
 <!--    salary tracking-->
     <string name="salary_tracking_title">Theo dõi lương</string>

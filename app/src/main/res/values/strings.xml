@@ -126,6 +126,7 @@
     <string name="reject_success">Rejected</string>
     <string name="approve_success">Approved</string>
     <string name="delete_all">Delete all</string>
+    <string name="from_job_text">from job</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -440,6 +441,7 @@
     <string name="unconfirmed">Unconfirmed</string>
     <string name="at">at</string>
     <string name="not_working_yet">Job is not working yet</string>
+    <string name="check_out_notice">Claim your salary at Job management</string>
 
     <!--    salary tracking-->
     <string name="salary_tracking_title">Salary tracking</string>

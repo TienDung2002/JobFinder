@@ -13,6 +13,8 @@ class CheckInViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
 
     private val database = FirebaseDatabase.getInstance().getReference("ApprovedJob")
+    private val bUserCheckInDb = FirebaseDatabase.getInstance().getReference("CheckInFromBUser")
+    private val nUserCheckInDb = FirebaseDatabase.getInstance().getReference("NUserCheckIn")
 
     fun fetchApprovedJob() {
         _isLoading.value = true
@@ -49,6 +51,12 @@ class CheckInViewModel: ViewModel() {
             }
             .addOnFailureListener {
             }
+    }
+
+    fun deleteCheckIn(jobId:String){
+        bUserCheckInDb.child(jobId).removeValue()
+
+        nUserCheckInDb.child(jobId).removeValue()
     }
 
 }

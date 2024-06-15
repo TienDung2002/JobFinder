@@ -17,6 +17,7 @@ import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.CheckIn.CheckInViewModel
 import com.example.jobfinder.UI.JobHistory.JobHistoryViewModel
+import com.example.jobfinder.UI.Notifications.NotificationViewModel
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.Utils.CheckTime
 import com.example.jobfinder.Utils.GetData
@@ -31,6 +32,7 @@ class SalaryTrackingActivity : AppCompatActivity() {
     private val checkInViewModel: CheckInViewModel by viewModels()
     private val jobHistoryViewModel: JobHistoryViewModel by viewModels()
     private val jobViewModel: PostedJobViewModel by viewModels()
+    private val notificationViewModel: NotificationViewModel by viewModels()
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +86,6 @@ class SalaryTrackingActivity : AppCompatActivity() {
                             binding.cfEndJobBtn.isClickable =true
                             binding.cfEndJobBtn.setOnClickListener {
                                 // xử lí hoàn tiền và thêm vào job history
-                                Log.d("sdkjfbdskjfbdskjfkjdsjkf", "clicked")
                                 endJobHandle(approved_job, uid.toString(), todayDate)
                             }
                         }
@@ -95,7 +96,6 @@ class SalaryTrackingActivity : AppCompatActivity() {
                             binding.cfEndJobBtn.isClickable =true
                             binding.cfEndJobBtn.setOnClickListener {
                                 // xử lí hoàn tiền và thêm vào job history
-                                Log.d("sdkjfbdskjfbdskjfkjdsjkf", "clicked2")
                                 endJobHandle(approved_job, uid.toString(), todayDate)
                             }
                         }
@@ -140,6 +140,9 @@ class SalaryTrackingActivity : AppCompatActivity() {
         val salaryRef = FirebaseDatabase.getInstance().getReference("Salary")
             .child(approved_job.jobId.toString()).child(uid)
 
+        val format = NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("VND")
+
         salaryRef.get().addOnSuccessListener { salarySnapshot ->
             if (salarySnapshot.exists()) {
                 val nuserTotalSalary = salarySnapshot.child("totalSalary").getValue(Float::class.java)
@@ -165,6 +168,7 @@ class SalaryTrackingActivity : AppCompatActivity() {
                             jobRef.updateChildren(updateJob).addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     Log.d("endJobHandle", "Job updated successfully")
+                                    val today = GetData.getCurrentDateTime()
 
                                     // push lên NUserJobHistory
                                     val nUserJobHistoryModel = JobHistoryModel(
@@ -184,6 +188,11 @@ class SalaryTrackingActivity : AppCompatActivity() {
                                     // xóa trong approvedJob
                                     checkInViewModel.removeApprovedJob(jobModel.jobId.toString(), uid)
 
+                                    //thông báo cho nuser
+                                    val nUserNotiDetail = "+${nuserTotalSalary?.let {format.format(it.toDouble())}} \n" +
+                                            "${getText(R.string.salary_title)} ${getText(R.string.from_job_text)} ${jobModel.jobTitle}."
+                                    notificationViewModel.addNotiForCurrUser("Admin",nUserNotiDetail ,today)
+
                                     // xóa trong salary
                                     salaryRef.removeValue()
 
@@ -192,8 +201,12 @@ class SalaryTrackingActivity : AppCompatActivity() {
 
                                         // hoàn tiền vào ví buser
                                         jobViewModel.addWalletAmount(jobModel.BUserId.toString(), newJobTotalSalary)
+                                        // thông báo về cho buser
+                                        val bUserNotiDetail = "${getText(R.string.refund)} ${format.format(newJobTotalSalary.toDouble())} ${getText(R.string.from_job_text)} ${jobModel.jobTitle}."
+                                        notificationViewModel.addNotificationForUser(jobModel.BUserId.toString(), "Admin",bUserNotiDetail ,today)
 
                                         //xóa trong check in và buser check in
+                                        checkInViewModel.deleteCheckIn(jobModel.jobId.toString())
 
                                         // xóa job
                                         jobRef.removeValue()
