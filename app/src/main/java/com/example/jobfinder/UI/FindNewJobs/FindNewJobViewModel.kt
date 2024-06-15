@@ -130,5 +130,9 @@ class FindNewJobViewModel : ViewModel() {
         return _bookmarkStatus.value?.get(jobId) ?: false
     }
 
+    fun updateJob(jobId: String, buserId: String, update: HashMap<String, Any>) {
+        database.child(buserId).child(jobId).updateChildren(update)
+    }
+
 }
 

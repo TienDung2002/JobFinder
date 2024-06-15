@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.PostedJob
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,7 @@ class PostedJobViewModel : ViewModel() {
     private val userInfoDb = FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString())
     private val appliedJobDb = FirebaseDatabase.getInstance().getReference("AppliedJob")
     private val approvedJobDb = FirebaseDatabase.getInstance().getReference("ApprovedJob")
+    private val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount")
 
     fun fetchPostedJobs() {
         _isLoading.value = true
@@ -90,6 +92,61 @@ class PostedJobViewModel : ViewModel() {
         approvedJobDb.get().addOnSuccessListener {
             for(uid in it.children){
                 appliedJobDb.child(uid.key.toString()).child(jobId).removeValue()
+            }
+        }
+    }
+
+    fun addWalletAmount(uid: String, amount: Float) {
+        walletAmountRef.child(uid).get().addOnSuccessListener { walletAmountSnapShot ->
+            if (walletAmountSnapShot.exists()) {
+                val walletAmount = walletAmountSnapShot.child("amount").getValue(String::class.java)
+
+                if (walletAmount != null) {
+                    try {
+                        val currentWalletAmount = walletAmount.toFloat()
+                        val newWalletAmount = currentWalletAmount + amount
+
+                        val update = hashMapOf<String, Any>(
+                            "amount" to newWalletAmount.toString()
+                        )
+
+                        walletAmountRef.child(uid).updateChildren(update).addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d("addWalletAmount", "Wallet amount updated successfully for user $uid")
+                            } else {
+                                Log.e("addWalletAmount", "Failed to update wallet amount for user $uid")
+                            }
+                        }.addOnFailureListener { exception ->
+                            Log.e("addWalletAmount", "Failed to update wallet amount", exception)
+                        }
+                    } catch (e: NumberFormatException) {
+                        Log.e("addWalletAmount", "Invalid wallet amount: $walletAmount", e)
+                    }
+                } else {
+                    Log.e("addWalletAmount", "Wallet amount is null for user $uid")
+                }
+            } else {
+                Log.e("addWalletAmount", "Wallet snapshot does not exist for user $uid")
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("addWalletAmount", "Failed to get wallet snapshot", exception)
+        }
+    }
+
+
+
+    fun minusWalletAmount(uid:String, amount:Float){
+        walletAmountRef.child(uid).get().addOnSuccessListener{ walletAmountSnapShot->
+            if(walletAmountSnapShot.exists()){
+                val walletAmount = walletAmountSnapShot.child("amount").getValue(String::class.java)
+
+                val newWalletAmount = walletAmount.toString().toFloat() - amount
+
+                val update = hashMapOf<String, Any>(
+                    "amount" to newWalletAmount.toString()
+                )
+
+                walletAmountRef.child(uid).updateChildren(update)
             }
         }
     }

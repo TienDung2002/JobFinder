@@ -1,5 +1,6 @@
 package com.example.jobfinder.Utils
 
+import android.annotation.SuppressLint
 import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -67,6 +68,14 @@ object CheckTime {
         } catch (e: Exception) {
             false
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun areDatesEqual(dateStr1: String, dateStr2: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val date1 = dateFormat.parse(dateStr1)
+        val date2 = dateFormat.parse(dateStr2)
+        return date1 == date2
     }
 
 }

@@ -50,7 +50,7 @@ class NUserWorkingJobFragment(private val animationView: LottieAnimationView) : 
                 if (!isActivityOpened) {
                     // Mở activity chỉ khi activity chưa được mở
                     val intent = Intent(requireContext(), SalaryTrackingActivity::class.java)
-                    intent.putExtra("applied_job", job)
+                    intent.putExtra("approved_job", job)
                     startActivityForResult(intent, REQUEST_CODE)
                     // Đặt biến kiểm tra là đã mở
                     isActivityOpened = true

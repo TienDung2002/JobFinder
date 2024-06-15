@@ -6,29 +6,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
+import com.example.jobfinder.Datas.Model.BUserJobHistoryModel
 import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
-import com.example.jobfinder.Datas.Model.SalaryModel
+import com.example.jobfinder.Datas.Model.JobHistoryModel
+import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.CheckIn.CheckInViewModel
+import com.example.jobfinder.UI.JobHistory.JobHistoryViewModel
+import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.Utils.CheckTime
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivitySalaryTrackingBinding
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.text.NumberFormat
 import java.util.Currency
-import kotlin.math.roundToInt
 
 class SalaryTrackingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySalaryTrackingBinding
     private val viewModel: SalaryTrackingViewModel by viewModels()
-    private var isCliked = false
+    private val checkInViewModel: CheckInViewModel by viewModels()
+    private val jobHistoryViewModel: JobHistoryViewModel by viewModels()
+    private val jobViewModel: PostedJobViewModel by viewModels()
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,18 +44,21 @@ class SalaryTrackingActivity : AppCompatActivity() {
             finish()
         }
 
-        val applied_job = intent.getParcelableExtra<AppliedJobModel>("applied_job")
+        val approved_job = intent.getParcelableExtra<AppliedJobModel>("approved_job")
 
         val format = NumberFormat.getCurrencyInstance()
         format.currency = Currency.getInstance("VND")
 
         val today = GetData.getCurrentDateTime()
         val todayDate = GetData.getDateFromString(today)
+        val currentTime = GetData.getTimeFromString(today)
+
+        val uid = GetData.getCurrentUserId()
 
 
-        if(applied_job!= null ){
+        if(approved_job!= null && uid != null){
 
-            val adapter = SalaryTrackingAdapter(binding.root.context, mutableListOf(), applied_job)
+            val adapter = SalaryTrackingAdapter(binding.root.context, mutableListOf(), approved_job)
             binding.recyclerSalaryTrackingList.adapter = adapter
             binding.recyclerSalaryTrackingList.layoutManager = LinearLayoutManager(this)
 
@@ -63,41 +68,47 @@ class SalaryTrackingActivity : AppCompatActivity() {
             }
 
             viewModel.salaryModel.observe(this) { salaryModel ->
-                if (!isFinishing && !isDestroyed) {
-                    if(salaryModel!= null) {
-                        binding.workedDay.text =
-                            "${getText(R.string.worked_day)}: ${salaryModel.workedDay.toString()}/${salaryModel.totalWorkDay.toString()}"
-                        val totalSalaryFormatted = format.format(salaryModel.totalSalary)
-                        binding.totalSalary.text = "${getText(R.string.total_salary)}: $totalSalaryFormatted"
-                    }
-                    else {
-                        // Xử lý khi salaryModel null
-                        binding.workedDay.text = "${getText(R.string.worked_day)}: -/-"
-                        binding.totalSalary.text = "${getText(R.string.total_salary)}: -"
-                    }
+                if(salaryModel!= null) {
+                    binding.workedDay.text =
+                        "${getText(R.string.worked_day)}: ${salaryModel.workedDay.toString()}/${salaryModel.totalWorkDay.toString()}"
+                    val totalSalaryFormatted = format.format(salaryModel.totalSalary)
+                    binding.totalSalary.text = "${getText(R.string.total_salary)}: $totalSalaryFormatted"
                 }
             }
 
             viewModel.jobModel.observe(this){jobModel ->
                 if(jobModel!= null) {
-                    if (CheckTime.isDateAfter(todayDate, jobModel.endTime.toString())){
-                        binding.confirmEndJobHolder.visibility=View.VISIBLE
+                    if( CheckTime.areDatesEqual( todayDate, jobModel.endTime.toString())){
+                        if(CheckTime.calculateMinuteDiff(approved_job.endHr.toString(),currentTime) >0){
+                            binding.confirmEndJobHolder.visibility=View.VISIBLE
+                            binding.cfEndJobBtn.isClickable =true
+                            binding.cfEndJobBtn.setOnClickListener {
+                                // xử lí hoàn tiền và thêm vào job history
+                                Log.d("sdkjfbdskjfbdskjfkjdsjkf", "clicked")
+                                endJobHandle(approved_job, uid.toString(), todayDate)
+                            }
+                        }
+                    }
+                    if(!CheckTime.areDatesEqual( todayDate, jobModel.endTime.toString())) {
+                        if (CheckTime.isDateAfter(todayDate, jobModel.endTime.toString())) {
+                            binding.confirmEndJobHolder.visibility = View.VISIBLE
+                            binding.cfEndJobBtn.isClickable =true
+                            binding.cfEndJobBtn.setOnClickListener {
+                                // xử lí hoàn tiền và thêm vào job history
+                                Log.d("sdkjfbdskjfbdskjfkjdsjkf", "clicked2")
+                                endJobHandle(approved_job, uid.toString(), todayDate)
+                            }
+                        }
                     }
                 }
             }
 
-            viewModel.fetchCheckIn(applied_job.jobId.toString())
+            viewModel.fetchCheckIn(approved_job.jobId.toString())
 
-            viewModel.fetchSalary(applied_job.jobId.toString())
+            viewModel.fetchSalary(approved_job.jobId.toString())
 
-            viewModel.fetchJob(applied_job.jobId.toString(), applied_job.buserId.toString())
+            viewModel.fetchJob(approved_job.jobId.toString(), approved_job.buserId.toString())
 
-            binding.cfEndJobBtn.setOnClickListener {
-                Log.d("clicked cfEndJobBtn", "Clicked")
-                // xử lí hoàn tiền
-
-
-            }
         }
     }
 
@@ -121,5 +132,97 @@ class SalaryTrackingActivity : AppCompatActivity() {
             binding.animationView.visibility = View.GONE
         }
     }
+
+    private fun endJobHandle(approved_job: AppliedJobModel, uid: String, todayDate: String) {
+        val jobRef = FirebaseDatabase.getInstance().getReference("Job")
+            .child(approved_job.buserId.toString()).child(approved_job.jobId.toString())
+
+        val salaryRef = FirebaseDatabase.getInstance().getReference("Salary")
+            .child(approved_job.jobId.toString()).child(uid)
+
+        salaryRef.get().addOnSuccessListener { salarySnapshot ->
+            if (salarySnapshot.exists()) {
+                val nuserTotalSalary = salarySnapshot.child("totalSalary").getValue(Float::class.java)
+                Log.d("endJobHandle", "NUser total salary: $nuserTotalSalary")
+
+                // update wallet amount
+                jobViewModel.addWalletAmount(uid, nuserTotalSalary.toString().toFloat())
+
+                jobRef.get().addOnSuccessListener { jobSnapshot ->
+                    if (jobSnapshot.exists()) {
+                        val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                        if (jobModel != null) {
+                            Log.d("endJobHandle", "Job model retrieved: $jobModel")
+
+                            val newJobTotalSalary = jobModel.totalSalary.toString().toFloat() - nuserTotalSalary.toString().toFloat()
+                            val newJobRecruitedEmp = jobModel.numOfRecruited.toString().toInt() - 1
+
+                            val updateJob = hashMapOf<String, Any>(
+                                "numOfRecruited" to newJobRecruitedEmp.toString(),
+                                "totalSalary" to newJobTotalSalary.toString()
+                            )
+
+                            jobRef.updateChildren(updateJob).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Log.d("endJobHandle", "Job updated successfully")
+
+                                    // push lên NUserJobHistory
+                                    val nUserJobHistoryModel = JobHistoryModel(
+                                        jobModel.jobId, jobModel.jobTitle, todayDate,
+                                        jobModel.jobType, jobModel.BUserId, "", "", uid
+                                    )
+                                    jobHistoryViewModel.pushToFirebase(jobModel.jobId.toString(), uid, nUserJobHistoryModel)
+
+                                    // push lên BUserJobHistory
+                                    val bUserJobHistoryRef = FirebaseDatabase.getInstance().getReference("BUserJobHistory")
+                                        .child(jobModel.BUserId.toString()).child(jobModel.jobId.toString()).child(uid)
+
+                                    val bUserJobHistoryModel = BUserJobHistoryModel(jobModel.jobId, jobModel.BUserId, uid)
+
+                                    bUserJobHistoryRef.setValue(bUserJobHistoryModel)
+
+                                    // xóa trong approvedJob
+                                    checkInViewModel.removeApprovedJob(jobModel.jobId.toString(), uid)
+
+                                    // xóa trong salary
+                                    salaryRef.removeValue()
+
+                                    if (newJobRecruitedEmp == 0) {
+                                        // khi nuser cuối xác nhận kết thúc việc để nhận lương sẽ xóa job
+
+                                        // hoàn tiền vào ví buser
+                                        jobViewModel.addWalletAmount(jobModel.BUserId.toString(), newJobTotalSalary)
+
+                                        //xóa trong check in và buser check in
+
+                                        // xóa job
+                                        jobRef.removeValue()
+                                    }
+
+                                    val resultIntent = Intent()
+                                    setResult(Activity.RESULT_OK, resultIntent)
+                                    finish()
+
+                                } else {
+                                    Log.e("endJobHandle", "Failed to update job")
+                                }
+                            }
+                        } else {
+                            Log.e("endJobHandle", "Job model is null")
+                        }
+                    } else {
+                        Log.e("endJobHandle", "Job snapshot does not exist")
+                    }
+                }.addOnFailureListener { exception ->
+                    Log.e("endJobHandle", "Failed to get job snapshot", exception)
+                }
+            } else {
+                Log.e("endJobHandle", "Salary snapshot does not exist")
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("endJobHandle", "Failed to get salary snapshot", exception)
+        }
+    }
+
 
 }
