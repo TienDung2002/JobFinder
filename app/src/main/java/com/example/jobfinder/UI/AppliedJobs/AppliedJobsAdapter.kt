@@ -81,11 +81,6 @@ class AppliedJobsAdapter(
 
     fun updateData(newList: List<AppliedJobModel>) {
         appliedList = newList
-        if (appliedList.isEmpty()) {
-            showNoDataFoundImg()
-        } else {
-            hideNoDataFoundImg()
-        }
         notifyDataSetChanged()
     }
 

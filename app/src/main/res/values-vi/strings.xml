@@ -251,6 +251,16 @@
     <string name="account_deleted">Đã xóa tài khoản</string>
     <string name="delete_account_failed">Xóa tài khoản không thành công. Vui lòng thử lại.</string>
 
+    <!-- About app-->
+    <string name="about_title_app">Về ứng dụng</string>
+    <string name="about_desc_app">JobFinder là nền tảng kết nối người tìm việc làm bán thời gian với các nhà tuyển dụng uy tín, giúp đôi bên tiết kiệm thời gian, công sức và cùng hướng tới lợi ích chung.</string>
+    <string name="about_title_us">Nhóm phát triển</string>
+    <string name="about_desc_us">Nhóm phát triển của chúng tôi gồm 2 thành viên đến từ Đại học Thăng Long, với mong muốn tạo ra giải pháp hiệu quả, tiết kiệm công sức để giải quyết bài toán tìm việc bán thời gian.</string>
+    <string name="about_title_goals">Mục tiêu</string>
+    <string name="about_desc_goals">Mục tiêu của chúng tôi là trở thành nền tảng tìm kiếm việc làm bán thời gian hàng đầu, cung cấp cơ hội việc làm chất lượng và phù hợp với mọi đối tượng.</string>
+    <string name="about_title_feaAndBen">Tính năng và lợi ích</string>
+    <string name="about_desc_feaAndBen">JobFinder cung cấp các tính năng chính như tìm kiếm việc làm, quản lý thu nhập, tìm kiếm ứng viên, quản lý nhân viên, đánh giá ứng viên,… và nhiều tính năng khác giúp bạn nhanh chóng đạt được mục tiêu mong muốn.</string>
+
     <!--    Find new job-->
     <string name="hint_search">Tìm kiếm</string>
     <string name="open">Mở</string>
@@ -329,6 +339,7 @@
     <string name="no_end_time">Ngày kết thúc trống</string>
     <string name="end_time_be4_start">Ngày kết thúc phải sau ngày bắt đầu</string>
     <string name="job_type">Loại công việc</string>
+    <string name="total_cost">Tổng chi phí:</string>
     <string-array name="job_types_array">
         <item>Nhân viên bán hàng</item>
         <item>Phục vụ</item>
@@ -457,4 +468,11 @@
 
     <!--    job history-->
     <string name="job_history_title">Lịch sử</string>
+    <!--    watch reviewed nuser-->
+    <string name="review_rating_Average">Đánh giá:</string>
+    <string name="review_rating_sub_title_default">(Chưa có đánh giá)</string>
+    <string name="review_recycler_title">Đánh giá từ các nhà tuyển dụng</string>
+    <string name="review_recycler_no_reviewed">Ứng viên chưa có đánh giá</string>
+    <string name="review_ex_comp_jobtitle">Công việc:</string>
+
 </resources>

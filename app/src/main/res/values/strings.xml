@@ -250,6 +250,17 @@
     <string name="delete_account_failed">Delete account failed. Please try again.</string>
 
 
+    <!-- About app-->
+    <string name="about_title_app">About app</string>
+    <string name="about_desc_app">The Job Finder application is a platform that connects part-time job seekers with reputable employers, helping both parties save time and effort towards mutual benefits.</string>
+    <string name="about_title_us">About us</string>
+    <string name="about_desc_us">Our development team includes 2 members from Thang Long University, with the desire to create an effective, effort-saving solution for the problem of finding part-time jobs.</string>
+    <string name="about_title_goals">The goals</string>
+    <string name="about_desc_goals">Our goal is to become the leading part-time job search platform, providing quality and suitable job opportunities for everyone.</string>
+    <string name="about_title_feaAndBen">Features vs Benefits</string>
+    <string name="about_desc_feaAndBen">JobFinder provides key features such as job search, income management, candidate search, employee management, candidate evaluation,… and many other features to help you quickly achieve your set goals direction</string>
+
+
     <!--    Find new job-->
     <string name="hint_search">Search</string>
     <string name="open">Open</string>
@@ -327,6 +338,7 @@
     <string name="no_end_time">No end date</string>
     <string name="end_time_be4_start">Start date must before end date</string>
     <string name="job_type">Job type</string>
+    <string name="total_cost">Total cost:</string>
     <string-array name="job_types_array">
         <item>Retail Sales Associate</item>
         <item>Food and Beverage Server</item>
@@ -455,4 +467,11 @@
 
 <!--    job history-->
     <string name="job_history_title">Job history</string>
+    <!--    watch reviewed nuser-->
+    <string name="review_rating_Average">Rating:</string>
+    <string name="review_rating_sub_title_default">(Not rated yet)</string>
+    <string name="review_recycler_title">Reviews from employers</string>
+    <string name="review_recycler_no_reviewed">Candidate has no reviews yet</string>
+    <string name="review_ex_comp_jobtitle">Completed job:</string>
+
 </resources>

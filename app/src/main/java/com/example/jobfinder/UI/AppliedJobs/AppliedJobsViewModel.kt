@@ -10,13 +10,17 @@ import com.google.firebase.database.FirebaseDatabase
 class AppliedJobsViewModel: ViewModel()  {
     private val appliedList: MutableList<AppliedJobModel> = mutableListOf()
     private val _appliedListLiveData = MutableLiveData<List<AppliedJobModel>>()
-
+    private val _isFetchingData = MutableLiveData<Boolean>()
     private val database = FirebaseDatabase.getInstance().getReference("AppliedJob")
 
 
-
     val appliedListLiveData: LiveData<List<AppliedJobModel>> get() = _appliedListLiveData
+    val isFetchingData: LiveData<Boolean> get() = _isFetchingData
 
+
+    init {
+        _isFetchingData.value = false
+    }
 
     fun getAppliedList(): List<AppliedJobModel>{
         return appliedList
@@ -64,5 +68,22 @@ class AppliedJobsViewModel: ViewModel()  {
                 database.child(uid.key.toString()).child(jobId).removeValue()
             }
         }
+    }
+
+    fun fetchAppliedJobs(){
+        _isFetchingData.value = true
+        clearAppliedList()
+        val userID = GetData.getCurrentUserId()
+        FirebaseDatabase.getInstance().getReference("AppliedJob").child(userID.toString())
+            .get().addOnSuccessListener {datasnapshot ->
+                for (AppliedJobSnapshot in datasnapshot.children) {
+                    val AppliedJobModel = AppliedJobSnapshot.getValue(AppliedJobModel::class.java)
+                    AppliedJobModel?.let {
+                        addAppliedToAppliedList(it)
+                    }
+                }
+                sortByNewestApplied()
+                _isFetchingData.value = false
+            }
     }
 }

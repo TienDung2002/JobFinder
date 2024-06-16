@@ -11,4 +11,5 @@
 - [Vũ Tiến Dũng](https://github.com/TienDung2002)
 
 ## About
+- Graduation project on finding part-time jobs with the purpose of being a bridge between employers and employees. The project consists of 2 main members, using Kotlin as the main language to handle the interface and communicate with methods on Firebase - Realtime database
 - [Word](https://thanglongedu-my.sharepoint.com/:w:/g/personal/a38520_thanglong_edu_vn/EcAJVdxh9cRKjuI2aNRqHtQBHIHQLri2q1ydfLAaNJzL1Q?e=WxiCl1)

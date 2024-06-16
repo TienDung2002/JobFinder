@@ -17,17 +17,23 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
+            android:name=".UI.ReviewUser.WNuserReviewedActivity"
+            android:exported="false" />
+        <activity
             android:name=".UI.SalaryTracking.SalaryTrackingActivity"
             android:exported="false" />
         <activity
             android:name=".UI.CheckIn.Check_In_Activity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.JobEmpList.JobEmpListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.WorkingJob.WorkingJobActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.WorkingJob.NUserWorkingJobActivity"
             android:exported="false" />
@@ -135,6 +141,10 @@
             android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.UserDetailInfo.BUserDetailInfoActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".UI.AboutUs.AboutUsActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
     </application>
