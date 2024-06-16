@@ -32,7 +32,7 @@ class Check_In_Activity : AppCompatActivity() {
             checkEmptyAdapter(updatedList)
         }
 
-        viewModel.fetchApprovedJob()
+        viewModel.fetchApprovedJobForCheckIn()
 
         binding.backButton.setOnClickListener {
             sendResultAndFinish()
