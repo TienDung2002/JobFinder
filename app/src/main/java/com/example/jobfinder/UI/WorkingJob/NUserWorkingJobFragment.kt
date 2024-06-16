@@ -67,6 +67,7 @@ class NUserWorkingJobFragment(private val animationView: LottieAnimationView) : 
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
             isActivityOpened = false
+            viewModel.fetchApprovedJob()
         }
     }
 
