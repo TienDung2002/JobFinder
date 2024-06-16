@@ -229,7 +229,9 @@ class SeekerJobDetailActivity : AppCompatActivity() {
                             job.startHr.toString(),
                             job.endHr.toString(),
                             job.salaryPerEmp.toString(),
-                            job.postDate.toString()
+                            job.postDate.toString(),
+                            job.startTime.toString(),
+                            job.endTime.toString()
                         )
 
                         val notiId = notiRef.push().key.toString()

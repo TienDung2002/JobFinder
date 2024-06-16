@@ -12,6 +12,8 @@ class AppliedJobModel: Parcelable {
     var endHr: String?= null
     var salary:String?= null
     var postedDate: String? = null
+    var startTime:String? = null
+    var endTime:String?= null
     constructor() {
         // Constructor mặc định không làm gì cả
     }
@@ -24,7 +26,9 @@ class AppliedJobModel: Parcelable {
         startHr :String?,
         endHr: String?,
         salary:String?,
-        postedDate: String?
+        postedDate: String?,
+        startTime: String?,
+        endTime: String?
     ) {
         this.buserId = buserId
         this.jobId = jobId
@@ -34,8 +38,12 @@ class AppliedJobModel: Parcelable {
         this.endHr = endHr
         this.salary = salary
         this.postedDate = postedDate
+        this.startTime = startTime
+        this.endTime = endTime
     }
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -55,6 +63,8 @@ class AppliedJobModel: Parcelable {
         parcel.writeString(endHr)
         parcel.writeString(salary)
         parcel.writeString(postedDate)
+        parcel.writeString(startTime)
+        parcel.writeString(endTime)
     }
 
     override fun describeContents(): Int {
