@@ -8,11 +8,13 @@ import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jobfinder.Datas.Model.ReviewDataModel
+import com.example.jobfinder.Datas.Model.JobHistoryModel
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
+import com.example.jobfinder.Utils.RetriveImg
 
 class WNuserReviewedAdapter(
-    private var list: List<ReviewDataModel>,
+    private var list: List<JobHistoryModel>,
     private val noDataImage: LinearLayout,
 ) : RecyclerView.Adapter<WNuserReviewedAdapter.WNuserReviewedAdapterViewHolder>(){
 
@@ -22,6 +24,7 @@ class WNuserReviewedAdapter(
         val rating: RatingBar
         val jobTitle: TextView
         val rvContent: TextView
+        val reviewDay: TextView
 
         init {
             avatar = view.findViewById(R.id.user_ava)
@@ -29,6 +32,7 @@ class WNuserReviewedAdapter(
             rating = view.findViewById(R.id.ratingID_item)
             jobTitle = view.findViewById(R.id.exJob_position)
             rvContent = view.findViewById(R.id.RV_desc)
+            reviewDay = view.findViewById(R.id.reviewDay)
         }
 
     }
@@ -40,15 +44,18 @@ class WNuserReviewedAdapter(
 
     // gán data vào từng phần tử trong item
     override fun onBindViewHolder(holder: WNuserReviewedAdapterViewHolder, position: Int) {
-        holder.buserName.text = list[position].userName
-        holder.rating.rating = list[position].rating.toFloat()
+        RetriveImg.retrieveImage(list[position].BUserId.toString(), holder.avatar)
+        holder.buserName.text = list[position].bUserName
+        holder.rating.rating = list[position].rating?.toFloatOrNull() ?: 0.0f
         holder.jobTitle.text = list[position].jobTitle
-        holder.rvContent.text = list[position].reviewDesc
+        holder.rvContent.text = list[position].review
+        holder.reviewDay.text = GetData.getDateFromString(list[position].endDate.toString())
+
     }
 
     override fun getItemCount(): Int = list.size
 
-    fun updateData(newList: List<ReviewDataModel>) {
+    fun updateData(newList: List<JobHistoryModel>) {
         list = newList
         notifyDataSetChanged()
     }

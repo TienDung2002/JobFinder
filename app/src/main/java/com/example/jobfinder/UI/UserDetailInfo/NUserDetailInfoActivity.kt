@@ -179,7 +179,8 @@ class NUserDetailInfoActivity : AppCompatActivity() {
                 FirebaseDatabase.getInstance().getReference("EmpInJob").child(job.jobId.toString()).child(userId).setValue(empInJob)
 
                 val approvedJob = AppliedJobModel(job.BUserId.toString(), job.jobId.toString(), curTime, job.jobTitle.toString(),
-                    job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString())
+                    job.startHr.toString(), job.endHr.toString(), job.salaryPerEmp.toString(), job.postDate.toString(),
+                    job.startTime.toString(), job.endTime.toString())
                 FirebaseDatabase.getInstance().getReference("ApprovedJob").child(userId).child(job.jobId.toString()).setValue(approvedJob)
 
                 val totalWorkDay = GetData.countDaysBetweenDates(job.startTime.toString(), job.endTime.toString())
