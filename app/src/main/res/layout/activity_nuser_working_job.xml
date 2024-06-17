@@ -53,8 +53,6 @@
             android:id="@+id/working_job_title_holder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="0dp"
             android:background="@color/home_bg"
             android:paddingTop="2dp"
             android:paddingBottom="2dp">
@@ -63,10 +61,11 @@
                 android:id="@+id/working_job_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/working_job_title"
+                android:text="@string/working_job_short_title"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="@color/primary_color1"/>
+                android:textColor="@color/primary_color1"
+                android:layout_centerInParent="true"/>
 
         </RelativeLayout>
 
@@ -75,8 +74,6 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingEnd="20dp"
-            android:paddingStart="0dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp">
 
@@ -87,7 +84,7 @@
                 android:text="@string/job_history_title"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:layout_alignParentEnd="true"/>
+                android:layout_centerInParent="true"/>
         </RelativeLayout>
 
 

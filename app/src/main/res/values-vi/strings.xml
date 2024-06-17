@@ -441,6 +441,7 @@
     <string name="checked">Đã điểm danh</string>
     <string name="checked_in">Đã đến</string>
     <string name="checked_out">Đã về</string>
+    <string name="working_job_short_title">Đang hoạt động</string>
 
     <!--    check in-->
     <string name="check_in_title">Điểm danh</string>
@@ -454,7 +455,7 @@
     <string name="unconfirmed">Chưa xác nhận</string>
     <string name="at">lúc</string>
     <string name="not_working_yet">Việc chưa hoạt động</string>
-    <string name="check_out_notice">Nhận lương của bạn ở Quản lí công việc</string>
+    <string name="check_out_notice">Nhận lương của bạn\nở Quản lí công việc</string>
 
 <!--    salary tracking-->
     <string name="salary_tracking_title">Theo dõi lương</string>
