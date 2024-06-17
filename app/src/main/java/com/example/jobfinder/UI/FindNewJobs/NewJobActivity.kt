@@ -42,7 +42,6 @@ class NewJobActivity : AppCompatActivity() {
     lateinit var cusBindingFilter: CustomFilterLayoutBinding
     private val viewModel: FindNewJobViewModel by viewModels()
     private val appliedJobViewModel: AppliedJobsViewModel by viewModels()
-    private val approvedJobViewModel: CheckInViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
     private var isJobDetailActivityOpen = false
     private var isFirstApplyFilter = true

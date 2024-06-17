@@ -82,7 +82,8 @@
                 android:id="@+id/newJobHomeRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                tools:listitem="@layout/new_jobs_item_home"/>
 
             <ImageView
                 android:id="@+id/noDataImage"

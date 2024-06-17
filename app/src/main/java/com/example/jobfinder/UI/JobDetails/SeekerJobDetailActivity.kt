@@ -58,7 +58,6 @@ class SeekerJobDetailActivity : AppCompatActivity() {
 
 
         if (job_id != null && buser_id != null) {
-            binding.saveJobBtnCardView.visibility = View.GONE
             fetchJobData(job_id, buser_id)
             uid = buser_id
 
@@ -74,12 +73,6 @@ class SeekerJobDetailActivity : AppCompatActivity() {
             uid = job.BUserId.toString()
             // Gán data
             fetchJobData(job.jobId.toString(), job.BUserId.toString())
-
-            // Bookmark
-            binding.saveJobBtn.setOnClickListener {
-                updateBookmarkedUI(isBookmarked)
-                this.isBookmarked = !isBookmarked
-            }
 
             // Kiểm tra nếu công việc đã được apply
             checkIfApplied(job.jobId.toString())
@@ -128,13 +121,6 @@ class SeekerJobDetailActivity : AppCompatActivity() {
         val resultIntent = Intent()
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
-    }
-
-
-    private fun updateBookmarkedUI(isBookmarked: Boolean) {
-        binding.saveJobBtn.setImageResource(
-            if (isBookmarked) R.drawable.ic_bookmark_grey30px else R.drawable.ic_bookmark_orange30px
-        )
     }
 
     private fun fetchJobData(jobId: String, bUserId: String) {

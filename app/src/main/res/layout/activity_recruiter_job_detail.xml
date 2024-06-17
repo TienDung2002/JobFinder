@@ -430,7 +430,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:background="@color/white"
+            android:background="@drawable/transparent_background"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             >
