@@ -10,7 +10,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
-import com.example.jobfinder.Datas.Model.BUserJobHistoryModel
 import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
 import com.example.jobfinder.Datas.Model.JobHistoryModel
 import com.example.jobfinder.Datas.Model.JobModel
@@ -175,15 +174,10 @@ class SalaryTrackingActivity : AppCompatActivity() {
                                         jobModel.jobId, jobModel.jobTitle, todayDate,
                                         jobModel.jobType, jobModel.BUserId, "", "", uid, jobModel.BUserName.toString()
                                     )
-                                    jobHistoryViewModel.pushToFirebase(jobModel.jobId.toString(), uid, nUserJobHistoryModel)
+                                    jobHistoryViewModel.pushToFirebaseNUser(jobModel.jobId.toString(), uid, nUserJobHistoryModel)
 
                                     // push lên BUserJobHistory
-                                    val bUserJobHistoryRef = FirebaseDatabase.getInstance().getReference("BUserJobHistory")
-                                        .child(jobModel.BUserId.toString()).child(jobModel.jobId.toString()).child(uid)
-
-                                    val bUserJobHistoryModel = BUserJobHistoryModel(jobModel.jobId, jobModel.BUserId, uid)
-
-                                    bUserJobHistoryRef.setValue(bUserJobHistoryModel)
+                                    jobHistoryViewModel.pushToFirebaseBUser(jobModel.jobId.toString(), jobModel.BUserId.toString(), uid, nUserJobHistoryModel)
 
                                     // xóa trong approvedJob
                                     checkInViewModel.removeApprovedJob(jobModel.jobId.toString(), uid)
