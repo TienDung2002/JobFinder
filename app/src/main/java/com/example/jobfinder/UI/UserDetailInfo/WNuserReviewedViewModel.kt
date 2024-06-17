@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.ReviewUser
+package com.example.jobfinder.UI.UserDetailInfo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

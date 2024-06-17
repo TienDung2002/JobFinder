@@ -46,7 +46,8 @@
         android:layout_margin="10dp"
         android:scrollbars="none"
         android:id="@+id/scrollview"
-        android:layout_below="@+id/applicant_info_top_nav">
+        android:layout_below="@+id/applicant_info_top_nav"
+        android:layout_above="@+id/applicant_info_btn_holder">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,9 +66,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="40dp"
                     android:background="@drawable/image_loading_80px"/>
-
             </LinearLayout>
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -86,7 +85,6 @@
                     android:layout_height="56dp"
                     android:layout_marginTop="40dp"
                     android:background="@drawable/input_box">
-
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -99,8 +97,8 @@
                         android:layout_height="54dp"
                         android:layout_marginStart="50dp"
                         android:layout_marginEnd="15dp"
-                        android:scrollbars="none"
-                        >
+                        android:scrollbars="none">
+
                         <EditText
                             android:id="@+id/edit_profile_name"
                             android:layout_width="wrap_content"
@@ -113,13 +111,7 @@
                             android:textSize="20sp"
                             android:clickable="false"
                             android:focusable="false"/>
-
                     </HorizontalScrollView>
-
-
-
-
-
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -206,7 +198,6 @@
                         android:textSize="20sp"
                         android:clickable="false"
                         android:focusable="false"/>
-
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -240,8 +231,7 @@
                         android:layout_height="54dp"
                         android:layout_marginStart="50dp"
                         android:layout_marginEnd="15dp"
-                        android:scrollbars="none"
-                        >
+                        android:scrollbars="none">
                         <EditText
                             android:id="@+id/edit_profile_address"
                             android:layout_width="wrap_content"
@@ -254,9 +244,7 @@
                             android:textSize="20sp"
                             android:clickable="false"
                             android:focusable="false"/>
-
                     </HorizontalScrollView>
-
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -264,27 +252,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_profile_age"
                     android:textColor="@color/primary_color1"
                     android:textSize="18sp" />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="40dp"
                     android:background="@drawable/input_box">
-
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:background="@drawable/ic_birthdate_32px" />
-
                     <EditText
                         android:id="@+id/edit_profile_age"
                         android:layout_width="match_parent"
@@ -300,38 +284,30 @@
                         android:textSize="20sp"
                         android:clickable="false"
                         android:focusable="false"/>
-
                 </RelativeLayout>
-
-
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_profile_gender"
                     android:textColor="@color/primary_color1"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="40dp"
-                    android:background="@drawable/input_box"
-                    >
-
+                    android:background="@drawable/input_box" >
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:background="@drawable/ic_gender_26px"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        />
+                        android:layout_marginStart="15dp"/>
                     <TextView
                         android:id="@+id/edit_profile_gender"
                         android:layout_width="match_parent"
@@ -345,33 +321,26 @@
                         android:textColor="@color/black"
                         android:background="@drawable/edit_text_blank"
                         android:clickable="false"
-                        android:focusable="false"
-                        />
-
+                        android:focusable="false"/>
                 </RelativeLayout>
-
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rec_description"
                     android:textColor="@color/primary_color1"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp"/>
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     app:cardCornerRadius="15dp"
-                    app:cardElevation="0dp"
-
-                    >
+                    app:cardElevation="0dp">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/applicant_Description"
                         android:layout_width="match_parent"
@@ -384,70 +353,104 @@
                         android:textSize="20sp"
                         android:background="@drawable/edit_text_blank"
                         android:clickable="false"
-                        android:focusable="false"
-                        />
-
+                        android:focusable="false"/>
                 </androidx.cardview.widget.CardView>
-
             </RelativeLayout>
 
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:id="@+id/review_recycler_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/review_recycler_title"
+                    android:textColor="@color/primary_color1"
+                    android:textSize="18sp"
+                    android:layout_alignParentTop="true"/>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/historyRVrecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/review_recycler_title"
+                    android:layout_marginTop="10dp"
+                    android:paddingTop="10dp"
+                    android:scrollbars="none"
+                    android:orientation="horizontal"
+                    tools:listitem="@layout/row_wnuser_reviewed"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/noDataImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:visibility="gone">
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/no_job_img"
+                    android:src="@drawable/no_reviews_img"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/review_recycler_no_reviewed"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
 <!--    button holder-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal"
         android:gravity="bottom"
         android:id="@+id/applicant_info_btn_holder"
         android:layout_alignParentBottom="true">
 
         <LinearLayout
+            android:id="@+id/btn_wrap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal"
-            android:background="@color/white"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:baselineAligned="false">
+            android:weightSum="1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/approve_btn"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_weight="1">
+                android:layout_weight="0.5"
+                android:background="@drawable/wallet_btn_shape"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/approve"
+                android:textSize="12sp"
+                android:minHeight="45dp"/>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wallet_btn_shape"
-                    android:text="@string/approve"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:id="@+id/approve_btn" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/reject_btn"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_weight="1">
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/wallet_btn_shape"
-                    android:text="@string/reject"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:id="@+id/reject_btn"/>
-
-            </LinearLayout>
-
+                android:layout_weight="0.5"
+                android:background="@drawable/wallet_btn_shape"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/reject"
+                android:layout_marginStart="30dp"
+                android:minHeight="45dp"
+                android:textSize="12sp"/>
         </LinearLayout>
 
     </LinearLayout>

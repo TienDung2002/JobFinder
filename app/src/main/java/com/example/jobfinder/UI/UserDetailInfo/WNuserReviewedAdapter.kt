@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.ReviewUser
+package com.example.jobfinder.UI.UserDetailInfo
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.ReviewUser
+package com.example.jobfinder.UI.UserDetailInfo
 
 import android.app.Activity
 import android.content.Intent
@@ -48,7 +48,7 @@ class WNuserReviewedActivity : AppCompatActivity() {
 
         // gán data vào adapter
         adapter = WNuserReviewedAdapter(listOf(), binding.noDataImage)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerView.adapter = adapter
 
 
