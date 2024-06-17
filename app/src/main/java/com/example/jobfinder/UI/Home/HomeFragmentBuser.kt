@@ -49,6 +49,16 @@ class HomeFragmentBuser : Fragment() {
             startActivity(Intent(requireContext(), SupportActivity::class.java))
         }
 
+        // Lịch sử công việc
+        binding.jobHisBtn.setOnClickListener{
+
+        }
+
+        // phân tích 
+        binding.statisticalBtn.setOnClickListener{
+
+        }
+
         return binding.root
     }
 
