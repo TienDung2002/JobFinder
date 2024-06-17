@@ -103,6 +103,8 @@
     <string name="grid_reports">Báo cáo</string>
     <string name="grid_saveJob">Đã lưu</string>
     <string name="grid_statistical">Thống kê</string>
+    <string name="grid_jobHistory">Lịch sử công việc</string>
+
 
     <!--    Buser-->
     <string name="grid_recruit">Tuyển dụng</string>
