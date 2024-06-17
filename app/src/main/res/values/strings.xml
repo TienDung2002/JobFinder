@@ -104,6 +104,8 @@
     <string name="grid_reports">Reports</string>
     <string name="grid_saveJob">Saved</string>
     <string name="grid_statistical">Statistical</string>
+    <string name="grid_jobHistory">Job history </string>
+
     <!--    Buser-->
     <string name="grid_recruit">Recruit</string>
     <string name="grid_recruit_posted">Recruit posted</string>
@@ -126,6 +128,7 @@
     <string name="reject_success">Rejected</string>
     <string name="approve_success">Approved</string>
     <string name="delete_all">Delete all</string>
+    <string name="from_job_text">from job</string>
 
     <!--    Wallet-->
     <string name="wallet_title">Wallet</string>
@@ -429,6 +432,7 @@
     </string-array>
 
     <!--    working job-->
+    <string name="job_management_title">Job management</string>
     <string name="working_job_title">Working Job</string>
     <string name="no_wkJob">No job is working</string>
     <string name="no_emp">No employee in job</string>
@@ -438,6 +442,7 @@
     <string name="checked">Checked</string>
     <string name="checked_in">Checked in</string>
     <string name="checked_out">Checked out</string>
+    <string name="working_job_short_title">Working Job</string>
 
     <!--    check in-->
     <string name="check_in_title">Check In</string>
@@ -451,6 +456,7 @@
     <string name="unconfirmed">Unconfirmed</string>
     <string name="at">at</string>
     <string name="not_working_yet">Job is not working yet</string>
+    <string name="check_out_notice">Claim your salary\nat Job management</string>
 
     <!--    salary tracking-->
     <string name="salary_tracking_title">Salary tracking</string>
@@ -462,6 +468,8 @@
     <string name="worked_day">Work day</string>
     <string name="end_job">End job</string>
 
+<!--    job history-->
+    <string name="job_history_title">Job history</string>
     <!--    watch reviewed nuser-->
     <string name="review_rating_Average">Rating:</string>
     <string name="review_rating_sub_title_default">(Not rated yet)</string>

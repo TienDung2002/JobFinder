@@ -71,4 +71,10 @@ class NotificationViewModel: ViewModel() {
             notiRef.child(uid).child(noti.notiId.toString()).setValue(noti)
         }
     }
+
+    fun addNotificationForUser(uid: String, from:String, detai:String, date:String){
+        val noti_id = notiRef.child(uid).push().key
+        val noti = NotificationsRowModel(noti_id,from, detai, date)
+        notiRef.child(uid).child(noti.notiId.toString()).setValue(noti)
+    }
 }

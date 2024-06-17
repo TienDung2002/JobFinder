@@ -73,7 +73,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
                 FirebaseDatabase.getInstance().getReference("NUserCheckIn").child(job.jobId.toString()).removeValue()
 
 
-                // bao giờ làm viewModel cho savedJob và ApprovedJob thì sẽ thêm hàm xóa ở đây
+                // bao giờ làm viewModel cho savedJob thì sẽ thêm hàm xóa ở đây
 
                 Toast.makeText(this@RecruiterJobDetailActivity, getString(R.string.deleted_job), Toast.LENGTH_SHORT).show()
                 setResult(RESULT_OK)
