@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.ApplicantsModel
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.UI.ReviewUser.WNuserReviewedActivity
 import com.example.jobfinder.UI.UserDetailInfo.NUserDetailInfoActivity
 import com.example.jobfinder.databinding.ActivityApplicantsListBinding
 
@@ -37,8 +38,8 @@ class ActivityApplicantsList : AppCompatActivity() {
             adapter.setOnItemClickListener(object : ApplicantAdapter.OnItemClickListener {
                 override fun onItemClick(applicant: ApplicantsModel) {
                     if (!isActivityOpened) {
-                        val intent =
-                            Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
+//                        val intent = Intent(this@ActivityApplicantsList, NUserDetailInfoActivity::class.java)
+                        val intent = Intent(this@ActivityApplicantsList, WNuserReviewedActivity::class.java)
                         intent.putExtra("nuser_applicant", applicant)
                         intent.putExtra("job",job)
                         startActivityForResult(intent, REQUEST_CODE)

@@ -15,7 +15,6 @@ class HomeViewModel : ViewModel() {
     var userRole: String = ""
     private val database = FirebaseDatabase.getInstance().getReference("Job")
     private val appliedJobDb = FirebaseDatabase.getInstance().getReference("AppliedJob")
-    private val approvedJobDb = FirebaseDatabase.getInstance().getReference("ApprovedJob")
 
     fun fetchJobs() {
         FirebaseDatabase.getInstance().getReference("Job")
@@ -73,11 +72,4 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun deleteApprovedJob(jobId:String){
-        approvedJobDb.get().addOnSuccessListener {
-            for(uid in it.children){
-                approvedJobDb.child(uid.key.toString()).child(jobId).removeValue()
-            }
-        }
-    }
 }

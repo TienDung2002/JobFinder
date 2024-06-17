@@ -61,7 +61,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         val currentDay = GetData.formatDateForFirebase(currentDayString)
         jobDb.child(currentItem.buserId.toString()).child(currentItem.jobId.toString()).get().addOnSuccessListener { jobSnapShot->
             val jobStatus = jobSnapShot.child("status").getValue(String::class.java)
-            if(jobStatus!= null&&jobStatus=="working") {
+            if(jobStatus!= null && jobStatus=="working") {
                 // lấy dữ liệu từ fb về xem đã check in chưa
                 checkInDb.child(currentDay).child(uid.toString()).get().addOnSuccessListener { dataSnapshot ->
                     if (dataSnapshot.exists()) {
@@ -78,6 +78,10 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                     dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
                                 // kiểm tra check out time có rỗng không
                                 if (checkOutTime == "") {
+                                    if(CheckTime.areDatesEqual(currentItem.endTime.toString(), currentDayString)){
+                                        holder.checkInTime.text = context.getString(R.string.check_out_notice)
+                                        holder.checkInTime.visibility = View.VISIBLE
+                                    }
                                     holder.checkBtn.setText(R.string.check_out)
                                     holder.checkBtn.visibility = View.VISIBLE
                                     holder.checkBtn.setOnClickListener {
@@ -87,9 +91,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                         setCheckedOutBtn(holder.checkBtn)
                                         // lấy số giờ làm việc
                                         val workHr = GetData.calculateHourDifference(checkInTime, currentItem.endHr.toString())
-//                                        Log.d("salarydskhfkdshfkjds", workHr.toString())
                                         val salary = workHr*currentItem.salary.toString().toFloat()
-//                                        Log.d("salarydskhfkdshfkjds", salary.toString())
                                         // lấy 2 số sau dấy .
                                         val stringSalary = salary.roundToInt().toString()
 
@@ -128,6 +130,10 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                             }
                                     }
                                 } else {
+                                    if(CheckTime.areDatesEqual(currentItem.endTime.toString(), currentDayString)){
+                                        holder.checkInTime.text = context.getString(R.string.check_out_notice)
+                                        holder.checkInTime.visibility = View.VISIBLE
+                                    }
                                     holder.checkBtn.visibility = View.VISIBLE
                                     setCheckedOutBtn(holder.checkBtn)
                                 }
