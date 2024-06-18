@@ -53,7 +53,7 @@ class PostedJobActivity : AppCompatActivity() {
         }
 
         // Khi Activity được tạo, gọi phương thức để tải danh sách công việc đã đăng
-        viewModel.fetchPostedJobs()
+        viewModel.fetchPostedJobs(binding.root.context)
 
         binding.animationView.visibility = View.VISIBLE
     }
@@ -63,7 +63,7 @@ class PostedJobActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_DELETE_JOB && resultCode == Activity.RESULT_OK) {
             isActivityOpened = false
-            viewModel.fetchPostedJobs()
+            viewModel.fetchPostedJobs(binding.root.context)
         }
     }
 

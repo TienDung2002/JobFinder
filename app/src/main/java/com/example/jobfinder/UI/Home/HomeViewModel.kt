@@ -19,7 +19,6 @@ class HomeViewModel : ViewModel() {
     fun fetchJobs() {
         FirebaseDatabase.getInstance().getReference("Job")
             .addListenerForSingleValueEvent(object : ValueEventListener {
-                @RequiresApi(Build.VERSION_CODES.O)
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (userSnapshot in dataSnapshot.children) {
                         val buserId = userSnapshot.key.toString()
@@ -41,7 +40,7 @@ class HomeViewModel : ViewModel() {
                                 }
                             }
                             updateStatusToFirebase(buserId,tempList)
-                            }
+                        }
                     }
                 }
                 override fun onCancelled(databaseError: DatabaseError) {

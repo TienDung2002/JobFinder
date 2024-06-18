@@ -18,20 +18,13 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.AppliedJobs.AppliedJobsViewModel
-import com.example.jobfinder.UI.CheckIn.CheckInViewModel
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
-import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 import com.example.jobfinder.databinding.CustomFilterLayoutBinding
 import com.google.android.material.slider.RangeSlider
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import java.text.NumberFormat
 import java.util.Currency
 
@@ -42,7 +35,6 @@ class NewJobActivity : AppCompatActivity() {
     lateinit var cusBindingFilter: CustomFilterLayoutBinding
     private val viewModel: FindNewJobViewModel by viewModels()
     private val appliedJobViewModel: AppliedJobsViewModel by viewModels()
-    private val approvedJobViewModel: CheckInViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
     private var isJobDetailActivityOpen = false
     private var isFirstApplyFilter = true
@@ -60,7 +52,7 @@ class NewJobActivity : AppCompatActivity() {
     private var ftStartHr = 0
     private var ftEndHr = 24
 
-
+    private var isLoadingData: Boolean = true
 
     @SuppressLint("DefaultLocale")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -78,29 +70,42 @@ class NewJobActivity : AppCompatActivity() {
         }
 
         // chạy hàm lấy data các công việc
-        if (viewModel.getJobsList().isEmpty()) { fetchJobs() }
+        viewModel.fetchJobs()
 
         // gán data vào adapter sau khi fetch
-        adapter = NewJobsAdapter(viewModel.getJobsList(), binding.noDataImage)
+        adapter = NewJobsAdapter(listOf(), binding.noDataImage)
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
+        adapter.setDataChangeListener(object : NewJobsAdapter.DataChangeListener {
+            override fun onDataChanged(filteredList: List<JobModel>) {
+                if (!isLoadingData) {
+                    checkEmptyAdapter(filteredList)
+                }
+            }
+        })
+
+
+        isLoadingData = true
         // Cập nhật adapter khi có dữ liệu mới từ ViewModel
         viewModel.jobsListLiveData.observe(this) { newItem ->
-            newItem?.let {
 //                val sortedByPostDate = newItem.toMutableList().sortedByDescending { GetData.convertStringToDATE(it.postDate.toString()) }
-                adapter.updateData(newItem)
-            }
-        }
-        // Cập nhật adapter khi sử dụng filter để sắp xếp
-        viewModel.sortedJobsLiveData.observe(this) { sortedList ->
-            adapter.updateData(sortedList)
+            adapter.updateData(newItem)
+            isLoadingData = false
+            checkEmptyAdapter(newItem)
         }
 
+
+        // Cập nhật adapter khi sử dụng filter để sắp xếp
+//        viewModel.sortedJobsLiveData.observe(this) { sortedList ->
+//            adapter.updateData(sortedList)
+//            checkEmptyAdapter(sortedList)
+//        }
+
         // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
-        viewModel._isLoading.observe(this) { isLoading ->
-            binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
-        }
+//        viewModel._isLoading.observe(this) { isLoading ->
+//            binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
+//        }
 
         // lắng nghe event được gửi về từ activity đích (activity jobDetail của nhà tuyển dụng)
         val startJobDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -297,48 +302,6 @@ class NewJobActivity : AppCompatActivity() {
 
 
     } // end of onCreate()
-
-
-    private fun fetchJobs() {
-        viewModel._isLoading.value = true
-        viewModel.clearJobsList() // xóa item cũ đi trước khi fetch lại
-        FirebaseDatabase.getInstance().getReference("Job")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                @RequiresApi(Build.VERSION_CODES.O)
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    for (userSnapshot in dataSnapshot.children) {
-                        val buserId = userSnapshot.key.toString()
-                        val tempList: MutableList<JobModel> = mutableListOf()
-                        GetData.getUsernameFromUserId(buserId) { username ->
-                            for (jobSnapshot in userSnapshot.children) {
-                                val jobModel = jobSnapshot.getValue(JobModel::class.java)
-                                jobModel?.let {
-                                    it.BUserName = username.toString()
-                                    it.status = GetData.setStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
-
-                                    if(it.status == "closed"){
-                                        appliedJobViewModel.deleteAppliedJob(it.jobId.toString())
-//                                        approvedJobViewModel.deleteJob(it.jobId.toString())
-                                    }
-
-                                    tempList.add(it) //Chứa full data toàn bộ các job
-
-                                    if (it.status == "recruiting") { // check trạng thái công việc cho vào viewmodel để hiển thị
-                                        viewModel.addJobsToJobsList(it)
-                                    }
-                                }
-                            }
-                            viewModel.updateStatusToFirebase(buserId,tempList)
-                            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr)
-                        }
-                    }
-                    viewModel._isLoading.value = false
-                }
-                override fun onCancelled(databaseError: DatabaseError) {
-                    viewModel._isLoading.value = false
-                }
-            })
-    }
 
 
     @Deprecated("Deprecated in Java")
@@ -538,6 +501,16 @@ class NewJobActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         saveButtonUIState()
+    }
+
+    private fun checkEmptyAdapter(list: List<JobModel>) {
+        if (list.isEmpty()) {
+            binding.noDataImage.visibility = View.VISIBLE
+            binding.animationView.visibility = View.GONE
+        } else {
+            binding.noDataImage.visibility = View.GONE
+            binding.animationView.visibility = View.GONE
+        }
     }
 
 }

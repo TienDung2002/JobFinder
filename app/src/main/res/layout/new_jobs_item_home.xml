@@ -63,15 +63,6 @@
                     android:textStyle="italic"
                     android:text="@string/Ji_recName"/>
             </LinearLayout>
-
-
-            <ImageButton
-                android:id="@+id/bookmark_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/ic_bookmark_grey30px" />
         </RelativeLayout>
 
 

@@ -1,17 +1,13 @@
 package com.example.jobfinder.UI.FindNewJobs
 
-import android.icu.text.NumberFormat
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
@@ -28,10 +24,19 @@ class NewJobsAdapter(
     lateinit var mListener: onItemClickListener
     private var originalData: List<JobModel> = list
     private var filteredData: List<JobModel> = list
+    private var dataChangeListener: DataChangeListener? = null
 
 
     interface onItemClickListener {
         fun onItemClicked(Job: JobModel) {}
+    }
+
+    interface DataChangeListener {
+        fun onDataChanged(filteredList: List<JobModel>)
+    }
+
+    fun setDataChangeListener(listener: DataChangeListener) {
+        dataChangeListener = listener
     }
 
     // Click vào từng item
@@ -51,9 +56,6 @@ class NewJobsAdapter(
         val postedTime: TextView
         val salary: TextView
 
-        val bookmarkButton: ImageButton
-        var isBookmarked = false
-
 
         init {
             avatar = view.findViewById(R.id.user_ava)
@@ -66,7 +68,6 @@ class NewJobsAdapter(
             appliDeadline = view.findViewById(R.id.appliDeadline)
             postedTime = view.findViewById(R.id.posttime)
             salary = view.findViewById(R.id.salary)
-            bookmarkButton = view.findViewById(R.id.bookmark_btn)
 
             view.setOnClickListener {
                 val position = bindingAdapterPosition // Lấy vị trí của item trong danh sách
@@ -102,15 +103,6 @@ class NewJobsAdapter(
         holder.postedTime.text = GetData.getDateFromString(list[position].postDate.toString())
         holder.salary.text = format.format(list[position].salaryPerEmp?.toDouble())
 
-
-        // nút bookmark
-        holder.bookmarkButton.setOnClickListener {
-            holder.bookmarkButton.setImageResource(
-                if (!holder.isBookmarked) R.drawable.ic_bookmark_orange30px else R.drawable.ic_bookmark_grey30px
-            )
-            holder.isBookmarked = !holder.isBookmarked
-        }
-
     }
 
     override fun getItemCount(): Int = list.size
@@ -142,16 +134,12 @@ class NewJobsAdapter(
                 return filterResults
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 val filteredList = results?.values as? List<JobModel> ?: emptyList()
                 list = filteredList
                 notifyDataSetChanged()
-
-                if (filteredList.isEmpty()) {
-                    showNoDataFoundImg()
-                } else {
-                    hideNoDataFoundImg()
-                }
+                dataChangeListener?.onDataChanged(filteredList)
             }
         }
     }
@@ -159,30 +147,29 @@ class NewJobsAdapter(
 
 
 
+    @SuppressLint("NotifyDataSetChanged")
     fun resetOriginalList() {
         list = filteredData
-        hideNoDataFoundImg()
         notifyDataSetChanged()
+        dataChangeListener?.onDataChanged(filteredData)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<JobModel>) {
         list = newList
         filteredData = newList
-//        if (list.isEmpty()) {
-//            showNoDataFoundImg()
-//        } else {
-//            hideNoDataFoundImg()
-//        }
         notifyDataSetChanged()
+        dataChangeListener?.onDataChanged(newList)
     }
 
 
-    fun showNoDataFoundImg() {
-        noDataImage.visibility = View.VISIBLE
-    }
-
-    fun hideNoDataFoundImg() {
-        noDataImage.visibility = View.GONE
-    }
+//
+//    fun showNoDataFoundImg() {
+//        noDataImage.visibility = View.VISIBLE
+//    }
+//
+//    fun hideNoDataFoundImg() {
+//        noDataImage.visibility = View.GONE
+//    }
 
 }
