@@ -15,7 +15,6 @@ import com.example.jobfinder.Utils.RetriveImg
 
 class WNuserReviewedAdapter(
     private var list: List<JobHistoryModel>,
-    private val noDataImage: LinearLayout,
 ) : RecyclerView.Adapter<WNuserReviewedAdapter.WNuserReviewedAdapterViewHolder>(){
 
     inner class WNuserReviewedAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -60,11 +59,4 @@ class WNuserReviewedAdapter(
         notifyDataSetChanged()
     }
 
-    fun showNoReviewsImg() {
-        noDataImage.visibility = View.VISIBLE
-    }
-
-    fun hideNoReviewsImg() {
-        noDataImage.visibility = View.GONE
-    }
 }

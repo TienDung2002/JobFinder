@@ -72,7 +72,7 @@ class NUserDetailInfoActivity : AppCompatActivity() {
             })
 
             // adapter reviews của nuser
-            rvAdapter = WNuserReviewedAdapter(listOf(), binding.noDataImage)
+            rvAdapter = WNuserReviewedAdapter(listOf())
             binding.historyRVrecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.historyRVrecyclerView.adapter = rvAdapter
 

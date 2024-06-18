@@ -20,8 +20,8 @@
         app:cardElevation="0dp"
         android:background="@color/white"
         android:layout_marginBottom="12dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="12dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +52,9 @@
         android:layout_column="1"
         android:layout_columnWeight="1"
         android:layout_marginBottom="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="15dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white">
@@ -88,7 +88,7 @@
         android:layout_columnWeight="1"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="12dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
@@ -122,9 +122,9 @@
         android:layout_column="1"
         android:layout_columnWeight="1"
         android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="15dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:background="@color/white">
@@ -149,7 +149,7 @@
 
     <!-- ImageButton 5 -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/reportsBtn"
+        android:id="@+id/statisticalBtn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_row="2"
@@ -158,42 +158,7 @@
         android:layout_columnWeight="1"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="12dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="12dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        android:background="@color/white">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:foreground="?android:attr/selectableItemBackground">
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:src="@drawable/ic_grid_reports100px" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/grid_reports"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- ImageButton 6 -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/statisticalBtn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_row="2"
-        android:layout_rowWeight="1"
-        android:layout_column="1"
-        android:layout_columnWeight="1"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="12dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
@@ -216,4 +181,41 @@
                 android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <!-- ImageButton 6 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/reportsBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_row="2"
+        android:layout_rowWeight="1"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="0dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:foreground="?android:attr/selectableItemBackground">
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:src="@drawable/ic_grid_reports100px" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/grid_reports"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
 </GridLayout>
