@@ -10,6 +10,7 @@ import com.example.jobfinder.UI.AppliedJobs.AppliedJobsActivity
 import com.example.jobfinder.UI.CheckIn.Check_In_Activity
 import com.example.jobfinder.UI.FindNewJobs.NewJobActivity
 import com.example.jobfinder.UI.Report.SupportActivity
+import com.example.jobfinder.UI.Statistical.StatisticalActivity
 import com.example.jobfinder.UI.Wallet.WalletActivity
 import com.example.jobfinder.databinding.FragmentHomeNuserBinding
 
@@ -50,7 +51,7 @@ class HomeFragmentNuser : Fragment() {
         }
 
         binding.statisticalBtn.setOnClickListener {
-
+            startActivity(Intent(requireContext(), StatisticalActivity::class.java))
         }
 
         return binding.root

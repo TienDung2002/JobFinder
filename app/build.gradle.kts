@@ -130,4 +130,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
+    // chart - biểu đồ (nếu add ở pj khác nhớ sửa cả file setting.gradle.kts)
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

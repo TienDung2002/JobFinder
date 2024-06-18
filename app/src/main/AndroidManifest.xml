@@ -17,11 +17,13 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".UI.UserDetailInfo.WNuserReviewedActivity"
-            android:exported="false" />
+            android:name=".UI.Statistical.StatisticalActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.SalaryTracking.SalaryTrackingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.CheckIn.Check_In_Activity"
             android:exported="false"
@@ -36,7 +38,8 @@
             android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.WorkingJob.NUserWorkingJobActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.Report.SupportActivity"
             android:exported="false"
