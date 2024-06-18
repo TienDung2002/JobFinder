@@ -71,7 +71,6 @@ class NewJobActivity : AppCompatActivity() {
 
         // chạy hàm lấy data các công việc
         viewModel.fetchJobs()
-        viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr)
 
         // gán data vào adapter sau khi fetch
         adapter = NewJobsAdapter(listOf(), binding.noDataImage)
