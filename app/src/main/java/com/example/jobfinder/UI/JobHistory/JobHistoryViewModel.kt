@@ -9,7 +9,7 @@ class JobHistoryViewModel : ViewModel() {
     private val bUserDb = FirebaseDatabase.getInstance().getReference("BUserJobHistory")
 
     fun pushToFirebaseNUser(jobId:String, uid:String, jobHistoryModel: JobHistoryModel){
-        database.child(jobId).child(uid).setValue(jobHistoryModel)
+        database.child(uid).child(jobId).setValue(jobHistoryModel)
     }
 
     fun pushToFirebaseBUser(jobId:String, buserId:String, nUserId:String, jobHistoryModel: JobHistoryModel){
