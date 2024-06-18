@@ -166,17 +166,6 @@ class FindNewJobViewModel : ViewModel() {
 
 
 
-
-    // Cập nhật trạng thái bookmark
-    fun updateBookmarkStatus(jobId: String, isBookmarked: Boolean) {
-        val newStatus = _bookmarkStatus.value?.toMutableMap() ?: mutableMapOf()
-        newStatus[jobId] = isBookmarked
-        _bookmarkStatus.value = newStatus
-    }
-    fun getBookmarkStatus(jobId: String): Boolean {
-        return _bookmarkStatus.value?.get(jobId) ?: false
-    }
-
     fun updateJob(jobId: String, buserId: String, update: HashMap<String, Any>) {
         database.child(buserId).child(jobId).updateChildren(update)
     }
