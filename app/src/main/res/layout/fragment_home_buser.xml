@@ -30,8 +30,8 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_grid_recruit64px" />
             <TextView
                 android:layout_width="wrap_content"

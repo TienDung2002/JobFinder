@@ -30,8 +30,8 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_grid_attendance64px" />
             <TextView
                 android:layout_width="wrap_content"
@@ -65,8 +65,8 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_grid_wallet96px" />
             <TextView
                 android:layout_width="wrap_content"
@@ -100,8 +100,8 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_grid_jobapplied96px"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -135,8 +135,8 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_grid_jobsearch100px" />
             <TextView
                 android:layout_width="wrap_content"
@@ -170,8 +170,8 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_grid_statistical96px" />
             <TextView
                 android:layout_width="wrap_content"
@@ -205,8 +205,8 @@
             android:orientation="vertical"
             android:foreground="?android:attr/selectableItemBackground">
             <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/ic_grid_reports100px" />
             <TextView
                 android:layout_width="wrap_content"
