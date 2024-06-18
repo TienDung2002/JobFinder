@@ -41,8 +41,8 @@ class HomeActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         // Khởi tạo viewmodel
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        viewModel.fetchJobs()
 
         // Chỉ add fragment vào home khi trạng thái hiện tại là null (tránh xoay màn hình lại add lại gây lỗi)
         if (savedInstanceState == null) {

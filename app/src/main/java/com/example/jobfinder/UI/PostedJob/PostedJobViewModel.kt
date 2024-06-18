@@ -1,15 +1,23 @@
 package com.example.jobfinder.UI.PostedJob
 
+import android.content.Context
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.Datas.Model.JobModel
+import com.example.jobfinder.Datas.Model.NotificationsRowModel
+import com.example.jobfinder.R
+import com.example.jobfinder.UI.Notifications.NotificationViewModel
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.text.NumberFormat
+import java.util.Currency
 
-class PostedJobViewModel : ViewModel() {
+class PostedJobViewModel: ViewModel() {
     private val _postedJobList = MutableLiveData<List<JobModel>>()
     val postedJobList: LiveData<List<JobModel>> get() = _postedJobList
 
@@ -22,8 +30,16 @@ class PostedJobViewModel : ViewModel() {
     private val appliedJobDb = FirebaseDatabase.getInstance().getReference("AppliedJob")
     private val approvedJobDb = FirebaseDatabase.getInstance().getReference("ApprovedJob")
     private val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount")
+    private val notiRef = FirebaseDatabase.getInstance().getReference("Notifications")
 
-    fun fetchPostedJobs() {
+    fun fetchPostedJobs(context: Context) {
+
+        val today =GetData.getCurrentDateTime()
+        val todayDate= GetData.getDateFromString(today)
+
+        val format = NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("VND")
+
         _isLoading.value = true
         database.get().addOnSuccessListener { dataSnapshot ->
             val postedJobList: MutableList<JobModel> = mutableListOf()
@@ -36,9 +52,24 @@ class PostedJobViewModel : ViewModel() {
                         it.status = GetData.setStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
                         if(it.status == "closed"){
                             deleteAppliedJob(it.jobId.toString())
-//                            deleteApprovedJob(it.jobId.toString())
+
                         }
-                        postedJobList.add(it)
+                        // khi doanh nghiệp fetch job thì việc đã đóng 7 ngày sau endTime thì sẽ xóa việc và hoàn số tiền còn lại từ việc về cho doanh nghiệp
+                        if(GetData.countDaysBetweenDates(it.endTime.toString(), todayDate) >=7 && it.status == "closed"){
+                            // hoàn tiền
+                            addWalletAmount(it.BUserId.toString(), it.totalSalary.toString().toFloat())
+                            // xóa job
+                            deleteJob(it.jobId.toString())
+                            // thông báo
+                            val bUserNotiDetail = "${context.getText(R.string.refund)} ${format.format(it.totalSalary.toString().toDouble())} " +
+                                    "${context.getText(R.string.from_job_text)} ${jobModel.jobTitle}."
+
+                            val noti_id = notiRef.child(jobModel.BUserId.toString()).push().key
+                            val noti = NotificationsRowModel(noti_id, "Admin",bUserNotiDetail ,today)
+                            notiRef.child(jobModel.BUserId.toString()).child(noti.notiId.toString()).setValue(noti)
+                        }else {
+                            postedJobList.add(it)
+                        }
                     }
                 }
                 // Sắp xếp danh sách công việc theo thời gian đăng

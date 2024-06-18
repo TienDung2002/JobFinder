@@ -181,9 +181,9 @@ object GetData {
             if (empAmountInt != null && recruitedEmpInt != null && today!= null) {
 
                 return when {
+                    today.after(endDate) -> "closed"
                     (!today.before(startDate) && !today.after(endDate)) && recruitedEmpInt != 0-> "working"
                     recruitedEmpInt >= empAmountInt-> "closed2"
-                    today.after(endDate) -> "closed"
                     today.before(startDate) -> "recruiting"
                     else -> "closed"
                 }

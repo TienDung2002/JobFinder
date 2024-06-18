@@ -17,12 +17,12 @@ import com.example.jobfinder.databinding.FragmentHomeBuserBinding
 
 class HomeFragmentBuser : Fragment() {
     private lateinit var binding: FragmentHomeBuserBinding
-    private val jobViewModel: PostedJobViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        jobViewModel.fetchPostedJobs()
-    }
+//    private val jobViewModel: PostedJobViewModel by viewModels()
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        jobViewModel.fetchPostedJobs()
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

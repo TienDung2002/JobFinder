@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.PostedJob
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
         this.listener = listener
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<JobModel>) {
         jobList = newList
         notifyDataSetChanged()
@@ -45,16 +47,16 @@ class PostedJobAdapter(private val context: Context, private var jobList: List<J
         holder.jobTitleTextView.text = job.jobTitle
         holder.numOfRecruitsTextView.text = job.empAmount
         holder.numOfRecruitedTxtView.text= job.numOfRecruited
-        holder.salaryTextView.setText(format.format(job.salaryPerEmp?.toDouble()))
+        holder.salaryTextView.text = format.format(job.salaryPerEmp.toString().toDouble())
         holder.postTimeTextView.text = GetData.getDateFromString(job.postDate.toString())
         holder.status.setText(getStatus(job.status.toString()))
 
         // Đặt màu chữ cho trạng thái
         when (job.status) {
-            "working" -> holder.status.setTextColor(context.resources.getColor(R.color.green))
-            "recruiting" -> holder.status.setTextColor(context.resources.getColor(R.color.yellow))
-            "closed2" -> holder.status.setTextColor(context.resources.getColor(R.color.red))
-            else -> holder.status.setTextColor(context.resources.getColor(R.color.red)) // màu mặc định nếu không khớp
+            "working" -> holder.status.setTextColor(context.getColor(R.color.green))
+            "recruiting" -> holder.status.setTextColor(context.getColor(R.color.yellow))
+            "closed2" -> holder.status.setTextColor(context.getColor(R.color.red))
+            else -> holder.status.setTextColor(context.getColor(R.color.red)) // màu mặc định nếu không khớp
         }
 
         holder.itemView.setOnClickListener {
