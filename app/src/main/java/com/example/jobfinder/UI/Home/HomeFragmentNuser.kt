@@ -49,6 +49,10 @@ class HomeFragmentNuser : Fragment() {
             startActivity(Intent(requireContext(), Check_In_Activity::class.java))
         }
 
+        binding.statisticalBtn.setOnClickListener {
+
+        }
+
         return binding.root
     }
 
