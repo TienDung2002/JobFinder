@@ -29,5 +29,7 @@ class JobHistoryFragment(private val animationView: LottieAnimationView) : Fragm
         animationView.visibility= View.VISIBLE
 
         animationView.visibility= View.GONE
+
+
     }
 }

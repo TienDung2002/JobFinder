@@ -24,10 +24,19 @@ class NewJobsAdapter(
     lateinit var mListener: onItemClickListener
     private var originalData: List<JobModel> = list
     private var filteredData: List<JobModel> = list
+    private var dataChangeListener: DataChangeListener? = null
 
 
     interface onItemClickListener {
         fun onItemClicked(Job: JobModel) {}
+    }
+
+    interface DataChangeListener {
+        fun onDataChanged(filteredList: List<JobModel>)
+    }
+
+    fun setDataChangeListener(listener: DataChangeListener) {
+        dataChangeListener = listener
     }
 
     // Click vào từng item
@@ -130,12 +139,7 @@ class NewJobsAdapter(
                 val filteredList = results?.values as? List<JobModel> ?: emptyList()
                 list = filteredList
                 notifyDataSetChanged()
-
-                if (filteredList.isEmpty()) {
-                    showNoDataFoundImg()
-                } else {
-                    hideNoDataFoundImg()
-                }
+                dataChangeListener?.onDataChanged(filteredList)
             }
         }
     }
@@ -146,29 +150,26 @@ class NewJobsAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun resetOriginalList() {
         list = filteredData
-        hideNoDataFoundImg()
         notifyDataSetChanged()
+        dataChangeListener?.onDataChanged(filteredData)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<JobModel>) {
         list = newList
         filteredData = newList
-//        if (list.isEmpty()) {
-//            showNoDataFoundImg()
-//        } else {
-//            hideNoDataFoundImg()
-//        }
         notifyDataSetChanged()
+        dataChangeListener?.onDataChanged(newList)
     }
 
 
-    fun showNoDataFoundImg() {
-        noDataImage.visibility = View.VISIBLE
-    }
-
-    fun hideNoDataFoundImg() {
-        noDataImage.visibility = View.GONE
-    }
+//
+//    fun showNoDataFoundImg() {
+//        noDataImage.visibility = View.VISIBLE
+//    }
+//
+//    fun hideNoDataFoundImg() {
+//        noDataImage.visibility = View.GONE
+//    }
 
 }

@@ -18,15 +18,49 @@ import java.util.Locale
 class FindNewJobViewModel : ViewModel() {
     private val OriginJobsList: MutableList<JobModel> = mutableListOf()
     private val _jobsListLiveData = MutableLiveData<List<JobModel>>()
-    private val _sortedJobsLiveData = MutableLiveData<List<JobModel>>()
+//    private val _sortedJobsLiveData = MutableLiveData<List<JobModel>>()
     private val _bookmarkStatus = MutableLiveData<Map<String, Boolean>>()
     private val database = FirebaseDatabase.getInstance().getReference("Job")
+    private val appliedJobDb = FirebaseDatabase.getInstance().getReference("AppliedJob")
+    private val approvedJobDb = FirebaseDatabase.getInstance().getReference("ApprovedJob")
     var _isLoading = MutableLiveData<Boolean>()
 
 
     val jobsListLiveData: LiveData<List<JobModel>> get() = _jobsListLiveData
-    val sortedJobsLiveData: LiveData<List<JobModel>> get() = _sortedJobsLiveData
-    val bookmarkStatus: LiveData<Map<String, Boolean>> get() = _bookmarkStatus
+//    val sortedJobsLiveData: LiveData<List<JobModel>> get() = _sortedJobsLiveData
+
+    fun fetchJobs() {
+//        clearJobsList() // xóa item cũ đi trước khi fetch lại
+        FirebaseDatabase.getInstance().getReference("Job")
+            .get().addOnSuccessListener { dataSnapshot->
+                @RequiresApi(Build.VERSION_CODES.O)
+                    for (userSnapshot in dataSnapshot.children) {
+                        val buserId = userSnapshot.key.toString()
+                        val tempList: MutableList<JobModel> = mutableListOf()
+                        GetData.getUsernameFromUserId(buserId) { username ->
+                            for (jobSnapshot in userSnapshot.children) {
+                                val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                                jobModel?.let {
+                                    it.BUserName = username.toString()
+                                    it.status = GetData.setStatus(it.startTime.toString(), it.endTime.toString(), it.empAmount.toString(), it.numOfRecruited.toString())
+
+                                    if(it.status == "closed"){
+                                        deleteAppliedJob(it.jobId.toString())
+                                    }
+
+                                    tempList.add(it) //Chứa full data toàn bộ các job
+
+                                    if (it.status == "recruiting") { // check trạng thái công việc cho vào viewmodel để hiển thị
+                                        addJobsToJobsList(it)
+                                    }
+                                }
+                            }
+                            updateStatusToFirebase(buserId,tempList)
+
+                        }
+                    }
+            }
+    }
 
 
     fun getJobsList(): List<JobModel> {
@@ -99,7 +133,7 @@ class FindNewJobViewModel : ViewModel() {
 
         }
 
-        _sortedJobsLiveData.value = sortedList
+        _jobsListLiveData.value = sortedList
     }
 
     fun updateStatusToFirebase(userId :String,jobList: List<JobModel>) {
@@ -132,6 +166,14 @@ class FindNewJobViewModel : ViewModel() {
 
     fun updateJob(jobId: String, buserId: String, update: HashMap<String, Any>) {
         database.child(buserId).child(jobId).updateChildren(update)
+    }
+
+    fun deleteAppliedJob(jobId:String){
+        appliedJobDb.get().addOnSuccessListener {
+            for(uid in it.children){
+                appliedJobDb.child(uid.key.toString()).child(jobId).removeValue()
+            }
+        }
     }
 
 }
