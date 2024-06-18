@@ -58,8 +58,7 @@ class PostedJobViewModel: ViewModel() {
                         if(GetData.countDaysBetweenDates(it.endTime.toString(), todayDate) >=7 && it.status == "closed"){
                             // hoàn tiền
                             addWalletAmount(it.BUserId.toString(), it.totalSalary.toString().toFloat())
-                            // xóa job
-                            deleteJob(it.jobId.toString())
+
                             // thông báo
                             val bUserNotiDetail = "${context.getText(R.string.refund)} ${format.format(it.totalSalary.toString().toDouble())} " +
                                     "${context.getText(R.string.from_job_text)} ${jobModel.jobTitle}."
@@ -67,6 +66,12 @@ class PostedJobViewModel: ViewModel() {
                             val noti_id = notiRef.child(jobModel.BUserId.toString()).push().key
                             val noti = NotificationsRowModel(noti_id, "Admin",bUserNotiDetail ,today)
                             notiRef.child(jobModel.BUserId.toString()).child(noti.notiId.toString()).setValue(noti)
+
+                            // xóa việc thông qua của ứng viên- này để tránh trường hợp nhân viên không đi làm và không xác nhận kết thúc
+                            deleteApprovedJob(it.jobId.toString())
+
+                            // xóa job
+                            deleteJob(it.jobId.toString())
                         }else {
                             postedJobList.add(it)
                         }
@@ -161,24 +166,6 @@ class PostedJobViewModel: ViewModel() {
             }
         }.addOnFailureListener { exception ->
             Log.e("addWalletAmount", "Failed to get wallet snapshot", exception)
-        }
-    }
-
-
-
-    fun minusWalletAmount(uid:String, amount:Float){
-        walletAmountRef.child(uid).get().addOnSuccessListener{ walletAmountSnapShot->
-            if(walletAmountSnapShot.exists()){
-                val walletAmount = walletAmountSnapShot.child("amount").getValue(String::class.java)
-
-                val newWalletAmount = walletAmount.toString().toFloat() - amount
-
-                val update = hashMapOf<String, Any>(
-                    "amount" to newWalletAmount.toString()
-                )
-
-                walletAmountRef.child(uid).updateChildren(update)
-            }
         }
     }
 
