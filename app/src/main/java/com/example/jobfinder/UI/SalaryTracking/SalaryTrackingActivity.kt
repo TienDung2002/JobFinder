@@ -172,7 +172,7 @@ class SalaryTrackingActivity : AppCompatActivity() {
                                     // push lên NUserJobHistory
                                     val nUserJobHistoryModel = JobHistoryModel(
                                         jobModel.jobId, jobModel.jobTitle, todayDate,
-                                        jobModel.jobType, jobModel.BUserId, "", "", uid, jobModel.BUserName.toString()
+                                        jobModel.jobType, jobModel.BUserId, "0.0", "", uid, jobModel.BUserName.toString()
                                     )
                                     jobHistoryViewModel.pushToFirebaseNUser(jobModel.jobId.toString(), uid, nUserJobHistoryModel)
 

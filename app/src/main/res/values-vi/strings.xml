@@ -471,6 +471,7 @@
 
     <!--    job history-->
     <string name="job_history_title">Lịch sử</string>
+    <string name="no_review">Chưa có đánh giá</string>
     <!--    watch reviewed nuser-->
     <string name="review_rating_Average">Đánh giá:</string>
     <string name="review_rating_sub_title_default">(Chưa có đánh giá)</string>
