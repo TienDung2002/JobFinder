@@ -38,57 +38,112 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/topBar"
             android:scrollbars="none"
             android:layout_marginTop="20dp">
 
             <RelativeLayout
-                android:id="@+id/barChartWrap"
+                android:id="@+id/allChartWrap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/BarchatTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/Statistical_IncomeExpend"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="10dp"/>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/chartCardView"
+                <RelativeLayout
+                    android:id="@+id/barChartWrap"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="20dp"
-                    android:layout_below="@+id/BarchatTitle">
+                    android:layout_height="wrap_content">
 
-                    <Button
-                        android:id="@+id/selectMonthYearBtn"
+                    <TextView
+                        android:id="@+id/BarchatTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/transparent_background"
-                        android:drawableEnd="@drawable/ic_drop_down"
-                        android:text="@string/Statistical_Monyea_select"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="10dp"
+                        android:text="@string/Statistical_IncomeExpend"
                         android:textColor="@color/black"
-                        android:layout_alignParentEnd="true"
-                        android:layout_gravity="end|center_horizontal"/>
+                        android:textSize="20sp"
+                        android:layout_marginBottom="20dp"/>
 
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/barChart"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/chartCardView"
                         android:layout_width="match_parent"
-                        android:layout_height="450dp"
-                        android:padding="10dp"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginBottom="10dp"/>
-                </androidx.cardview.widget.CardView>
-            </RelativeLayout>
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        android:layout_below="@+id/BarchatTitle">
 
+                        <Button
+                            android:id="@+id/selectMonthYearBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/transparent_background"
+                            android:drawableEnd="@drawable/ic_drop_down"
+                            android:text="@string/Statistical_Monyea_select"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/black"
+                            android:layout_alignParentEnd="true"
+                            android:layout_gravity="end|center_horizontal"/>
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/barChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="450dp"
+                            android:padding="10dp"
+                            android:layout_marginTop="50dp"
+                            android:layout_marginBottom="10dp"/>
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/pieChartWrap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/barChartWrap"
+                    android:layout_marginTop="60dp">
+
+                    <TextView
+                        android:id="@+id/PiechatTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Statistical_property_structure"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/pieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_below="@+id/PiechatTitle"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/lineChartWrap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pieChartWrap"
+                    android:layout_marginTop="60dp">
+
+                    <TextView
+                        android:id="@+id/lineChartTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Statistical_workingHourPMonth"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/lineChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_below="@+id/lineChartTitle"/>
+                </RelativeLayout>
+            </RelativeLayout>
         </ScrollView>
 
     </RelativeLayout>

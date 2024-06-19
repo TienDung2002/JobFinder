@@ -6,6 +6,9 @@
     <color name="green">#11B800</color>
     <color name="yellow">#E4B300</color>
     <color name="red">#E30000</color>
+    <color name="pink">#EC00FD</color>
+    <color name="blue">#005ED3</color>
+
     <color name="bottom_nav_color">#636363</color>
     <color name="grey_hint_ForgotPass">#8C8C8C</color>
     <color name="filter_border_btn_default">#E4E4E4</color>

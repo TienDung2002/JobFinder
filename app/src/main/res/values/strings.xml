@@ -483,5 +483,9 @@
     <string name="Statistical_mainTitle">Statistical</string>
     <string name="Statistical_IncomeExpend">Income and expenditure reports</string>
     <string name="Statistical_Monyea_select">Month/Year</string>
+    <string name="Statistical_property_structure">Property structure</string>
+    <string name="Statistical_wallet">Wallet</string>
+    <string name="Statistical_card">Card</string>
+    <string name="Statistical_workingHourPMonth">Number of working hours per month</string>
 
 </resources>
