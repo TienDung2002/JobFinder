@@ -468,9 +468,10 @@
     <string name="worked_day">Work day</string>
     <string name="end_job">End job</string>
 
-<!--    job history-->
+    <!--    job history-->
     <string name="job_history_title">Job history</string>
     <string name="no_review">No review</string>
+    <string name="no_job_history">Blank history</string>
     <!--    watch reviewed nuser-->
     <string name="review_rating_Average">Rating:</string>
     <string name="review_rating_sub_title_default">(Not rated yet)</string>
