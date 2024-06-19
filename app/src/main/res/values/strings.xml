@@ -170,6 +170,7 @@
     <string name="cancel">Cancel</string>
     <string name="add_cash">Add cash to card</string>
     <string name="add_card">Add card</string>
+    <string name="Ok">Ok</string>
 
 
     <!--    Profile-->
@@ -470,11 +471,17 @@
 
     <!--    job history-->
     <string name="job_history_title">Job history</string>
+
     <!--    watch reviewed nuser-->
     <string name="review_rating_Average">Rating:</string>
     <string name="review_rating_sub_title_default">(Not rated yet)</string>
     <string name="review_recycler_title">Reviews from employers</string>
     <string name="review_recycler_no_reviewed">Candidate has no reviews yet</string>
     <string name="review_ex_comp_jobtitle">Completed job:</string>
+
+    <!--    statistical-->
+    <string name="Statistical_mainTitle">Statistical</string>
+    <string name="Statistical_IncomeExpend">Income and expenditure reports</string>
+    <string name="Statistical_Monyea_select">Month/Year</string>
 
 </resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -28,47 +28,68 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thống kê"
+                android:text="@string/Statistical_mainTitle"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:layout_marginTop="4dp"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
 
-        <RelativeLayout
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/topBar"
+            android:scrollbars="none"
             android:layout_marginTop="20dp">
 
-            <TextView
-                android:id="@+id/BarchatTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Báo cáo thu chi"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:layout_marginBottom="10dp"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/chartCardView"
+            <RelativeLayout
+                android:id="@+id/barChartWrap"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp"
-                android:layout_below="@+id/BarchatTitle">
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="450dp"
-                    android:layout_marginTop="10dp"
-                    android:padding="10dp"
-                    android:layout_marginBottom="10dp"/>
-            </androidx.cardview.widget.CardView>
-        </RelativeLayout>
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/BarchatTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Statistical_IncomeExpend"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/chartCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp"
+                    android:layout_below="@+id/BarchatTitle">
+
+                    <Button
+                        android:id="@+id/selectMonthYearBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/transparent_background"
+                        android:drawableEnd="@drawable/ic_drop_down"
+                        android:text="@string/Statistical_Monyea_select"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="end|center_horizontal"/>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/barChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="450dp"
+                        android:padding="10dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="10dp"/>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

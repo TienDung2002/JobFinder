@@ -171,6 +171,7 @@
     <string name="cancel">Hủy</string>
     <string name="add_cash">Thêm tiền vào thẻ</string>
     <string name="add_card">Thêm thẻ</string>
+    <string name="Ok">Ok</string>
 
 
     <!--    Trang cá nhân-->
@@ -471,11 +472,17 @@
 
     <!--    job history-->
     <string name="job_history_title">Lịch sử</string>
+
     <!--    watch reviewed nuser-->
     <string name="review_rating_Average">Đánh giá:</string>
     <string name="review_rating_sub_title_default">(Chưa có đánh giá)</string>
     <string name="review_recycler_title">Đánh giá từ các nhà tuyển dụng</string>
     <string name="review_recycler_no_reviewed">Ứng viên chưa có đánh giá</string>
     <string name="review_ex_comp_jobtitle">Công việc:</string>
+
+    <!--    statistical-->
+    <string name="Statistical_mainTitle">Thống kê</string>
+    <string name="Statistical_IncomeExpend">Báo cáo thu chi</string>
+    <string name="Statistical_Monyea_select">Tháng/Năm</string>
 
 </resources>

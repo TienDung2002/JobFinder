@@ -8,13 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.jobfinder.R
 import com.example.jobfinder.databinding.ActivityStatisticalBinding
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.formatter.ValueFormatter
 
 class StatisticalActivity : AppCompatActivity() {
@@ -32,11 +31,30 @@ class StatisticalActivity : AppCompatActivity() {
         }
 
         drawBarChart()
+
+        // Hiển thị MonthYearPickerDialog và xử lí data BarChart
+        binding.selectMonthYearBtn.setOnClickListener {
+            val monthYearPickerDialog = MonthYearPickerDialog()
+            monthYearPickerDialog.setListener { month, year ->
+                val monthYearText = "Tháng $month/$year"
+                binding.selectMonthYearBtn.text = monthYearText
+
+                // Cập nhật biểu đồ với dữ liệu mới
+                updateBarChartForMonthAndYear(month, year)
+            }
+            monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
+        }
+
+
+
+    }
+    private fun updateBarChartForMonthAndYear(month: Int, year: Int) {
+
     }
 
     private fun drawBarChart() {
-        // Tham số X là các tuần 1, 2, 3, 4 với tương ứng với thu nhập ở tham số Y
-        // Kiểu dữ liệu float (fill data vào thì đổi tham số Y nhé)
+        // Kiểu dữ liệu float (fill data vào thì chỉ đổi tham số Y thôi nhé)
+        // CẤM ĐỘNG X nó lệch label với nhóm đấy
         val ColumnThuNhap = listOf(
             BarEntry(0.5f, 2000000f),
             BarEntry(1.5f, 204852f),
@@ -58,24 +76,20 @@ class StatisticalActivity : AppCompatActivity() {
         val chiTieuDataSet = BarDataSet(ColumnChiTieu, "Chi tiêu").apply {
             color = ContextCompat.getColor(this@StatisticalActivity, R.color.red)
         }
+
+        // Gán data vào chart
         val data = BarData(thuNhapDataSet, chiTieuDataSet)
+        setupAndApplyDataToChart(binding.barChart, data)
 
         // độ rộng của 1 cột trong 1 nhóm
         data.barWidth = 0.3f
 
-        // Đặt định dạng số cho value hiển thị ở mỗi cột trên biểu đồ
-        setupValueFormatter(data)
-
-        // Gán data vào chart
-        binding.barChart.data = data
-
-        // Đổi tên từng nhóm
+        // Đổi tên label từng nhóm và config chart
         val weeks = arrayOf("Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4")
-
-        setBarChart(weeks)
+        configBarChart(weeks)
     }
 
-    private fun setBarChart(weeks: Array<String>) {
+    private fun configBarChart(weeks: Array<String>) {
         val groupSpace = 0.2f                              // Khoảng cách giữa các nhóm (tuần 1, tuần 2,...)
         val barSpace = 0.1f                                // Khoảng cách giữa các cột trong 1 nhóm (chi tiêu, thu nhập)
         val firstPosition = 0.5f                           // Vị trí đặt nhóm đầu tiên (tuần 1)
@@ -96,8 +110,8 @@ class StatisticalActivity : AppCompatActivity() {
             setDrawGridLines(false)                        // không kẻ lưới cho trục X
             textColor = getColor(R.color.black)
             position = XAxis.XAxisPosition.BOTTOM           // Vị trí đặt trục X
-            axisMinimum = 0.5f                                // Giá trị tối thiểu trục X
-            axisMaximum = weeks.size.toFloat() + 0.5f             // Giá trị tối đa trục X
+            axisMinimum = 0.5f                              // Giá trị tối thiểu trục X
+            axisMaximum = weeks.size.toFloat() + 0.5f       // Giá trị tối đa trục X
 
             valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
@@ -112,29 +126,30 @@ class StatisticalActivity : AppCompatActivity() {
             setDrawGridLines(true)
             textColor = getColor(R.color.black)
         }
-
-        binding.barChart.invalidate() // Cập nhật cài đặt ở trên và áp dụng để vẽ chart
     }
 
-    private fun setupValueFormatter(data: BarData) {
+    private fun setupValueFormatter(data: ChartData<*>) {
         val formatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
                 return when {
                     value >= 1000000 -> "${"%.1f".format(value / 1000000)}M"
-                    value >= 1000 -> "${"%.1f".format(value / 1000)}K"
+                    value >= 1000 -> "${"%.0f".format(value / 1000)}K"
                     else -> "%.0f".format(value)
                 }
             }
         }
 
         for (set in data.dataSets) {
-            if (set is BarDataSet) {
-                set.valueFormatter = formatter
-                set.valueTextColor = Color.BLACK
-                set.valueTextSize = 10f
-            }
+            set.valueFormatter = formatter
+            set.valueTextColor = Color.BLACK
+            set.valueTextSize = 10f
         }
     }
 
+    private fun setupAndApplyDataToChart(chart: Chart<*>, data: ChartData<*>) {
+        chart.data = data
+        setupValueFormatter(data) // Đặt format value hiển thị ở mỗi cột trên biểu đồ
+        chart.invalidate() // Cập nhật cài đặt ở trên và áp dụng để vẽ chart
+    }
 
 }
