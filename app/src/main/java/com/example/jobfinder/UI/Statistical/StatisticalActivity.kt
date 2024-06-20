@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.example.jobfinder.R
 import com.example.jobfinder.databinding.ActivityStatisticalBinding
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -16,6 +17,9 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.ChartData
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -37,27 +41,38 @@ class StatisticalActivity : AppCompatActivity() {
 
         drawBarChart()
         drawPieChart()
+        drawLineChart()
 
-        // Hiển thị MonthYearPickerDialog và xử lí data BarChart
+        // Barchart
         binding.selectMonthYearBtn.setOnClickListener {
             val monthYearPickerDialog = MonthYearPickerDialog()
             monthYearPickerDialog.setListener { month, year ->
                 val monthYearText = "Tháng $month/$year"
                 binding.selectMonthYearBtn.text = monthYearText
-
-                // Cập nhật biểu đồ với dữ liệu mới theo từng tháng/năm
                 updateBarCharMonYea(month, year)
             }
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
 
-
+        // Line chart
+        binding.selectYearBtn.setOnClickListener {
+            val monthYearPickerDialog = MonthYearPickerDialog(isYearOnly = true)
+            monthYearPickerDialog.setListener { _, year ->
+                val yearText = "$year"
+                binding.selectYearBtn.text = yearText
+                updateLineChart(year)
+            }
+            monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
+        }
 
     }
     private fun updateBarCharMonYea(month: Int, year: Int) {
 
     }
 
+    private fun updateLineChart(year: Int) {
+
+    }
 
     private fun drawBarChart() {
         // Kiểu dữ liệu float (fill data vào thì chỉ đổi tham số Y thôi nhé)
@@ -82,10 +97,10 @@ class StatisticalActivity : AppCompatActivity() {
         val defaultValues = weeks.indices.map { BarEntry(it + 0.5f, 0f) }
 
         // Gán giá trị default và đổi màu cột
-        val thuNhapDataSet = BarDataSet(ColumnThuNhap.ifEmpty { defaultValues }, "Thu nhập").apply {
+        val thuNhapDataSet = BarDataSet(ColumnThuNhap.ifEmpty { defaultValues }, getString(R.string.Sta_labelBarchart_income)).apply {
             color = ContextCompat.getColor(this@StatisticalActivity, R.color.income_color)
         }
-        val chiTieuDataSet = BarDataSet(ColumnChiTieu.ifEmpty { defaultValues }, "Chi tiêu").apply {
+        val chiTieuDataSet = BarDataSet(ColumnChiTieu.ifEmpty { defaultValues }, getString(R.string.Sta_labelBarchart_expenditure)).apply {
             color = ContextCompat.getColor(this@StatisticalActivity, R.color.red)
         }
 
@@ -142,12 +157,11 @@ class StatisticalActivity : AppCompatActivity() {
 
 
 
-
     private fun drawPieChart() {
         // Chỉ cần sửa tham số 1 của PieEntry()
         val pieEntries = listOf(
-            PieEntry(3205230f, getString(R.string.Statistical_wallet)),
-            PieEntry(5040400f, getString(R.string.Statistical_card))
+            PieEntry(3205230f, getString(R.string.Sta_wallet)),
+            PieEntry(5040400f, getString(R.string.Sta_card))
         )
 
         // Màu của các trường
@@ -193,6 +207,74 @@ class StatisticalActivity : AppCompatActivity() {
     }
 
 
+
+    private fun drawLineChart() {
+        // Dữ liệu mẫu cho LineChart
+        val lineEntries = listOf(
+            Entry(1f, 160f),
+            Entry(2f, 150f),
+            Entry(3f, 172f),
+            Entry(4f, 120f),
+            Entry(5f, 80f),
+            Entry(6f, 20f),
+            Entry(7f, 200f),
+            Entry(8f, 430f),
+            Entry(9f, 250f),
+            Entry(10f, 360f),
+            Entry(11f, 23f),
+            Entry(12f, 9f)
+        )
+
+        val lineDataSet = LineDataSet(lineEntries, getString(R.string.Sta_workedHourPerMonth)).apply {
+            color = ContextCompat.getColor(this@StatisticalActivity, R.color.primary_color2)
+            valueTextColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+            valueTextSize = 10f
+            setDrawFilled(true)
+            fillColor = ContextCompat.getColor(this@StatisticalActivity, R.color.filter_color)
+        }
+
+        val data = LineData(lineDataSet)
+        setupAndApplyDataToLineChart(binding.lineChart, data)
+    }
+
+    private fun setupAndApplyDataToLineChart(chart: LineChart, data: LineData) {
+        chart.apply {
+            this.data = data
+            description.isEnabled = false
+            setDrawGridBackground(true)
+            setPinchZoom(true)
+            animateY(1000)
+            axisRight.isEnabled = false
+
+            // Trục x
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                granularity = 1f
+                labelCount = 12
+                textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return "T${value.toInt()}"
+                    }
+                }
+            }
+            // Trục y
+            axisLeft.apply {
+                textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+                setDrawGridLines(true)
+            }
+            // Chú thích
+            legend.apply {
+                setExtraOffsets(0f,0f,0f,15f)
+                verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM       // Căn chiều dọc
+                horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT    // Căn chiều ngang
+                textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+                textSize = 14f
+            }
+
+            invalidate()
+        }
+    }
 
 
 
