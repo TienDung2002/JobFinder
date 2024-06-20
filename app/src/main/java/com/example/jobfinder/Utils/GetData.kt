@@ -56,6 +56,21 @@ object GetData {
         return null
     }
 
+    fun convertStringToDate2(dateString: String?): Date? {
+        if (dateString.isNullOrEmpty()) {
+            return null
+        }
+
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        try {
+            return dateFormat.parse(dateString)
+        } catch (e: ParseException) {
+            // Xử lý nếu chuỗi ngày không đúng định dạng
+            e.printStackTrace()
+        }
+        return null
+    }
+
     //kiểm tra ngày B có trước ngày A không
     fun compareDates(dateA: String, dateB: String): Boolean {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())

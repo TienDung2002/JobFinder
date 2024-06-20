@@ -176,7 +176,7 @@ class SalaryTrackingActivity : AppCompatActivity() {
                                         if(it.exists()){
                                             val userName = it.child("name").getValue(String::class.java)
                                             val nUserJobHistoryModel = JobHistoryModel(
-                                                jobModel.jobId, jobModel.jobTitle, todayDate,
+                                                jobModel.jobId, jobModel.jobTitle, today,
                                                 jobModel.jobType, jobModel.BUserId,
                                                 "0.0", "", uid, jobModel.BUserName.toString(), userName
                                             )

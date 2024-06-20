@@ -60,7 +60,9 @@ class JobHistoryViewModel : ViewModel() {
             nuserJobHistorySnapshot.children.forEach { nuserJobHistoryData ->
                 val jobHistoryModel = nuserJobHistoryData.getValue(JobHistoryModel::class.java)
                 jobHistoryModel?.let {
-                    jobHistoryList.add(it)
+                    if(it.review !="") {
+                        jobHistoryList.add(it)
+                    }
                 }
             }
             val sortedJobHistoryList =
@@ -81,15 +83,12 @@ class JobHistoryViewModel : ViewModel() {
             bUserDb.child(currentBUserId).get().addOnSuccessListener { jobIdSnapshot ->
                 jobIdSnapshot.children.forEach { jobIdSnapshot ->
                     val jobHistoryParentList: MutableList<JobHistoryModel> = mutableListOf()
-                    Log.d("LogKeyyyy", jobIdSnapshot.key.toString())
                     jobIdSnapshot.children.forEach { bUserJobHistoryData ->
-                        Log.d("LogKeyyyy", bUserJobHistoryData.key.toString())
                         val jobHistoryModel =
                             bUserJobHistoryData.getValue(JobHistoryModel::class.java)
                         jobHistoryModel?.let {
 //                            jobHistoryList.add(it)
                             jobHistoryParentList.add(it)
-                            Log.d("sfsdsdsdf", it.toString())
                         }
                     }
                     val jobHistoryParentModel = JobHistoryParentModel(jobHistoryParentList[0].jobTitle.toString(), jobHistoryParentList[0].jobType.toString(), jobHistoryParentList)
