@@ -52,7 +52,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
 
         if (job != null) {
             if(job.status.toString()== "closed"){
-                binding.applicantBtn.visibility = View.GONE
+                binding.detailJobBtnHolder.visibility = View.GONE
             }
             if(job.status.toString()== "working"){
                 binding.detailJobBtnHolder.visibility = View.GONE

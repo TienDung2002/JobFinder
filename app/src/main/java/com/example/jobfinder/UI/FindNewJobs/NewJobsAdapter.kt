@@ -18,7 +18,6 @@ import java.util.Locale
 
 class NewJobsAdapter(
     private var list: List<JobModel>,
-    private val noDataImage: ImageView,
 ) : RecyclerView.Adapter<NewJobsAdapter.NewJobViewHolder>(), Filterable {
 
     lateinit var mListener: onItemClickListener
@@ -161,15 +160,5 @@ class NewJobsAdapter(
         notifyDataSetChanged()
         dataChangeListener?.onDataChanged(newList)
     }
-
-
-//
-//    fun showNoDataFoundImg() {
-//        noDataImage.visibility = View.VISIBLE
-//    }
-//
-//    fun hideNoDataFoundImg() {
-//        noDataImage.visibility = View.GONE
-//    }
 
 }

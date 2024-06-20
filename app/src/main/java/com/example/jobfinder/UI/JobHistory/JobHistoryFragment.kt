@@ -6,14 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
-import com.example.jobfinder.R
+import com.example.jobfinder.Datas.Model.JobHistoryModel
 import com.example.jobfinder.databinding.FragmentJobHistoryBinding
 
 class JobHistoryFragment(private val animationView: LottieAnimationView) : Fragment() {
 
     private val viewModel: JobHistoryViewModel by viewModels()
     private lateinit var binding: FragmentJobHistoryBinding
+    private lateinit var adapter:NUserJobHistoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,8 +30,27 @@ class JobHistoryFragment(private val animationView: LottieAnimationView) : Fragm
 
         animationView.visibility= View.VISIBLE
 
-        animationView.visibility= View.GONE
+        // Tạo adapter và gán vào RecyclerView
+        adapter = NUserJobHistoryAdapter(binding.root.context, mutableListOf())
+        binding.recyclerWorkingJob.adapter = adapter
+        binding.recyclerWorkingJob.layoutManager = LinearLayoutManager(requireContext())
 
+        viewModel.JobHistoryList.observe(viewLifecycleOwner) { updatedList ->
+            adapter.updateData(updatedList)
+            checkEmptyAdapter(updatedList)
+        }
 
+        viewModel.fetchNUserJobHistory()
+
+    }
+
+    private fun checkEmptyAdapter(list: MutableList<JobHistoryModel>) {
+        if (list.isEmpty()) {
+            binding.noJob.visibility = View.VISIBLE
+            animationView.visibility = View.GONE
+        } else {
+            binding.noJob.visibility = View.GONE
+            animationView.visibility = View.GONE
+        }
     }
 }

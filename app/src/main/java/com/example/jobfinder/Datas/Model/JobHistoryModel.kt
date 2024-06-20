@@ -13,6 +13,7 @@ class JobHistoryModel : Parcelable {
     var review: String? = null
     var nUserId:String? = null
     var bUserName:String? = null
+    var nUserName:String? = null
 
     constructor()
 
@@ -25,7 +26,8 @@ class JobHistoryModel : Parcelable {
         rating: String?,
         review: String?,
         nUserId:String?,
-        bUserName:String?
+        bUserName:String?,
+        nUserName:String?
     ) {
         this.jobId = jobId
         this.jobTitle = jobTitle
@@ -36,6 +38,7 @@ class JobHistoryModel : Parcelable {
         this.review = review
         this.nUserId = nUserId
         this.bUserName = bUserName
+        this.nUserName = nUserName
     }
 
     private constructor(parcel: Parcel) {
@@ -48,6 +51,7 @@ class JobHistoryModel : Parcelable {
         review = parcel.readString()
         nUserId= parcel.readString()
         bUserName= parcel.readString()
+        nUserName= parcel.readString()
 
     }
 
@@ -61,6 +65,7 @@ class JobHistoryModel : Parcelable {
         parcel.writeString(review)
         parcel.writeString(nUserId)
         parcel.writeString(bUserName)
+        parcel.writeString(nUserName)
     }
 
     override fun describeContents(): Int {

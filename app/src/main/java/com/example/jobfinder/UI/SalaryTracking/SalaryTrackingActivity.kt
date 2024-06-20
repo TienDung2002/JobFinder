@@ -139,6 +139,8 @@ class SalaryTrackingActivity : AppCompatActivity() {
         val salaryRef = FirebaseDatabase.getInstance().getReference("Salary")
             .child(approved_job.jobId.toString()).child(uid)
 
+        val nUserInfoRef = FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid)
+
         val format = NumberFormat.getCurrencyInstance()
         format.currency = Currency.getInstance("VND")
 
@@ -170,14 +172,21 @@ class SalaryTrackingActivity : AppCompatActivity() {
                                     val today = GetData.getCurrentDateTime()
 
                                     // push lên NUserJobHistory
-                                    val nUserJobHistoryModel = JobHistoryModel(
-                                        jobModel.jobId, jobModel.jobTitle, todayDate,
-                                        jobModel.jobType, jobModel.BUserId, "", "", uid, jobModel.BUserName.toString()
-                                    )
-                                    jobHistoryViewModel.pushToFirebaseNUser(jobModel.jobId.toString(), uid, nUserJobHistoryModel)
+                                    nUserInfoRef.get().addOnSuccessListener {
+                                        if(it.exists()){
+                                            val userName = it.child("name").getValue(String::class.java)
+                                            val nUserJobHistoryModel = JobHistoryModel(
+                                                jobModel.jobId, jobModel.jobTitle, today,
+                                                jobModel.jobType, jobModel.BUserId,
+                                                "0.0", "", uid, jobModel.BUserName.toString(), userName
+                                            )
+                                            jobHistoryViewModel.pushToFirebaseNUser(jobModel.jobId.toString(), uid, nUserJobHistoryModel)
 
-                                    // push lên BUserJobHistory
-                                    jobHistoryViewModel.pushToFirebaseBUser(jobModel.jobId.toString(), jobModel.BUserId.toString(), uid, nUserJobHistoryModel)
+                                            // push lên BUserJobHistory
+                                            jobHistoryViewModel.pushToFirebaseBUser(jobModel.jobId.toString(), jobModel.BUserId.toString(), uid, nUserJobHistoryModel)
+                                        }
+                                    }
+
 
                                     // xóa trong approvedJob
                                     checkInViewModel.removeApprovedJob(jobModel.jobId.toString(), uid)

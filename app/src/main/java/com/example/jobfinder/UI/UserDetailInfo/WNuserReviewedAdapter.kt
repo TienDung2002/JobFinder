@@ -14,7 +14,7 @@ import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 
 class WNuserReviewedAdapter(
-    private var list: List<JobHistoryModel>,
+    private var list: List<JobHistoryModel>
 ) : RecyclerView.Adapter<WNuserReviewedAdapter.WNuserReviewedAdapterViewHolder>(){
 
     inner class WNuserReviewedAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {

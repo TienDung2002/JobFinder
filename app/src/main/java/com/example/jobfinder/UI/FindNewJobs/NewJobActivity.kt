@@ -20,7 +20,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.AppliedJobs.AppliedJobsViewModel
 import com.example.jobfinder.UI.JobDetails.SeekerJobDetailActivity
 import com.example.jobfinder.databinding.ActivityNewJobBinding
 import com.example.jobfinder.databinding.CustomFilterLayoutBinding
@@ -34,7 +33,6 @@ class NewJobActivity : AppCompatActivity() {
     lateinit var binding: ActivityNewJobBinding
     lateinit var cusBindingFilter: CustomFilterLayoutBinding
     private val viewModel: FindNewJobViewModel by viewModels()
-    private val appliedJobViewModel: AppliedJobsViewModel by viewModels()
     private lateinit var adapter: NewJobsAdapter
     private var isJobDetailActivityOpen = false
     private var isFirstApplyFilter = true
@@ -73,7 +71,7 @@ class NewJobActivity : AppCompatActivity() {
         viewModel.fetchJobs()
 
         // gán data vào adapter sau khi fetch
-        adapter = NewJobsAdapter(listOf(), binding.noDataImage)
+        adapter = NewJobsAdapter(listOf())
         binding.newJobHomeRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.newJobHomeRecyclerView.adapter = adapter
 
@@ -514,4 +512,3 @@ class NewJobActivity : AppCompatActivity() {
     }
 
 }
-

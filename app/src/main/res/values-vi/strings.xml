@@ -472,7 +472,14 @@
 
     <!--    job history-->
     <string name="job_history_title">Lịch sử</string>
-
+    <string name="no_review">Chưa có đánh giá</string>
+    <string name="no_job_history">Lịch sử trống</string>
+    <string name="not_review">Chưa đánh giá</string>
+    <string name="save">Lưu</string>
+    <string name="review_nuser">Đánh giá nhân viên của bạn sau khi hoàn thành việc</string>
+    <string name="no_des">Đánh giá trống</string>
+    <string name="no_job_des2">Mô tả trống</string>
+    <string name="review">Đánh giá</string>
     <!--    watch reviewed nuser-->
     <string name="review_rating_Average">Đánh giá:</string>
     <string name="review_rating_sub_title_default">(Chưa có đánh giá)</string>

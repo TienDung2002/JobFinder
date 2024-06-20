@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
+import com.example.jobfinder.UI.JobHistory.BUserJobHistoryActivity
 import com.example.jobfinder.UI.JobPosts.JobpostsActivity
 import com.example.jobfinder.UI.PostedJob.PostedJobActivity
 import com.example.jobfinder.UI.Report.SupportActivity
@@ -52,7 +53,7 @@ class HomeFragmentBuser : Fragment() {
 
         // Lịch sử công việc
         binding.jobHisBtn.setOnClickListener{
-
+            startActivity(Intent(requireContext(), BUserJobHistoryActivity::class.java))
         }
 
         // phân tích 
