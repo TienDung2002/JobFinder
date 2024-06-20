@@ -490,7 +490,9 @@
     <string name="Sta_card">Card</string>
     <string name="Sta_workingHourPMonth">Number of worked hours per month</string>
     <string name="Sta_year_select">Year</string>
-    <string name="Sta_workedHourPerMonth">Worked hours</string>
+    <string name="Sta_workedHourPMonth_legend">Worked hours</string>
+    <string name="Sta_jobs_posted">Number of jobs posted</string>
+    <string name="Sta_jobs_posted_legend">Jobs posted</string>
 
 
 

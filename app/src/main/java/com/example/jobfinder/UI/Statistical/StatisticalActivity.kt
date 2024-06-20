@@ -4,9 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.jobfinder.R
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityStatisticalBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
@@ -27,6 +30,8 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 
 class StatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityStatisticalBinding
+    private val viewModel: ChartDataViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStatisticalBinding.inflate(layoutInflater)
@@ -39,28 +44,47 @@ class StatisticalActivity : AppCompatActivity() {
             finish()
         }
 
-        drawBarChart()
-        drawPieChart()
-        drawLineChart()
+
+        GetData.getUserRole { role ->
+            role?.let {
+                viewModel.userRole = it
+                if (viewModel.userRole == "NUser"){
+                    drawChartNuser()
+                } else {
+                    drawChartBuser()
+                }
+            }
+        }
+
 
         // Barchart
         binding.selectMonthYearBtn.setOnClickListener {
             val monthYearPickerDialog = MonthYearPickerDialog()
             monthYearPickerDialog.setListener { month, year ->
-                val monthYearText = "Tháng $month/$year"
+                val monthYearText = "Tháng $month /$year"
                 binding.selectMonthYearBtn.text = monthYearText
                 updateBarCharMonYea(month, year)
             }
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
 
-        // Line chart
-        binding.selectYearBtn.setOnClickListener {
+        // Line chart (Nuser)
+        binding.NuserselectYearBtn.setOnClickListener {
             val monthYearPickerDialog = MonthYearPickerDialog(isYearOnly = true)
             monthYearPickerDialog.setListener { _, year ->
                 val yearText = "$year"
-                binding.selectYearBtn.text = yearText
-                updateLineChart(year)
+                binding.NuserselectYearBtn.text = yearText
+                updateLineChartNuser(year)
+            }
+            monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
+        }
+
+        binding.BuserselectMonthYearBtn.setOnClickListener {
+            val monthYearPickerDialog = MonthYearPickerDialog()
+            monthYearPickerDialog.setListener { month, year ->
+                val monthYearText = "Tháng $month /$year"
+                binding.BuserselectMonthYearBtn.text = monthYearText
+                updateLineChartBuser(month, year)
             }
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
@@ -70,7 +94,11 @@ class StatisticalActivity : AppCompatActivity() {
 
     }
 
-    private fun updateLineChart(year: Int) {
+    private fun updateLineChartNuser(year: Int) {
+
+    }
+
+    private fun updateLineChartBuser(month: Int, year: Int) {
 
     }
 
@@ -128,6 +156,8 @@ class StatisticalActivity : AppCompatActivity() {
             // Chú thích
             legend.apply {
                 setExtraOffsets(0f,0f,0f,15f)
+                form = Legend.LegendForm.LINE
+                setXEntrySpace(30f)
                 textSize = 14f
             }
             // Trục X
@@ -191,6 +221,7 @@ class StatisticalActivity : AppCompatActivity() {
                 isEnabled = true                                                // Hiển thị chú thích
                 textColor = getColor(R.color.black)
                 textSize = 15f
+                setXEntrySpace(15f)                                             // Khoảng cách giữa các legend, trục X
                 verticalAlignment = Legend.LegendVerticalAlignment.CENTER       // Căn chú thích theo chiều dọc
                 horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER   // Căn chú thích theo chiều ngang
                 form = Legend.LegendForm.CIRCLE                                 // Đổi hình dạng của chú thích thành chấm tròn
@@ -208,7 +239,7 @@ class StatisticalActivity : AppCompatActivity() {
 
 
 
-    private fun drawLineChart() {
+    private fun drawLineChart(label: String, chart: LineChart) {
         // Dữ liệu mẫu cho LineChart
         val lineEntries = listOf(
             Entry(1f, 160f),
@@ -225,7 +256,7 @@ class StatisticalActivity : AppCompatActivity() {
             Entry(12f, 9f)
         )
 
-        val lineDataSet = LineDataSet(lineEntries, getString(R.string.Sta_workedHourPerMonth)).apply {
+        val lineDataSet = LineDataSet(lineEntries, label).apply {
             color = ContextCompat.getColor(this@StatisticalActivity, R.color.primary_color2)
             valueTextColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
             valueTextSize = 10f
@@ -234,7 +265,7 @@ class StatisticalActivity : AppCompatActivity() {
         }
 
         val data = LineData(lineDataSet)
-        setupAndApplyDataToLineChart(binding.lineChart, data)
+        setupAndApplyDataToLineChart(chart, data)
     }
 
     private fun setupAndApplyDataToLineChart(chart: LineChart, data: LineData) {
@@ -296,5 +327,31 @@ class StatisticalActivity : AppCompatActivity() {
     }
 
 
+
+    private fun drawChartNuser() {
+        val lineChartTitle = getString(R.string.Sta_workingHourPMonth)
+        val legend = getString(R.string.Sta_workedHourPMonth_legend)
+        val lineChart = binding.NuserlineChart
+
+        binding.NuserLineChartWrap.visibility = View.VISIBLE
+        binding.BuserlineChartTitle.text = lineChartTitle
+
+        drawBarChart()
+        drawPieChart()
+        drawLineChart(legend, lineChart)
+    }
+
+    private fun drawChartBuser() {
+        val lineChartTitle = getString(R.string.Sta_jobs_posted)
+        val legend = getString(R.string.Sta_jobs_posted_legend)
+        val lineChart = binding.BuserlineChart
+
+        binding.BuserLineChartWrap.visibility = View.VISIBLE
+        binding.BuserlineChartTitle.text = lineChartTitle
+
+        drawBarChart()
+        drawPieChart()
+        drawLineChart(legend, lineChart)
+    }
 
 }

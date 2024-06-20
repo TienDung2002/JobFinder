@@ -491,7 +491,9 @@
     <string name="Sta_card">Thẻ</string>
     <string name="Sta_workingHourPMonth">Số giờ làm việc mỗi tháng</string>
     <string name="Sta_year_select">Năm</string>
-    <string name="Sta_workedHourPerMonth">Số giờ làm</string>
+    <string name="Sta_workedHourPMonth_legend">Số giờ làm</string>
+    <string name="Sta_jobs_posted">Số công việc đăng tuyển</string>
+    <string name="Sta_jobs_posted_legend">Việc đăng tuyển</string>
 
 
 </resources>
