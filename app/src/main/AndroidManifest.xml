@@ -20,9 +20,6 @@
             android:name=".UI.JobHistory.BUserJobHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.UserDetailInfo.WNuserReviewedActivity"
-            android:exported="false" />
-        <activity
             android:name=".UI.SalaryTracking.SalaryTrackingActivity"
             android:exported="false" />
         <activity

@@ -30,6 +30,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import androidx.lifecycle.Observer
+import com.example.jobfinder.Datas.Model.JobHistoryModel
+import com.example.jobfinder.Datas.Model.JobHistoryParentModel
+import com.example.jobfinder.UI.JobHistory.JobHistoryViewModel
 
 
 class NUserDetailInfoActivity : AppCompatActivity() {
@@ -37,7 +40,7 @@ class NUserDetailInfoActivity : AppCompatActivity() {
 
     lateinit var viewModel: ProfileViewModel
     private val applicantViewModel: ApplicantViewModel by viewModels()
-    private val rvViewModel: WNuserReviewedViewModel by viewModels()
+    private val rvViewModel: JobHistoryViewModel by viewModels()
 
     private lateinit var adapter: ApplicantAdapter
     private lateinit var rvAdapter: WNuserReviewedAdapter
@@ -54,6 +57,8 @@ class NUserDetailInfoActivity : AppCompatActivity() {
         val applicant = intent.getParcelableExtra<ApplicantsModel>("nuser_applicant")
         val job = intent.getParcelableExtra<JobModel>("job")
 
+        binding.animationView.visibility = View.VISIBLE
+
         if (applicant != null && job != null) {
             val userId = applicant.userId.toString()
             setupUserInformation(database, userId)
@@ -63,16 +68,15 @@ class NUserDetailInfoActivity : AppCompatActivity() {
             adapter = ApplicantAdapter(mutableListOf(), job, binding.root.context, applicantViewModel)
 
 
-
-            rvViewModel.fetchReviews()
+            rvViewModel.fetchNUserReview(userId)
             // Quan sát data adapter từ ViewModel
-            rvViewModel.reviewsList.observe(this, Observer { reviews ->
+            rvViewModel.JobHistoryList.observe(this, Observer { reviews ->
                 rvAdapter.updateData(reviews)
-                binding.noDataImage.visibility = View.GONE
+                checkEmptyAdapter(reviews)
             })
 
             // adapter reviews của nuser
-            rvAdapter = WNuserReviewedAdapter(listOf(), binding.noDataImage)
+            rvAdapter = WNuserReviewedAdapter(listOf())
             binding.historyRVrecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             binding.historyRVrecyclerView.adapter = rvAdapter
 
@@ -121,12 +125,20 @@ class NUserDetailInfoActivity : AppCompatActivity() {
                 val age = snapshot.child("age").getValue(String::class.java)
                 age?.let {
                     viewModel.age = it
-                    binding.editProfileAge.setText(viewModel.age)
+                    if(it ==""){
+                        binding.editProfileAge.setText(R.string.blank_age)
+                    }else {
+                        binding.editProfileAge.setText(viewModel.age)
+                    }
                 }
                 val gender = snapshot.child("gender").getValue(String::class.java)
                 gender?.let {
                     viewModel.gender = it
-                    binding.editProfileGender.setText(viewModel.gender)
+                    if(it ==""){
+                        binding.editProfileGender.setText(R.string.error_invalid_Gender)
+                    }else {
+                        binding.editProfileGender.setText(viewModel.gender)
+                    }
                 }
             }
 
@@ -140,7 +152,11 @@ class NUserDetailInfoActivity : AppCompatActivity() {
 
 
     private fun setupApplicantDescription(applicant: ApplicantsModel) {
-        binding.applicantDescription.setText(applicant.applicantDes.toString())
+        if(applicant.applicantDes == ""){
+            binding.applicantDescription.setText(R.string.no_job_des2)
+        }else {
+            binding.applicantDescription.setText(applicant.applicantDes.toString())
+        }
         binding.animationView.visibility = View.GONE
     }
 
@@ -243,6 +259,16 @@ class NUserDetailInfoActivity : AppCompatActivity() {
         resultIntent.putExtra("change", change)
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
+    }
+
+    private fun checkEmptyAdapter(list: MutableList<JobHistoryModel>) {
+        if (list.isEmpty()) {
+            binding.noDataReview.visibility = View.VISIBLE
+            binding.animationView.visibility = View.GONE
+        } else {
+            binding.noDataReview.visibility = View.GONE
+            binding.animationView.visibility = View.GONE
+        }
     }
 
 }

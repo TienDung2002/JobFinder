@@ -58,7 +58,11 @@ class ApplicantAdapter(private var applicantList: MutableList<ApplicantsModel>,
     override fun onBindViewHolder(holder: ApplicantViewHolder, position: Int) {
         val currentItem = applicantList[position]
         holder.textViewName.text = currentItem.userName
-        holder.textViewDescription.text = currentItem.applicantDes
+        if(currentItem.applicantDes == ""){
+            holder.textViewDescription.text = holder.itemView.context.getString(R.string.no_job_des2)
+        }else {
+            holder.textViewDescription.text = currentItem.applicantDes
+        }
         val position = holder.adapterPosition
 
         val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(currentItem.userId.toString())

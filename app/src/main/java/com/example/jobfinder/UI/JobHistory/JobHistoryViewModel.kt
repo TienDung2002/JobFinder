@@ -54,27 +54,23 @@ class JobHistoryViewModel : ViewModel() {
 
     }
 
-    fun fetchBUserJobHistory(jobId: String) {
-        val currentBUserId = GetData.getCurrentUserId()
-        if (currentBUserId != null) {
+    fun fetchNUserReview(uid:String) {
+        database.child(uid).get().addOnSuccessListener { nuserJobHistorySnapshot ->
             val jobHistoryList: MutableList<JobHistoryModel> = mutableListOf()
-            bUserDb.child(currentBUserId).child(jobId).get()
-                .addOnSuccessListener { nUserIdSnapshot ->
-                    nUserIdSnapshot.children.forEach { bUserJobHistoryData ->
-                        val jobHistoryModel =
-                            bUserJobHistoryData.getValue(JobHistoryModel::class.java)
-                        jobHistoryModel?.let {
-                            jobHistoryList.add(it)
-                        }
-                    }
-                    val sortedJobHistoryList =
-                        jobHistoryList.sortedByDescending { GetData.convertStringToDate(it.endDate.toString()) }
-                    val mutableSortedJobHistoryList = sortedJobHistoryList.toMutableList()
-                    _JobHistoryList.value = mutableSortedJobHistoryList
-            }.addOnFailureListener {
-                // Handle failure
+            nuserJobHistorySnapshot.children.forEach { nuserJobHistoryData ->
+                val jobHistoryModel = nuserJobHistoryData.getValue(JobHistoryModel::class.java)
+                jobHistoryModel?.let {
+                    jobHistoryList.add(it)
+                }
             }
+            val sortedJobHistoryList =
+                jobHistoryList.sortedByDescending { GetData.convertStringToDate(it.endDate.toString()) }
+            val mutableSortedJobHistoryList = sortedJobHistoryList.toMutableList()
+            _JobHistoryList.value = mutableSortedJobHistoryList
+        }.addOnFailureListener {
+            // Handle failure
         }
+
     }
 
     fun fetchBUserJobHistoryId(){
