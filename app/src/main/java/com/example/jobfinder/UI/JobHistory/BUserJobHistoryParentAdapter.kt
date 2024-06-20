@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.JobHistoryParentModel
@@ -35,6 +36,18 @@ class BUserJobHistoryParentAdapter(private var jobList: List<JobHistoryParentMod
         holder.childRecyclerView.adapter= adapter
         holder.childRecyclerView.layoutManager= LinearLayoutManager(holder.itemView.context)
 
+        // mở ra adapter con
+        val isExpanded = job.isExpanded
+
+        holder.childRecyclerView.visibility = if(isExpanded) View.VISIBLE else View.GONE
+
+        holder.jobHolder.setOnClickListener {
+
+            isAnyItemExpanded(position)
+            job.isExpanded= !job.isExpanded
+            notifyItemChanged(position)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -45,6 +58,17 @@ class BUserJobHistoryParentAdapter(private var jobList: List<JobHistoryParentMod
         val jobTitleTextView: TextView = itemView.findViewById(R.id.jH_job_title)
         val jobTypeTextView: TextView = itemView.findViewById(R.id.jH_job_type)
         val childRecyclerView :RecyclerView= itemView.findViewById(R.id.buser_job_history_recycler)
+        val jobHolder:ConstraintLayout = itemView.findViewById(R.id.job_text_holder)
     }
 
+    private fun isAnyItemExpanded(position:Int){
+        val temp = jobList.indexOfFirst {
+            it.isExpanded
+        }
+
+        if(temp >= 0 && temp != position){
+            jobList[temp].isExpanded= false
+            notifyItemChanged(temp)
+        }
+    }
 }

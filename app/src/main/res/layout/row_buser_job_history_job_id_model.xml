@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:foreground="?android:attr/selectableItemBackground"
     android:layout_marginBottom="10dp"
-    app:cardCornerRadius="10dp"
     android:elevation="0dp"
     app:cardElevation="0dp"
     tools:ignore="ExtraText">
@@ -15,10 +13,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/text_holder"
+            android:id="@+id/job_text_holder"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -27,6 +26,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="0dp"
             android:paddingBottom="20dp"
+            android:layout_marginTop="10dp"
             >
 
             <TextView
@@ -56,12 +56,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:id="@+id/line"
-            app:layout_constraintTop_toBottomOf="@id/text_holder"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/buser_job_history_recycler"
@@ -70,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line"
+            app:layout_constraintTop_toBottomOf="@id/job_text_holder"
             tools:listitem="@layout/row_buser_job_history_model"
             tools:itemCount="5"
             android:background="@color/home_bg"/>
