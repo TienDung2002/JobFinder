@@ -157,7 +157,7 @@ class StatisticalActivity : AppCompatActivity() {
             legend.apply {
                 setExtraOffsets(0f,0f,0f,15f)
                 form = Legend.LegendForm.LINE
-                setXEntrySpace(30f)
+                xEntrySpace = 30f       // Khoảng cách của legend trục X
                 textSize = 14f
             }
             // Trục X
@@ -297,8 +297,9 @@ class StatisticalActivity : AppCompatActivity() {
             // Chú thích
             legend.apply {
                 setExtraOffsets(0f,0f,0f,15f)
+                xEntrySpace = 30f
                 verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM       // Căn chiều dọc
-                horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT    // Căn chiều ngang
+                horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT    // Căn chiều ngang
                 textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
                 textSize = 14f
             }
