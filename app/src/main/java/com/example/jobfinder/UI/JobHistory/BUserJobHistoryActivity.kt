@@ -32,7 +32,6 @@ class BUserJobHistoryActivity : AppCompatActivity() {
 
         viewModel.JobIdList.observe(this) { updatedList ->
             adapter.updateData(updatedList)
-            Log.d("sdkjbhfsdkj", updatedList[0].jobTitle)
             checkEmptyAdapter(updatedList)
         }
 

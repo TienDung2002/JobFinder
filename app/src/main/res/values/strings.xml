@@ -472,6 +472,7 @@
     <string name="job_history_title">Job history</string>
     <string name="no_review">No review</string>
     <string name="no_job_history">Blank history</string>
+    <string name="not_review">Not review yet</string>
     <!--    watch reviewed nuser-->
     <string name="review_rating_Average">Rating:</string>
     <string name="review_rating_sub_title_default">(Not rated yet)</string>

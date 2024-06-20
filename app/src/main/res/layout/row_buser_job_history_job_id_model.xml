@@ -8,6 +8,8 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_marginBottom="10dp"
     app:cardCornerRadius="10dp"
+    android:elevation="0dp"
+    app:cardElevation="0dp"
     tools:ignore="ExtraText">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,6 +40,19 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:text="@string/post_job_title" />
+
+            <TextView
+                android:id="@+id/jH_job_type"
+                app:layout_constraintTop_toBottomOf="@id/jH_job_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_centerVertical="true"
+                android:textSize="15sp"
+                android:paddingTop="2dp"
+                android:text="@string/job_type" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

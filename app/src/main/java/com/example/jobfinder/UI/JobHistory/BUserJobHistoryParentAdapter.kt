@@ -30,6 +30,7 @@ class BUserJobHistoryParentAdapter(private var jobList: List<JobHistoryParentMod
 
 
         holder.jobTitleTextView.text = job.jobTitle
+        holder.jobTypeTextView.text = job.jobType
         val adapter = BUserJobHIstoryChildAdapter(job.childernList)
         holder.childRecyclerView.adapter= adapter
         holder.childRecyclerView.layoutManager= LinearLayoutManager(holder.itemView.context)
@@ -42,6 +43,7 @@ class BUserJobHistoryParentAdapter(private var jobList: List<JobHistoryParentMod
 
     inner class BUserJobHistoryParentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val jobTitleTextView: TextView = itemView.findViewById(R.id.jH_job_title)
+        val jobTypeTextView: TextView = itemView.findViewById(R.id.jH_job_type)
         val childRecyclerView :RecyclerView= itemView.findViewById(R.id.buser_job_history_recycler)
     }
 

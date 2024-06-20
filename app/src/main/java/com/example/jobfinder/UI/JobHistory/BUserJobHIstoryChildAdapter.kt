@@ -30,7 +30,14 @@ class BUserJobHIstoryChildAdapter(private var jobList: List<JobHistoryModel>) :
         val job = jobList[position]
         RetriveImg.retrieveImage(job.nUserId.toString(), holder.nUserAvt)
         holder.nUserNameTxt.text = job.nUserName
-        holder.reviewStatusTxt.text = "Unreview"
+        if(job.review.toString() == ""){
+            holder.reviewStatusTxt.text = holder.itemView.context.getString(R.string.not_review)
+        }else{
+            holder.reviewStatusTxt.text = job.review
+        }
+
+
+
     }
 
     override fun getItemCount(): Int {
