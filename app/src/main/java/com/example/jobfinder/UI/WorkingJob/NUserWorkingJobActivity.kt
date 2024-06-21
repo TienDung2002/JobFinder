@@ -12,7 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.CheckIn.CheckInViewModel
+import com.example.jobfinder.UI.Home.HomeFragmentBuser
+import com.example.jobfinder.UI.Home.HomeFragmentNuser
 import com.example.jobfinder.UI.JobHistory.JobHistoryFragment
+import com.example.jobfinder.UI.Notifications.NotificationsFragment
 import com.example.jobfinder.UI.SalaryTracking.SalaryTrackingActivity
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityNuserWorkingJobBinding
@@ -34,15 +37,19 @@ class NUserWorkingJobActivity : AppCompatActivity() {
         FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, NUserWorkingJobFragment(binding.animationView))
 
         binding.jobHistoryTitleHolder.setOnClickListener{
-            FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, JobHistoryFragment(binding.animationView))
-            workingJob = false
-            changeTitleHolderColor(workingJob)
+            if (!isCurrentFragment(R.id.job_history_title)) {
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, JobHistoryFragment(binding.animationView))
+                workingJob = false
+                changeTitleHolderColor(workingJob)
+            }
         }
 
         binding.workingJobTitleHolder.setOnClickListener {
-            FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, NUserWorkingJobFragment(binding.animationView))
-            workingJob =true
-            changeTitleHolderColor(workingJob)
+            if (!isCurrentFragment(R.id.working_job_title)) {
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, NUserWorkingJobFragment(binding.animationView))
+                workingJob = true
+                changeTitleHolderColor(workingJob)
+            }
         }
 
 
@@ -79,6 +86,15 @@ class NUserWorkingJobActivity : AppCompatActivity() {
             binding.workingJobTitleHolder.setBackgroundColor(getColor(R.color.white))
             binding.workingJobTitle.setTextColor(getColor(R.color.black))
             binding.workingJobTitle.setTypeface(null, Typeface.NORMAL)
+        }
+    }
+
+    private fun isCurrentFragment(itemId: Int): Boolean {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.job_management_activity_frame_layout)
+        return when (itemId) {
+            R.id.working_job_title -> currentFragment is NUserWorkingJobFragment
+            R.id.job_history_title -> currentFragment is JobHistoryFragment
+            else -> false
         }
     }
 }

@@ -461,7 +461,7 @@
 
     <!--    salary tracking-->
     <string name="salary_tracking_title">Salary tracking</string>
-    <string name="no_working">You haven\'t work</string>
+    <string name="no_working">Job inactive</string>
     <string name="salary_title">Salary</string>
     <string name="note_title">Note</string>
     <string name="working_time">Working day/time</string>

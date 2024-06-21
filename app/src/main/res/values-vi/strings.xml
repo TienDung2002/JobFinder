@@ -462,7 +462,7 @@
 
 <!--    salary tracking-->
     <string name="salary_tracking_title">Theo dõi lương</string>
-    <string name="no_working">Bạn chưa đi làm</string>
+    <string name="no_working">Chưa có hoạt động</string>
     <string name="salary_title">Lương</string>
     <string name="note_title">Ghi chú</string>
     <string name="working_time">Ngày/Giờ làm</string>
