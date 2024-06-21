@@ -53,7 +53,6 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
         holder.wrapper.setOnClickListener {
             if (!isDialogShown) {
                 showOptionsDialog(job, holder.itemView.context, holder.reviewStatusTxt, position, holder.rating)
-                isDialogShown = true
             }
         }
     }
@@ -78,14 +77,13 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
         val reviewDes: TextInputEditText = dialog.findViewById(R.id.jH_description)
         val cancelBtn: Button = dialog.findViewById(R.id.jH_cancel_btn)
         val saveBtn: Button = dialog.findViewById(R.id.jH_send)
-
+        isDialogShown = false
 //        rating.rating = job.rating.toString().toFloat()
         rating.rating = job.rating?.toFloatOrNull() ?: 0.0f
         reviewDes.setText(job.review)
 
         cancelBtn.setOnClickListener {
             dialog.dismiss()
-            isDialogShown = false
         }
 
         saveBtn.setOnClickListener {
@@ -115,12 +113,10 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
                 ratingBar.rating = ratingNum
 
                 dialog.dismiss()
-                isDialogShown = false
             } else {
                 reviewDes.requestFocus()
             }
         }
-        isDialogShown = false
         dialog.show()
     }
 }
