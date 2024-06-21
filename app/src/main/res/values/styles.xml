@@ -10,4 +10,9 @@
         <item name="android:background">@color/home_bg</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/gray</item>
+        <item name="colorControlActivated">@color/ratingStar</item>
+    </style>
+
 </resources>

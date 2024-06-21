@@ -8,6 +8,7 @@
     <color name="red">#E30000</color>
     <color name="pink">#EC00FD</color>
     <color name="blue">#005ED3</color>
+    <color name="ratingStar">#ffdf00</color>
 
     <color name="bottom_nav_color">#636363</color>
     <color name="grey_hint_ForgotPass">#8C8C8C</color>
