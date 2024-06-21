@@ -120,7 +120,7 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
                 reviewDes.requestFocus()
             }
         }
-
+        isDialogShown = false
         dialog.show()
     }
 }
