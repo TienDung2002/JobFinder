@@ -49,10 +49,10 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
         } else {
             job.review
         }
-
+        holder.rating.rating = job.rating?.toFloatOrNull() ?: 0f
         holder.wrapper.setOnClickListener {
             if (!isDialogShown) {
-                showOptionsDialog(job, holder.itemView.context, holder.reviewStatusTxt, position)
+                showOptionsDialog(job, holder.itemView.context, holder.reviewStatusTxt, position, holder.rating)
                 isDialogShown = true
             }
         }
@@ -66,10 +66,11 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
         val nUserNameTxt: TextView = itemView.findViewById(R.id.jh_nusername)
         val reviewStatusTxt: TextView = itemView.findViewById(R.id.rv_status)
         val nUserAvt: ImageView = itemView.findViewById(R.id.nuser_ava)
+        val rating: RatingBar = itemView.findViewById(R.id.ratingID)
         val wrapper: RelativeLayout = itemView.findViewById(R.id.jH_rv_holder)
     }
 
-    private fun showOptionsDialog(job: JobHistoryModel, context: Context, reviewStatusTxt: TextView, position: Int) {
+    private fun showOptionsDialog(job: JobHistoryModel, context: Context, reviewStatusTxt: TextView, position: Int, ratingBar: RatingBar) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_review_model)
 
@@ -78,7 +79,8 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
         val cancelBtn: Button = dialog.findViewById(R.id.jH_cancel_btn)
         val saveBtn: Button = dialog.findViewById(R.id.jH_send)
 
-        rating.rating = job.rating.toString().toFloat()
+//        rating.rating = job.rating.toString().toFloat()
+        rating.rating = job.rating?.toFloatOrNull() ?: 0.0f
         reviewDes.setText(job.review)
 
         cancelBtn.setOnClickListener {
@@ -105,10 +107,12 @@ class BUserJobHIstoryChildAdapter(private var jobList: MutableList<JobHistoryMod
                 database.child(job.nUserId.toString()).child(job.jobId.toString()).updateChildren(updateRv)
 
                 job.review = reviewDesTxt
+                job.rating = ratingNum.toString()
 
                 updateJob(position, job)
 
                 reviewStatusTxt.text = reviewDesTxt
+                ratingBar.rating = ratingNum
 
                 dialog.dismiss()
                 isDialogShown = false

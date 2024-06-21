@@ -21,10 +21,7 @@
             android:elevation="0dp"
             app:cardElevation="0dp"
             app:cardCornerRadius="0dp"
-            android:backgroundTint="@color/primary_color2"
-            >
-
-
+            android:backgroundTint="@color/primary_color2">
         </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
