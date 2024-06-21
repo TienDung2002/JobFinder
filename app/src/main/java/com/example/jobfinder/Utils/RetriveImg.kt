@@ -32,7 +32,12 @@ object RetriveImg {
                         .into(imgView)
                 }
                 .addOnFailureListener { exception ->
-                    retrieveImage("default_user_avt.png", imgView)
+                    if (exception is StorageException &&
+                        (exception.errorCode == StorageException.ERROR_OBJECT_NOT_FOUND ||
+                                exception.errorCode == StorageException.ERROR_BUCKET_NOT_FOUND)
+                    ) {
+                        retrieveImage("default_user_avt.png", imgView)
+                    }
                 }
         }
     }
