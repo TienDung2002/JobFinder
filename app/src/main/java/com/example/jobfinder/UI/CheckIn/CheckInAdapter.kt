@@ -13,15 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Statistical.IncomeViewModel
 import com.example.jobfinder.Utils.CheckTime
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.FirebaseDatabase
 import kotlin.math.roundToInt
 
 class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
-                        private val context: Context
+                        private val context: Context,
+                        private val viewModel: IncomeViewModel
 ) :
     RecyclerView.Adapter<CheckInAdapter.CheckInViewHolder>() {
+
 
     class CheckInViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewJobTitle: TextView = itemView.findViewById(R.id.check_in_job_title)
@@ -128,6 +131,10 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                                         .child(uid.toString()).updateChildren(updateSalary)
                                                 }
                                             }
+
+                                        // đẩy giá trị thu nhập lên firebase
+                                        viewModel.pushIncomeToFirebase(uid.toString(), stringSalary, currentDayString)
+
                                     }
                                 } else {
                                     if(CheckTime.areDatesEqual(currentItem.endTime.toString(), currentDayString)){
