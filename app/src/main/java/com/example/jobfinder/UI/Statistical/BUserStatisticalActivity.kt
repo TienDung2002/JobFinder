@@ -34,16 +34,14 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-class StatisticalActivity : AppCompatActivity() {
+class BUserStatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityStatisticalBinding
     private val viewModel: IncomeViewModel by viewModels()
-    private val workHourViewModel: WorkHoursViewModel by viewModels()
     private val uid =GetData.getCurrentUserId()
     private val today = GetData.getCurrentDateTime()
 
     private var selectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
     private var selectedYear = Calendar.getInstance().get(Calendar.YEAR)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +55,7 @@ class StatisticalActivity : AppCompatActivity() {
             finish()
         }
 
-        drawChartNuser()
+        drawChartBuser()
 
         // Barchart
         binding.selectMonthYearBtn.setOnClickListener {
@@ -72,14 +70,14 @@ class StatisticalActivity : AppCompatActivity() {
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
 
-        // Line chart
-        binding.NuserselectYearBtn.setOnClickListener {
-            val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear, isYearOnly = true)
-            monthYearPickerDialog.setListener { _, year ->
+        binding.BuserselectMonthYearBtn.setOnClickListener {
+            val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear)
+            monthYearPickerDialog.setListener { month, year ->
+                selectedMonth = month
                 selectedYear = year
-                val yearText = "$year"
-                binding.NuserselectYearBtn.text = yearText
-                updateLineChartNuser(year)
+                val monthYearText = "Tháng $month /$year"
+                binding.BuserselectMonthYearBtn.text = monthYearText
+                updateLineChartBuser(month, year)
             }
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
@@ -105,7 +103,10 @@ class StatisticalActivity : AppCompatActivity() {
     }
 
     private fun drawBarChart(weekAndTotalIncome: Map<Int,Double>, weekAndTotalExpense: Map<Int, Double>) {
+        // Kiểu dữ liệu float (fill data vào thì chỉ đổi tham số Y thôi nhé)
+        // CẤM ĐỘNG X nó lệch label với nhóm đấy
         val mutableColumnThuNhap = mutableListOf<BarEntry>()
+
         val mutableColumnChiTieu = mutableListOf<BarEntry>()
 
         var positionX = 0.5f
@@ -125,9 +126,24 @@ class StatisticalActivity : AppCompatActivity() {
         }
 
         // Chuyển đổi MutableList thành List
-        val ColumnChiTieu: List<BarEntry> = mutableColumnChiTieu.toList()
+        val ColumnChiTieu: List<BarEntry> = mutableColumnThuNhap.toList()
 
 
+//        val ColumnThuNhap = listOf(
+//            BarEntry(0.5f, 2000000f),
+//            BarEntry(1.5f, 204852f),
+//            BarEntry(2.5f, 643450f),
+//            BarEntry(3.5f, 54640f)
+//        )
+
+//        val ColumnChiTieu = listOf(
+//            BarEntry(0.5f, 436000f),
+//            BarEntry(1.5f, 23530f),
+//            BarEntry(2.5f, 154345f),
+//            BarEntry(3.5f, 5430f)
+//        )
+
+//        val weeks = arrayOf("Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4")
         val weeks = weekAndTotalIncome.keys.map { "Tuần $it" }.toTypedArray()
 
         // Không có data thì đây là giá trị mặc định
@@ -135,10 +151,10 @@ class StatisticalActivity : AppCompatActivity() {
 
         // Gán giá trị default và đổi màu cột
         val thuNhapDataSet = BarDataSet(ColumnThuNhap.ifEmpty { defaultValues }, getString(R.string.Sta_labelBarchart_income)).apply {
-            color = ContextCompat.getColor(this@StatisticalActivity, R.color.income_color)
+            color = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.income_color)
         }
         val chiTieuDataSet = BarDataSet(ColumnChiTieu.ifEmpty { defaultValues }, getString(R.string.Sta_labelBarchart_expenditure)).apply {
-            color = ContextCompat.getColor(this@StatisticalActivity, R.color.red)
+            color = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.red)
         }
 
         val data = BarData(thuNhapDataSet, chiTieuDataSet)
@@ -196,19 +212,18 @@ class StatisticalActivity : AppCompatActivity() {
 
 
 
-    private fun drawPieChart(totalIncomeByJobType: Map<Int,Double>) {
-        val pieEntriesMutableList = mutableListOf<PieEntry>()
-
-        for ((jobType, totalIncome) in totalIncomeByJobType) {
-            pieEntriesMutableList.add(PieEntry(totalIncome.toFloat(), GetData.getStringFromJobTypeInt( binding.root.context,jobType)))
-        }
-        val pieEntries: List<PieEntry> = pieEntriesMutableList.toList()
+    private fun drawPieChart() {
+        // Chỉ cần sửa tham số 1 của PieEntry()
+        val pieEntries = listOf(
+            PieEntry(3205230f, getString(R.string.Sta_wallet)),
+            PieEntry(5040400f, getString(R.string.Sta_card))
+        )
 
         // Màu của các trường
         val pieDataSet = PieDataSet(pieEntries, "").apply {
             colors = listOf(
-                ContextCompat.getColor(this@StatisticalActivity, R.color.primary_color2),
-                ContextCompat.getColor(this@StatisticalActivity, R.color.blue)
+                ContextCompat.getColor(this@BUserStatisticalActivity, R.color.primary_color2),
+                ContextCompat.getColor(this@BUserStatisticalActivity, R.color.blue)
             )
         }
 
@@ -232,7 +247,7 @@ class StatisticalActivity : AppCompatActivity() {
                 textColor = getColor(R.color.black)
                 textSize = 15f
                 setXEntrySpace(15f)                                             // Khoảng cách giữa các legend, trục X
-                verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM       // Căn chú thích theo chiều dọc
+                verticalAlignment = Legend.LegendVerticalAlignment.CENTER       // Căn chú thích theo chiều dọc
                 horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER   // Căn chú thích theo chiều ngang
                 form = Legend.LegendForm.CIRCLE                                 // Đổi hình dạng của chú thích thành chấm tròn
             }
@@ -249,23 +264,29 @@ class StatisticalActivity : AppCompatActivity() {
 
 
 
-    private fun drawLineChart(label: String, chart: LineChart, workHourMap:Map<Int,Double>) {
+    private fun drawLineChart(label: String, chart: LineChart) {
         // Dữ liệu mẫu cho LineChart
-        val LineEntries = mutableListOf<Entry>()
-
-        for ((dayOfMonth, hours) in workHourMap) {
-            val entry = Entry(dayOfMonth.toFloat(), hours.toFloat())
-            LineEntries.add(entry)
-        }
-        val lineEntries: List<Entry> =  LineEntries.toList()
-        Log.d("LINEETRIESLISTTt", lineEntries.toString())
+        val lineEntries = listOf(
+            Entry(1f, 160f),
+            Entry(2f, 150f),
+            Entry(3f, 172f),
+            Entry(4f, 120f),
+            Entry(5f, 80f),
+            Entry(6f, 20f),
+            Entry(7f, 200f),
+            Entry(8f, 430f),
+            Entry(9f, 250f),
+            Entry(10f, 360f),
+            Entry(11f, 23f),
+            Entry(12f, 9f)
+        )
 
         val lineDataSet = LineDataSet(lineEntries, label).apply {
-            color = ContextCompat.getColor(this@StatisticalActivity, R.color.primary_color2)
-            valueTextColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+            color = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.primary_color2)
+            valueTextColor = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.black)
             valueTextSize = 10f
             setDrawFilled(true)
-            fillColor = ContextCompat.getColor(this@StatisticalActivity, R.color.filter_color)
+            fillColor = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.filter_color)
         }
 
         val data = LineData(lineDataSet)
@@ -286,7 +307,7 @@ class StatisticalActivity : AppCompatActivity() {
                 position = XAxis.XAxisPosition.BOTTOM
                 granularity = 1f
                 labelCount = 12
-                textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+                textColor = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.black)
                 valueFormatter = object : ValueFormatter() {
                     override fun getFormattedValue(value: Float): String {
                         return "T${value.toInt()}"
@@ -295,7 +316,7 @@ class StatisticalActivity : AppCompatActivity() {
             }
             // Trục y
             axisLeft.apply {
-                textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+                textColor = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.black)
                 setDrawGridLines(true)
             }
             // Chú thích
@@ -304,7 +325,7 @@ class StatisticalActivity : AppCompatActivity() {
                 xEntrySpace = 30f
                 verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM       // Căn chiều dọc
                 horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT    // Căn chiều ngang
-                textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
+                textColor = ContextCompat.getColor(this@BUserStatisticalActivity, R.color.black)
                 textSize = 14f
             }
 
@@ -333,63 +354,44 @@ class StatisticalActivity : AppCompatActivity() {
 
 
 
-    @SuppressLint("NewApi")
-    private fun drawChartNuser() {
-        val lineChartTitle = getString(R.string.Sta_workingHourPMonth)
-        val legend = getString(R.string.Sta_workedHourPMonth_legend)
-        val lineChart = binding.BuserlineChart
-
-        val todayString = GetData.getDateFromString(today)
-
-        val todayDate = LocalDate.parse(todayString, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-
-        binding.NuserLineChartWrap.visibility = View.VISIBLE
-        binding.BuserlineChartTitle.text = lineChartTitle
-
-        viewModel.fetchIncome(uid.toString())
-
-        viewModel.incomeList.observe(this){ newIncomeList->
-            val weeklyTotals = IncomeHandle.calculateWeeklyIncome(newIncomeList, todayDate.year, todayDate.monthValue)
-            drawBarChart(weeklyTotals, mapOf())
+//    @SuppressLint("NewApi")
+//    private fun drawChartBuser() {
+//        val lineChartTitle = getString(R.string.Sta_workingHourPMonth)
+//        val legend = getString(R.string.Sta_workedHourPMonth_legend)
+//        val lineChart = binding.NuserlineChart
+//
+//        val todayString = GetData.getDateFromString(today)
+//
+//        val todayDate = LocalDate.parse(todayString, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+//
+//        binding.NuserLineChartWrap.visibility = View.VISIBLE
+//        binding.BuserlineChartTitle.text = lineChartTitle
+//
+//        viewModel.fetchIncome(uid.toString())
+//
+//        viewModel.incomeList.observe(this){ newIncomeList->
+//            val weeklyTotals = IncomeHandle.calculateWeeklyIncome(newIncomeList, todayDate.year, todayDate.monthValue)
+//            drawBarChart(weeklyTotals, mapOf())
 //            weeklyTotals.forEach { (weekNumber, total) ->
 //                Log.d("dkjbfkjds","Tuần $weekNumber: Tổng thu nhập = $total")
 //            }
-        }
-
-        viewModel.fetchIncomeByJobTypeId(uid.toString())
-
-        viewModel.incomeByJobTypeList.observe(this){ newIncomeListByJobType->
-            val totalIncomeByJobType = IncomeHandle.calculateIncomeByJobType(newIncomeListByJobType)
-            drawPieChart(totalIncomeByJobType)
-//            totalIncomeByJobType.forEach { (jobTypeId, total) ->
-//                Log.d("dkjbfkjds","Job $jobTypeId: Tổng thu nhập = $total")
-//            }
-        }
-
-        workHourViewModel.fetchWorkHour(uid.toString())
-
-        workHourViewModel.workHourList.observe(this){newWorHourList ->
-            Log.d("ListWỏkHr", newWorHourList[0].workTime.toString())
-            val workHourMap = IncomeHandle.calculateWorkHoursByDay(newWorHourList, todayDate.year, todayDate.monthValue)
-            drawLineChart(legend, lineChart, workHourMap)
-            workHourMap.forEach { (workDay, hrs) ->
-                Log.d("dkjbfkjds","Ngày thứ $workDay: Tổng giờ làm = $hrs")
-            }
-        }
-
-    }
-
-//    private fun drawChartBuser() {
-//        val lineChartTitle = getString(R.string.Sta_jobs_posted)
-//        val legend = getString(R.string.Sta_jobs_posted_legend)
-//        val lineChart = binding.BuserlineChart
+//        }
 //
-//        binding.BuserLineChartWrap.visibility = View.VISIBLE
-//        binding.BuserlineChartTitle.text = lineChartTitle
-//
-////        drawBarChart()
 //        drawPieChart()
 //        drawLineChart(legend, lineChart)
 //    }
+
+    private fun drawChartBuser() {
+        val lineChartTitle = getString(R.string.Sta_jobs_posted)
+        val legend = getString(R.string.Sta_jobs_posted_legend)
+        val lineChart = binding.BuserlineChart
+
+        binding.BuserLineChartWrap.visibility = View.VISIBLE
+        binding.BuserlineChartTitle.text = lineChartTitle
+
+//        drawBarChart()
+        drawPieChart()
+        drawLineChart(legend, lineChart)
+    }
 
 }

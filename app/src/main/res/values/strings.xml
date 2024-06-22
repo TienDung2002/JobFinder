@@ -492,7 +492,7 @@
     <string name="Sta_labelBarchart_income">Income</string>
     <string name="Sta_labelBarchart_expenditure">Expenditure</string>
     <string name="Sta_Monyea_select">Month/Year</string>
-    <string name="Sta_property_structure">Property structure</string>
+    <string name="Sta_income_each_typeJob">Income for each type of job</string>
     <string name="Sta_wallet">Wallet</string>
     <string name="Sta_card">Card</string>
     <string name="Sta_workingHourPMonth">Number of worked hours per month</string>

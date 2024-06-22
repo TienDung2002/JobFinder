@@ -2,7 +2,6 @@ package com.example.jobfinder.UI.CheckIn
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.Datas.Model.CheckInFromBUserModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Statistical.IncomeViewModel
+import com.example.jobfinder.UI.Statistical.WorkHoursViewModel
 import com.example.jobfinder.Utils.CheckTime
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.FirebaseDatabase
@@ -21,7 +21,8 @@ import kotlin.math.roundToInt
 
 class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                         private val context: Context,
-                        private val viewModel: IncomeViewModel
+                        private val viewModel: IncomeViewModel,
+                        private val workHourViewModel: WorkHoursViewModel
 ) :
     RecyclerView.Adapter<CheckInAdapter.CheckInViewHolder>() {
 
@@ -64,7 +65,8 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
         val currentDay = GetData.formatDateForFirebase(currentDayString)
         jobDb.child(currentItem.buserId.toString()).child(currentItem.jobId.toString()).get().addOnSuccessListener { jobSnapShot->
             val jobStatus = jobSnapShot.child("status").getValue(String::class.java)
-            if(jobStatus!= null && jobStatus=="working") {
+            val jobType = jobSnapShot.child("jobType").getValue(String::class.java)
+            if(jobStatus!= null && jobStatus=="working" && jobType!= null) {
                 // lấy dữ liệu từ fb về xem đã check in chưa
                 checkInDb.child(currentDay).child(uid.toString()).get().addOnSuccessListener { dataSnapshot ->
                     if (dataSnapshot.exists()) {
@@ -133,7 +135,14 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                             }
 
                                         // đẩy giá trị thu nhập lên firebase
-                                        viewModel.pushIncomeToFirebase(uid.toString(), stringSalary, currentDayString)
+                                        viewModel.pushIncomeToFirebaseByDate(uid.toString(), stringSalary, currentDayString)
+
+                                        val jobTypeId = GetData.getIntFromJobType(jobType)
+
+                                        viewModel.pushIncomeToFirebaseJobTypeId(uid.toString(),stringSalary, jobTypeId)
+
+                                        //Đẩy giá trị giờ làm việc lên Firebase
+                                        workHourViewModel.pushWorkHourToFirebase(uid.toString(), workHr.toString(), currentDayString)
 
                                     }
                                 } else {

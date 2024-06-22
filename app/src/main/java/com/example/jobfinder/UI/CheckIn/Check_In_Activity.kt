@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
 import com.example.jobfinder.UI.Statistical.IncomeViewModel
+import com.example.jobfinder.UI.Statistical.WorkHoursViewModel
 import com.example.jobfinder.databinding.ActivityCheckInBinding
 
 class Check_In_Activity : AppCompatActivity() {
     private lateinit var binding: ActivityCheckInBinding
     private val viewModel: CheckInViewModel by viewModels()
     private val incomeViewModel: IncomeViewModel by viewModels()
+    private val workHourViewModel: WorkHoursViewModel by viewModels()
     private lateinit var adapter: CheckInAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,7 @@ class Check_In_Activity : AppCompatActivity() {
         binding.animationView.visibility = View.VISIBLE
 
         // Tạo adapter và gán vào RecyclerView
-        adapter = CheckInAdapter(mutableListOf(), binding.root.context, incomeViewModel)
+        adapter = CheckInAdapter(mutableListOf(), binding.root.context, incomeViewModel, workHourViewModel)
         binding.recyclerCheckIn.adapter = adapter
         binding.recyclerCheckIn.layoutManager = LinearLayoutManager(this)
 

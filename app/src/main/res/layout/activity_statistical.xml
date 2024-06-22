@@ -104,7 +104,7 @@
                         android:id="@+id/PiechatTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Sta_property_structure"
+                        android:text="@string/Sta_income_each_typeJob"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:layout_marginBottom="10dp"/>
