@@ -1,15 +1,18 @@
 package com.example.jobfinder.UI.Statistical
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
+import com.example.jobfinder.Utils.IncomeHandle
 import com.example.jobfinder.databinding.ActivityStatisticalBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
@@ -27,10 +30,14 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class StatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityStatisticalBinding
-    private val viewModel: ChartDataViewModel by viewModels()
+    private val viewModel: IncomeViewModel by viewModels()
+    private val uid =GetData.getCurrentUserId()
+    private val today = GetData.getCurrentDateTime()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +62,6 @@ class StatisticalActivity : AppCompatActivity() {
                 }
             }
         }
-
 
         // Barchart
         binding.selectMonthYearBtn.setOnClickListener {
@@ -91,7 +97,14 @@ class StatisticalActivity : AppCompatActivity() {
 
     }
     private fun updateBarCharMonYea(month: Int, year: Int) {
-
+        val incomeList = viewModel.incomeList.value
+        incomeList?.let {
+            val weeklyTotals = IncomeHandle.calculateWeeklyIncome(incomeList, year, month)
+            drawBarChart(weeklyTotals)
+//            weeklyTotals.forEach { (weekNumber, total) ->
+//                Log.d("dkjbfkjds","Tuần $weekNumber: Tổng thu nhập = $total")
+//            }
+        }
     }
 
     private fun updateLineChartNuser(year: Int) {
@@ -102,15 +115,29 @@ class StatisticalActivity : AppCompatActivity() {
 
     }
 
-    private fun drawBarChart() {
+    private fun drawBarChart(weekAndTotal: Map<Int,Double>) {
         // Kiểu dữ liệu float (fill data vào thì chỉ đổi tham số Y thôi nhé)
         // CẤM ĐỘNG X nó lệch label với nhóm đấy
-        val ColumnThuNhap = listOf(
-            BarEntry(0.5f, 2000000f),
-            BarEntry(1.5f, 204852f),
-            BarEntry(2.5f, 643450f),
-            BarEntry(3.5f, 54640f)
-        )
+        val mutableColumnThuNhap = mutableListOf<BarEntry>()
+
+        var positionX = 0.5f
+
+        // Duyệt qua weekAndTotal và thêm BarEntry vào mutableColumnThuNhap
+        weekAndTotal.forEach { (_, total) ->
+            mutableColumnThuNhap.add(BarEntry(positionX, total.toFloat()))
+            positionX += 1.0f // Tăng vị trí x thêm 1.0 sau mỗi tuần
+        }
+
+        // Chuyển đổi MutableList thành List
+        val ColumnThuNhap: List<BarEntry> = mutableColumnThuNhap.toList()
+
+
+//        val ColumnThuNhap = listOf(
+//            BarEntry(0.5f, 2000000f),
+//            BarEntry(1.5f, 204852f),
+//            BarEntry(2.5f, 643450f),
+//            BarEntry(3.5f, 54640f)
+//        )
 
         val ColumnChiTieu = listOf(
             BarEntry(0.5f, 436000f),
@@ -119,7 +146,8 @@ class StatisticalActivity : AppCompatActivity() {
             BarEntry(3.5f, 5430f)
         )
 
-        val weeks = arrayOf("Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4")
+//        val weeks = arrayOf("Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4")
+        val weeks = weekAndTotal.keys.map { "Tuần $it" }.toTypedArray()
 
         // Không có data thì đây là giá trị mặc định
         val defaultValues = weeks.indices.map { BarEntry(it + 0.5f, 0f) }
@@ -329,15 +357,29 @@ class StatisticalActivity : AppCompatActivity() {
 
 
 
+    @SuppressLint("NewApi")
     private fun drawChartNuser() {
         val lineChartTitle = getString(R.string.Sta_workingHourPMonth)
         val legend = getString(R.string.Sta_workedHourPMonth_legend)
         val lineChart = binding.NuserlineChart
 
+        val todayString = GetData.getDateFromString(today)
+
+        val todayDate = LocalDate.parse(todayString, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+
         binding.NuserLineChartWrap.visibility = View.VISIBLE
         binding.BuserlineChartTitle.text = lineChartTitle
 
-        drawBarChart()
+        viewModel.fetchIncome(uid.toString())
+
+        viewModel.incomeList.observe(this){ newIncomeList->
+            val weeklyTotals = IncomeHandle.calculateWeeklyIncome(newIncomeList, todayDate.year, todayDate.monthValue)
+            drawBarChart(weeklyTotals)
+            weeklyTotals.forEach { (weekNumber, total) ->
+                Log.d("dkjbfkjds","Tuần $weekNumber: Tổng thu nhập = $total")
+            }
+        }
+
         drawPieChart()
         drawLineChart(legend, lineChart)
     }
@@ -350,7 +392,7 @@ class StatisticalActivity : AppCompatActivity() {
         binding.BuserLineChartWrap.visibility = View.VISIBLE
         binding.BuserlineChartTitle.text = lineChartTitle
 
-        drawBarChart()
+//        drawBarChart()
         drawPieChart()
         drawLineChart(legend, lineChart)
     }
