@@ -9,7 +9,11 @@ import androidx.fragment.app.DialogFragment
 import com.example.jobfinder.R
 import java.util.Calendar
 
-class MonthYearPickerDialog(private val isYearOnly: Boolean = false) : DialogFragment() {
+class MonthYearPickerDialog(
+    private var selectedMonth: Int,
+    private var selectedYear: Int,
+    private val isYearOnly: Boolean = false
+) : DialogFragment() {
 
     private var listener: ((Int, Int) -> Unit)? = null
 
@@ -30,17 +34,19 @@ class MonthYearPickerDialog(private val isYearOnly: Boolean = false) : DialogFra
         } else {
             monthPicker.minValue = 1
             monthPicker.maxValue = 12
-            monthPicker.value = Calendar.getInstance().get(Calendar.MONTH) + 1
+            monthPicker.value = selectedMonth
         }
 
         val year = Calendar.getInstance().get(Calendar.YEAR)
         yearPicker.minValue = year - 50
         yearPicker.maxValue = year + 50
-        yearPicker.value = year
+        yearPicker.value = selectedYear
 
         dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
             val month = if (isYearOnly) 0 else monthPicker.value
             listener?.invoke(month, yearPicker.value)
+            selectedMonth = monthPicker.value
+            selectedYear = yearPicker.value
             dismiss()
         }
 
@@ -51,3 +57,4 @@ class MonthYearPickerDialog(private val isYearOnly: Boolean = false) : DialogFra
         return dialog
     }
 }
+

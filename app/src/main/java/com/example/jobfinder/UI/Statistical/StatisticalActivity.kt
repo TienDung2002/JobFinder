@@ -32,6 +32,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class StatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityStatisticalBinding
@@ -39,6 +40,10 @@ class StatisticalActivity : AppCompatActivity() {
     private val workHourViewModel: WorkHoursViewModel by viewModels()
     private val uid =GetData.getCurrentUserId()
     private val today = GetData.getCurrentDateTime()
+
+    private var selectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+    private var selectedYear = Calendar.getInstance().get(Calendar.YEAR)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +61,10 @@ class StatisticalActivity : AppCompatActivity() {
 
         // Barchart
         binding.selectMonthYearBtn.setOnClickListener {
-            val monthYearPickerDialog = MonthYearPickerDialog()
+            val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear)
             monthYearPickerDialog.setListener { month, year ->
+                selectedMonth = month
+                selectedYear = year
                 val monthYearText = "Tháng $month /$year"
                 binding.selectMonthYearBtn.text = monthYearText
                 updateBarCharMonYea(month, year)
@@ -65,23 +72,14 @@ class StatisticalActivity : AppCompatActivity() {
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
 
-        // Line chart (Nuser)
+        // Line chart
         binding.NuserselectYearBtn.setOnClickListener {
-            val monthYearPickerDialog = MonthYearPickerDialog(isYearOnly = true)
+            val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear, isYearOnly = true)
             monthYearPickerDialog.setListener { _, year ->
+                selectedYear = year
                 val yearText = "$year"
                 binding.NuserselectYearBtn.text = yearText
                 updateLineChartNuser(year)
-            }
-            monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
-        }
-
-        binding.BuserselectMonthYearBtn.setOnClickListener {
-            val monthYearPickerDialog = MonthYearPickerDialog()
-            monthYearPickerDialog.setListener { month, year ->
-                val monthYearText = "Tháng $month /$year"
-                binding.BuserselectMonthYearBtn.text = monthYearText
-                updateLineChartBuser(month, year)
             }
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
@@ -107,10 +105,7 @@ class StatisticalActivity : AppCompatActivity() {
     }
 
     private fun drawBarChart(weekAndTotalIncome: Map<Int,Double>, weekAndTotalExpense: Map<Int, Double>) {
-        // Kiểu dữ liệu float (fill data vào thì chỉ đổi tham số Y thôi nhé)
-        // CẤM ĐỘNG X nó lệch label với nhóm đấy
         val mutableColumnThuNhap = mutableListOf<BarEntry>()
-
         val mutableColumnChiTieu = mutableListOf<BarEntry>()
 
         var positionX = 0.5f
@@ -133,21 +128,6 @@ class StatisticalActivity : AppCompatActivity() {
         val ColumnChiTieu: List<BarEntry> = mutableColumnChiTieu.toList()
 
 
-//        val ColumnThuNhap = listOf(
-//            BarEntry(0.5f, 2000000f),
-//            BarEntry(1.5f, 204852f),
-//            BarEntry(2.5f, 643450f),
-//            BarEntry(3.5f, 54640f)
-//        )
-
-//        val ColumnChiTieu = listOf(
-//            BarEntry(0.5f, 436000f),
-//            BarEntry(1.5f, 23530f),
-//            BarEntry(2.5f, 154345f),
-//            BarEntry(3.5f, 5430f)
-//        )
-
-//        val weeks = arrayOf("Tuần 1", "Tuần 2", "Tuần 3", "Tuần 4")
         val weeks = weekAndTotalIncome.keys.map { "Tuần $it" }.toTypedArray()
 
         // Không có data thì đây là giá trị mặc định
@@ -217,8 +197,6 @@ class StatisticalActivity : AppCompatActivity() {
 
 
     private fun drawPieChart(totalIncomeByJobType: Map<Int,Double>) {
-        // Chỉ cần sửa tham số 1 của PieEntry()
-
         val pieEntriesMutableList = mutableListOf<PieEntry>()
 
         for ((jobType, totalIncome) in totalIncomeByJobType) {
@@ -254,7 +232,7 @@ class StatisticalActivity : AppCompatActivity() {
                 textColor = getColor(R.color.black)
                 textSize = 15f
                 setXEntrySpace(15f)                                             // Khoảng cách giữa các legend, trục X
-                verticalAlignment = Legend.LegendVerticalAlignment.CENTER       // Căn chú thích theo chiều dọc
+                verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM       // Căn chú thích theo chiều dọc
                 horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER   // Căn chú thích theo chiều ngang
                 form = Legend.LegendForm.CIRCLE                                 // Đổi hình dạng của chú thích thành chấm tròn
             }

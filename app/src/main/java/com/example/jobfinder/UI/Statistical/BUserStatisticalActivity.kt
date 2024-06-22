@@ -32,12 +32,16 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class BUserStatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityStatisticalBinding
     private val viewModel: IncomeViewModel by viewModels()
     private val uid =GetData.getCurrentUserId()
     private val today = GetData.getCurrentDateTime()
+
+    private var selectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
+    private var selectedYear = Calendar.getInstance().get(Calendar.YEAR)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +59,10 @@ class BUserStatisticalActivity : AppCompatActivity() {
 
         // Barchart
         binding.selectMonthYearBtn.setOnClickListener {
-            val monthYearPickerDialog = MonthYearPickerDialog()
+            val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear)
             monthYearPickerDialog.setListener { month, year ->
+                selectedMonth = month
+                selectedYear = year
                 val monthYearText = "Tháng $month /$year"
                 binding.selectMonthYearBtn.text = monthYearText
                 updateBarCharMonYea(month, year)
@@ -64,20 +70,11 @@ class BUserStatisticalActivity : AppCompatActivity() {
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
 
-        // Line chart (Nuser)
-        binding.NuserselectYearBtn.setOnClickListener {
-            val monthYearPickerDialog = MonthYearPickerDialog(isYearOnly = true)
-            monthYearPickerDialog.setListener { _, year ->
-                val yearText = "$year"
-                binding.NuserselectYearBtn.text = yearText
-                updateLineChartNuser(year)
-            }
-            monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
-        }
-
         binding.BuserselectMonthYearBtn.setOnClickListener {
-            val monthYearPickerDialog = MonthYearPickerDialog()
+            val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear)
             monthYearPickerDialog.setListener { month, year ->
+                selectedMonth = month
+                selectedYear = year
                 val monthYearText = "Tháng $month /$year"
                 binding.BuserselectMonthYearBtn.text = monthYearText
                 updateLineChartBuser(month, year)

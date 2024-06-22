@@ -493,7 +493,7 @@
     <string name="Sta_labelBarchart_income">Thu nhập</string>
     <string name="Sta_labelBarchart_expenditure">Chi phí</string>
     <string name="Sta_Monyea_select">Tháng/Năm</string>
-    <string name="Sta_property_structure">Cơ cấu tài sản</string>
+    <string name="Sta_income_each_typeJob">Thu nhập từ loại công việc</string>
     <string name="Sta_wallet">Ví</string>
     <string name="Sta_card">Thẻ</string>
     <string name="Sta_workingHourPMonth">Số giờ làm việc mỗi tháng</string>
