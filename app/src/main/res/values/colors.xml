@@ -35,6 +35,6 @@
     <color name="unselected_tab_jobhistory">#CDD6D8</color>
 
     <color name="bg_barChart">#5358C1</color>
-
+    <color name="filter_color">#95C4CA</color>
 
 </resources>
