@@ -1,7 +1,9 @@
 package com.example.jobfinder.Utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import com.example.jobfinder.Datas.Model.idAndRole
+import com.example.jobfinder.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.ParseException
@@ -312,4 +314,30 @@ object GetData {
         val minutes = ((value - hours) * 60).toInt()
         return String.format("%02d:%02d", hours, minutes)
     }
+
+    fun getIntFromJobType(jobType: String): Int {
+        return when (jobType) {
+            "Retail Sales Associate", "Nhân viên bán hàng" -> 1
+            "Food and Beverage Server", "Phục vụ" -> 2
+            "Administrative Assistant", "Trợ lý hành chính" -> 3
+            "Tutor", "Gia sư" -> 4
+            "Barista", "Pha chế cà phê" -> 5
+            "Cashier", "Thu ngân" -> 6
+            "Delivery Driver", "Nhân viên giao hàng" -> 7
+            "Receptionist", "Lễ tân" -> 8
+            "Other", "Khác" -> 9
+            else -> 9
+        }
+    }
+
+    fun getStringFromJobTypeInt(context: Context, i: Int): String {
+        val jobTypesArray = context.resources.getStringArray(R.array.job_types_array)
+        return if (i in 1..jobTypesArray.size) {
+            jobTypesArray[i - 1]
+        } else {
+            jobTypesArray.last()  // This will return "Other" as the default case
+        }
+    }
+
+
 }
