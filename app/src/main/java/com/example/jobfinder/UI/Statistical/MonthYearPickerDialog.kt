@@ -2,13 +2,14 @@ package com.example.jobfinder.UI.Statistical
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.NumberPicker
 import androidx.fragment.app.DialogFragment
 import com.example.jobfinder.R
 import java.util.Calendar
 
-class MonthYearPickerDialog : DialogFragment() {
+class MonthYearPickerDialog(private val isYearOnly: Boolean = false) : DialogFragment() {
 
     private var listener: ((Int, Int) -> Unit)? = null
 
@@ -24,9 +25,13 @@ class MonthYearPickerDialog : DialogFragment() {
         val monthPicker = dialog.findViewById<NumberPicker>(R.id.picker_month)
         val yearPicker = dialog.findViewById<NumberPicker>(R.id.picker_year)
 
-        monthPicker.minValue = 1
-        monthPicker.maxValue = 12
-        monthPicker.value = Calendar.getInstance().get(Calendar.MONTH) + 1
+        if (isYearOnly) {
+            monthPicker.isEnabled = false
+        } else {
+            monthPicker.minValue = 1
+            monthPicker.maxValue = 12
+            monthPicker.value = Calendar.getInstance().get(Calendar.MONTH) + 1
+        }
 
         val year = Calendar.getInstance().get(Calendar.YEAR)
         yearPicker.minValue = year - 50
@@ -34,7 +39,8 @@ class MonthYearPickerDialog : DialogFragment() {
         yearPicker.value = year
 
         dialog.findViewById<Button>(R.id.btn_confirm).setOnClickListener {
-            listener?.invoke(monthPicker.value, yearPicker.value)
+            val month = if (isYearOnly) 0 else monthPicker.value
+            listener?.invoke(month, yearPicker.value)
             dismiss()
         }
 
