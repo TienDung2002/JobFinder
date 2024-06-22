@@ -501,6 +501,21 @@
     <string name="Sta_workedHourPMonth_legend">Số giờ làm</string>
     <string name="Sta_jobs_posted">Số công việc đăng tuyển</string>
     <string name="Sta_jobs_posted_legend">Việc đăng tuyển</string>
+    <string-array name="months_array">
+        <item>Th01</item>
+        <item>Th02</item>
+        <item>Th03</item>
+        <item>Th04</item>
+        <item>Th05</item>
+        <item>Th06</item>
+        <item>Th07</item>
+        <item>Th08</item>
+        <item>Th09</item>
+        <item>Th10</item>
+        <item>Th11</item>
+        <item>Th12</item>
+    </string-array>
+    <string name="week">Tuần</string>
 
 
 </resources>

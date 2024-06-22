@@ -7,11 +7,15 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginBottom
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.IncomeHandle
@@ -126,7 +130,7 @@ class StatisticalActivity : AppCompatActivity() {
         val ColumnChiTieu: List<BarEntry> = mutableColumnChiTieu.toList()
 
 
-        val weeks = weekAndTotalIncome.keys.map { "Tuần $it" }.toTypedArray()
+        val weeks = weekAndTotalIncome.keys.map { "${getText(R.string.week)} $it" }.toTypedArray()
 
         // Không có data thì đây là giá trị mặc định
         val defaultValues = weeks.indices.map { BarEntry(it + 0.5f, 0f) }
@@ -203,14 +207,65 @@ class StatisticalActivity : AppCompatActivity() {
         val pieEntries: List<PieEntry> = pieEntriesMutableList.toList()
 
         // Màu của các trường
-        val pieDataSet = PieDataSet(pieEntries, "").apply {
-            colors = listOf(
+        val colors = listOf(
                 ContextCompat.getColor(this@StatisticalActivity, R.color.primary_color2),
-                ContextCompat.getColor(this@StatisticalActivity, R.color.blue)
-            )
+                ContextCompat.getColor(this@StatisticalActivity, R.color.blue),
+                ContextCompat.getColor(this@StatisticalActivity, R.color.green),
+                ContextCompat.getColor(this@StatisticalActivity, R.color.ratingStar),
+                ContextCompat.getColor(this@StatisticalActivity, R.color.cyan),
+                ContextCompat.getColor(this@StatisticalActivity, R.color.red),
+                ContextCompat.getColor(this@StatisticalActivity, R.color.purple),
+                ContextCompat.getColor(this@StatisticalActivity, R.color.pink),
+                ContextCompat.getColor(this@StatisticalActivity, R.color.teal)
+        )
+
+        val pieDataSet = PieDataSet(pieEntries, "").apply {
+            this.colors = colors
         }
 
         val pieData = PieData(pieDataSet)
+
+        for ((index, entry) in pieEntries.withIndex()) {
+            val legendText = entry.label
+            val legendColor = colors[index]
+
+            val textView = TextView(this).apply {
+                text = legendText
+                setTextColor(Color.BLACK)
+                textSize = 15f
+                setPadding(8, 8, 8, 0)
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+
+            val colorView = View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    40, // width
+                    40 // height
+                ).apply {
+                    setMargins(0, 0, 8, 0) // Optional: add margins between colorView and textView
+                }
+                setBackgroundColor(legendColor)
+            }
+
+            val legendItemLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                addView(colorView)
+                addView(textView)
+                setPadding(0, 8, 0, 8)
+                gravity = Gravity.CENTER_VERTICAL // Center vertically within the LinearLayout
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+            binding.legendContainer.addView(legendItemLayout)
+        }
+
+
+
 
         setupAndApplyDataToPieChart(binding.pieChart, pieData)
     }
@@ -223,16 +278,17 @@ class StatisticalActivity : AppCompatActivity() {
             holeRadius = 40f                                    // Đặt bán kính của lỗ ở giữa
             setEntryLabelColor(getColor(R.color.white))         // Đặt màu sắc cho nhãn của các phần
             animateY(1000)                          // Thêm animation khi hiển thị biểu đồ
+            setDrawEntryLabels(false)
 
             // Chỉnh chú thích (legend)
             legend.apply {
-                isEnabled = true                                                // Hiển thị chú thích
+                isEnabled = false                                                // Hiển thị chú thích
                 textColor = getColor(R.color.black)
                 textSize = 15f
                 setXEntrySpace(15f)                                             // Khoảng cách giữa các legend, trục X
                 verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM       // Căn chú thích theo chiều dọc
                 horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER   // Căn chú thích theo chiều ngang
-                form = Legend.LegendForm.CIRCLE                                 // Đổi hình dạng của chú thích thành chấm tròn
+                form = Legend.LegendForm.CIRCLE // Đổi hình dạng của chú thích thành chấm tròn
             }
 
             setupValueFormatter(data, getColor(R.color.white), 14f) // Verify định dạng value
@@ -256,7 +312,6 @@ class StatisticalActivity : AppCompatActivity() {
             LineEntries.add(entry)
         }
         val lineEntries: List<Entry> =  LineEntries.toList()
-        Log.d("LINEETRIESLISTTt", lineEntries.toString())
 
         val lineDataSet = LineDataSet(lineEntries, label).apply {
             color = ContextCompat.getColor(this@StatisticalActivity, R.color.primary_color2)
@@ -287,7 +342,22 @@ class StatisticalActivity : AppCompatActivity() {
                 textColor = ContextCompat.getColor(this@StatisticalActivity, R.color.black)
                 valueFormatter = object : ValueFormatter() {
                     override fun getFormattedValue(value: Float): String {
-                        return "T${value.toInt()}"
+                        val monthsArray = context.resources.getStringArray(R.array.months_array)
+                        return when(value.toInt()){
+                            1 -> monthsArray[0]
+                            2 -> monthsArray[1]
+                            3 -> monthsArray[2]
+                            4 -> monthsArray[3]
+                            5 -> monthsArray[4]
+                            6 -> monthsArray[5]
+                            7 -> monthsArray[6]
+                            8 -> monthsArray[7]
+                            9 -> monthsArray[8]
+                            10 -> monthsArray[9]
+                            11 -> monthsArray[10]
+                            12 -> monthsArray[11]
+                            else -> monthsArray[11]
+                        }
                     }
                 }
             }
@@ -368,12 +438,11 @@ class StatisticalActivity : AppCompatActivity() {
         workHourViewModel.fetchWorkHour(uid.toString())
 
         workHourViewModel.workHourList.observe(this){newWorHourList ->
-            Log.d("ListWỏkHr", newWorHourList[0].workTime.toString())
-            val workHourMap = IncomeHandle.calculateWorkHoursByDay(newWorHourList, todayDate.year, todayDate.monthValue)
+            val workHourMap = IncomeHandle.calculateWorkHoursByMonth(newWorHourList, todayDate.year)
             drawLineChart(legend, lineChart, workHourMap)
-            workHourMap.forEach { (workDay, hrs) ->
-                Log.d("dkjbfkjds","Ngày thứ $workDay: Tổng giờ làm = $hrs")
-            }
+//            workHourMap.forEach { (workDay, hrs) ->
+//                Log.d("dkjbfkjds","Ngày thứ $workDay: Tổng giờ làm = $hrs")
+//            }
         }
     }
 

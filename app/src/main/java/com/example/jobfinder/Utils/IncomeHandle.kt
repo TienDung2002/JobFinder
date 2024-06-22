@@ -16,8 +16,6 @@ object IncomeHandle{
 
     @SuppressLint("NewApi")
     fun calculateWeeklyIncome(incomes: MutableList<IncomeModel>, year: Int, month: Int): Map<Int, Double> {
-        // Định dạng ngày
-        val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
         // Lấy ngày đầu và ngày cuối của tháng
         val firstDayOfMonth = LocalDate.of(year, month, 1)
@@ -82,19 +80,17 @@ object IncomeHandle{
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun calculateWorkHoursByDay(
+    fun calculateWorkHoursByMonth(
         list: MutableList<NUserWorkHour>,
-        year: Int,
-        month: Int
+        year: Int
     ): Map<Int, Double> {
-        val workHoursByDay = mutableMapOf<Int, Double>()
+        val workHoursByMonth = mutableMapOf<Int, Double>()
 
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formatter = DateTimeFormatter.ofPattern("MM/yyyy")
 
-        // Khởi tạo workHoursByDay với giờ làm = 0 cho tất cả các ngày trong tháng
-        val daysInMonth = LocalDate.of(year, month, 1).lengthOfMonth()
-        for (dayOfMonth in 1..daysInMonth) {
-            workHoursByDay[dayOfMonth] = 0.0
+        // Khởi tạo workHoursByMonth với giờ làm = 0 cho tất cả các tháng trong năm
+        for (month in 1..12) {
+            workHoursByMonth[month] = 0.0
         }
 
         // Xử lý dữ liệu từ danh sách list
@@ -103,23 +99,24 @@ object IncomeHandle{
             val workTime = item.workTime?.toDoubleOrNull() ?: 0.0
 
             try {
-                val date = LocalDate.parse(workDate, formatter)
+                val date = YearMonth.parse(workDate, formatter)
 
-                // Chỉ xử lý các ngày trong tháng và năm đã cho
-                if (date.year == year && date.monthValue == month) {
-                    val dayOfMonth = date.dayOfMonth
+                // Chỉ xử lý các tháng trong năm đã cho
+                if (date.year == year) {
+                    val month = date.monthValue
 
-                    // Cộng dồn số giờ làm cho ngày trong tháng
-                    workHoursByDay[dayOfMonth] = workHoursByDay[dayOfMonth]?.plus(workTime) ?: workTime
+                    // Cộng dồn số giờ làm cho tháng trong năm
+                    workHoursByMonth[month] = workHoursByMonth[month]?.plus(workTime) ?: workTime
                 }
             } catch (e: Exception) {
-                // Xử lý ngoại lệ nếu không thể phân tích chuỗi workDate thành LocalDate
+                // Xử lý ngoại lệ nếu không thể phân tích chuỗi workDate thành YearMonth
                 e.printStackTrace()
             }
         }
 
-        return workHoursByDay
+        return workHoursByMonth
     }
+
 
 
 }

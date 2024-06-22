@@ -2,12 +2,16 @@ package com.example.jobfinder.Utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.Calendar
 import java.util.Date
@@ -150,6 +154,28 @@ object GetData {
             return format.parse(dateString)
         }
         return null
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatDateMonthYearForFirebase(date:String):String{
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formatedDate = LocalDate.parse(date, formatter)
+        if (formatedDate!= null) {
+            val result = "${formatedDate.monthValue}-${formatedDate.year}"
+            return result
+        }
+        return ""
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatDateMonthYear(date:String):String{
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formatedDate = LocalDate.parse(date, formatter)
+        if (formatedDate!= null) {
+            val result = "${formatedDate.monthValue}/${formatedDate.year}"
+            return result
+        }
+        return ""
     }
 
 

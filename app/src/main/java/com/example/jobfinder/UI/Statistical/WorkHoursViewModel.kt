@@ -1,5 +1,7 @@
 package com.example.jobfinder.UI.Statistical
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.jobfinder.Datas.Model.NUserWorkHour
@@ -13,9 +15,11 @@ class WorkHoursViewModel:ViewModel() {
 
     private val database = FirebaseDatabase.getInstance().getReference("NUserWorkHour")
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun pushWorkHourToFirebase(uid:String, workTime:String, date:String){
 
-        val toFbDate = GetData.formatDateForFirebase(date)
+        val toFbDate = GetData.formatDateMonthYearForFirebase(date)
+        val formatedDate = GetData.formatDateMonthYear(date)
 
         database.child(uid).child(toFbDate).get().addOnSuccessListener {
             if(it.exists()){
@@ -28,7 +32,7 @@ class WorkHoursViewModel:ViewModel() {
                     database.child(uid).child(toFbDate).updateChildren(update)
                 }
             }else{
-                val NUserWorkHour = NUserWorkHour(date, workTime)
+                val NUserWorkHour = NUserWorkHour(formatedDate, workTime)
                 database.child(uid).child(toFbDate).setValue(NUserWorkHour)
             }
         }
