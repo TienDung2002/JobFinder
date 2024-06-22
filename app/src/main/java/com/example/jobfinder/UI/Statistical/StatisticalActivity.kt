@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.jobfinder.R
@@ -38,12 +40,11 @@ class StatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityStatisticalBinding
     private val viewModel: IncomeViewModel by viewModels()
     private val workHourViewModel: WorkHoursViewModel by viewModels()
-    private val uid =GetData.getCurrentUserId()
+    private val uid = GetData.getCurrentUserId()
     private val today = GetData.getCurrentDateTime()
 
     private var selectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
     private var selectedYear = Calendar.getInstance().get(Calendar.YEAR)
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +60,7 @@ class StatisticalActivity : AppCompatActivity() {
 
         drawChartNuser()
 
-        // Barchart
+        // Dialog Barchart
         binding.selectMonthYearBtn.setOnClickListener {
             val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear)
             monthYearPickerDialog.setListener { month, year ->
@@ -67,12 +68,12 @@ class StatisticalActivity : AppCompatActivity() {
                 selectedYear = year
                 val monthYearText = "Tháng $month /$year"
                 binding.selectMonthYearBtn.text = monthYearText
-                updateBarCharMonYea(month, year)
+                updateBarChartMonYea(month, year)
             }
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
 
-        // Line chart
+        // Dialog Line chart
         binding.NuserselectYearBtn.setOnClickListener {
             val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear, isYearOnly = true)
             monthYearPickerDialog.setListener { _, year ->
@@ -85,7 +86,7 @@ class StatisticalActivity : AppCompatActivity() {
         }
 
     }
-    private fun updateBarCharMonYea(month: Int, year: Int) {
+    private fun updateBarChartMonYea(month: Int, year: Int) {
         val incomeList = viewModel.incomeList.value
         incomeList?.let {
             val weeklyTotals = IncomeHandle.calculateWeeklyIncome(incomeList, year, month)
@@ -100,9 +101,6 @@ class StatisticalActivity : AppCompatActivity() {
 
     }
 
-    private fun updateLineChartBuser(month: Int, year: Int) {
-
-    }
 
     private fun drawBarChart(weekAndTotalIncome: Map<Int,Double>, weekAndTotalExpense: Map<Int, Double>) {
         val mutableColumnThuNhap = mutableListOf<BarEntry>()
@@ -337,11 +335,12 @@ class StatisticalActivity : AppCompatActivity() {
     private fun drawChartNuser() {
         val lineChartTitle = getString(R.string.Sta_workingHourPMonth)
         val legend = getString(R.string.Sta_workedHourPMonth_legend)
-        val lineChart = binding.BuserlineChart
+        val lineChart = binding.NuserlineChart
 
         val todayString = GetData.getDateFromString(today)
 
         val todayDate = LocalDate.parse(todayString, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        showDateDialog(todayDate)
 
         binding.NuserLineChartWrap.visibility = View.VISIBLE
         binding.BuserlineChartTitle.text = lineChartTitle
@@ -376,20 +375,15 @@ class StatisticalActivity : AppCompatActivity() {
                 Log.d("dkjbfkjds","Ngày thứ $workDay: Tổng giờ làm = $hrs")
             }
         }
-
     }
 
-//    private fun drawChartBuser() {
-//        val lineChartTitle = getString(R.string.Sta_jobs_posted)
-//        val legend = getString(R.string.Sta_jobs_posted_legend)
-//        val lineChart = binding.BuserlineChart
-//
-//        binding.BuserLineChartWrap.visibility = View.VISIBLE
-//        binding.BuserlineChartTitle.text = lineChartTitle
-//
-////        drawBarChart()
-//        drawPieChart()
-//        drawLineChart(legend, lineChart)
-//    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun showDateDialog(todayDate : LocalDate ){
+        val monthYearText = "Tháng ${todayDate.monthValue}/${todayDate.year}"
+        val yearText = "${todayDate.year}"
+
+        binding.selectMonthYearBtn.text = monthYearText
+        binding.NuserselectYearBtn.text = yearText
+    }
 
 }

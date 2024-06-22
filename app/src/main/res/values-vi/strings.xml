@@ -491,7 +491,7 @@
     <string name="Sta_mainTitle">Thống kê</string>
     <string name="Sta_IncomeExpend">Báo cáo thu chi</string>
     <string name="Sta_labelBarchart_income">Thu nhập</string>
-    <string name="Sta_labelBarchart_expenditure">Chi phí</string>
+    <string name="Sta_labelBarchart_expenditure">Chi tiêu</string>
     <string name="Sta_Monyea_select">Tháng/Năm</string>
     <string name="Sta_income_each_typeJob">Thu nhập từ loại công việc</string>
     <string name="Sta_wallet">Ví</string>

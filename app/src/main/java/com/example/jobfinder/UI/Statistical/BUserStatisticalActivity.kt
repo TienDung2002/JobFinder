@@ -37,7 +37,7 @@ import java.util.Calendar
 class BUserStatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityStatisticalBinding
     private val viewModel: IncomeViewModel by viewModels()
-    private val uid =GetData.getCurrentUserId()
+    private val uid = GetData.getCurrentUserId()
     private val today = GetData.getCurrentDateTime()
 
     private var selectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
@@ -57,7 +57,7 @@ class BUserStatisticalActivity : AppCompatActivity() {
 
         drawChartBuser()
 
-        // Barchart
+        // Dialog Barchart
         binding.selectMonthYearBtn.setOnClickListener {
             val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear)
             monthYearPickerDialog.setListener { month, year ->
@@ -70,6 +70,7 @@ class BUserStatisticalActivity : AppCompatActivity() {
             monthYearPickerDialog.show(supportFragmentManager, "MonthYearPickerDialog")
         }
 
+        // Dialog Line chart
         binding.BuserselectMonthYearBtn.setOnClickListener {
             val monthYearPickerDialog = MonthYearPickerDialog(selectedMonth, selectedYear)
             monthYearPickerDialog.setListener { month, year ->
@@ -94,9 +95,6 @@ class BUserStatisticalActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateLineChartNuser(year: Int) {
-
-    }
 
     private fun updateLineChartBuser(month: Int, year: Int) {
 
