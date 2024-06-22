@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:text="@string/job_history_title"
+            android:text="@string/job_workingReview_title"
             android:textColor="@color/primary_color1"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"

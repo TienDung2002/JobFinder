@@ -471,7 +471,7 @@
     <string name="end_job">Kết thúc việc</string>
 
     <!--    job history-->
-    <string name="job_history_title">Lịch sử</string>
+    <string name="job_workingReview_title">Đánh giá</string>
     <string name="no_review">Chưa có đánh giá</string>
     <string name="no_job_history">Lịch sử trống</string>
     <string name="not_review">Chưa đánh giá</string>

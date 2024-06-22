@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="2dp">
 
             <ImageView
                 android:id="@+id/user_ava"
@@ -108,13 +108,13 @@
                 <TextView
                     android:id="@+id/jh_desc"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text=""
                     android:textColor="@color/black"
                     android:textSize="17sp"
-                    android:maxLines="7"
-                    android:minLines="4"
-                    android:lines="3"
+                    android:maxLines="4"
+                    android:minLines="3"
+                    android:lines="4"
                     android:ellipsize="end"/>
             </LinearLayout>
 
@@ -131,7 +131,6 @@
                     android:id="@+id/jh_endDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
                     android:ellipsize="end"
                     android:text="@string/Ji_appliDeadline"
                     android:textColor="@color/grey_hint_ForgotPass"

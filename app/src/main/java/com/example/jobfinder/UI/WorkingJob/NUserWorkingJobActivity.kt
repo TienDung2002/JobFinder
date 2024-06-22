@@ -3,27 +3,26 @@ package com.example.jobfinder.UI.WorkingJob
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
-import android.view.View
-import androidx.activity.viewModels
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.jobfinder.Datas.Model.AppliedJobModel
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.CheckIn.CheckInViewModel
-import com.example.jobfinder.UI.Home.HomeFragmentBuser
-import com.example.jobfinder.UI.Home.HomeFragmentNuser
 import com.example.jobfinder.UI.JobHistory.JobHistoryFragment
-import com.example.jobfinder.UI.Notifications.NotificationsFragment
-import com.example.jobfinder.UI.SalaryTracking.SalaryTrackingActivity
-import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityNuserWorkingJobBinding
-import com.example.jobfinder.databinding.ActivityWorkingJobBinding
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class NUserWorkingJobActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNuserWorkingJobBinding
-    private var workingJob = true
+    private lateinit var viewPager: ViewPager2
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,24 +33,11 @@ class NUserWorkingJobActivity : AppCompatActivity() {
             sendResultAndFinish()
         }
 
-        FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, NUserWorkingJobFragment(binding.animationView))
+        viewPager = binding.viewPager
+        tabLayout = binding.tabLayout
 
-        binding.jobHistoryTitleHolder.setOnClickListener{
-            if (!isCurrentFragment(R.id.job_history_title)) {
-                FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, JobHistoryFragment(binding.animationView))
-                workingJob = false
-                changeTitleHolderColor(workingJob)
-            }
-        }
-
-        binding.workingJobTitleHolder.setOnClickListener {
-            if (!isCurrentFragment(R.id.working_job_title)) {
-                FragmentHelper.replaceFragment(supportFragmentManager, binding.jobManagementActivityFrameLayout, NUserWorkingJobFragment(binding.animationView))
-                workingJob = true
-                changeTitleHolderColor(workingJob)
-            }
-        }
-
+        setupViewPager()
+        removeTabMargins(tabLayout)
 
     }
 
@@ -68,33 +54,43 @@ class NUserWorkingJobActivity : AppCompatActivity() {
         sendResultAndFinish()
     }
 
-    private fun changeTitleHolderColor(workingJob:Boolean){
-        if(workingJob){
-            binding.workingJobTitleHolder.setBackgroundColor(getColor(R.color.home_bg))
-            binding.workingJobTitle.setTextColor(getColor(R.color.primary_color1))
-            binding.workingJobTitle.setTypeface(null, Typeface.BOLD)
 
-            binding.jobHistoryTitleHolder.setBackgroundColor(getColor(R.color.white))
-            binding.jobHistoryTitle.setTextColor(getColor(R.color.black))
-            binding.jobHistoryTitle.setTypeface(null, Typeface.NORMAL)
+    private fun setupViewPager() {
+        viewPagerAdapter = ViewPagerAdapter(this)
+        viewPager.adapter = viewPagerAdapter
 
-        }else{
-            binding.jobHistoryTitleHolder.setBackgroundColor(getColor(R.color.home_bg))
-            binding.jobHistoryTitle.setTextColor(getColor(R.color.primary_color1))
-            binding.jobHistoryTitle.setTypeface(null, Typeface.BOLD)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            val customView = LayoutInflater.from(this@NUserWorkingJobActivity).inflate(R.layout.cus_tab_layout_jobhistory, null)
+            val tabTextView = customView.findViewById<TextView>(R.id.tabTextView)
+            when (position) {
+                0 -> tabTextView.text = getString(R.string.working_job_short_title)
+                1 -> tabTextView.text = getString(R.string.job_workingReview_title)
+            }
+            tab.customView = customView
+        }.attach()
+    }
 
-            binding.workingJobTitleHolder.setBackgroundColor(getColor(R.color.white))
-            binding.workingJobTitle.setTextColor(getColor(R.color.black))
-            binding.workingJobTitle.setTypeface(null, Typeface.NORMAL)
+    private inner class ViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
+        override fun getItemCount(): Int = 2
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> NUserWorkingJobFragment(binding.animationView)
+                1 -> JobHistoryFragment(binding.animationView)
+                else -> throw IllegalArgumentException("Invalid position $position")
+            }
         }
     }
 
-    private fun isCurrentFragment(itemId: Int): Boolean {
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.job_management_activity_frame_layout)
-        return when (itemId) {
-            R.id.working_job_title -> currentFragment is NUserWorkingJobFragment
-            R.id.job_history_title -> currentFragment is JobHistoryFragment
-            else -> false
+    private fun removeTabMargins(tabLayout: TabLayout) {
+        val tabStrip = tabLayout.getChildAt(0) as ViewGroup
+        for (i in 0 until tabStrip.childCount) {
+            val tabView = tabStrip.getChildAt(i)
+            val layoutParams = tabView.layoutParams as ViewGroup.MarginLayoutParams
+            layoutParams.setMargins(0, 0, 0, 0)
+            tabView.layoutParams = layoutParams
+            tabView.requestLayout()
         }
     }
+
 }

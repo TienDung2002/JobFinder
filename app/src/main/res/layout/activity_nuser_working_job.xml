@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:background="@color/home_bg">
 
     <RelativeLayout
@@ -23,7 +20,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/transparent_background"
-            android:drawableStart="@drawable/ic_back24px"/>
+            android:drawableStart="@drawable/ic_back24px" />
 
         <TextView
             android:id="@+id/account"
@@ -33,62 +30,28 @@
             android:text="@string/job_management_title"
             android:textColor="@color/primary_color1"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            />
-
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/job_management_and_history_title_holder"
-        android:layout_below="@id/activity_working_job_top_nav"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/activity_working_job_top_nav"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
-        android:baselineAligned="false"
-        android:orientation="horizontal">
+        app:tabIndicator="@drawable/tab_layout_empty_indicator"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/black"
+        app:tabRippleColor="@null"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0dp"/>
 
-        <RelativeLayout
-            android:layout_weight="1"
-            android:id="@+id/working_job_title_holder"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/home_bg"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-
-            <TextView
-                android:id="@+id/working_job_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/working_job_short_title"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_centerInParent="true"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/job_history_title_holder"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-
-            <TextView
-                android:id="@+id/job_history_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/job_history_title"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:layout_centerInParent="true"/>
-        </RelativeLayout>
-
-
-    </LinearLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabLayout"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
@@ -103,12 +66,10 @@
 
     <FrameLayout
         android:id="@+id/job_management_activity_frame_layout"
-        android:layout_below="@id/job_management_and_history_title_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="25dp">
-
-
-    </FrameLayout>
-
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/tabLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"/>
 </RelativeLayout>

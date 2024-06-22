@@ -470,7 +470,7 @@
     <string name="end_job">End job</string>
 
     <!--    job history-->
-    <string name="job_history_title">Job history</string>
+    <string name="job_workingReview_title">Reviewed</string>
     <string name="no_review">No review</string>
     <string name="no_job_history">Blank history</string>
     <string name="not_review">Not review yet</string>

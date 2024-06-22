@@ -31,7 +31,9 @@
     <color name="expense_color">#EA3C53</color>
     <color name="gray">#646464</color>
 
-    <color name="filter_color">#95C4CA</color>
+    <color name="selected_tab_jobhistory">#51C0DC</color>
+    <color name="unselected_tab_jobhistory">#CDD6D8</color>
+
     <color name="bg_barChart">#5358C1</color>
 
 
