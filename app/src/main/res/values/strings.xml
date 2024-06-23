@@ -493,9 +493,11 @@
     <string name="Sta_labelBarchart_expenditure">Expenditure</string>
     <string name="Sta_Monyea_select">Month/Year</string>
     <string name="Sta_income_each_typeJob">Income for each type of job</string>
+    <string name="Sta_expense_each_typeJob">Expense for each type of job</string>
     <string name="Sta_wallet">Wallet</string>
     <string name="Sta_card">Card</string>
     <string name="Sta_workingHourPMonth">Number of worked hours per month</string>
+    <string name="Sta_amountJobPostPMonth">Number of job posted per month</string>
     <string name="Sta_year_select">Year</string>
     <string name="Sta_workedHourPMonth_legend">Worked hours</string>
     <string name="Sta_jobs_posted">Number of jobs posted</string>

@@ -494,9 +494,11 @@
     <string name="Sta_labelBarchart_expenditure">Chi tiêu</string>
     <string name="Sta_Monyea_select">Tháng/Năm</string>
     <string name="Sta_income_each_typeJob">Thu nhập từ loại công việc</string>
+    <string name="Sta_expense_each_typeJob">Chi tiêu cho loại công việc</string>
     <string name="Sta_wallet">Ví</string>
     <string name="Sta_card">Thẻ</string>
     <string name="Sta_workingHourPMonth">Số giờ làm việc mỗi tháng</string>
+    <string name="Sta_amountJobPostPMonth">Số việc đăng tuyển mỗi tháng</string>
     <string name="Sta_year_select">Năm</string>
     <string name="Sta_workedHourPMonth_legend">Số giờ làm</string>
     <string name="Sta_jobs_posted">Số công việc đăng tuyển</string>

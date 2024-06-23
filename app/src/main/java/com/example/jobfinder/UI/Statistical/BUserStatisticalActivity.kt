@@ -62,6 +62,9 @@ class BUserStatisticalActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.PiechatTitle.setText(R.string.Sta_expense_each_typeJob)
+
+
         drawChartBuser()
 
         // Dialog Barchart
@@ -100,14 +103,14 @@ class BUserStatisticalActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateLineChartBuser(year: Int) {
-//        val workHourList = workHourViewModel.workHourList.value
-//        val legend = getString(R.string.Sta_workedHourPMonth_legend)
-//        val lineChart = binding.BuserlineChart
-//        workHourList?.let {
-//            val workHourMap = IncomeHandle.calculateWorkHoursByMonth(workHourList,year)
-//            drawLineChart(legend, lineChart, workHourMap)
-////            }
-//        }
+        val workHourList = workHourViewModel.amountJobPostList.value
+        val legend = getString(R.string.Sta_workedHourPMonth_legend)
+        val lineChart = binding.NuserlineChart
+        workHourList?.let {
+            val workHourMap = IncomeHandle.calculateWorkHoursByMonth(workHourList,year)
+            drawLineChart(legend, lineChart, workHourMap)
+//            }
+        }
     }
 
 
@@ -408,8 +411,8 @@ class BUserStatisticalActivity : AppCompatActivity() {
 
     @SuppressLint("NewApi")
     private fun drawChartBuser() {
-        val lineChartTitle = getString(R.string.Sta_workingHourPMonth)
-        val legend = getString(R.string.Sta_workedHourPMonth_legend)
+        val lineChartTitle = getString(R.string.Sta_amountJobPostPMonth)
+        val legend = getString(R.string.Sta_jobs_posted)
         val lineChart = binding.NuserlineChart
 
         val todayString = GetData.getDateFromString(today)
