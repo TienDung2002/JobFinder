@@ -2,6 +2,7 @@ package com.example.jobfinder.UI.JobPosts
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -21,6 +22,10 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.util.Log
+import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import com.example.jobfinder.UI.Statistical.IncomeViewModel
+import com.example.jobfinder.UI.Statistical.WorkHoursViewModel
 import java.text.NumberFormat
 import java.util.Currency
 
@@ -28,8 +33,11 @@ import java.util.Currency
 class JobpostsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityJobpostsBinding
     private lateinit var auth: FirebaseAuth
+    private val viewModel: IncomeViewModel by viewModels()
+    private val workViewModel: WorkHoursViewModel by viewModels()
     private var jobType: String = ""
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJobpostsBinding.inflate(layoutInflater)
@@ -189,11 +197,14 @@ class JobpostsActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun postJob(title: String, workStartTime: String, workEndTime: String, startTime: String, endTime: String, empAmount: String, salary: String, address: String, jobDes: String) {
         val uid = auth.currentUser?.uid
         val jobId= FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).push().key
         val totalSalary = calculateTotalSalary()
         val date = GetData.getCurrentDateTime()
+        val today = GetData.getCurrentDateTime()
+        val currentDayString = GetData.getDateFromString(today)
 
         FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).get().addOnSuccessListener { data ->
             if(data.exists()) {
@@ -224,6 +235,12 @@ class JobpostsActivity : AppCompatActivity() {
                                                 "-$convertSalaryVnd ${getString(R.string.from_wallet)}",
                                         date
                                     )
+                                    // chi tiêu
+                                    viewModel.pushExpenseToFirebaseByDate(uid.toString(), totalSalary, currentDayString)
+                                    viewModel.pushExpenseToFirebaseJobTypeId(uid.toString(), totalSalary, GetData.getIntFromJobType(jobType))
+                                    // số việc đăng
+                                    workViewModel.pushAmountJobPost(uid.toString(), "1", currentDayString)
+
                                     FirebaseDatabase.getInstance().getReference("Notifications").child(uid.toString()).child(notiId).setValue(notificationsRowModel)
                                     Toast.makeText(binding.root.context, getString(R.string.post_job_success), Toast.LENGTH_SHORT).show()
                                     // back home page

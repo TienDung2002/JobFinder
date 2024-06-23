@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -95,9 +94,6 @@ class StatisticalActivity : AppCompatActivity() {
         incomeList?.let {
             val weeklyTotals = IncomeHandle.calculateWeeklyIncome(incomeList, year, month)
             drawBarChart(weeklyTotals, mapOf())
-//            weeklyTotals.forEach { (weekNumber, total) ->
-//                Log.d("dkjbfkjds","Tuần $weekNumber: Tổng thu nhập = $total")
-//            }
         }
     }
 
@@ -129,16 +125,18 @@ class StatisticalActivity : AppCompatActivity() {
         // Chuyển đổi MutableList thành List
         val ColumnThuNhap: List<BarEntry> = mutableColumnThuNhap.toList()
 
+        var positionXExpense = 0.5f
+
         weekAndTotalExpense.forEach { (_, total) ->
-            mutableColumnChiTieu.add(BarEntry(positionX, total.toFloat()))
-            positionX += 1.0f // Tăng vị trí x thêm 1.0 sau mỗi tuần
+            mutableColumnChiTieu.add(BarEntry(positionXExpense, total.toFloat()))
+            positionXExpense += 1.0f // Increase x position by 1.0 after each week
         }
 
         // Chuyển đổi MutableList thành List
         val ColumnChiTieu: List<BarEntry> = mutableColumnChiTieu.toList()
 
 
-        val weeks = weekAndTotalIncome.keys.map { "${getText(R.string.week)} $it" }.toTypedArray()
+        val weeks = (1..(weekAndTotalIncome.keys + weekAndTotalExpense.keys).maxOrNull()!!).map { "${getText(R.string.week)} $it" }.toTypedArray()
 
         // Không có data thì đây là giá trị mặc định
         val defaultValues = weeks.indices.map { BarEntry(it + 0.5f, 0f) }
@@ -421,16 +419,13 @@ class StatisticalActivity : AppCompatActivity() {
         showDateDialog(todayDate)
 
         binding.NuserLineChartWrap.visibility = View.VISIBLE
-        binding.BuserlineChartTitle.text = lineChartTitle
+        binding.NuserlineChartTitle.text = lineChartTitle
 
         viewModel.fetchIncome(uid.toString())
 
         viewModel.incomeList.observe(this){ newIncomeList->
             val weeklyTotals = IncomeHandle.calculateWeeklyIncome(newIncomeList, todayDate.year, todayDate.monthValue)
             drawBarChart(weeklyTotals, mapOf())
-//            weeklyTotals.forEach { (weekNumber, total) ->
-//                Log.d("dkjbfkjds","Tuần $weekNumber: Tổng thu nhập = $total")
-//            }
         }
 
         viewModel.fetchIncomeByJobTypeId(uid.toString())
@@ -438,9 +433,6 @@ class StatisticalActivity : AppCompatActivity() {
         viewModel.incomeByJobTypeList.observe(this){ newIncomeListByJobType->
             val totalIncomeByJobType = IncomeHandle.calculateIncomeByJobType(newIncomeListByJobType)
             drawPieChart(totalIncomeByJobType)
-//            totalIncomeByJobType.forEach { (jobTypeId, total) ->
-//                Log.d("dkjbfkjds","Job $jobTypeId: Tổng thu nhập = $total")
-//            }
         }
 
         workHourViewModel.fetchWorkHour(uid.toString())
@@ -448,9 +440,6 @@ class StatisticalActivity : AppCompatActivity() {
         workHourViewModel.workHourList.observe(this){newWorHourList ->
             val workHourMap = IncomeHandle.calculateWorkHoursByMonth(newWorHourList, todayDate.year)
             drawLineChart(legend, lineChart, workHourMap)
-//            workHourMap.forEach { (workDay, hrs) ->
-//                Log.d("dkjbfkjds","Ngày thứ $workDay: Tổng giờ làm = $hrs")
-//            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.jobfinder.Utils
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.jobfinder.Datas.Model.IncomeByJobTypeModel
 import com.example.jobfinder.Datas.Model.IncomeModel
@@ -86,7 +87,7 @@ object IncomeHandle{
     ): Map<Int, Double> {
         val workHoursByMonth = mutableMapOf<Int, Double>()
 
-        val formatter = DateTimeFormatter.ofPattern("MM/yyyy")
+        val formatter = DateTimeFormatter.ofPattern("M/yyyy")
 
         // Khởi tạo workHoursByMonth với giờ làm = 0 cho tất cả các tháng trong năm
         for (month in 1..12) {
@@ -97,6 +98,7 @@ object IncomeHandle{
         for (item in list) {
             val workDate = item.workDate ?: continue
             val workTime = item.workTime?.toDoubleOrNull() ?: 0.0
+            Log.d("sdsdfdsg", item.workTime.toString())
 
             try {
                 val date = YearMonth.parse(workDate, formatter)
@@ -116,7 +118,5 @@ object IncomeHandle{
 
         return workHoursByMonth
     }
-
-
 
 }
