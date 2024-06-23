@@ -15,7 +15,6 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.IncomeHandle
@@ -50,6 +49,7 @@ class StatisticalActivity : AppCompatActivity() {
     private var selectedMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
     private var selectedYear = Calendar.getInstance().get(Calendar.YEAR)
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStatisticalBinding.inflate(layoutInflater)
@@ -101,8 +101,16 @@ class StatisticalActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateLineChartNuser(year: Int) {
-
+        val workHourList = workHourViewModel.workHourList.value
+        val legend = getString(R.string.Sta_workedHourPMonth_legend)
+        val lineChart = binding.NuserlineChart
+        workHourList?.let {
+            val workHourMap = IncomeHandle.calculateWorkHoursByMonth(workHourList,year)
+            drawLineChart(legend, lineChart, workHourMap)
+//            }
+        }
     }
 
 
