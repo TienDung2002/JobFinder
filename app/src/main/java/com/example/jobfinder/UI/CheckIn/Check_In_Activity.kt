@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AppliedJobModel
+import com.example.jobfinder.UI.Home.HomeViewModel
 import com.example.jobfinder.UI.Statistical.IncomeViewModel
 import com.example.jobfinder.UI.Statistical.WorkHoursViewModel
 import com.example.jobfinder.databinding.ActivityCheckInBinding
@@ -18,11 +19,14 @@ class Check_In_Activity : AppCompatActivity() {
     private val viewModel: CheckInViewModel by viewModels()
     private val incomeViewModel: IncomeViewModel by viewModels()
     private val workHourViewModel: WorkHoursViewModel by viewModels()
+    private val homeViewModel:HomeViewModel by viewModels()
     private lateinit var adapter: CheckInAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckInBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        homeViewModel.fetchJobs()
 
         binding.animationView.visibility = View.VISIBLE
 
