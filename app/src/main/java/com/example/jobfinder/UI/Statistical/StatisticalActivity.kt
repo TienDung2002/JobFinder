@@ -269,10 +269,6 @@ class StatisticalActivity : AppCompatActivity() {
             }
             binding.legendContainer.addView(legendItemLayout)
         }
-
-
-
-
         setupAndApplyDataToPieChart(binding.pieChart, pieData)
     }
 

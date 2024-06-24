@@ -109,7 +109,6 @@ class BUserStatisticalActivity : AppCompatActivity() {
         workHourList?.let {
             val workHourMap = IncomeHandle.calculateWorkHoursByMonth(workHourList,year)
             drawLineChart(legend, lineChart, workHourMap)
-//            }
         }
     }
 
@@ -312,7 +311,6 @@ class BUserStatisticalActivity : AppCompatActivity() {
 
 
     private fun drawLineChart(label: String, chart: LineChart, workHourMap:Map<Int,Double>) {
-        // Dữ liệu mẫu cho LineChart
         val LineEntries = mutableListOf<Entry>()
 
         for ((dayOfMonth, hours) in workHourMap) {
