@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
@@ -422,9 +423,14 @@ class StatisticalActivity : AppCompatActivity() {
         binding.NuserlineChartTitle.text = lineChartTitle
 
         viewModel.fetchIncome(uid.toString())
+        defaltChart(todayDate, legend, lineChart)
 
         viewModel.incomeList.observe(this){ newIncomeList->
-            val weeklyTotals = IncomeHandle.calculateWeeklyIncome(newIncomeList, todayDate.year, todayDate.monthValue)
+            val weeklyTotals = IncomeHandle.calculateWeeklyIncome(
+                newIncomeList,
+                todayDate.year,
+                todayDate.monthValue
+            )
             drawBarChart(weeklyTotals, mapOf())
         }
 
@@ -450,6 +456,24 @@ class StatisticalActivity : AppCompatActivity() {
 
         binding.selectMonthYearBtn.text = monthYearText
         binding.NuserselectYearBtn.text = yearText
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun defaltChart(todayDate:LocalDate, legend:String, lineChart:LineChart){
+        val weeklyTotals = IncomeHandle.calculateWeeklyIncome(
+            mutableListOf(),
+            todayDate.year,
+            todayDate.monthValue
+        )
+        drawBarChart(weeklyTotals, mapOf())
+
+
+        val totalIncomeByJobType = IncomeHandle.calculateIncomeByJobType(mutableListOf())
+        drawPieChart(totalIncomeByJobType)
+
+        val workHourMap = IncomeHandle.calculateWorkHoursByMonth(mutableListOf(), todayDate.year)
+        drawLineChart(legend, lineChart, workHourMap)
+
     }
 
 }

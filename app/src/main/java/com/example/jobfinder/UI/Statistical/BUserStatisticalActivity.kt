@@ -423,6 +423,8 @@ class BUserStatisticalActivity : AppCompatActivity() {
         binding.NuserLineChartWrap.visibility = View.VISIBLE
         binding.NuserlineChartTitle.text = lineChartTitle
 
+        defaltChart(todayDate, legend, lineChart)
+
         viewModel.fetchExpense(uid.toString())
 
         viewModel.expenseList.observe(this){ newIncomeList->
@@ -455,6 +457,24 @@ class BUserStatisticalActivity : AppCompatActivity() {
 
         binding.selectMonthYearBtn.text = monthYearText
         binding.NuserselectYearBtn.text = yearText
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun defaltChart(todayDate:LocalDate, legend:String, lineChart:LineChart){
+        val weeklyTotals = IncomeHandle.calculateWeeklyIncome(
+            mutableListOf(),
+            todayDate.year,
+            todayDate.monthValue
+        )
+        drawBarChart(weeklyTotals, mapOf())
+
+
+        val totalIncomeByJobType = IncomeHandle.calculateIncomeByJobType(mutableListOf())
+        drawPieChart(totalIncomeByJobType)
+
+        val workHourMap = IncomeHandle.calculateWorkHoursByMonth(mutableListOf(), todayDate.year)
+        drawLineChart(legend, lineChart, workHourMap)
+
     }
 
 }
