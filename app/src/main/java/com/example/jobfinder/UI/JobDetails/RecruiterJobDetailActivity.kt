@@ -3,10 +3,12 @@ package com.example.jobfinder.UI.JobDetails
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
@@ -17,6 +19,8 @@ import com.example.jobfinder.UI.AppliedJobs.AppliedJobsViewModel
 import com.example.jobfinder.UI.CheckIn.CheckInViewModel
 import com.example.jobfinder.UI.JobEmpList.JobEmpListViewModel
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
+import com.example.jobfinder.UI.Statistical.IncomeViewModel
+import com.example.jobfinder.UI.Statistical.WorkHoursViewModel
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
@@ -32,6 +36,8 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
     private val appliedJobViewModel: AppliedJobsViewModel by viewModels()
     private val empInJobViewModel: JobEmpListViewModel by viewModels()
     private val approvedJobViewModel: CheckInViewModel by viewModels()
+    private val incomeViewModel: IncomeViewModel by viewModels()
+    private val workHourViewModel: WorkHoursViewModel by viewModels()
 
     @Deprecated("Deprecated in Java")
     @SuppressLint("MissingSuperCall")
@@ -106,6 +112,7 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
             FirebaseDatabase.getInstance().getReference("WalletAmount")
                 .child(job.BUserId.toString()).child("amount")
         walletAmountRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val walletAmountString = snapshot.getValue(String::class.java)
@@ -113,6 +120,17 @@ class RecruiterJobDetailActivity : AppCompatActivity() {
                     val newWalletAmount = walletAmount + job.totalSalary.toString().toFloat()
                     //refund to wallet
                     walletAmountRef.setValue(newWalletAmount.toString())
+
+                    //khi xóa việc trạng thái đang tuyển thì phải trừ đi chi tiêu, trừ đi số việc đã đăng
+                    val refundExpense = -job.totalSalary?.toDouble()!!
+                    val jobTypeId = GetData.getIntFromJobType(job.jobType.toString())
+                    val expenseDate = GetData.getDateFromString(job.postDate.toString())
+
+                    incomeViewModel.pushExpenseToFirebaseByDate(job.BUserId.toString(), refundExpense.toString(), expenseDate)
+
+                    incomeViewModel.pushExpenseToFirebaseJobTypeId(job.BUserId.toString(), refundExpense.toString(), jobTypeId)
+
+                    workHourViewModel.pushAmountJobPost(job.BUserId.toString(), "-1", expenseDate)
 
                     // notification
                     val date = GetData.getCurrentDateTime()

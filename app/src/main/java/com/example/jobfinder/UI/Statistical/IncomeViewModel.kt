@@ -128,10 +128,14 @@ class IncomeViewModel:ViewModel() {
                 val expenseModel = it.getValue(IncomeByJobTypeModel::class.java)
                 if(expenseModel!= null) {
                     val newExpense = expenseModel.incomeAmount.toString().toDouble() + expense.toDouble()
-                    val update = hashMapOf<String, Any>(
-                        "incomeAmount" to newExpense.toString()
-                    )
-                    bDatabaseByJobId.child(uid).child(jobTypeId.toString()).updateChildren(update)
+                    if(newExpense == 0.0){
+                        bDatabaseByJobId.child(uid).child(jobTypeId.toString()).removeValue()
+                    }else {
+                        val update = hashMapOf<String, Any>(
+                            "incomeAmount" to newExpense.toString())
+                        bDatabaseByJobId.child(uid).child(jobTypeId.toString())
+                            .updateChildren(update)
+                    }
                 }
             }else{
                 val incomeModel = IncomeByJobTypeModel(jobTypeId.toString(), expense)
