@@ -524,7 +524,11 @@
     <string name="week">Week</string>
 
     <!--    Admin-->
-    <string name="welcome_admin">Welcome Admin</string>
+    <string name="admin_welcome">Welcome Admin</string>
+    <string name="grid_admin_accMana">Users Account</string>
+    <string name="grid_admin_Finance">Finance</string>
+    <string name="grid_admin_RepRes">Reports response</string>
+    <string name="grid_admin_profile">Admin account</string>
 
 
 </resources>

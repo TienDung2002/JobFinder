@@ -524,6 +524,9 @@
     <string name="week">Tuần</string>
 
     <!--    Admin-->
-    <string name="welcome_admin">Chào mừng Admin</string>
-
+    <string name="admin_welcome">Chào mừng Admin</string>
+    <string name="grid_admin_accMana">Tài khoản người dùng</string>
+    <string name="grid_admin_Finance">Tài chính</string>
+    <string name="grid_admin_RepRes">Phản hồi báo cáo</string>
+    <string name="grid_admin_profile">Tài khoản Admin</string>
 </resources>

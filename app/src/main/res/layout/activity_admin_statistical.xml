@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.Admin.Statistical.AdminStatisticalActivity">
+
+    <Button
+        android:id="@+id/backbtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/transparent_background"
+        android:drawableStart="@drawable/ic_back24px" />
+
+</RelativeLayout>

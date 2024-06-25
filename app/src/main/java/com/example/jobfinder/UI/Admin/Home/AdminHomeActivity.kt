@@ -1,4 +1,4 @@
-package com.example.jobfinder.UI.Admin
+package com.example.jobfinder.UI.Admin.Home
 
 import android.app.Activity
 import android.content.Intent
@@ -8,8 +8,12 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Admin.Finance.AdminFinanceActivity
+import com.example.jobfinder.UI.Admin.ResReports.AdminResponseReportsActivity
+import com.example.jobfinder.UI.Admin.Statistical.AdminStatisticalActivity
+import com.example.jobfinder.UI.Admin.UserManagement.AdminUserManagActivity
+import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.databinding.ActivityAdminHomeBinding
-import com.google.android.material.textfield.TextInputEditText
 
 class AdminHomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminHomeBinding
@@ -25,10 +29,37 @@ class AdminHomeActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, resultIntent)
 
 
+        // Quản lý tài khoản người dùng
+        binding.accManagerBtn.setOnClickListener {
+            startActivity(Intent(this, AdminUserManagActivity::class.java))
+        }
 
 
+        // Add tiền cho người dùng
+        binding.financeBtn.setOnClickListener {
+            startActivity(Intent(this, AdminFinanceActivity::class.java))
+        }
+
+
+        // Thống kê
+        binding.statisticalBtn.setOnClickListener {
+            startActivity(Intent(this, AdminStatisticalActivity::class.java))
+        }
+
+
+        // Phản hồi báo cáo
+        binding.ResponseReportsBtn.setOnClickListener {
+            startActivity(Intent(this, AdminResponseReportsActivity::class.java))
+        }
+
+
+        // Tài khoản admin
+        binding.AdminPro5Btn.setOnClickListener {
+            startActivity(Intent(this, UserDetailActivity::class.java))
+        }
 
     }
+
 
 
     override fun onResume() {

@@ -1,27 +1,19 @@
-package com.example.jobfinder.UI.Admin
+package com.example.jobfinder.UI.Admin.Login
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Admin.Home.AdminHomeActivity
 import com.example.jobfinder.UI.ForgotPassword.ForgotPassActivity
-import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
-import com.example.jobfinder.databinding.ActivityAdminHomeBinding
 import com.example.jobfinder.databinding.ActivityLoginAdminBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.database.FirebaseDatabase
 
 class AdminLoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginAdminBinding
@@ -36,6 +28,8 @@ class AdminLoginActivity : AppCompatActivity() {
         //firebase
         auth = FirebaseAuth.getInstance()
 
+        // Lấy usertype từ select role gửi tới
+        val userType = intent.getStringExtra("user_type")
 
         // Quên mật khẩu
         binding.moveToForgotBtn.setOnClickListener {
@@ -83,22 +77,21 @@ class AdminLoginActivity : AppCompatActivity() {
 //                checkToAutoFocus(isEmailValid, isPassValid)
 //            }
 
-                val test = true
-                if (test) {
-                    val intent = Intent(this, AdminHomeActivity::class.java)
-                    binding.animationView.visibility = View.GONE
-                    startActivityForResult(intent, LOGIN_REQUEST_CODE)
-                }
+
+                checkRole("Admin", userType.toString())
+                binding.animationView.visibility = View.GONE
+
             }
 
         }
     }
 
+
     private fun checkRole(role: String, userType: String){
         if (role == userType){
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, AdminHomeActivity::class.java))
             finish()
         }else {
             Toast.makeText(applicationContext, getString(R.string.wrong_role), Toast.LENGTH_SHORT).show()

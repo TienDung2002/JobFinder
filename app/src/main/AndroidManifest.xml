@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -15,13 +15,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/FullScreenTheme"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
-            android:name=".UI.Admin.AdminLoginActivity"
-            android:exported="false" />
+            android:name=".UI.Admin.ResReports.AdminResponseReportsActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
-            android:name=".UI.Admin.AdminHomeActivity"
-            android:exported="false" />
+            android:name=".UI.Admin.UserManagement.AdminUserManagActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.Admin.Finance.AdminFinanceActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.Admin.Statistical.AdminStatisticalActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.Admin.Login.AdminLoginActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
+        <activity
+            android:name=".UI.Admin.Home.AdminHomeActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.Statistical.StatisticalActivity"
             android:exported="false"
@@ -32,7 +50,8 @@
             android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.JobHistory.BUserJobHistoryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/FullScreenTheme"/>
         <activity
             android:name=".UI.SalaryTracking.SalaryTrackingActivity"
             android:exported="false"
@@ -108,7 +127,7 @@
         <activity
             android:name=".UI.SplashScreen.Splashscreen"
             android:exported="true"
-            android:theme="@style/FullScreenTheme" >
+            android:theme="@style/FullScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

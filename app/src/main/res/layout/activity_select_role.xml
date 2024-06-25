@@ -13,6 +13,7 @@
         android:padding="20dp">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/loginAdminCardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardElevation="0dp"
@@ -38,6 +39,7 @@
             android:id="@+id/contentLayoutTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/loginAdminCardView"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -49,7 +51,7 @@
                     android:id="@+id/icon_bg"
                     android:layout_width="260dp"
                     android:layout_height="260dp"
-                    android:layout_marginTop="40sp"
+                    android:layout_marginTop="20sp"
                     app:layout_constraintVertical_bias="0.2"
                     android:src="@drawable/app_icon_bg" />
 

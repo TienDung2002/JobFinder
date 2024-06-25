@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/topImageView"
-            android:layout_width="60dp"
+            android:layout_width="55dp"
             android:layout_height="50dp"
             android:src="@drawable/logo_ic_only"
             android:layout_alignParentEnd="true"
@@ -81,8 +81,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:src="@drawable/ic_grid_attendance64px" />
 
                 <TextView
@@ -119,8 +119,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:src="@drawable/ic_grid_wallet96px" />
 
                 <TextView
@@ -157,8 +157,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:src="@drawable/ic_grid_jobapplied96px" />
 
                 <TextView
@@ -195,8 +195,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:src="@drawable/ic_grid_jobsearch100px" />
 
                 <TextView
@@ -233,8 +233,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:src="@drawable/ic_grid_statistical96px" />
 
                 <TextView
@@ -271,8 +271,8 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:src="@drawable/ic_grid_reports100px" />
 
                 <TextView
