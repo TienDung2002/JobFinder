@@ -147,8 +147,9 @@ class JobpostsActivity : AppCompatActivity() {
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val total = calculateTotalSalary()
-                displayTotalSalary(total)
+                val expense = calculateTotalSalary()
+                val lastTotal = expense.toFloat() + (expense.toFloat() * 0.05)
+                displayTotalSalary(expense, lastTotal.toString())
             }
             override fun afterTextChanged(s: Editable?) {}
         }
@@ -190,10 +191,11 @@ class JobpostsActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayTotalSalary(totalSalary: String) {
+    private fun displayTotalSalary(expense: String, lastTotal: String) {
         val format = NumberFormat.getCurrencyInstance()
         format.currency = Currency.getInstance("VND")
-        binding.totalTemp.text = format.format(totalSalary.toFloat())
+        binding.expense.text = format.format(expense.toFloat())
+        binding.lastTotal.text = format.format(lastTotal.toFloat())
     }
 
 
