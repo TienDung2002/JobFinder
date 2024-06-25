@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Admin.Home.AdminHomeActivity
 import com.example.jobfinder.UI.JobsManagement.JobsManagementActivity
 import com.example.jobfinder.UI.Notifications.NotificationsFragment
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
@@ -151,9 +152,18 @@ class HomeActivity : AppCompatActivity() {
             "BUser" -> {
                 FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentBuser())
                 binding.animationView.visibility = View.GONE
+                binding.bottomNavView.visibility= View.VISIBLE
             }
             "NUser" -> {
                 FragmentHelper.replaceFragment(supportFragmentManager, binding.HomeFrameLayout, HomeFragmentNuser())
+                binding.animationView.visibility = View.GONE
+                binding.bottomNavView.visibility= View.VISIBLE
+            }
+            "Admin" ->{
+                val resultIntent = Intent()
+                setResult(Activity.RESULT_OK, resultIntent)
+                startActivity(Intent(this, AdminHomeActivity::class.java))
+                finish()
                 binding.animationView.visibility = View.GONE
             }
             else -> {

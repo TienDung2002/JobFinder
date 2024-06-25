@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.jobfinder.UI.Admin.Login.AdminLoginActivity
 import com.example.jobfinder.UI.Login.LoginActivity
 import com.example.jobfinder.databinding.ActivitySelectRoleBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -37,14 +36,6 @@ class SelectRoleActivity : AppCompatActivity() {
             intent.putExtra("user_type", "NUser")
             startActivityForResult(intent, LOGIN_REQUEST_CODE)
         }
-
-        // Admin
-        binding.loginAdminBtn.setOnClickListener {
-            val intent = Intent(this, AdminLoginActivity::class.java)
-            intent.putExtra("user_type", "Admin")
-            startActivityForResult(intent, LOGIN_REQUEST_CODE)
-        }
-
 
     }
 

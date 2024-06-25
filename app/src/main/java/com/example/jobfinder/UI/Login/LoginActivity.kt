@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Admin.Home.AdminHomeActivity
 import com.example.jobfinder.UI.ForgotPassword.ForgotPassActivity
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.UI.Register.RecruiterRegisterActivity
@@ -147,12 +148,18 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun checkRole(role: String, userType: String){
-        if (role == userType){
+        if (role == userType && role != "Admin"){
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
-        }else {
+        }else if(role == "Admin"){
+            val resultIntent = Intent()
+            setResult(Activity.RESULT_OK, resultIntent)
+            startActivity(Intent(this, AdminHomeActivity::class.java))
+            finish()
+        }
+        else {
             Toast.makeText(applicationContext, getString(R.string.wrong_role), Toast.LENGTH_SHORT).show()
         }
     }
