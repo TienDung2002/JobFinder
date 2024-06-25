@@ -15,22 +15,31 @@
             android:id="@+id/fragment_FrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/returnLoginBtn">
+            android:layout_above="@id/returnLoginBtnWrap">
         </FrameLayout>
 
-        <Button
-            android:id="@+id/returnLoginBtn"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/returnLoginBtnWrap"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="16dp"
             android:layout_marginTop="10dp"
-            android:alpha="0.9"
-            android:background="@drawable/splash_btn2"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:text="@string/FP_backToLoginBtn"
-            android:textColor="@color/black"
-            android:textSize="18sp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/returnLoginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.9"
+                android:background="@drawable/splash_btn2"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/FP_backToLoginBtn"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </androidx.cardview.widget.CardView>
+
 
 
     </RelativeLayout>

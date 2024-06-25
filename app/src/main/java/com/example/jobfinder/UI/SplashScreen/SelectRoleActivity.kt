@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.jobfinder.UI.Admin.AdminLoginActivity
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.UI.Login.LoginActivity
 import com.example.jobfinder.databinding.ActivitySelectRoleBinding
@@ -35,7 +36,13 @@ class SelectRoleActivity : AppCompatActivity() {
         binding.loginasSeeker.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("user_type", "NUser")
-            startActivityForResult(intent, LOGIN_REQUEST_CODE) // Mở LoginActivity với mã request
+            startActivityForResult(intent, LOGIN_REQUEST_CODE)
+        }
+
+        // Admin
+        binding.loginAdminBtn.setOnClickListener {
+            val intent = Intent(this, AdminLoginActivity::class.java)
+            startActivityForResult(intent, LOGIN_REQUEST_CODE)
         }
 
 

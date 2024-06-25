@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jobs Finder</string>
+    <string name="app_name1">Jobs</string>
+    <string name="app_name2">Finder</string>
 
     <!--    Splash screen-->
     <string name="splash_title1">Tìm kiếm</string>
@@ -9,6 +11,8 @@
     <string name="splash_subtitle">Đăng nhập với tư cách:</string>
     <string name="splash_recruiter">Nhà tuyển dụng</string>
     <string name="splash_jobseeker">Tìm công việc</string>
+    <string name="splash_admin">Đăng nhập Admin</string>
+
 
     <!--    Login-->
     <string name="login_btn">Đăng nhập</string>
@@ -519,5 +523,7 @@
     </string-array>
     <string name="week">Tuần</string>
 
+    <!--    Admin-->
+    <string name="welcome_admin">Chào mừng Admin</string>
 
 </resources>

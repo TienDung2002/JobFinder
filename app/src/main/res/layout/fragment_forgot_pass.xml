@@ -100,20 +100,29 @@
             app:lottie_rawRes="@raw/loading"
             android:layout_marginTop="50dp"/>
 
-        <Button
-            android:id="@+id/btnReset"
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginBottom="5dp"
-            android:alpha="0.9"
-            android:background="@drawable/splash_btn1"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:text="@string/FP_resetPassBtn"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:gravity="center"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="16dp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp">
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.9"
+                android:background="@drawable/splash_btn1"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/FP_resetPassBtn"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:gravity="center" />
+        </androidx.cardview.widget.CardView>
+
     </RelativeLayout>
 
 </FrameLayout>

@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Jobs Finder</string>
+    <string name="app_name1">Jobs</string>
+    <string name="app_name2">Finder</string>
+
 
     <!--    splash screen-->
     <string name="splash_title1">Find your</string>
@@ -8,6 +11,8 @@
     <string name="splash_subtitle">Login as:</string>
     <string name="splash_recruiter">Recruiter</string>
     <string name="splash_jobseeker">Job seeker</string>
+    <string name="splash_admin">Login as Admin</string>
+
 
     <!--    Login-->
     <string name="login_btn">Login</string>
@@ -517,6 +522,9 @@
         <item>Dec</item>
     </string-array>
     <string name="week">Week</string>
+
+    <!--    Admin-->
+    <string name="welcome_admin">Welcome Admin</string>
 
 
 </resources>

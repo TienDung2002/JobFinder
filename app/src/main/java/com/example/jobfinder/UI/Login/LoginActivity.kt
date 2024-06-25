@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     private var isPassVisible = PasswordToggleState(false)
     private lateinit var auth: FirebaseAuth
-    private val LOGIN_REQUEST_CODE = 100 // Đặt một mã request
+    private val LOGIN_REQUEST_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
