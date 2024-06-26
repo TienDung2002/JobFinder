@@ -33,4 +33,19 @@ class AdminIncomeViewModel: ViewModel() {
             }
         }
     }
+
+    fun fetchIncome(){
+        database.get().addOnSuccessListener {
+            if(it.exists()){
+                val incomeList: MutableList<IncomeModel> = mutableListOf()
+                it.children.forEach { incomeSnapshot->
+                    val incomeModel = incomeSnapshot.getValue(IncomeModel::class.java)
+                    incomeModel?.let{
+                        incomeList.add(incomeModel)
+                    }
+                }
+                _incomeList.value = incomeList
+            }
+        }
+    }
 }

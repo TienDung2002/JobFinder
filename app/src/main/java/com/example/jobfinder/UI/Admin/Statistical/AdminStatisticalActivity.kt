@@ -16,6 +16,7 @@ import com.example.jobfinder.databinding.ActivityAdminUserManagBinding
 class AdminStatisticalActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminStatisticalBinding
     private val userCountViewModel: AdminUserCountViewModel by viewModels()
+    private val incomeVM:AdminIncomeViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +52,13 @@ class AdminStatisticalActivity : AppCompatActivity() {
             }
         }
 
+        incomeVM.fetchIncome()
+
+        incomeVM.incomeList.observe(this){ incomeList->
+            for(income in incomeList){
+                Log.d("Incomeeee", "${income.incomeAmount} ${income.incomeDate}")
+            }
+        }
 
     }
 }
