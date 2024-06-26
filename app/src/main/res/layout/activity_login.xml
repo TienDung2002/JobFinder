@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintVertical_bias="0.2"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="20dp">
 
             <ImageView
                 android:id="@+id/image"
@@ -75,7 +75,7 @@
                     android:maxLines="1"
                     android:paddingStart="50dp"
                     android:paddingEnd="20dp"
-                    android:paddingTop="16dp"
+                    android:paddingTop="10dp"
                     android:paddingBottom="8dp"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -91,7 +91,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/passwordTextInputLayout"
@@ -119,6 +120,17 @@
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <ImageView
+                    android:id="@+id/btnFingerprintLogin"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_fingerprint_login"
+                    android:layout_gravity="center_vertical"/>
+
             </LinearLayout>
             <!-- gạch dưới -->
             <View
@@ -126,7 +138,8 @@
                 android:layout_height="1dp"
                 android:background="@color/black"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
+                android:paddingRight="5dp"
+                android:layout_marginEnd="80dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -190,13 +203,13 @@
                     android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/btnFingerprintLogin"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:scaleType="centerCrop"
-                android:layout_marginStart="15dp"
-                android:src="@drawable/ic_fingerprint_login"/>
+<!--            <ImageView-->
+<!--                android:id="@+id/btnFingerprintLogin"-->
+<!--                android:layout_width="55dp"-->
+<!--                android:layout_height="55dp"-->
+<!--                android:scaleType="centerCrop"-->
+<!--                android:layout_marginStart="15dp"-->
+<!--                android:src="@drawable/ic_fingerprint_login"/>-->
 
         </LinearLayout>
 
