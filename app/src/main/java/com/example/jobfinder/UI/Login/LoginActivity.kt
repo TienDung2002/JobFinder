@@ -225,34 +225,20 @@ class LoginActivity : AppCompatActivity() {
                             if (uid != null) {
                                 FirebaseDatabase.getInstance().getReference("UserRole").child(uid)
                                     .get()
-                                    .addOnSuccessListener { snapshot ->
-                                        val data: idAndRole? =
-                                            snapshot.getValue(idAndRole::class.java)
+                                    .addOnSuccessListener { snapshot -> val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
                                         if (data != null) {
                                             checkRole(data.role.toString(), userType)
                                         } else {
-                                            Toast.makeText(
-                                                applicationContext,
-                                                getString(R.string.login_failed),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                         }
                                         binding.animationView.visibility = View.GONE
                                     }
                                     .addOnFailureListener { e ->
-                                        Toast.makeText(
-                                            applicationContext,
-                                            getString(R.string.login_failed),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                         binding.animationView.visibility = View.GONE
                                     }
                             } else {
-                                Toast.makeText(
-                                    applicationContext,
-                                    getString(R.string.login_failed),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                 binding.animationView.visibility = View.GONE
                             }
                         }
