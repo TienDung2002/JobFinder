@@ -1,14 +1,11 @@
 package com.example.jobfinder.UI.Admin.ResReports
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
+import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.Datas.Model.SupportUser
@@ -16,7 +13,7 @@ import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.FirebaseDatabase
 
-class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, private val noData: ConstraintLayout) :
+class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, private val noData: RelativeLayout) :
     RecyclerView.Adapter<AdminResReportAdapter.ReportViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -37,7 +34,6 @@ class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, pr
 
         // Bind data to views
         holder.reportTitleTextView.text = report.status
-        holder.reportTypeTextView.text = report.supportName
         if(report.description == ""){
             holder.reportDesTextView.text = holder.itemView.context.getString(R.string.no_job_des2)
         }else {
@@ -74,7 +70,6 @@ class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, pr
 
     inner class ReportViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val reportTitleTextView: TextView = itemView.findViewById(R.id.report_res_report_title)
-        val reportTypeTextView: TextView = itemView.findViewById(R.id.report_res_report_type)
         val reportDesTextView: TextView = itemView.findViewById(R.id.report_des)
         val reportCloseTextView: TextView = itemView.findViewById(R.id.rr_delete_txt)
     }

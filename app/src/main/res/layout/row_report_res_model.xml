@@ -37,31 +37,10 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/topSection2"
-            android:layout_below="@id/topSection"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/report_res_report_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:layout_centerVertical="true"
-                android:textSize="17sp"
-                android:textStyle="italic"
-                android:text="@string/post_job_title"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/middleSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/topSection2"
+            android:layout_below="@+id/topSection"
             android:layout_marginTop="10dp">
 
             <LinearLayout
