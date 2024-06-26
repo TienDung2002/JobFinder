@@ -531,4 +531,5 @@
     <string name="grid_admin_Finance">Tài chính</string>
     <string name="grid_admin_RepRes">Phản hồi báo cáo</string>
     <string name="grid_admin_profile">Tài khoản Admin</string>
+    <string name="no_report">Chưa có báo cáo</string>
 </resources>
