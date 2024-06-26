@@ -211,25 +211,25 @@ class LoginActivity : AppCompatActivity() {
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, errString, Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.fingerAuth_success), Toast.LENGTH_SHORT).show()
                     navigateToHome()
                 }
 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.fingerAuth_failed), Toast.LENGTH_SHORT).show()
                 }
             })
 
         promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Biometric login for my app")
-            .setSubtitle("Log in using your biometric credential")
-            .setNegativeButtonText("Use account password")
+            .setTitle(getString(R.string.app_name))
+            .setSubtitle(getString(R.string.fingerAuth_title))
+            .setNegativeButtonText(getString(R.string.fingerAuth_usePassword))
             .build()
     }
 

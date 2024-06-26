@@ -32,6 +32,11 @@
     <string name="error_wrong_passwordOrUsername">Email không tồn tại hoặc sai mật khẩu</string>
     <string name="wrong_role">Đăng nhập sai vai trò!</string>
     <string name="duplicate_phone">Trùng số điện thoại</string>
+    <string name="fingerAuth_error">Lỗi xác thực</string>
+    <string name="fingerAuth_success">Xác thực thành công</string>
+    <string name="fingerAuth_failed">Xác thực thất bại</string>
+    <string name="fingerAuth_title">Đăng nhập bằng xác thực sinh trắc học</string>
+    <string name="fingerAuth_usePassword">Sử dụng mật khẩu</string>
 
 
     <!--    Register-->

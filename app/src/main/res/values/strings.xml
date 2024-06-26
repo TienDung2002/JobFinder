@@ -32,6 +32,12 @@
     <string name="error_wrong_passwordOrUsername">Email does not exist or password is incorrect</string>
     <string name="wrong_role">Login with wrong role!</string>
     <string name="duplicate_phone">Duplicate phone number</string>
+    <string name="fingerAuth_error">Authorize error</string>
+    <string name="fingerAuth_success">Authorize success</string>
+    <string name="fingerAuth_failed">Authorize failed</string>
+    <string name="fingerAuth_title">Log in with biometric authentication</string>
+    <string name="fingerAuth_usePassword">Use account password</string>
+
 
     <!--    register-->
     <string name="register_btn">Register</string>
