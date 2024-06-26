@@ -60,8 +60,8 @@ class SupportActivity : AppCompatActivity() {
 
             if (check != ""){
                 val supportId = FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).push().key
-                val reportForm =  SupportUser(supportId, check, statusType, note)
-                FirebaseDatabase.getInstance().getReference("Support").child(userId.toString()).child(supportId.toString()).setValue(reportForm)
+                val reportForm =  SupportUser(supportId, check, statusType, note, userId)
+                FirebaseDatabase.getInstance().getReference("AdminRef").child("Report").child(supportId.toString()).setValue(reportForm)
                 Toast.makeText(this, getString(R.string.request_sent), Toast.LENGTH_SHORT).show()
                 binding.note.setText("")
 

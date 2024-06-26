@@ -532,6 +532,7 @@
     <string name="grid_admin_Finance">Finance</string>
     <string name="grid_admin_RepRes">Reports response</string>
     <string name="grid_admin_profile">Admin account</string>
+    <string name="no_report">No report yet</string>
 
 
 </resources>

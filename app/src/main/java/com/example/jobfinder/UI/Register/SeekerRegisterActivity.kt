@@ -5,12 +5,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.jobfinder.Datas.Model.NUserInfo
 import com.example.jobfinder.Datas.Model.UserBasicInfoModel
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.Datas.Model.walletAmountModel
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Admin.Statistical.AdminUserCountViewModel
 import com.example.jobfinder.UI.Home.HomeActivity
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivitySeekerRegisterBinding
@@ -21,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase
 class SeekerRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivitySeekerRegisterBinding
     private lateinit var auth: FirebaseAuth
+    private val viewModel: AdminUserCountViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +60,8 @@ class SeekerRegisterActivity : AppCompatActivity() {
                     auth.createUserWithEmailAndPassword(emailInput,passInput).addOnCompleteListener(this) { task->
                         if (task.isSuccessful) {
                             Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
+                            val today = GetData.getCurrentDateTime()
+                            val todayStr = GetData.getDateFromString(today)
                             val uid = auth.currentUser?.uid
                             val userBasicInfo = UserBasicInfoModel(uid, nameInput, emailInput, phoneInput,addressInput)
                             val nUserInfo = NUserInfo("","")
@@ -68,6 +74,7 @@ class SeekerRegisterActivity : AppCompatActivity() {
                             FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).setValue(userRole)
                             FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(uid.toString()).setValue(userBasicInfo)
                             FirebaseDatabase.getInstance().getReference("NUserInfo").child(uid.toString()).setValue(nUserInfo)
+                            viewModel.pushRegisteredUserToFirebaseByDate("NUser", "1", todayStr)
                             startActivity(Intent(this, HomeActivity::class.java))
                             Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
                             finish()
