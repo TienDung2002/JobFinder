@@ -539,4 +539,9 @@
     <string name="technic_title">Kỹ thuật</string>
     <string name="feedback_title">Phản hồi</string>
     <string name="report_title">Báo cáo</string>
+    <string name="buser">Nhà tuyển dụng</string>
+    <string name="nuser">Người tìm việc</string>
+    <string name="registered_amount">Báo cáo số lượng người đăng ký sử dụng ứng dụng</string>
+    <string name="admin_income">Lợi nhuận của ứng dụng theo năm</string>
+    <string name="unit">VNĐ</string>
 </resources>

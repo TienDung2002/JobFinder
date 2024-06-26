@@ -539,5 +539,10 @@
     <string name="technic_title">Technical</string>
     <string name="feedback_title">Feedback</string>
     <string name="report_title">Report</string>
+    <string name="buser">Recruiter</string>
+    <string name="nuser">Seeker</string>
+    <string name="registered_amount">Report the number of registered users of the application</string>
+    <string name="admin_income">Income from app per year</string>
+    <string name="unit">VND</string>
 
 </resources>
