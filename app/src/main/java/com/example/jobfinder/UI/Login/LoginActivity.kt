@@ -2,11 +2,16 @@ package com.example.jobfinder.UI.Login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Admin.Home.AdminHomeActivity
@@ -22,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.database.FirebaseDatabase
+import java.util.concurrent.Executor
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
@@ -29,36 +35,50 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val LOGIN_REQUEST_CODE = 100
 
+    private lateinit var executor: Executor
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+
+
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //firebase
+        // Firebase Authentication
         auth = FirebaseAuth.getInstance()
 
+        // Khởi tạo SharedPreferences và Editor
+        sharedPreferences = getSharedPreferences("email_preferences", MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+
+        // Lấy email cuối cùng đăng nhập
+        val savedEmail = sharedPreferences.getString("last_login_email", "")
+        binding.userEmailLogin.setText(savedEmail)
+
+        // Biometric Authentication
+        setupBiometricPrompt()
 
         // gọi hàm đổi icon và ẩn hiện password
         VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
 
-
         // Lấy role từ bên select role
         val userType = intent.getStringExtra("user_type")
 
-
         // Mở register
-        binding.openRegisterActi.setOnClickListener{
+        binding.openRegisterActi.setOnClickListener {
             if (PreventDoubleClick.checkClick()) {
-                if (userType == "NUser") {
-                    val intent = Intent(this, SeekerRegisterActivity::class.java)
-                    startActivity(intent)
-                } else if (userType == "BUser") {
-                    val intent = Intent(this, RecruiterRegisterActivity::class.java)
-                    startActivity(intent)
+                val intent = if (userType == "NUser") {
+                    Intent(this, SeekerRegisterActivity::class.java)
+                } else {
+                    Intent(this, RecruiterRegisterActivity::class.java)
                 }
+                startActivity(intent)
             }
         }
-
 
         // Hiển thị tiêu đề dựa vào role đã chọn
         if (userType == "NUser") {
@@ -68,7 +88,6 @@ class LoginActivity : AppCompatActivity() {
             binding.titleLogin1.setText(R.string.welcome_rec1)
             binding.titleLogin2.setText(R.string.welcome_rec2)
         }
-
 
         // Xác nhận để Login
         binding.btnLogin.setOnClickListener {
@@ -91,45 +110,60 @@ class LoginActivity : AppCompatActivity() {
             }
 
             if (isEmailValid && isPassValid) {
-                auth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener {
-                    if(it.isSuccessful){
+                auth.signInWithEmailAndPassword(emailInput, passInput).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
                         val uid = auth.currentUser?.uid
-                        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get().addOnSuccessListener {
-                            val data: idAndRole? = it.getValue(idAndRole::class.java)
-                            if (data != null) {
-                                checkRole(data.role.toString(), userType.toString())
-                            }
-                            // ẩn loading khi đăng nhập hoàn tất
+                        if (uid != null) {
+                            FirebaseDatabase.getInstance().getReference("UserRole").child(uid).get()
+                                .addOnSuccessListener { snapshot ->
+                                    val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
+                                    if (data != null) {
+                                        // Lưu email lần cuối đăng nhập trước khi đăng xuất vào SharedPreferences
+                                        editor.putString("last_login_email", emailInput)
+                                        editor.apply()
+                                        checkRole(data.role.toString(), userType.toString())
+                                    } else {
+                                        Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                                    }
+                                    binding.animationView.visibility = View.GONE
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Login button", "Something wrong while getting data", e)
+                                    Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                                    binding.animationView.visibility = View.GONE
+                                }
+                        } else {
+                            Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                             binding.animationView.visibility = View.GONE
-                        }.addOnFailureListener{
-                            Log.e("Login button", "Something wrong while getting data", it)
                         }
-                    }
-                }.addOnFailureListener {exception ->
-                    // kiểm tra nếu lỗi là do mật khẩu sai
-                    if (exception is FirebaseAuthInvalidCredentialsException) {
-                        Toast.makeText(applicationContext, getString(R.string.error_wrong_passwordOrUsername), Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                        binding.animationView.visibility = View.GONE
+                        if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(applicationContext, getString(R.string.error_wrong_passwordOrUsername), Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
+                        }
+                        checkToAutoFocus(isEmailValid, isPassValid)
                     }
-                    binding.animationView.visibility = View.GONE
-                    checkToAutoFocus(isEmailValid, isPassValid)
                 }
             } else {
                 checkToAutoFocus(isEmailValid, isPassValid)
             }
         }
 
-
         // Quên mật khẩu
-        binding.moveToForgotBtn.setOnClickListener{
+        binding.moveToForgotBtn.setOnClickListener {
             if (PreventDoubleClick.checkClick()) {
                 val intent = Intent(this, ForgotPassActivity::class.java)
                 startActivity(intent)
             }
         }
-    }
 
+        // Đăng nhập vân tay
+        binding.btnFingerprintLogin.setOnClickListener {
+            biometricPrompt.authenticate(promptInfo)
+        }
+    }
 
     private fun checkToAutoFocus(vararg isValidFields: Boolean) {
         val invalidFields = mutableListOf<TextInputEditText>()
@@ -146,24 +180,58 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun checkRole(role: String, userType: String){
-        if (role == userType && role != "Admin"){
-            val resultIntent = Intent()
-            setResult(Activity.RESULT_OK, resultIntent)
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
-        }else if(role == "Admin"){
-            val resultIntent = Intent()
-            setResult(Activity.RESULT_OK, resultIntent)
-            startActivity(Intent(this, AdminHomeActivity::class.java))
-            finish()
-        }
-        else {
+    private fun checkRole(role: String, userType: String) {
+        if (role == userType && role != "Admin") {
+            navigateToHome()
+        } else if (role == "Admin") {
+            navigateToAdminHome()
+        } else {
             Toast.makeText(applicationContext, getString(R.string.wrong_role), Toast.LENGTH_SHORT).show()
         }
     }
 
+    private fun navigateToHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToAdminHome() {
+        val intent = Intent(this, AdminHomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun setupBiometricPrompt() {
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(
+            this,
+            executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Toast.makeText(applicationContext, "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Toast.makeText(applicationContext, "Authentication succeeded!", Toast.LENGTH_SHORT).show()
+                    navigateToHome()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(applicationContext, "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric login for my app")
+            .setSubtitle("Log in using your biometric credential")
+            .setNegativeButtonText("Use account password")
+            .build()
+    }
 
     // Xử lý kết quả từ Homeactivity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -173,5 +241,4 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
-
 }
