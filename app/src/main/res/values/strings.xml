@@ -287,6 +287,7 @@
     <string name="sort_workShift">Work shift</string>
     <string name="sort_wShiftAM">Morning</string>
     <string name="sort_wShiftPM">Afternoon</string>
+    <string name="sort_workTypes">Work types</string>
     <string-array name="initial_WShift_Slider_values">
         <item>0</item>
         <item>24</item>

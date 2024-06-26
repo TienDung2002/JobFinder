@@ -110,72 +110,72 @@ class SettingsMenuFragment : Fragment() {
             }
         }
 
-        binding.deleteAccount.setOnClickListener(){
-            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.password_dialog, null)
-            val builder = AlertDialog.Builder(requireContext()).setView(dialogView)
-            val title = dialogView.findViewById<TextView>(R.id.dialog_title)
-            val cancelButton = dialogView.findViewById<Button>(R.id.btn_cancle)
-            val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirm)
-            val currentPasswordEditText = dialogView.findViewById<EditText>(R.id.current_pass)
-            val forgotPassword = dialogView.findViewById<TextView>(R.id.forgot_pass)
-            title.setText(getString(R.string.Confirm_delete_account))
-
-            val alertDialog = builder.create()
-            alertDialog.show()
-            cancelButton.setOnClickListener {
-                alertDialog.dismiss()
-            }
-            confirmButton.setOnClickListener {
-                val currentPassword = currentPasswordEditText.text.toString()
-                val isvalid_pass = VerifyField.isValidPassword(currentPassword)
-                currentPasswordEditText.error = if (isvalid_pass) null else getString(R.string.error_pass)
-
-                if (isvalid_pass){
-                    val userId = auth.currentUser
-                    userId?.let { currentUser ->
-                        val credential = EmailAuthProvider.getCredential(currentUser.email!!, currentPassword)
-                        currentUser.reauthenticate(credential).addOnCompleteListener { reauthTask ->
-                            if (reauthTask.isSuccessful) {
-                                val uid = auth.currentUser?.uid.toString()
-                                currentUser.delete().addOnCompleteListener { deleteTask ->
-                                    if (deleteTask.isSuccessful) {
-                                        deleteImage(uid)
-                                        deleteUserData(uid)
-                                        Toast.makeText(
-                                            requireContext(),
-                                            getString(R.string.account_deleted),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        alertDialog.dismiss()
-                                        val intent = Intent(requireContext(), SelectRoleActivity::class.java)
-                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        startActivity(intent)
-                                        requireActivity().finishAffinity()
-                                    } else {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            getString(R.string.delete_account_failed),
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-                            }else{
-                                Toast.makeText(
-                                    requireContext(),
-                                    R.string.re_authen_failed,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-                    }
-                }
-            }
-            forgotPassword.setOnClickListener(){
-                val intent = Intent(requireContext(), ProfileForgotPasswordActivity::class.java)
-                startActivity(intent)
-                alertDialog.dismiss()
-            }
-        }
+//        binding.deleteAccount.setOnClickListener(){
+//            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.password_dialog, null)
+//            val builder = AlertDialog.Builder(requireContext()).setView(dialogView)
+//            val title = dialogView.findViewById<TextView>(R.id.dialog_title)
+//            val cancelButton = dialogView.findViewById<Button>(R.id.btn_cancle)
+//            val confirmButton = dialogView.findViewById<Button>(R.id.btn_confirm)
+//            val currentPasswordEditText = dialogView.findViewById<EditText>(R.id.current_pass)
+//            val forgotPassword = dialogView.findViewById<TextView>(R.id.forgot_pass)
+//            title.setText(getString(R.string.Confirm_delete_account))
+//
+//            val alertDialog = builder.create()
+//            alertDialog.show()
+//            cancelButton.setOnClickListener {
+//                alertDialog.dismiss()
+//            }
+//            confirmButton.setOnClickListener {
+//                val currentPassword = currentPasswordEditText.text.toString()
+//                val isvalid_pass = VerifyField.isValidPassword(currentPassword)
+//                currentPasswordEditText.error = if (isvalid_pass) null else getString(R.string.error_pass)
+//
+//                if (isvalid_pass){
+//                    val userId = auth.currentUser
+//                    userId?.let { currentUser ->
+//                        val credential = EmailAuthProvider.getCredential(currentUser.email!!, currentPassword)
+//                        currentUser.reauthenticate(credential).addOnCompleteListener { reauthTask ->
+//                            if (reauthTask.isSuccessful) {
+//                                val uid = auth.currentUser?.uid.toString()
+//                                currentUser.delete().addOnCompleteListener { deleteTask ->
+//                                    if (deleteTask.isSuccessful) {
+//                                        deleteImage(uid)
+//                                        deleteUserData(uid)
+//                                        Toast.makeText(
+//                                            requireContext(),
+//                                            getString(R.string.account_deleted),
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                        alertDialog.dismiss()
+//                                        val intent = Intent(requireContext(), SelectRoleActivity::class.java)
+//                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                                        startActivity(intent)
+//                                        requireActivity().finishAffinity()
+//                                    } else {
+//                                        Toast.makeText(
+//                                            requireContext(),
+//                                            getString(R.string.delete_account_failed),
+//                                            Toast.LENGTH_SHORT
+//                                        ).show()
+//                                    }
+//                                }
+//                            }else{
+//                                Toast.makeText(
+//                                    requireContext(),
+//                                    R.string.re_authen_failed,
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            forgotPassword.setOnClickListener(){
+//                val intent = Intent(requireContext(), ProfileForgotPasswordActivity::class.java)
+//                startActivity(intent)
+//                alertDialog.dismiss()
+//            }
+//        }
 
         binding.aboutApp.setOnClickListener {
             val intent = Intent(requireContext(),AboutUsActivity::class.java)

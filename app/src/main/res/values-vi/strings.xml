@@ -286,6 +286,7 @@
     <string name="sort_workShift">Giờ làm</string>
     <string name="sort_wShiftAM">Sáng</string>
     <string name="sort_wShiftPM">Chiều</string>
+    <string name="sort_workTypes">Loại công việc</string>
     <string-array name="initial_WShift_Slider_values">
         <item>0</item>
         <item>24</item>
