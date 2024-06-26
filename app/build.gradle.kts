@@ -132,4 +132,7 @@ dependencies {
 
     // chart - biểu đồ (nếu add ở pj khác nhớ sửa cả file setting.gradle.kts)
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // Vân tay
+    implementation ("androidx.biometric:biometric:1.1.0")
 }

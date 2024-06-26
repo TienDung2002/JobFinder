@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +29,7 @@ import com.example.jobfinder.databinding.CustomFilterLayoutBinding
 import com.google.android.material.slider.RangeSlider
 import java.text.NumberFormat
 import java.util.Currency
+
 
 
 
@@ -170,22 +174,21 @@ class NewJobActivity : AppCompatActivity() {
         recNameButtons = listOf(cusBindingFilter.recAll, cusBindingFilter.recAtoZ)
         postedTimeButtons = listOf(cusBindingFilter.PTAnytime, cusBindingFilter.PTNewest, cusBindingFilter.PTThisMonth)
 
+        // Khởi tạo luôn UI mặc định cho filter trước khi mở bằng drawer
+        defaultSelectionUIFilter()
+
         // nút mở filter drawer
         binding.filterIcon.setOnClickListener {
             binding.rootNewJob.openDrawer(GravityCompat.END)
-            defaultSelectionUIFilter()
         }
         binding.rootNewJob.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerOpened(drawerView: View) {
                 // Nếu đã nhấn apply ít nhất một lần, khôi phục trạng thái từ SharedPreferences
                 if (!isFirstApplyFilter) {
                     restoreButtonUIState()
-                } else {
-                    // Nếu chưa nhấn apply lần đầu tiên, sử dụng UI mặc định
-                    defaultSelectionUIFilter()
                 }
             }
-            // Các hàm khác khi ngăn kéo được đóng hoặc mở, dùng nếu cần thiết
+            // Các hàm khác khi được đóng hoặc mở, dùng nếu cần thiết
             override fun onDrawerClosed(drawerView: View) {}
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
             override fun onDrawerStateChanged(newState: Int) {}
@@ -226,6 +229,14 @@ class NewJobActivity : AppCompatActivity() {
                 handleButtonSelection(postedTimeButtons, button,"time")
             }
         }
+
+        // Setup Spinner
+        val jobTypes = listOf(getString(R.string.sort_defaultSelectJobType)) + resources.getStringArray(R.array.job_types_array)
+        val spinnerAdapter = ArrayAdapter(this, R.layout.simple_spinner_item_filter, jobTypes)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        cusBindingFilter.workTypeSpinner.adapter = spinnerAdapter
+
+
 
         // Seekbar lương slider
         cusBindingFilter.rangeslider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
@@ -357,6 +368,12 @@ class NewJobActivity : AppCompatActivity() {
         // Đặt lại giá trị của RangeSlider về mặc định
         cusBindingFilter.rangeslider.setValues(defaultValuesSalary)
         cusBindingFilter.workshiftSlider.setValues(defaultValueWS)
+
+
+        val jobTypes = listOf(getString(R.string.sort_defaultSelectJobType)) + resources.getStringArray(R.array.job_types_array)
+        // Đặt mặc định spinner là "Tất cả công việc"
+        val defaultPosition = jobTypes.indexOf(getString(R.string.sort_defaultSelectJobType))
+        cusBindingFilter.workTypeSpinner.setSelection(defaultPosition)
     }
 
     // Hàm để điều chỉnh trạng thái của targetButton dựa trên trạng thái của selectedButton
@@ -411,6 +428,9 @@ class NewJobActivity : AppCompatActivity() {
         editor.putFloat("slider_start_value_WS", sliderValuesWS[0])
         editor.putFloat("slider_end_value_WS", sliderValuesWS[1])
 
+        // Lưu trạng thái của Spinner
+        val spinnerPosition = cusBindingFilter.workTypeSpinner.selectedItemPosition
+        editor.putInt("spinner_position", spinnerPosition)
 
         editor.apply()
     }
@@ -493,6 +513,11 @@ class NewJobActivity : AppCompatActivity() {
         val startValueWS = sharedPreferences.getFloat("slider_start_value_WS", cusBindingFilter.workshiftSlider.values[0])
         val endValueWS = sharedPreferences.getFloat("slider_end_value_WS", cusBindingFilter.workshiftSlider.values[1])
         cusBindingFilter.workshiftSlider.values = listOf(startValueWS, endValueWS)
+
+
+        // Khôi phục spinner
+        val spinnerPosition = sharedPreferences.getInt("spinner_position", 0)
+        cusBindingFilter.workTypeSpinner.setSelection(spinnerPosition)
     }
 
     // Khi activity ở trạng thái dừng cũng lưu trạng thái filter lại
@@ -510,5 +535,6 @@ class NewJobActivity : AppCompatActivity() {
             binding.animationView.visibility = View.GONE
         }
     }
+
 
 }

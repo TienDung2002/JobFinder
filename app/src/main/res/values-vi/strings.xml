@@ -301,6 +301,7 @@
     <string name="sort_resetCond">Đặt lại</string>
     <string name="sort_applyCond">Áp dụng</string>
     <string name="sort_applyFilterToast">Áp dụng bộ lọc</string>
+    <string name="sort_defaultSelectJobType">Tất cả các loại</string>
 
 
 

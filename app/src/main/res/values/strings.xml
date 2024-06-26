@@ -302,6 +302,8 @@
     <string name="sort_resetCond">Reset</string>
     <string name="sort_applyCond">Apply</string>
     <string name="sort_applyFilterToast">Filter Applied</string>
+    <string name="sort_defaultSelectJobType">All Type</string>
+
 
 
     <!--    List job item-->

@@ -247,27 +247,26 @@
                         android:paddingStart="12dp"
                         android:paddingEnd="12dp">
 
-                        <TextView
-                            android:id="@+id/selectWorkType"
+                        <Spinner
+                            android:id="@+id/workTypeSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingTop="5dp"
                             android:paddingBottom="5dp"
-                            android:background="@drawable/edit_text_blank_filter"
-                            android:hint="@string/sort_workTypes"
-                            android:maxLines="1"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/gray"
-                            android:textSize="14.5sp"
-                            android:layout_centerVertical="true" />
+                            android:layout_marginEnd="20dp"
+                            android:background="@android:color/transparent"
+                            android:layout_centerVertical="true"
+                            android:spinnerMode="dropdown"
+                            android:dropDownHeight="150dp"
+                            android:visibility="visible"/>
 
                         <ImageView
                             android:layout_width="15dp"
                             android:layout_height="15dp"
                             android:src="@drawable/ic_dropdown18px"
                             android:layout_centerVertical="true"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="5dp"/>
+                            android:layout_alignParentEnd="true"/>
+
                     </RelativeLayout>
 
                 </RelativeLayout>
