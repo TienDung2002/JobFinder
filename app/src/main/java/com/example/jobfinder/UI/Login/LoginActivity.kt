@@ -61,6 +61,12 @@ class LoginActivity : AppCompatActivity() {
         val savedPass = sharedPreferences.getString("last_login_password", "").toString()
         binding.userEmailLogin.setText(savedEmail)
 
+        if(savedEmail!="" && savedPass !=""){
+            binding.btnFingerprintLogin.visibility = View.VISIBLE
+        }else{
+            binding.btnFingerprintLogin.visibility = View.GONE
+        }
+
         // Biometric Authentication
         setupBiometricPrompt(savedEmail, savedPass)
 
@@ -124,7 +130,7 @@ class LoginActivity : AppCompatActivity() {
                                         editor.putString("last_login_email", emailInput)
                                         editor.putString("last_login_password", passInput)
                                         editor.apply()
-                                        checkRole(data.role.toString(), userType.toString())
+                                        checkRole(data.role.toString(), userType)
                                     } else {
                                         Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                     }
