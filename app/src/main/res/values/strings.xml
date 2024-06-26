@@ -531,7 +531,8 @@
     <string name="grid_admin_accMana">Users Account</string>
     <string name="grid_admin_Finance">Finance</string>
     <string name="grid_admin_RepRes">Reports response</string>
-    <string name="grid_admin_profile">Admin account</string>
+    <string name="grid_admin_logout">Logout</string>
+    <string name="grid_admin_changePass">Change Password</string>
     <string name="no_report">No report yet</string>
 
 

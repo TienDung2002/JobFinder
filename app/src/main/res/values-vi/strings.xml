@@ -531,6 +531,7 @@
     <string name="grid_admin_accMana">Tài khoản người dùng</string>
     <string name="grid_admin_Finance">Tài chính</string>
     <string name="grid_admin_RepRes">Phản hồi báo cáo</string>
-    <string name="grid_admin_profile">Tài khoản Admin</string>
+    <string name="grid_admin_logout">Đăng xuất</string>
+    <string name="grid_admin_changePass">Đổi mật khẩu</string>
     <string name="no_report">Chưa có báo cáo</string>
 </resources>

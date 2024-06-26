@@ -17,21 +17,25 @@
         android:theme="@style/FullScreenTheme"
         tools:targetApi="31">
         <activity
-            android:name=".UI.Admin.ResReports.AdminResponseReportsActivity"
+            android:name=".UI.Admin.Home.AdminChangePassActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme"/>
+        <activity
+            android:name=".UI.Admin.ResReports.AdminResponseReportsActivity"
+            android:exported="false"
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.Admin.UserManagement.AdminUserManagActivity"
             android:exported="false"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.Admin.Finance.AdminFinanceActivity"
             android:exported="false"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.Admin.Statistical.AdminStatisticalActivity"
             android:exported="false"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.Admin.Home.AdminHomeActivity"
             android:exported="false"
@@ -47,7 +51,7 @@
         <activity
             android:name=".UI.JobHistory.BUserJobHistoryActivity"
             android:exported="false"
-            android:theme="@style/FullScreenTheme"/>
+            android:theme="@style/FullScreenTheme" />
         <activity
             android:name=".UI.SalaryTracking.SalaryTrackingActivity"
             android:exported="false"

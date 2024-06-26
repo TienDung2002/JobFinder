@@ -12,17 +12,22 @@ import com.example.jobfinder.UI.Admin.Finance.AdminFinanceActivity
 import com.example.jobfinder.UI.Admin.ResReports.AdminResponseReportsActivity
 import com.example.jobfinder.UI.Admin.Statistical.AdminStatisticalActivity
 import com.example.jobfinder.UI.Admin.UserManagement.AdminUserManagActivity
+import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.databinding.ActivityAdminHomeBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class AdminHomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminHomeBinding
+    private lateinit var auth: FirebaseAuth
     private var backPressedCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
 
         // trả về result về login admin để đóng activity
         val resultIntent = Intent()
@@ -53,9 +58,18 @@ class AdminHomeActivity : AppCompatActivity() {
         }
 
 
-        // Tài khoản admin
-        binding.AdminPro5Btn.setOnClickListener {
-            startActivity(Intent(this, UserDetailActivity::class.java))
+        // Đăng xuất
+        binding.AdminLogoutBtn.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(this, SelectRoleActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(this, R.string.profile_logout_toast, Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+
+        binding.AdminChangePassBtn.setOnClickListener {
+            startActivity(Intent(this, AdminChangePassActivity::class.java))
         }
 
     }

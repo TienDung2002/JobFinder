@@ -41,10 +41,10 @@ class NewJobActivity : AppCompatActivity() {
     private lateinit var jtButtons: List<Button>
     private lateinit var recNameButtons: List<Button>
     private lateinit var postedTimeButtons: List<Button>
-    private var ftJobTitle =0
-    private var ftRecTitle =0
-    private var ftPostTime =1
-    private var ftShift =0
+    private var ftJobTitle = 0
+    private var ftRecTitle = 0
+    private var ftPostTime = 1
+    private var ftShift = 0
     private var ftMinSalary = 0.0f
     private var ftMaxSalary = 50000.0f
     private var ftStartHr = 0
