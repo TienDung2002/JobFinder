@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import com.example.jobfinder.UI.Admin.Statistical.AdminIncomeViewModel
 import com.example.jobfinder.UI.Statistical.IncomeViewModel
 import com.example.jobfinder.UI.Statistical.WorkHoursViewModel
 import java.text.NumberFormat
@@ -35,6 +36,7 @@ class JobpostsActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val viewModel: IncomeViewModel by viewModels()
     private val workViewModel: WorkHoursViewModel by viewModels()
+    private val adminIncomeVM : AdminIncomeViewModel by viewModels()
     private var jobType: String = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -204,6 +206,9 @@ class JobpostsActivity : AppCompatActivity() {
         val uid = auth.currentUser?.uid
         val jobId= FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).push().key
         val totalSalary = calculateTotalSalary()
+        val userPay = totalSalary.toDouble()*105/100
+        val appIncome = userPay - totalSalary.toDouble()
+        val userPayStr = userPay.toString()
         val date = GetData.getCurrentDateTime()
         val today = GetData.getCurrentDateTime()
         val currentDayString = GetData.getDateFromString(today)
@@ -216,20 +221,20 @@ class JobpostsActivity : AppCompatActivity() {
                     if(walletData.exists()) {
                         val walletAmount = walletData.child("amount").getValue(String::class.java).toString()
 
-                        if(GetData.compareFloatStrings(walletAmount, totalSalary)) {
+                        if(GetData.compareFloatStrings(walletAmount, userPayStr)) {
                             val newJob = JobModel(jobId, title, startTime, endTime, empAmount, salary, address,
-                                jobDes, totalSalary, date,"0", bUserName, jobType, uid,"recruiting",
+                                jobDes, userPayStr, date,"0", bUserName, jobType, uid,"recruiting",
                                 workStartTime,workEndTime)
 
                             //add to firebase
                             FirebaseDatabase.getInstance().getReference("Job").child(uid.toString()).child(jobId.toString()).setValue(newJob).addOnCompleteListener {
                                 if (it.isSuccessful) {
-                                    val newWalletAmount = walletAmountModel((walletAmount.toFloat()-totalSalary.toFloat()).toString())
+                                    val newWalletAmount = walletAmountModel((walletAmount.toFloat()-userPayStr.toFloat()).toString())
                                     walletAmountRef.setValue(newWalletAmount)
                                     val notiId = FirebaseDatabase.getInstance().getReference("Notifications").child(uid.toString()).push().key.toString()
                                     val format = NumberFormat.getCurrencyInstance()
                                     format.currency = Currency.getInstance("VND")
-                                    val convertSalaryVnd = format.format(totalSalary.toDouble())
+                                    val convertSalaryVnd = format.format(userPayStr.toDouble())
                                     val notificationsRowModel = NotificationsRowModel(
                                         notiId,"Admin",
                                         "${getString(R.string.post_job_success)}.\n" +
@@ -238,10 +243,13 @@ class JobpostsActivity : AppCompatActivity() {
                                         date
                                     )
                                     // chi tiêu
-                                    viewModel.pushExpenseToFirebaseByDate(uid.toString(), totalSalary, currentDayString)
-                                    viewModel.pushExpenseToFirebaseJobTypeId(uid.toString(), totalSalary, GetData.getIntFromJobType(jobType))
+                                    viewModel.pushExpenseToFirebaseByDate(uid.toString(), userPayStr, currentDayString)
+                                    viewModel.pushExpenseToFirebaseJobTypeId(uid.toString(), userPayStr, GetData.getIntFromJobType(jobType))
                                     // số việc đăng
                                     workViewModel.pushAmountJobPost(uid.toString(), "1", currentDayString)
+
+                                    //thu nhập của app
+                                    adminIncomeVM.pushIncomeToFirebaseByDate(appIncome.toString(), currentDayString)
 
                                     FirebaseDatabase.getInstance().getReference("Notifications").child(uid.toString()).child(notiId).setValue(notificationsRowModel)
                                     Toast.makeText(binding.root.context, getString(R.string.post_job_success), Toast.LENGTH_SHORT).show()
