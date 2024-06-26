@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
+    private lateinit var userType: String
 
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -56,17 +57,18 @@ class LoginActivity : AppCompatActivity() {
         editor = sharedPreferences.edit()
 
         // Lấy email cuối cùng đăng nhập
-        val savedEmail = sharedPreferences.getString("last_login_email", "")
+        val savedEmail = sharedPreferences.getString("last_login_email", "").toString()
+        val savedPass = sharedPreferences.getString("last_login_password", "").toString()
         binding.userEmailLogin.setText(savedEmail)
 
         // Biometric Authentication
-        setupBiometricPrompt()
+        setupBiometricPrompt(savedEmail, savedPass)
 
         // gọi hàm đổi icon và ẩn hiện password
         VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
 
         // Lấy role từ bên select role
-        val userType = intent.getStringExtra("user_type")
+        userType = intent.getStringExtra("user_type").toString()
 
         // Mở register
         binding.openRegisterActi.setOnClickListener {
@@ -120,6 +122,7 @@ class LoginActivity : AppCompatActivity() {
                                     if (data != null) {
                                         // Lưu email lần cuối đăng nhập trước khi đăng xuất vào SharedPreferences
                                         editor.putString("last_login_email", emailInput)
+                                        editor.putString("last_login_password", passInput)
                                         editor.apply()
                                         checkRole(data.role.toString(), userType.toString())
                                     } else {
@@ -203,7 +206,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
-    private fun setupBiometricPrompt() {
+    private fun setupBiometricPrompt(email:String, pass:String) {
         executor = ContextCompat.getMainExecutor(this)
         biometricPrompt = BiometricPrompt(
             this,
@@ -216,8 +219,44 @@ class LoginActivity : AppCompatActivity() {
 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    Toast.makeText(applicationContext, getString(R.string.fingerAuth_success), Toast.LENGTH_SHORT).show()
-                    navigateToHome()
+                    auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val uid = auth.currentUser?.uid
+                            if (uid != null) {
+                                FirebaseDatabase.getInstance().getReference("UserRole").child(uid)
+                                    .get()
+                                    .addOnSuccessListener { snapshot ->
+                                        val data: idAndRole? =
+                                            snapshot.getValue(idAndRole::class.java)
+                                        if (data != null) {
+                                            checkRole(data.role.toString(), userType)
+                                        } else {
+                                            Toast.makeText(
+                                                applicationContext,
+                                                getString(R.string.login_failed),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        binding.animationView.visibility = View.GONE
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Toast.makeText(
+                                            applicationContext,
+                                            getString(R.string.login_failed),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        binding.animationView.visibility = View.GONE
+                                    }
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    getString(R.string.login_failed),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                binding.animationView.visibility = View.GONE
+                            }
+                        }
+                    }
                 }
 
                 override fun onAuthenticationFailed() {
@@ -234,6 +273,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Xử lý kết quả từ Homeactivity
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == LOGIN_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
