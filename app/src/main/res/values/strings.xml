@@ -534,6 +534,7 @@
     <string name="grid_admin_logout">Logout</string>
     <string name="grid_admin_changePass">Change Password</string>
     <string name="no_report">No report yet</string>
-
+    <string name="close_report">Close report</string>
+    <string name="report_response1">The issue you reported has been resolved. \n Thank you for your feedback.</string>
 
 </resources>

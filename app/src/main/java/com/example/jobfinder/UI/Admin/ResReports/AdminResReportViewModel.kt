@@ -23,6 +23,8 @@ class AdminResReportViewModel: ViewModel() {
                     }
                 }
                 _ReportList.value = reportList
+            }else{
+                _ReportList.value = mutableListOf()
             }
         }
     }

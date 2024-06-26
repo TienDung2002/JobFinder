@@ -534,4 +534,6 @@
     <string name="grid_admin_logout">Đăng xuất</string>
     <string name="grid_admin_changePass">Đổi mật khẩu</string>
     <string name="no_report">Chưa có báo cáo</string>
+    <string name="close_report">Đóng báo cáo</string>
+    <string name="report_response1">Vấn đề mà bạn báo cáo đã được xử lí. \n Cảm ơn đã gửi phản hồi cho chúng tôi.</string>
 </resources>
