@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import com.example.jobfinder.Datas.Model.BUserInfo
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Home.HomeActivity
@@ -17,11 +19,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.example.jobfinder.Datas.Model.UserBasicInfoModel
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.Datas.Model.walletAmountModel
+import com.example.jobfinder.UI.Admin.Statistical.AdminUserCountViewModel
+import com.example.jobfinder.Utils.GetData
 
 
 class RecruiterRegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRecruiterRegisterBinding
     private lateinit var auth: FirebaseAuth
+    private val viewModel: AdminUserCountViewModel by viewModels()
 //    private var isPassVisible = PasswordToggleState(false)
 //    private var isCalendarVisible = CalendarToggleState(false)
 
@@ -69,10 +74,13 @@ class RecruiterRegisterActivity : AppCompatActivity() {
                     auth.createUserWithEmailAndPassword(emailInput,passInput).addOnCompleteListener(this) { task->
                         if (task.isSuccessful) {
                             Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
+                            val today = GetData.getCurrentDateTime()
+                            val todayStr = GetData.getDateFromString(today)
                             val uid = auth.currentUser?.uid
                             val userBasicInfo = UserBasicInfoModel(uid, nameInput, emailInput, hotlineInput,addressInput)
                             val bUserInfo= BUserInfo(uid,"", "","","")
                             val userRole= idAndRole(uid, "BUser")
+                            viewModel.pushRegisteredUserToFirebaseByDate("BUser", "1", todayStr)
                             val walletAmount = walletAmountModel("0.0")
                             FirebaseDatabase.getInstance()
                                 .getReference("WalletAmount")
