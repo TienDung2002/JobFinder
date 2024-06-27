@@ -120,6 +120,14 @@ class AdminUMNUserDetail : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             sendResultAndFinish()
         }
+        // disable
+        binding.approveBtn.setOnClickListener {
+
+        }
+        //add cash
+        binding.rejectBtn.setOnClickListener {
+
+        }
     }
 
     private fun sendResultAndFinish() {

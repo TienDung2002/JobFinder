@@ -135,4 +135,7 @@ dependencies {
 
     // Vân tay
     implementation ("androidx.biometric:biometric:1.1.0")
+
+    //admin
+    implementation ("com.google.firebase:firebase-admin:9.3.0")
 }

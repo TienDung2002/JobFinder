@@ -11,10 +11,13 @@ import com.example.jobfinder.R
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivityBuserDetailInfoBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.OidcProviderConfig
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+
 
 class BUserDetailInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBuserDetailInfoBinding
@@ -29,6 +32,8 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
         val userId = intent.getStringExtra("uid")
         val from = intent.getStringExtra("fromAct")
+
+        setUpButn(userId.toString())
 
         if (from!= null){
             binding.recuitterInfoBtnHolder.visibility = View.VISIBLE
@@ -117,5 +122,14 @@ class BUserDetailInfoActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         RetriveImg.retrieveImage(viewModel.userid, binding.profileImage)
+    }
+
+    fun setUpButn(uid:String){
+        binding.addCashBtn.setOnClickListener {
+
+        }
+
+        binding.disableBtn.setOnClickListener {
+        }
     }
 }
