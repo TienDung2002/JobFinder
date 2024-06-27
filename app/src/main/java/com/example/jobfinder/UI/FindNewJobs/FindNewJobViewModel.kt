@@ -65,7 +65,7 @@ class FindNewJobViewModel : ViewModel() {
                             }
                         }
 //                        _jobsListLiveData.value = tempList
-                        sortFilter(0, 0, 1, 0.0f, 50000.0f, 0, 24)
+                        sortFilter(0, 0, 1, 0.0f, 50000.0f, 0, 24, 0)
 
                         updateStatusToFirebase(buserId, tempList)
 
@@ -90,7 +90,7 @@ class FindNewJobViewModel : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun sortFilter(ftJobTitle: Int, ftRecTitle: Int, ftPostTime: Int, minSalary:Float, maxSalary:Float, startHr:Int, endHr:Int) {
+    fun sortFilter(ftJobTitle: Int, ftRecTitle: Int, ftPostTime: Int, minSalary:Float, maxSalary:Float, startHr:Int, endHr:Int, jobTypeId:Int) {
         val copyList = OriginJobsList.toMutableList()
 
         val collator = Collator.getInstance(Locale("vi", "VN"))
@@ -120,6 +120,12 @@ class FindNewJobViewModel : ViewModel() {
             // new to old
             ftPostTime == 1 -> copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
             else -> copyList
+        }
+        if(jobTypeId != 0) {
+            sortedList = sortedList.filter { job ->
+                val jobTypeID = GetData.getIntFromJobType(job.jobType.toString())
+                jobTypeID == jobTypeId
+            }
         }
 
 

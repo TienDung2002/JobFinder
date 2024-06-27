@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.AdminModel.BasicInfoAndRole
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
-import com.example.jobfinder.UI.UserDetailInfo.NUserDetailInfoActivity
 import com.example.jobfinder.databinding.ActivityAdminUserManagBinding
-import com.google.firebase.database.FirebaseDatabase
 
 class AdminUserManagActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminUserManagBinding
@@ -47,9 +45,8 @@ class AdminUserManagActivity : AppCompatActivity() {
         adapter.setOnItemClickListener(object : AdminUserManagementAdapter.OnItemClickListener {
             override fun onItemClick(userInfo: BasicInfoAndRole) {
                 if (!isActivityOpened) {
-                    Log.d("AdminClik", "Item clicked: ${userInfo.userBasicInfo.userId}")
                     if (userInfo.userRole == "NUser"){
-                        val intent = Intent(this@AdminUserManagActivity, NUserDetailInfoActivity::class.java)
+                        val intent = Intent(binding.root.context, AdminUMNUserDetail::class.java)
                         intent.putExtra("uid", userInfo.userBasicInfo.userId)
                         startActivityForResult(intent, REQUEST_CODE)
                         isActivityOpened = true
@@ -71,6 +68,7 @@ class AdminUserManagActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
+            isActivityOpened = false
             viewModel.fetchUserList()
         }
     }
