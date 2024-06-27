@@ -1,10 +1,10 @@
 package com.example.jobfinder.UI.UsersProfile
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +13,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
+import androidx.fragment.app.viewModels
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.AboutUs.AboutUsActivity
-import com.example.jobfinder.UI.ForgotPassword.ForgotPassFragment
-import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
 import com.example.jobfinder.Utils.VerifyField
-import com.example.jobfinder.databinding.ActivityForgotPassBinding
-import com.example.jobfinder.databinding.ActivitySettingsBinding
 import com.example.jobfinder.databinding.FragmentSettingsMenuBinding
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -39,20 +31,20 @@ import com.google.firebase.storage.StorageReference
 class SettingsMenuFragment : Fragment() {
     private lateinit var binding: FragmentSettingsMenuBinding
     private lateinit var auth: FirebaseAuth
+    private val viewModel: SettingsMenuViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         auth = FirebaseAuth.getInstance()
-
-
 
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingsMenuBinding.inflate(inflater,container, false)
         return binding.root
     }
@@ -60,9 +52,37 @@ class SettingsMenuFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Check bật tắt sinh trắc bằng email
+        val currentUser = auth.currentUser
+        currentUser?.email?.let { email ->
+            Log.d("curr_email_fetchFromFirebase", email)
+            viewModel.getUserByEmail(email) { user ->
+                user?.let {
+                    binding.biometricSwitch.isChecked = it.isBiometricEnabled
+                    Log.d("biometricSwitch", it.isBiometricEnabled.toString())
+                } ?: run {
+                    Log.d("getUserByEmail", "User not found")
+                }
+            }
+        }
+
+        // Cập nhật trạng thái bật tắt sinh trắc nếu có thay đổi vào db
+        binding.biometricSwitch.setOnCheckedChangeListener { _, isChecked ->
+            Log.d("biometricSwitch", "Checked change detected")
+            currentUser?.email?.let { email ->
+                viewModel.getUserByEmail(email) { user ->
+                    user?.let {
+                        it.isBiometricEnabled = isChecked
+                        viewModel.updateUser(it)
+                        Log.d("isChecked", isChecked.toString())
+                    } ?: run {
+                        Log.d("getUserByEmail", "User not found for update")
+                    }
+                }
+            }
+        }
 
         binding.changePassword.setOnClickListener(){
-
             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.password_dialog, null)
             val builder = AlertDialog.Builder(requireContext()).setView(dialogView)
             val title = dialogView.findViewById<TextView>(R.id.dialog_title)
@@ -141,30 +161,18 @@ class SettingsMenuFragment : Fragment() {
 //                                    if (deleteTask.isSuccessful) {
 //                                        deleteImage(uid)
 //                                        deleteUserData(uid)
-//                                        Toast.makeText(
-//                                            requireContext(),
-//                                            getString(R.string.account_deleted),
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
+//                                        Toast.makeText(requireContext(), getString(R.string.account_deleted), Toast.LENGTH_SHORT ).show()
 //                                        alertDialog.dismiss()
 //                                        val intent = Intent(requireContext(), SelectRoleActivity::class.java)
 //                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //                                        startActivity(intent)
 //                                        requireActivity().finishAffinity()
 //                                    } else {
-//                                        Toast.makeText(
-//                                            requireContext(),
-//                                            getString(R.string.delete_account_failed),
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
+//                                        Toast.makeText(requireContext(),getString(R.string.delete_account_failed),Toast.LENGTH_SHORT ).show()
 //                                    }
 //                                }
 //                            }else{
-//                                Toast.makeText(
-//                                    requireContext(),
-//                                    R.string.re_authen_failed,
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
+//                                Toast.makeText(requireContext(),R.string.re_authen_failed,Toast.LENGTH_SHORT).show()
 //                            }
 //                        }
 //                    }
@@ -187,6 +195,7 @@ class SettingsMenuFragment : Fragment() {
             requireActivity().setResult(Activity.RESULT_OK, resultIntent)
             requireActivity().finish()
         }
+
     }
 
     fun deleteUserData(uid: String) {

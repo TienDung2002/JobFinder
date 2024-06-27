@@ -56,6 +56,7 @@ dependencies {
     val nav_version = "2.7.7";
     val firebase_ver = "8.0.2";
     val lottieVersion = "3.4.0"
+    val room_version = "2.6.1"
 
 
     // default
@@ -66,6 +67,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
 
     // google service firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.4"))
@@ -85,12 +87,14 @@ dependencies {
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
+
     // Retrofit2
 //    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
 //    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
 //    implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
 //    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 //    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.11.0")
+
 
     // Android lifecycle
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -99,6 +103,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
 
+
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
@@ -106,7 +111,6 @@ dependencies {
     // store local user data
 //    implementation("androidx.datastore:datastore-preferences:1.0.0")
 //    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
-//    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     //Rxjava
 //    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
@@ -115,24 +119,37 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
 
-    // use Glide for retrieving image from a remote source/URL
-//    implementation("com.github.bumptech.glide:glide:$glideVersion")
-//    ksp("androidx.room:room-compiler:2.6.1")
 
     // splash screen animation
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.compose.animation:animation-core-android:1.6.6")
 
-    // loading lib from LottieFile
+
+    // loading animation lib from LottieFile
     implementation("com.airbnb.android:lottie:$lottieVersion")
 
-    //profile image
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Glide for retrieving image from a remote source/URL
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
 
     // chart - biểu đồ (nếu add ở pj khác nhớ sửa cả file setting.gradle.kts)
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+
     // Vân tay
     implementation ("androidx.biometric:biometric:1.1.0")
+
+
+    // SQLite room
+    implementation ("androidx.room:room-runtime:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")
+    ksp ("androidx.room:room-compiler:$room_version")
+    // RxJava2 support for Room
+    implementation ("androidx.room:room-rxjava2:$room_version")
+    //Guava support for Room, including Optional and ListenableFuture
+    implementation ("androidx.room:room-guava:$room_version")
+    //Test helpers
+    testImplementation ("androidx.room:room-testing:$room_version")
 }

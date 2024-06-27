@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Admin.Home.AdminHomeActivity
@@ -19,6 +22,7 @@ import com.example.jobfinder.UI.ForgotPassword.ForgotPassActivity
 import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.UI.Register.RecruiterRegisterActivity
 import com.example.jobfinder.UI.Register.SeekerRegisterActivity
+import com.example.jobfinder.UI.UsersProfile.SettingsMenuViewModel
 import com.example.jobfinder.Utils.PasswordToggleState
 import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.Utils.VerifyField
@@ -27,12 +31,14 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executor
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     private var isPassVisible = PasswordToggleState(false)
     private lateinit var auth: FirebaseAuth
+    private val settingsMenuVM: SettingsMenuViewModel by viewModels()
     private val LOGIN_REQUEST_CODE = 100
 
     private lateinit var executor: Executor
@@ -61,8 +67,6 @@ class LoginActivity : AppCompatActivity() {
         val savedPass = sharedPreferences.getString("last_login_password", "").toString()
         binding.userEmailLogin.setText(savedEmail)
 
-        // Biometric Authentication
-        setupBiometricPrompt(savedEmail, savedPass)
 
         // gọi hàm đổi icon và ẩn hiện password
         VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
@@ -124,6 +128,13 @@ class LoginActivity : AppCompatActivity() {
                                         editor.putString("last_login_email", emailInput)
                                         editor.putString("last_login_password", passInput)
                                         editor.apply()
+                                        // thêm email và pass vào room db nếu chưa có
+                                        settingsMenuVM.getUserByEmail(emailInput) { user ->
+                                            if (user == null) {
+                                                val newUser = UsersDataSavedModel(emailInput, passInput)
+                                                settingsMenuVM.insertUser(newUser)
+                                            }
+                                        }
                                         checkRole(data.role.toString(), userType.toString())
                                     } else {
                                         Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
@@ -164,7 +175,20 @@ class LoginActivity : AppCompatActivity() {
 
         // Đăng nhập vân tay
         binding.btnFingerprintLogin.setOnClickListener {
-            biometricPrompt.authenticate(promptInfo)
+            // Kiểm tra trạng thái isBiometricEnabled db SQLite
+            val db = RoomDB.getDatabase(applicationContext)
+            lifecycleScope.launch {
+                val user = db.usersDao().getUserByEmail(savedEmail)
+                if (user != null && user.isBiometricEnabled) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {   // Kiểm tra phiên bản SDK
+                        setupBiometricPrompt(savedEmail, savedPass)
+                        biometricPrompt.authenticate(promptInfo)
+                    }
+                } else {
+                    val biometricActivationDialog = NotifyBiometricDialog(this@LoginActivity)
+                    biometricActivationDialog.show()
+                }
+            }
         }
     }
 
@@ -258,6 +282,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
     }
 
+
     // Xử lý kết quả từ Homeactivity
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -267,4 +292,5 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }
