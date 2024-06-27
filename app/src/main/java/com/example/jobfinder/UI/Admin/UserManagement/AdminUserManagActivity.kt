@@ -19,7 +19,7 @@ class AdminUserManagActivity : AppCompatActivity() {
 
 
         // nút back về
-        binding.backbtn.setOnClickListener {
+        binding.backButton.setOnClickListener {
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
             finish()

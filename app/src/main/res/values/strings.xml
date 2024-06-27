@@ -311,7 +311,6 @@
     <string name="sort_defaultSelectJobType">All Type</string>
 
 
-
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
     <string name="Ji_recAdd">Recruiter address</string>
@@ -552,5 +551,7 @@
     <string name="registered_amount">Report the number of registered users of the application</string>
     <string name="admin_income">Income from app per year</string>
     <string name="unit">VND</string>
+    <string name="user_managerment_title">User management</string>
+    <string name="no_user">No registered user</string>
 
 </resources>

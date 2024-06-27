@@ -35,7 +35,7 @@ class TechnicalReportFragment(private val animationView: LottieAnimationView) : 
             checkEmptyAdapter(reportList)
         }
 
-        viewModel.fetchTech()
+        viewModel.fetchReport()
     
     }
 

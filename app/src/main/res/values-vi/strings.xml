@@ -550,4 +550,6 @@
     <string name="registered_amount">Báo cáo số lượng người đăng ký sử dụng ứng dụng</string>
     <string name="admin_income">Lợi nhuận của ứng dụng theo năm</string>
     <string name="unit">VNĐ</string>
+    <string name="user_managerment_title">Quản lí nguời dùng</string>
+    <string name="no_user">Không có người dùng đã đăng ký</string>
 </resources>

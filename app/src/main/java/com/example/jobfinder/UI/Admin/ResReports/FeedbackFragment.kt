@@ -36,7 +36,7 @@ class FeedbackFragment (private val animationView: LottieAnimationView) : Fragme
             checkEmptyAdapter(reportList)
         }
 
-        viewModel.fetchFeedback()
+        viewModel.fetchReport()
 
     }
 
