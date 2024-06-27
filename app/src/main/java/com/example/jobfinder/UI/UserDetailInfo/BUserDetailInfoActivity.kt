@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.jobfinder.R
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivityBuserDetailInfoBinding
@@ -27,6 +28,11 @@ class BUserDetailInfoActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance().reference
 
         val userId = intent.getStringExtra("uid")
+        val from = intent.getStringExtra("fromAct")
+
+        if (from!= null){
+            binding.recuitterInfoBtnHolder.visibility = View.VISIBLE
+        }
         userId?.let {
 
             database.child("UserBasicInfo").child(it).addListenerForSingleValueEvent(object :
@@ -65,17 +71,29 @@ class BUserDetailInfoActivity : AppCompatActivity() {
                     val description = snapshot.child("description").getValue(String::class.java)
                     description?.let {
                         viewModel.des = it
-                        binding.editProfileDescription.setText(viewModel.des)
+                        if(it == ""){
+                            binding.editProfileDescription.setText(R.string.no_job_des2)
+                        }else {
+                            binding.editProfileDescription.setText(viewModel.des)
+                        }
                     }
                     val busType = snapshot.child("business_type").getValue(String::class.java)
                     busType?.let {
                         viewModel.busType = it
-                        binding.editProfileBustype.text = viewModel.busType
+                        if(it == ""){
+                            binding.editProfileBustype.setText(R.string.error_invalid_BusSec)
+                        }else {
+                            binding.editProfileBustype.setText(viewModel.busType)
+                        }
                     }
                     val busSec = snapshot.child("business_sector").getValue(String::class.java)
                     busSec?.let {
                         viewModel.busSec = it
-                        binding.editProfileBusSec.text = viewModel.busSec
+                        if(it == ""){
+                            binding.editProfileBusSec.text = getString(R.string.blank_sector)
+                        }else {
+                            binding.editProfileBusSec.text = viewModel.busSec
+                        }
                     }
                 }
 

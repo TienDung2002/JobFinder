@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class UserBasicInfoModel : Parcelable {
-    var userId: String? = null
+    var user_id: String? = null
     var name: String? = null
     var email: String? = null
     var phone_num: String? = null
@@ -15,13 +15,13 @@ class UserBasicInfoModel : Parcelable {
     }
 
     constructor(
-        userId: String?,
+        user_id: String?,
         name: String?,
         email: String?,
         phone_num: String?,
         address: String?
     ) {
-        this.userId = userId
+        this.user_id = user_id
         this.name = name
         this.email = email
         this.phone_num = phone_num
@@ -29,7 +29,7 @@ class UserBasicInfoModel : Parcelable {
     }
 
     private constructor(parcel: Parcel) {
-        userId = parcel.readString()
+        user_id = parcel.readString()
         name = parcel.readString()
         email = parcel.readString()
         phone_num = parcel.readString()
@@ -37,7 +37,7 @@ class UserBasicInfoModel : Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(userId)
+        parcel.writeString(user_id)
         parcel.writeString(name)
         parcel.writeString(email)
         parcel.writeString(phone_num)

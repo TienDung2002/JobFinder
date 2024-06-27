@@ -12,9 +12,11 @@ import com.example.jobfinder.Datas.Model.AdminModel.BasicInfoAndRole
 import com.example.jobfinder.UI.UserDetailInfo.BUserDetailInfoActivity
 import com.example.jobfinder.databinding.ActivityAdminUserManagBinding
 
+
 class AdminUserManagActivity : AppCompatActivity() {
     lateinit var binding: ActivityAdminUserManagBinding
     private val viewModel: AdminUserManagementViewModel by viewModels()
+    lateinit var adapter: AdminUserManagementAdapter
     private var isActivityOpened = false
     private val REQUEST_CODE = 1002
 
@@ -31,7 +33,7 @@ class AdminUserManagActivity : AppCompatActivity() {
             finish()
         }
 
-        val adapter = AdminUserManagementAdapter(mutableListOf())
+        adapter = AdminUserManagementAdapter(mutableListOf())
         binding.recyclerUserList.adapter = adapter
         binding.recyclerUserList.layoutManager = LinearLayoutManager(this)
 
@@ -45,18 +47,18 @@ class AdminUserManagActivity : AppCompatActivity() {
         adapter.setOnItemClickListener(object : AdminUserManagementAdapter.OnItemClickListener {
             override fun onItemClick(userInfo: BasicInfoAndRole) {
                 if (!isActivityOpened) {
-                    if (userInfo.userRole == "NUser"){
-                        val intent = Intent(binding.root.context, AdminUMNUserDetail::class.java)
-                        intent.putExtra("uid", userInfo.userBasicInfo.userId)
-                        startActivityForResult(intent, REQUEST_CODE)
-                        isActivityOpened = true
+                    val intent = when (userInfo.userRole) {
+                        "NUser" -> Intent(this@AdminUserManagActivity, AdminUMNUserDetail::class.java)
+                        "BUser" -> Intent(this@AdminUserManagActivity, BUserDetailInfoActivity::class.java)
+                        else -> null // Handle other roles if needed
                     }
-                    if (userInfo.userRole == "BUser"){
-                        val intent = Intent(this@AdminUserManagActivity, BUserDetailInfoActivity::class.java)
-                        intent.putExtra("uid", userInfo.userBasicInfo.userId)
+
+                    if (intent != null) {
+                        intent.putExtra("uid", userInfo.userBasicInfo.user_id.toString())
+                        intent.putExtra("fromAct", "AdminAct")
                         startActivityForResult(intent, REQUEST_CODE)
-                        isActivityOpened = true
                     }
+                    isActivityOpened = true
                 }
             }
         })

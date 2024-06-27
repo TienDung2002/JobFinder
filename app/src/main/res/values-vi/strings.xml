@@ -560,4 +560,5 @@
     <string name="add_cash_to_wallet_btn">Nạp tiền</string>
     <string name="disable_acc">Vô hiệu hóa</string>
     <string name="enable_acc">Kích hoạt</string>
+    <string name="blank_sector">Lĩnh vực trống</string>
 </resources>

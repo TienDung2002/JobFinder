@@ -58,7 +58,11 @@ class AdminUserManagementAdapter(private var userList: MutableList<BasicInfoAndR
             holder.role.text = "${holder.itemView.context.getString(R.string.role_title)} ${holder.itemView.context.getString(R.string.nuser)}"
         }
 
-        RetriveImg.retrieveImage(userInfo.userBasicInfo.userId.toString(), holder.avt)
+        RetriveImg.retrieveImage(userInfo.userBasicInfo.user_id.toString(), holder.avt)
+
+        holder.itemView.setOnClickListener {
+            listener?.onItemClick(userInfo)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

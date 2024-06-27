@@ -75,6 +75,8 @@ class AdminUMNUserDetail : AppCompatActivity() {
                     viewModel.address = it
                     binding.editProfileAddress.setText(viewModel.address)
                 }
+
+                binding.animationView.visibility = View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {
