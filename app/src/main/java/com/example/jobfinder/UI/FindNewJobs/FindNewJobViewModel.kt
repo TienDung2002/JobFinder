@@ -121,6 +121,8 @@ class FindNewJobViewModel : ViewModel() {
             ftPostTime == 1 -> copyList.sortedByDescending { GetData.convertStringToDate(it.postDate.toString()) }
             else -> copyList
         }
+
+        //sort by jobtype
         if(jobTypeId != 0) {
             sortedList = sortedList.filter { job ->
                 val jobTypeID = GetData.getIntFromJobType(job.jobType.toString())
