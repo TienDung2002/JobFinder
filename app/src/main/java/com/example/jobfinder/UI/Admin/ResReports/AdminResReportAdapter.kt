@@ -39,6 +39,13 @@ class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, pr
         }else {
             holder.reportDesTextView.text = report.description
         }
+
+        FirebaseDatabase.getInstance().getReference("UserBasicInfo").child(report.userId.toString()).get().addOnSuccessListener {
+            if(it.exists()){
+                val email = it.child("email").getValue(String::class.java)
+                holder.email.text = email
+            }
+        }
         val position = holder.adapterPosition
 
         holder.reportCloseTextView.setOnClickListener {
@@ -71,6 +78,7 @@ class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, pr
         val reportTitleTextView: TextView = itemView.findViewById(R.id.report_res_report_title)
         val reportDesTextView: TextView = itemView.findViewById(R.id.report_des)
         val reportCloseTextView: TextView = itemView.findViewById(R.id.rr_delete_txt)
+        val email: TextView= itemView.findViewById(R.id.reporter_email)
     }
 
 //    private fun checkEmptyAdapter() {

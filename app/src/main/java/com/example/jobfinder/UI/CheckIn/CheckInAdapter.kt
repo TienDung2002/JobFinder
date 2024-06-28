@@ -79,8 +79,8 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                             dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
                         // kiểm tra buser đã xác nhận check in chưa
                         if(checkInStatus != "uncomfirmed checked in") {
-                            // hiện tại sau endTime thì sẽ mở check out trong vòng 15 phút
-                            if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime) in 0..15) {
+                            // hiện tại sau endTime thì sẽ mở check out trong vòng 30 phút
+                            if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime) in 0..30) {
 
                                 val checkOutTime =
                                     dataSnapshot.child("checkOutTime").getValue(String::class.java).toString()
@@ -99,6 +99,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                                         setCheckedOutBtn(holder.checkBtn)
                                         // lấy số giờ làm việc
                                         val workHr = GetData.calculateHourDifference(checkInTime, currentItem.endHr.toString())
+                                        // fix check in late
                                         val salary = workHr*currentItem.salary.toString().toFloat()
                                         // lấy 2 số sau dấy .
                                         val stringSalary = salary.roundToInt().toString()
@@ -176,7 +177,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
 
                     } else {
                         // kiểm tra giờ hiện tại nêú trong khoảng trước startTime 15' đến sau startTime 30' thì sẽ hiên nút check in
-                        if(CheckTime.calculateMinuteDiff(currentItem.startHr.toString(), todayTime) in -15.. 30) {
+                        if(CheckTime.calculateMinuteDiff(currentItem.startHr.toString(), todayTime) in -15.. 45) {
                             // khi không có dữ liệu sẽ cho phép ấn nút hoạt động
                             holder.checkBtn.visibility = View.VISIBLE
                             holder.checkBtn.setOnClickListener {
