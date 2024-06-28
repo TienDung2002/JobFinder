@@ -13,6 +13,7 @@ class AdminUserManagementViewModel:ViewModel() {
     val userList: MutableLiveData<MutableList<BasicInfoAndRole>> get() = _userList
 
     private val database = FirebaseDatabase.getInstance().getReference("UserBasicInfo")
+    private val roleDatabase = FirebaseDatabase.getInstance().getReference("UserRole")
 
     fun fetchUserList(){
         database.get().addOnSuccessListener { userInfoSnapshot ->
@@ -49,6 +50,23 @@ class AdminUserManagementViewModel:ViewModel() {
         }.addOnFailureListener {
             Log.e("FetchUserList", "Failed to fetch user info", it)
         }
+    }
+
+    fun updateAccountStatus(uid:String, disabled:Boolean){
+
+        if(disabled){
+            val update = hashMapOf<String, Any>(
+                "accountStatus" to "active"
+            )
+            roleDatabase.child(uid).updateChildren(update)
+        }else{
+            val update = hashMapOf<String, Any>(
+                "accountStatus" to "disable"
+            )
+            roleDatabase.child(uid).updateChildren(update)
+        }
+
+
     }
 
 }

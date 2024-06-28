@@ -32,6 +32,8 @@ class AdminUMNUserDetail : AppCompatActivity() {
 
     private val viewModel: ProfileViewModel by viewModels()
     private val walletViewModel : PostedJobViewModel by viewModels()
+    private val UMViewModel:AdminUserManagementViewModel by viewModels()
+    private var clicked = false
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +49,10 @@ class AdminUMNUserDetail : AppCompatActivity() {
         if (accStatus != null){
             if (accStatus == "active"){
                 binding.approveBtn.text = getString(R.string.disable_acc)
+                clicked = false
             }else{
                 binding.approveBtn.text = getString(R.string.enable_acc)
+                clicked = true
             }
         }
         binding.desHolder.visibility = View.GONE
@@ -140,6 +144,15 @@ class AdminUMNUserDetail : AppCompatActivity() {
         }
         // disable
         binding.approveBtn.setOnClickListener {
+            if(!clicked) {
+                binding.approveBtn.text = getString(R.string.enable_acc)
+                clicked = true
+                UMViewModel.updateAccountStatus(uid, false)
+            }else{
+                binding.approveBtn.text = getString(R.string.disable_acc)
+                clicked = false
+                UMViewModel.updateAccountStatus(uid, true)
+            }
 
         }
         //add cash
