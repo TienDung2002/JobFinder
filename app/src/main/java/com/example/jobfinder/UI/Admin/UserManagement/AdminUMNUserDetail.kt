@@ -32,7 +32,7 @@ class AdminUMNUserDetail : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance().reference
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         val userId = intent.getStringExtra("uid")
-        binding.applicantDescription.visibility = View.GONE
+        binding.desHolder.visibility = View.GONE
         binding.recyclerHolder.visibility = View.GONE
         binding.rejectBtn.text = getString(R.string.add_cash_to_wallet_btn)
         binding.approveBtn.text = getString(R.string.disable_acc)
