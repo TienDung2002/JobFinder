@@ -37,10 +37,27 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_below="@id/topSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/email_holder"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/reporter_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile_email"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/middleSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/topSection"
+            android:layout_below="@+id/email_holder"
             android:layout_marginTop="10dp">
 
             <LinearLayout

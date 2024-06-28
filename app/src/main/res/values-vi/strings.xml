@@ -553,4 +553,18 @@
     <string name="registered_amount">Báo cáo số lượng người đăng ký sử dụng ứng dụng</string>
     <string name="admin_income">Lợi nhuận của ứng dụng theo năm</string>
     <string name="unit">VNĐ</string>
+    <string name="user_managerment_title">Quản lí nguời dùng</string>
+    <string name="no_user">Không có người dùng đã đăng ký</string>
+    <string name="email_title">Email: </string>
+    <string name="phone_num_title">Số điện thoại: </string>
+    <string name="address_title">Địa chỉ: </string>
+    <string name="role_title">Vai trò: </string>
+
+    <string name="add_cash_to_wallet_btn">Nạp tiền</string>
+    <string name="disable_acc">Vô hiệu hóa</string>
+    <string name="enable_acc">Kích hoạt</string>
+    <string name="blank_sector">Lĩnh vực trống</string>
+    <string name="to_wallet2">vào ví bởi quản trị viên</string>
+    <string name="disabled_account">Tài khoản này đã bị vô hiệu hóa</string>
+    <string name="active">Đang hoạt động</string>
 </resources>

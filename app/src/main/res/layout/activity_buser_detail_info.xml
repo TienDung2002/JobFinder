@@ -46,7 +46,10 @@
         android:scrollbars="none"
         android:id="@+id/buser_detail_scroll_view"
         android:layout_below="@+id/activity_buser_detail_top_nav"
-        android:layout_margin="10dp">
+        android:layout_above="@id/recuitter_info_btn_holder"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -400,6 +403,56 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <!--    button holder-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:id="@+id/recuitter_info_btn_holder"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/transparent_background"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/btn_wrap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:baselineAligned="false">
+
+            <Button
+                android:id="@+id/disable_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/wallet_btn_shape"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/disable_acc"
+                android:textSize="12sp"
+                android:minHeight="45dp"/>
+
+            <Button
+                android:id="@+id/add_cash_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="@drawable/wallet_btn_shape"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:text="@string/add_cash_to_wallet_btn"
+                android:layout_marginStart="30dp"
+                android:minHeight="45dp"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"

@@ -1,5 +1,6 @@
 package com.example.jobfinder.UI.Wallet
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ class ChooseCardAdapter(context: Context, private val cardList: MutableList<bank
         return createView(position, convertView, parent)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun createView(position: Int, convertView: View?, parent: ViewGroup): View {
         val itemView = convertView ?: LayoutInflater.from(parent.context).inflate(R.layout.spinner_items, parent, false)
 

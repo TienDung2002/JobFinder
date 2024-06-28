@@ -69,6 +69,14 @@ class LoginActivity : AppCompatActivity() {
         val savedPass = sharedPreferences.getString("last_login_password", "").toString()
         binding.userEmailLogin.setText(savedEmail)
 
+        if(savedEmail!="" && savedPass !=""){
+            binding.btnFingerprintLogin.visibility = View.VISIBLE
+        }else{
+            binding.btnFingerprintLogin.visibility = View.GONE
+        }
+
+        // Biometric Authentication
+        setupBiometricPrompt(savedEmail, savedPass)
 
         // gọi hàm đổi icon và ẩn hiện password
         VerifyField.changeIconShowPassword(binding.passwordTextInputLayout, isPassVisible, binding.userPassLogin)
@@ -130,6 +138,13 @@ class LoginActivity : AppCompatActivity() {
                                         editor.putString("last_login_email", emailInput)
                                         editor.putString("last_login_password", passInput)
                                         editor.apply()
+
+                                        if(data.accountStatus == "active") {
+                                            checkRole(data.role.toString(), userType)
+                                        }else{
+                                            Toast.makeText(applicationContext, getString(R.string.disabled_account), Toast.LENGTH_SHORT).show()
+                                        }
+
                                         // thêm email và pass vào room db nếu chưa có
                                         settingsMenuVM.getUserByEmail(emailInput) { user ->
                                             if (user == null) {
@@ -137,7 +152,6 @@ class LoginActivity : AppCompatActivity() {
                                                 settingsMenuVM.insertUser(newUser)
                                             }
                                         }
-                                        checkRole(data.role.toString(), userType.toString())
                                     } else {
                                         Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                     }
@@ -264,9 +278,14 @@ class LoginActivity : AppCompatActivity() {
                             if (uid != null) {
                                 FirebaseDatabase.getInstance().getReference("UserRole").child(uid)
                                     .get()
-                                    .addOnSuccessListener { snapshot -> val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
+                                    .addOnSuccessListener { snapshot ->
+                                        val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
                                         if (data != null) {
-                                            checkRole(data.role.toString(), userType)
+                                            if(data.accountStatus == "active") {
+                                                checkRole(data.role.toString(), userType)
+                                            }else{
+                                                Toast.makeText(applicationContext, getString(R.string.disabled_account), Toast.LENGTH_SHORT).show()
+                                            }
                                         } else {
                                             Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                         }

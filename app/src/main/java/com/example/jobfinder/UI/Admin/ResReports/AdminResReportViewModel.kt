@@ -22,50 +22,55 @@ class AdminResReportViewModel: ViewModel() {
         database.get().addOnSuccessListener {
             if(it.exists()){
                 val reportList: MutableList<SupportUser> = mutableListOf()
+                val techList: MutableList<SupportUser> = mutableListOf()
+                val feedbackList: MutableList<SupportUser> = mutableListOf()
                 it.children.forEach { reportSnapshot->
                     val reportModel = reportSnapshot.getValue(SupportUser::class.java)
                     reportModel?.let{
                         if (reportModel.supportName == "report"){ reportList.add(reportModel)}
+                        if (reportModel.supportName == "feedback"){ feedbackList.add(reportModel)}
+                        if (reportModel.supportName == "technical"){ techList.add(reportModel)}
                     }
                 }
+                _FeedbackList.value = feedbackList
                 _ReportList.value = reportList
-            }else{
-                _ReportList.value = mutableListOf()
-            }
-        }
-    }
-
-    fun fetchFeedback(){
-        database.get().addOnSuccessListener {
-            if(it.exists()){
-                val reportList: MutableList<SupportUser> = mutableListOf()
-                it.children.forEach { reportSnapshot->
-                    val reportModel = reportSnapshot.getValue(SupportUser::class.java)
-                    reportModel?.let{
-                        if (reportModel.supportName == "feedback"){ reportList.add(reportModel)}
-                    }
-                }
-                _FeedbackList.value = reportList
+                _TechList.value = techList
             }else{
                 _FeedbackList.value = mutableListOf()
-            }
-        }
-    }
-
-    fun fetchTech(){
-        database.get().addOnSuccessListener {
-            if(it.exists()){
-                val reportList: MutableList<SupportUser> = mutableListOf()
-                it.children.forEach { reportSnapshot->
-                    val reportModel = reportSnapshot.getValue(SupportUser::class.java)
-                    reportModel?.let{
-                        if (reportModel.supportName == "technical"){ reportList.add(reportModel)}
-                    }
-                }
-                _TechList.value = reportList
-            }else{
+                _ReportList.value = mutableListOf()
                 _TechList.value = mutableListOf()
             }
         }
     }
+
+    fun deleteReport(reportId:String) {
+        database.child(reportId).removeValue()
+            .addOnSuccessListener {
+                updateReportListAfterDeletion(reportId)
+            }
+            .addOnFailureListener {
+            }
+    }
+
+    private fun updateReportListAfterDeletion(reportId: String) {
+        val reportList = _ReportList.value
+        val techList = _TechList.value
+        val feedback = _FeedbackList.value
+
+        reportList?.let { list ->
+            val updatedList = list.filter { it.supportId != reportId }.toMutableList()
+            _ReportList.value = updatedList
+        }
+
+        techList?.let { list ->
+            val updatedList = list.filter { it.supportId != reportId }.toMutableList()
+            _TechList.value = updatedList
+        }
+
+        feedback?.let { list ->
+            val updatedList = list.filter { it.supportId != reportId }.toMutableList()
+            _FeedbackList.value = updatedList
+        }
+    }
+
 }
