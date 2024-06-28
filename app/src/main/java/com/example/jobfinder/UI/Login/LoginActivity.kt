@@ -192,7 +192,7 @@ class LoginActivity : AppCompatActivity() {
             val currentEmail = binding.userEmailLogin.text.toString().trim()
             lifecycleScope.launch {
                 val user = db.usersDao().getUserByEmail(currentEmail)
-                if (isEmailChanged || currentEmail != savedEmail || user == null || user.isBiometricEnabled) {
+                if (isEmailChanged || currentEmail != savedEmail || user == null || !user.isBiometricEnabled) {
                     val biometricActivationDialog = NotifyBiometricDialog(this@LoginActivity)
                     biometricActivationDialog.show()
                 } else {
