@@ -3,10 +3,12 @@ package com.example.jobfinder.UI.UsersProfile
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityAccountBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class AccountActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAccountBinding
@@ -19,22 +21,21 @@ class AccountActivity : AppCompatActivity() {
 
         //firebase
         auth = FirebaseAuth.getInstance()
+        val uid = GetData.getCurrentUserId()
 
-        // gọi hàm getUserRole từ trong Utils.GetData
-        GetData.getUserRole { role ->
-            role?.let {
-                // Gán giá trị chỉ khi role không null (logic là thế nhưng hàm getUserRole t cho trả về "null string" thay vì null)
-                userRole = it
-                if (userRole=="NUser"){
-                    FragmentHelper.replaceFragment(supportFragmentManager , binding.profileframelayout, SeekerEditProfileFragment())
-                    binding.animationView.visibility = View.GONE
-                }else if (userRole=="BUser"){
-                    FragmentHelper.replaceFragment(supportFragmentManager , binding.profileframelayout, RecruterEditProfileFragment())
-                    binding.animationView.visibility = View.GONE
+        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get()
+            .addOnSuccessListener { snapshot ->
+                val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
+                data?.let {
+                    userRole = data.role.toString()
+                    if (userRole=="NUser"){
+                        FragmentHelper.replaceFragment(supportFragmentManager , binding.profileframelayout, SeekerEditProfileFragment())
+                        binding.animationView.visibility = View.GONE
+                    }else if (userRole=="BUser"){
+                        FragmentHelper.replaceFragment(supportFragmentManager , binding.profileframelayout, RecruterEditProfileFragment())
+                        binding.animationView.visibility = View.GONE
+                    }
                 }
             }
-        }
-
-
     }
 }
