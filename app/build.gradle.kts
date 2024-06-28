@@ -152,4 +152,7 @@ dependencies {
     implementation ("androidx.room:room-guava:$room_version")
     //Test helpers
     testImplementation ("androidx.room:room-testing:$room_version")
+
+    //  swipe refresh
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 }
