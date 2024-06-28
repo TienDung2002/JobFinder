@@ -561,4 +561,5 @@
     <string name="disable_acc">Vô hiệu hóa</string>
     <string name="enable_acc">Kích hoạt</string>
     <string name="blank_sector">Lĩnh vực trống</string>
+    <string name="to_wallet2">vào ví bởi quản trị viên</string>
 </resources>
