@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
@@ -70,6 +71,20 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
                 val resultIntent = Intent()
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
+            }
+        }
+
+        binding.confirmNum.setOnClickListener {
+            val inputNum = binding.inputNum.text
+            val inputNumDouble = inputNum.toString().toDoubleOrNull()
+
+            if (inputNum.isNullOrEmpty()) {
+                Toast.makeText(this, "Nhập số tiền muốn nạp!", Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(this, ZaloPaymentOrderActivity::class.java)
+                intent.putExtra("amount", inputNumDouble)
+                startActivity(intent)
+
             }
         }
     }

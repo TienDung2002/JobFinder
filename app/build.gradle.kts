@@ -49,6 +49,7 @@ dependencies {
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.fragment:fragment-ktx:1.5.6")
+
     val retrofitVersion = "2.9.0";
     val lifecycleVersion = "2.7.0";
     val glideVersion = "4.16.0";
@@ -152,4 +153,14 @@ dependencies {
     implementation ("androidx.room:room-guava:$room_version")
     //Test helpers
     testImplementation ("androidx.room:room-testing:$room_version")
+
+
+    // import lib Zalo pay
+    implementation(fileTree(mapOf(
+        "dir" to "E:\\Workspace\\Mobile_Dev\\KLTN\\Rss\\Zalopay",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
+    implementation("com.squareup.okhttp3:okhttp:4.6.0")
+    implementation("commons-codec:commons-codec:1.15")
 }
