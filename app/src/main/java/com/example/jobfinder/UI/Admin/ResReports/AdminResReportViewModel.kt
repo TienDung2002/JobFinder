@@ -43,4 +43,34 @@ class AdminResReportViewModel: ViewModel() {
         }
     }
 
+    fun deleteReport(reportId:String) {
+        database.child(reportId).removeValue()
+            .addOnSuccessListener {
+                updateReportListAfterDeletion(reportId)
+            }
+            .addOnFailureListener {
+            }
+    }
+
+    private fun updateReportListAfterDeletion(reportId: String) {
+        val reportList = _ReportList.value
+        val techList = _TechList.value
+        val feedback = _FeedbackList.value
+
+        reportList?.let { list ->
+            val updatedList = list.filter { it.supportId != reportId }.toMutableList()
+            _ReportList.value = updatedList
+        }
+
+        techList?.let { list ->
+            val updatedList = list.filter { it.supportId != reportId }.toMutableList()
+            _TechList.value = updatedList
+        }
+
+        feedback?.let { list ->
+            val updatedList = list.filter { it.supportId != reportId }.toMutableList()
+            _FeedbackList.value = updatedList
+        }
+    }
+
 }

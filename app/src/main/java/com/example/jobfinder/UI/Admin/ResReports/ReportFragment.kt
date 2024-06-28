@@ -27,7 +27,7 @@ class ReportFragment (private val animationView: LottieAnimationView) : Fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = AdminResReportAdapter(mutableListOf(), binding.noReport)
+        val adapter = AdminResReportAdapter(mutableListOf(),viewModel)
         binding.recyclerReportList.adapter = adapter
         binding.recyclerReportList.layoutManager = LinearLayoutManager(requireContext())
 

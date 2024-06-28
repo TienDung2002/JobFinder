@@ -11,8 +11,6 @@ import com.example.jobfinder.R
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.databinding.ActivityBuserDetailInfoBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.OidcProviderConfig
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

@@ -13,7 +13,7 @@ import com.example.jobfinder.R
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.database.FirebaseDatabase
 
-class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, private val noData: RelativeLayout) :
+class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, private val viewModel: AdminResReportViewModel) :
     RecyclerView.Adapter<AdminResReportAdapter.ReportViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -57,10 +57,9 @@ class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, pr
             FirebaseDatabase.getInstance().getReference("Notifications")
                 .child(report.userId.toString()).child(notiId).setValue(notificationsRowModel)
 
+            viewModel.deleteReport(report.supportId.toString())
             reportList.removeAt(position)
             notifyItemRemoved(position)
-            notifyDataSetChanged()
-            checkEmptyAdapter()
         }
     }
 
@@ -74,12 +73,12 @@ class AdminResReportAdapter(private var reportList: MutableList<SupportUser>, pr
         val reportCloseTextView: TextView = itemView.findViewById(R.id.rr_delete_txt)
     }
 
-    private fun checkEmptyAdapter() {
-        if (reportList.isEmpty()) {
-            noData.visibility = View.VISIBLE
-        } else {
-            noData.visibility = View.GONE
-        }
-    }
+//    private fun checkEmptyAdapter() {
+//        if (reportList.isEmpty()) {
+//            noData.visibility = View.VISIBLE
+//        } else {
+//            noData.visibility = View.GONE
+//        }
+//    }
 }
 

@@ -137,5 +137,5 @@ dependencies {
     implementation ("androidx.biometric:biometric:1.1.0")
 
     //admin
-    implementation ("com.google.firebase:firebase-admin:9.3.0")
+//    implementation ("com.google.firebase:firebase-admin:9.3.0")
 }
