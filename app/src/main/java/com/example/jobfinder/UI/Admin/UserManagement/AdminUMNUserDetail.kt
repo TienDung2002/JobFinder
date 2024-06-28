@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
@@ -19,7 +18,6 @@ import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.Utils.VerifyField
 import com.example.jobfinder.databinding.ActivityNuserDetailInfoBinding
-import com.example.jobfinder.databinding.DialogWalletDataBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -175,11 +173,7 @@ class AdminUMNUserDetail : AppCompatActivity() {
                         .child(notiId)
                         .setValue(newNoti)
                     dialog.dismiss() // Đóng dialog
-                } else{
-
                 }
-
-
             }
 
             cancelButton.setOnClickListener {
