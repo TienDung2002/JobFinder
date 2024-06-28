@@ -15,7 +15,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
@@ -206,7 +205,7 @@ class LoginActivity : AppCompatActivity() {
             val currentEmail = binding.userEmailLogin.text.toString().trim()
             lifecycleScope.launch {
                 val user = db.usersDao().getUserByEmail(currentEmail)
-                if (isEmailChanged || currentEmail != savedEmail || user == null || user.isBiometricEnabled) {
+                if (isEmailChanged || currentEmail != savedEmail || user == null || !user.isBiometricEnabled) {
                     val biometricActivationDialog = NotifyBiometricDialog(this@LoginActivity)
                     biometricActivationDialog.show()
                 } else {
