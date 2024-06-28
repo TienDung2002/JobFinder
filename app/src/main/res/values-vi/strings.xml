@@ -36,8 +36,8 @@
     <string name="fingerAuth_success">Xác thực thành công</string>
     <string name="fingerAuth_failed">Xác thực thất bại</string>
     <string name="fingerAuth_title">Đăng nhập bằng xác thực sinh trắc học</string>
-    <string name="fingerAuth_dialogtitle">Tài khoản chưa kích hoạt đăng nhập bằng sinh trắc</string>
-    <string name="fingerAuth_dialogSubtitle">Nếu bạn vừa thay đổi mật khẩu hoặc muốn đăng nhập bằng tài khoản khác, hãy sử dụng mật khẩu để đăng nhập và kích hoạt tính năng</string>
+    <string name="fingerAuth_dialogtitle">Kích hoạt sinh trắc thất bại</string>
+    <string name="fingerAuth_dialogSubtitle">Nếu bạn vừa thay đổi mật khẩu hoặc muốn đăng nhập bằng tài khoản khác, hãy sử dụng mật khẩu để đăng nhập một lần</string>
     <string name="fingerAuth_usePassword">Sử dụng mật khẩu</string>
 
 

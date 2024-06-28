@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -47,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var userType: String
-
+    private var isEmailChanged = false
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -173,23 +175,36 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // Theo dõi thay đổi email input để bật tắt sinh trắc bên dưới
+        binding.userEmailLogin.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val currentEmail = s.toString().trim()
+                val isEmailValid = currentEmail.isNotEmpty() && VerifyField.isValidEmail(currentEmail)
+                isEmailChanged = isEmailValid && currentEmail != savedEmail
+            }
+        })
+
         // Đăng nhập vân tay
         binding.btnFingerprintLogin.setOnClickListener {
-            // Kiểm tra trạng thái isBiometricEnabled db SQLite
             val db = RoomDB.getDatabase(applicationContext)
+            val currentEmail = binding.userEmailLogin.text.toString().trim()
             lifecycleScope.launch {
-                val user = db.usersDao().getUserByEmail(savedEmail)
-                if (user != null && user.isBiometricEnabled) {
+                val user = db.usersDao().getUserByEmail(currentEmail)
+                if (isEmailChanged || currentEmail != savedEmail || user == null || user.isBiometricEnabled) {
+                    val biometricActivationDialog = NotifyBiometricDialog(this@LoginActivity)
+                    biometricActivationDialog.show()
+                } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {   // Kiểm tra phiên bản SDK
                         setupBiometricPrompt(savedEmail, savedPass)
                         biometricPrompt.authenticate(promptInfo)
                     }
-                } else {
-                    val biometricActivationDialog = NotifyBiometricDialog(this@LoginActivity)
-                    biometricActivationDialog.show()
                 }
             }
         }
+
+
     }
 
     private fun checkToAutoFocus(vararg isValidFields: Boolean) {

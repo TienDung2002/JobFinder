@@ -36,8 +36,8 @@
     <string name="fingerAuth_success">Authorize success</string>
     <string name="fingerAuth_failed">Authorize failed</string>
     <string name="fingerAuth_title">Log in with biometric authentication</string>
-    <string name="fingerAuth_dialogtitle">The account has not been enabled for biometric login</string>
-    <string name="fingerAuth_dialogSubtitle">If you just changed your password or want to login with a different account, use your password to sign in and activate the feature.</string>
+    <string name="fingerAuth_dialogtitle">Biometric activation failed</string>
+    <string name="fingerAuth_dialogSubtitle">If you just changed your password or want to sign in with a different account, use your password to sign in again</string>
     <string name="fingerAuth_usePassword">Use account password</string>
 
 

@@ -109,6 +109,13 @@ class SettingsMenuFragment : Fragment() {
                         val credential = EmailAuthProvider.getCredential(currentUser.email!!, currentPassword)
                         currentUser.reauthenticate(credential).addOnCompleteListener { reauthTask ->
                             if (reauthTask.isSuccessful) {
+                                // Cập nhật trạng thái sinh trắc về false
+                                viewModel.getUserByEmail(currentUser.email!!) { user ->
+                                    user?.let {
+                                        it.isBiometricEnabled = false
+                                        viewModel.updateUser(it)
+                                    }
+                                }
                                 val activity = requireActivity() as SettingsActivity
                                 activity.replaceFragment(ChangePasswordFragment())
                                 alertDialog.dismiss()
