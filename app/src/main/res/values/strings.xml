@@ -314,7 +314,6 @@
     <string name="sort_defaultSelectJobType">All Type</string>
 
 
-
     <!--    List job item-->
     <string name="Ji_recName">Recruiter name</string>
     <string name="Ji_recAdd">Recruiter address</string>
@@ -545,6 +544,27 @@
     <string name="grid_admin_logout">Logout</string>
     <string name="grid_admin_changePass">Change Password</string>
     <string name="no_report">No report yet</string>
-
-
+    <string name="close_report">Close report</string>
+    <string name="report_response1">The issue you reported has been resolved. \n Thank you for your feedback.</string>
+    <string name="technic_title">Technical</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="report_title">Report</string>
+    <string name="buser">Recruiter</string>
+    <string name="nuser">Seeker</string>
+    <string name="registered_amount">Report the number of registered users of the application</string>
+    <string name="admin_income">Income from app per year</string>
+    <string name="unit">VND</string>
+    <string name="user_managerment_title">User management</string>
+    <string name="no_user">No registered user</string>
+    <string name="email_title">Email: </string>
+    <string name="phone_num_title">Phone number: </string>
+    <string name="address_title">Address: </string>
+    <string name="role_title">Role: </string>
+    <string name="add_cash_to_wallet_btn">Add cash</string>
+    <string name="disable_acc">Disable</string>
+    <string name="enable_acc">Enable</string>
+    <string name="blank_sector">Blank sector</string>
+    <string name="to_wallet2">into wallet by admin</string>
+    <string name="disabled_account">This account is disabled</string>
+    <string name="active">Active</string>
 </resources>

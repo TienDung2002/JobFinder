@@ -2,15 +2,14 @@ package com.example.jobfinder.UI.PostedJob
 
 import android.content.Context
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import com.example.jobfinder.Datas.Model.IncomeByJobTypeModel
+import com.example.jobfinder.Datas.Model.IncomeModel
 import com.example.jobfinder.Datas.Model.JobModel
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.Notifications.NotificationViewModel
 import com.example.jobfinder.Utils.GetData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -31,6 +30,8 @@ class PostedJobViewModel: ViewModel() {
     private val approvedJobDb = FirebaseDatabase.getInstance().getReference("ApprovedJob")
     private val walletAmountRef = FirebaseDatabase.getInstance().getReference("WalletAmount")
     private val notiRef = FirebaseDatabase.getInstance().getReference("Notifications")
+    private val bDatabase = FirebaseDatabase.getInstance().getReference("BUserExpense")
+    private val bDatabaseByJobId = FirebaseDatabase.getInstance().getReference("BUserExpenseByJobId")
 
     fun fetchPostedJobs(context: Context) {
 
@@ -56,8 +57,13 @@ class PostedJobViewModel: ViewModel() {
                         }
                         // khi doanh nghiệp fetch job thì việc đã đóng 7 ngày sau endTime thì sẽ xóa việc và hoàn số tiền còn lại từ việc về cho doanh nghiệp
                         if(GetData.countDaysBetweenDates(it.endTime.toString(), todayDate) >=7 && it.status == "closed"){
+                            val refundSalary = -it.totalSalary.toString().toDouble()
+                            val postDate = GetData.getDateFromString(it.postDate.toString())
+                            val jobTypeId = GetData.getIntFromJobType(it.jobType.toString())
                             // hoàn tiền
                             addWalletAmount(it.BUserId.toString(), it.totalSalary.toString().toFloat())
+                            pushExpenseToFirebaseByDate(it.BUserId.toString(), refundSalary.toString(), postDate)
+                            pushExpenseToFirebaseJobTypeId(it.BUserId.toString(), refundSalary.toString(), jobTypeId)
 
                             // thông báo
                             val bUserNotiDetail = "${context.getText(R.string.refund)} ${format.format(it.totalSalary.toString().toDouble())} " +
@@ -166,6 +172,50 @@ class PostedJobViewModel: ViewModel() {
             }
         }.addOnFailureListener { exception ->
             Log.e("addWalletAmount", "Failed to get wallet snapshot", exception)
+        }
+    }
+
+    private fun pushExpenseToFirebaseByDate(uid:String, expense:String, date:String){
+
+        val toFbDate = GetData.formatDateForFirebase(date)
+
+        bDatabase.child(uid).child(toFbDate).get().addOnSuccessListener {
+            if(it.exists()){
+                val expenseModel = it.getValue(IncomeModel::class.java)
+                if(expenseModel!= null) {
+                    val newExpense = expenseModel.incomeAmount.toString().toDouble() + expense.toDouble()
+                    val update = hashMapOf<String, Any>(
+                        "incomeAmount" to newExpense.toString()
+                    )
+                    bDatabase.child(uid).child(toFbDate).updateChildren(update)
+                }
+            }else{
+                val incomeModel = IncomeModel(date, expense)
+                bDatabase.child(uid).child(toFbDate).setValue(incomeModel)
+            }
+        }
+    }
+
+    private fun pushExpenseToFirebaseJobTypeId(uid:String, expense:String, jobTypeId:Int){
+
+        bDatabaseByJobId.child(uid).child(jobTypeId.toString()).get().addOnSuccessListener {
+            if(it.exists()){
+                val expenseModel = it.getValue(IncomeByJobTypeModel::class.java)
+                if(expenseModel!= null) {
+                    val newExpense = expenseModel.incomeAmount.toString().toDouble() + expense.toDouble()
+                    if(newExpense == 0.0){
+                        bDatabaseByJobId.child(uid).child(jobTypeId.toString()).removeValue()
+                    }else {
+                        val update = hashMapOf<String, Any>(
+                            "incomeAmount" to newExpense.toString())
+                        bDatabaseByJobId.child(uid).child(jobTypeId.toString())
+                            .updateChildren(update)
+                    }
+                }
+            }else{
+                val incomeModel = IncomeByJobTypeModel(jobTypeId.toString(), expense)
+                bDatabaseByJobId.child(uid).child(jobTypeId.toString()).setValue(incomeModel)
+            }
         }
     }
 

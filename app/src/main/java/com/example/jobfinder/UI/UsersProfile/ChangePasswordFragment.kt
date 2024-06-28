@@ -36,18 +36,18 @@ class ChangePasswordFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentChangePasswordBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backbtn.setOnClickListener(){
+        binding.backbtn.setOnClickListener{
             requireActivity().onBackPressed()
         }
 
-        binding.btnSave.setOnClickListener(){
+        binding.btnSave.setOnClickListener{
             val newPassword = binding.newPass.text.toString()
             val ConfNewPassword = binding.confirmNewPass.text.toString()
 

@@ -78,22 +78,38 @@ class RecruterEditProfileFragment : Fragment() {
                     val tax = snapshot.child("tax_code").getValue(String::class.java)
                     tax?.let {
                         viewModel.tax = it
-                        binding.editProfileTaxnum.setText(viewModel.tax)
+                        if(it == ""){
+                            binding.editProfileTaxnum.setText(R.string.blank_tax_code)
+                        }else {
+                            binding.editProfileTaxnum.setText(viewModel.tax)
+                        }
                     }
                     val description = snapshot.child("description").getValue(String::class.java)
                     description?.let {
                         viewModel.des = it
-                        binding.editProfileDescription.setText(viewModel.des)
+                        if(it == ""){
+                            binding.editProfileDescription.setText(R.string.no_job_des2)
+                        }else {
+                            binding.editProfileDescription.setText(viewModel.des)
+                        }
                     }
                     val busType = snapshot.child("business_type").getValue(String::class.java)
                     busType?.let {
                         viewModel.busType = it
-                        binding.editProfileBustype.text = viewModel.busType
+                        if(it == ""){
+                            binding.editProfileBustype.setText(R.string.error_invalid_BusSec)
+                        }else {
+                            binding.editProfileBustype.setText(viewModel.busType)
+                        }
                     }
                     val busSec = snapshot.child("business_sector").getValue(String::class.java)
                     busSec?.let {
                         viewModel.busSec = it
-                        binding.editProfileBusSec.text = viewModel.busSec
+                        if(it == ""){
+                            binding.editProfileBusSec.text = getString(R.string.blank_sector)
+                        }else {
+                            binding.editProfileBusSec.text = viewModel.busSec
+                        }
                     }
                 }
 

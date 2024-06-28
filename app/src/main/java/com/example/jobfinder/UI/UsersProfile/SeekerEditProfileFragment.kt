@@ -74,12 +74,20 @@ class SeekerEditProfileFragment : Fragment() {
                     val age = snapshot.child("age").getValue(String::class.java)
                     age?.let {
                         viewModel.age = it
-                        binding.editProfileAge.setText(viewModel.age)
+                        if (it == "") {
+                            binding.editProfileAge.setText(R.string.blank_age)
+                        } else {
+                            binding.editProfileAge.setText(viewModel.age)
+                        }
                     }
                     val gender = snapshot.child("gender").getValue(String::class.java)
                     gender?.let {
                         viewModel.gender = it
-                        binding.editProfileGender.setText(viewModel.gender)
+                        if (it == "") {
+                            binding.editProfileGender.setText(R.string.error_invalid_Gender)
+                        } else {
+                            binding.editProfileGender.setText(viewModel.gender)
+                        }
                     }
                 }
 

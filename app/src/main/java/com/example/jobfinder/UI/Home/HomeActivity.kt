@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.Admin.Home.AdminHomeActivity
 import com.example.jobfinder.UI.JobsManagement.JobsManagementActivity
@@ -24,6 +25,7 @@ import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityHomeBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -40,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
 
         //firebase
         auth = FirebaseAuth.getInstance()
+        val uid = auth.currentUser?.uid
 
         // Khởi tạo viewmodel
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
@@ -48,16 +51,28 @@ class HomeActivity : AppCompatActivity() {
         // Chỉ add fragment vào home khi trạng thái hiện tại là null (tránh xoay màn hình lại add lại gây lỗi)
         if (savedInstanceState == null) {
             addingFragmentInProgress = true
-            // gọi hàm getUserRole từ trong Utils.GetData
-            GetData.getUserRole { role ->
-                role?.let {
-                    // Gán giá trị chỉ khi role không null (logic là thế nhưng hàm getUserRole t cho trả về "null string" thay vì null)
-                    viewModel.userRole = it
-                    addFragmentDefault(viewModel.userRole)
-                    updateNavigationBar()
-                    addingFragmentInProgress = false
+
+            FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get()
+                .addOnSuccessListener { snapshot ->
+                    val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
+                    data?.let {
+                        val userRole = data.role
+                        if (data.accountStatus == "active") {
+                            viewModel.userRole = userRole.toString()
+                            addFragmentDefault(viewModel.userRole)
+                            updateNavigationBar()
+                            addingFragmentInProgress = false
+                        }else{
+                            // trả về result về login để đóng activity
+                            binding.animationView.visibility = View.GONE
+                            auth.signOut()
+                            val intent = Intent(this, SelectRoleActivity::class.java)
+                            startActivity(intent)
+                            Toast.makeText(this, R.string.disabled_account, Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                    }
                 }
-            }
         } else {
             // Khôi phục trạng thái của activity từ bundle
             viewModel.userRole = savedInstanceState.getString("userRole", "")

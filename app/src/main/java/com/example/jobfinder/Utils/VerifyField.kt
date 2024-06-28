@@ -71,6 +71,13 @@ object VerifyField {
         return empAmount.toInt() <=10
     }
 
+    fun isValidMinCash(amount:String):Boolean{
+        if(amount ==""){
+            return false
+        }
+        return amount.toFloat() > 0
+    }
+
     fun duplicatePhoneNum(phoneNum: String, callback: (Boolean) -> Unit) {
         FirebaseDatabase.getInstance().getReference("UserBasicInfo").get().addOnSuccessListener { dataSnapshot ->
             var isDuplicate = false

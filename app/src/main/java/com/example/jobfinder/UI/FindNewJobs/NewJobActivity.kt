@@ -53,6 +53,7 @@ class NewJobActivity : AppCompatActivity() {
     private var ftMaxSalary = 50000.0f
     private var ftStartHr = 0
     private var ftEndHr = 24
+    private var jobTypeId = 0
 
     private var isLoadingData: Boolean = true
 
@@ -236,7 +237,15 @@ class NewJobActivity : AppCompatActivity() {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         cusBindingFilter.workTypeSpinner.adapter = spinnerAdapter
 
+        cusBindingFilter.workTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                jobTypeId = position
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Xử lý khi không có mục nào được chọn
+            }
+        }
 
         // Seekbar lương slider
         cusBindingFilter.rangeslider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
@@ -294,7 +303,8 @@ class NewJobActivity : AppCompatActivity() {
             ftMaxSalary = 50000.0f
             ftStartHr = 0
             ftEndHr = 24
-            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr)
+            jobTypeId = 0
+            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr, jobTypeId)
         }
 
         // apply filter btn
@@ -303,7 +313,7 @@ class NewJobActivity : AppCompatActivity() {
             isFirstApplyFilter = false
             saveButtonUIState()
 
-            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr)
+            viewModel.sortFilter(ftJobTitle, ftRecTitle, ftPostTime, ftMinSalary, ftMaxSalary, ftStartHr, ftEndHr, jobTypeId)
 
             binding.rootNewJob.closeDrawer(GravityCompat.END)
         }

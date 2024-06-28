@@ -2,7 +2,6 @@ package com.example.jobfinder.Utils
 
 import android.app.Activity
 import android.net.Uri
-import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop

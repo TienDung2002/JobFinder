@@ -12,7 +12,7 @@
 
     <!--    top nav-->
     <RelativeLayout
-        android:id="@+id/activity_job_detail_top_nav"
+        android:id="@+id/activity_user_management_top_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
