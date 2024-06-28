@@ -28,18 +28,6 @@ import java.util.Date
 
 object GetData {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    fun getUserRole(callback: (String?) -> Unit) {
-        val uid = auth.currentUser?.uid
-        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get()
-            .addOnSuccessListener { snapshot ->
-                val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
-                val userRole = data?.role
-                callback(userRole)
-            }
-            .addOnFailureListener {
-                callback("null string") // Trả về null trong trường hợp có lỗi
-            }
-    }
 
     fun getCurrentDateTime(): String {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
