@@ -4,5 +4,6 @@ import com.example.jobfinder.Datas.Model.UserBasicInfoModel
 
 class BasicInfoAndRole (
     var userBasicInfo:UserBasicInfoModel,
-    var userRole:String
+    var userRole:String,
+    var accountStatus:String
 )

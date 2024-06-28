@@ -41,10 +41,19 @@ class AdminUMNUserDetail : AppCompatActivity() {
 
         val database = FirebaseDatabase.getInstance().reference
         val userId = intent.getStringExtra("uid")
+
+        val accStatus = intent.getStringExtra("accStatus")
+
+        if (accStatus != null){
+            if (accStatus == "active"){
+                binding.approveBtn.text = getString(R.string.disable_acc)
+            }else{
+                binding.approveBtn.text = getString(R.string.enable_acc)
+            }
+        }
         binding.desHolder.visibility = View.GONE
         binding.recyclerHolder.visibility = View.GONE
         binding.rejectBtn.text = getString(R.string.add_cash_to_wallet_btn)
-        binding.approveBtn.text = getString(R.string.disable_acc)
 
         binding.animationView.visibility = View.VISIBLE
 

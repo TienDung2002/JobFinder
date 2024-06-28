@@ -130,7 +130,12 @@ class LoginActivity : AppCompatActivity() {
                                         editor.putString("last_login_email", emailInput)
                                         editor.putString("last_login_password", passInput)
                                         editor.apply()
-                                        checkRole(data.role.toString(), userType)
+
+                                        if(data.accountStatus == "active") {
+                                            checkRole(data.role.toString(), userType)
+                                        }else{
+                                            Toast.makeText(applicationContext, getString(R.string.disabled_account), Toast.LENGTH_SHORT).show()
+                                        }
                                     } else {
                                         Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                     }
@@ -231,9 +236,14 @@ class LoginActivity : AppCompatActivity() {
                             if (uid != null) {
                                 FirebaseDatabase.getInstance().getReference("UserRole").child(uid)
                                     .get()
-                                    .addOnSuccessListener { snapshot -> val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
+                                    .addOnSuccessListener { snapshot ->
+                                        val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
                                         if (data != null) {
-                                            checkRole(data.role.toString(), userType)
+                                            if(data.accountStatus == "active") {
+                                                checkRole(data.role.toString(), userType)
+                                            }else{
+                                                Toast.makeText(applicationContext, getString(R.string.disabled_account), Toast.LENGTH_SHORT).show()
+                                            }
                                         } else {
                                             Toast.makeText(applicationContext, getString(R.string.login_failed), Toast.LENGTH_SHORT).show()
                                         }

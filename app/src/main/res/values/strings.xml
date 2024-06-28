@@ -562,4 +562,6 @@
     <string name="enable_acc">Enable</string>
     <string name="blank_sector">Blank sector</string>
     <string name="to_wallet2">into wallet by admin</string>
+    <string name="disabled_account">This account is disabled</string>
+    <string name="active">Active</string>
 </resources>

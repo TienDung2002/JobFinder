@@ -38,12 +38,17 @@ class BUserDetailInfoActivity : AppCompatActivity() {
         val database = FirebaseDatabase.getInstance().reference
 
         val userId = intent.getStringExtra("uid")
-        val from = intent.getStringExtra("fromAct")
+        val accStatus = intent.getStringExtra("accStatus")
 
         setUpBtn(userId.toString())
 
-        if (from!= null){
+        if (accStatus != null){
             binding.recuitterInfoBtnHolder.visibility = View.VISIBLE
+            if (accStatus == "active"){
+                binding.disableBtn.text = getString(R.string.disable_acc)
+            }else{
+                binding.disableBtn.text = getString(R.string.enable_acc)
+            }
         }
         userId?.let {
 

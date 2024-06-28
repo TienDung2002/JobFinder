@@ -55,7 +55,7 @@ class AdminUserManagActivity : AppCompatActivity() {
 
                     if (intent != null) {
                         intent.putExtra("uid", userInfo.userBasicInfo.user_id.toString())
-                        intent.putExtra("fromAct", "AdminAct")
+                        intent.putExtra("accStatus", userInfo.accountStatus.toString())
                         startActivityForResult(intent, REQUEST_CODE)
                     }
                     isActivityOpened = true

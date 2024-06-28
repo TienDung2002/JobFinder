@@ -24,9 +24,10 @@ class AdminUserManagementViewModel:ViewModel() {
                         .child(userInfo.key.toString()).get().addOnSuccessListener { roleSnapshot ->
                             if (roleSnapshot.exists()) {
                                 val role = roleSnapshot.child("role").getValue(String::class.java)
+                                val accStatus = roleSnapshot.child("accountStatus").getValue(String::class.java)
                                 val userInfoModel = userInfo.getValue(UserBasicInfoModel::class.java)
                                 userInfoModel?.let {
-                                    val infoAndRole = BasicInfoAndRole(it, role.toString())
+                                    val infoAndRole = BasicInfoAndRole(it, role.toString(), accStatus.toString())
                                     userList.add(infoAndRole)
                                 }
                             }

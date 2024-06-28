@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobfinder.Datas.Model.AdminModel.BasicInfoAndRole
 import com.example.jobfinder.R
@@ -31,6 +32,8 @@ class AdminUserManagementAdapter(private var userList: MutableList<BasicInfoAndR
         val phone_num: TextView = itemView.findViewById(R.id.phone_num)
         val address: TextView = itemView.findViewById(R.id.address)
         val role: TextView = itemView.findViewById(R.id.role)
+        val accStatus: TextView = itemView.findViewById(R.id.acc_status)
+        val accStatusTitle: TextView = itemView.findViewById(R.id.acc_status_title)
         val avt:ImageView = itemView.findViewById(R.id.UM_user_avt)
     }
 
@@ -50,12 +53,20 @@ class AdminUserManagementAdapter(private var userList: MutableList<BasicInfoAndR
         holder.email.text = "${holder.itemView.context.getString(R.string.email_title)} ${userInfo.userBasicInfo.email}"
         holder.phone_num.text = userInfo.userBasicInfo.phone_num
         holder.address.text = userInfo.userBasicInfo.address
+        holder.accStatusTitle.text = "${holder.itemView.context.getString(R.string.status)}: "
 
         if(userInfo.userRole == "BUser"){
             holder.role.text = "${holder.itemView.context.getString(R.string.role_title)} ${holder.itemView.context.getString(R.string.buser)}"
         }
         if(userInfo.userRole == "NUser"){
             holder.role.text = "${holder.itemView.context.getString(R.string.role_title)} ${holder.itemView.context.getString(R.string.nuser)}"
+        }
+        if(userInfo.accountStatus == "active"){
+            holder.accStatus.text = holder.itemView.context.getString(R.string.active)
+            holder.accStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.income_color))
+        }else{
+            holder.accStatus.text = holder.itemView.context.getString(R.string.disable_acc)
+            holder.accStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.expense_color))
         }
 
         RetriveImg.retrieveImage(userInfo.userBasicInfo.user_id.toString(), holder.avt)
