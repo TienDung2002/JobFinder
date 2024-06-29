@@ -13,6 +13,13 @@
         android:background="@color/home_bg"
         android:padding="15dp">
 
+        <Button
+            android:id="@+id/backbtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/transparent_background"
+            android:drawableStart="@drawable/ic_back24px" />
+
         <TextView
             android:id="@+id/payment_ordertitle"
             android:layout_width="wrap_content"
@@ -20,6 +27,8 @@
             android:text="Xác nhận thanh toán"
             android:textSize="24sp"
             android:textColor="@color/black"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/backbtn"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"/>
 
@@ -55,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_below="@+id/content_section"
+            android:foreground="?android:attr/selectableItemBackground"
             android:text="Thanh toán bằng ZaloPay"
             android:background="@color/primary_color4"
             android:layout_centerHorizontal="true"

@@ -40,5 +40,7 @@
 
     <color name="bg_barChart">#5358C1</color>
     <color name="filter_color">#95C4CA</color>
+    <color name="payment_success_color">#77CC00</color>
+
 
 </resources>

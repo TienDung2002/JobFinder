@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import com.example.jobfinder.Datas.Api.CreateOrder
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.databinding.ActivityWalletBinding
@@ -17,6 +19,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private var isExpanded = true
     private lateinit var fadeInAnimation: Animation
     private lateinit var fadeOutAnimation: Animation
+    private val PAYMENT_REQUEST_CODE = 1001
     private var backCheck = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +87,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
                 val intent = Intent(this, ZaloPaymentOrderActivity::class.java)
                 intent.putExtra("amount", inputNumDouble)
                 startActivity(intent)
-
             }
         }
     }
@@ -134,4 +136,5 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             binding.addWalletFtTxt.isClickable = true
         }
     }
+
 }

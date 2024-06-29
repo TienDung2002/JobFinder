@@ -1,7 +1,10 @@
 package com.example.jobfinder.Datas.Api;
 
-import com.zlpdemo.merchantDemo.Constant.AppInfo;
-import com.zlpdemo.merchantDemo.Helper.Helpers;
+import android.util.Log;
+
+import com.example.jobfinder.Datas.Constant.AppInfo;
+import com.example.jobfinder.Datas.Helper.Helpers;
+
 
 import org.json.JSONObject;
 
@@ -48,6 +51,7 @@ public class CreateOrder {
     }
 
      public JSONObject createOrder(String amount) throws Exception {
+
         CreateOrderData input = new CreateOrderData(amount);
 
         RequestBody formBody = new FormBody.Builder()
@@ -63,7 +67,16 @@ public class CreateOrder {
                 .add("mac", input.Mac)
                 .build();
 
+        Log.d("CreateOrder", "Sending request with data: " + formBody.toString());
+
         JSONObject data = HttpProvider.sendPost(AppInfo.URL_CREATE_ORDER, formBody);
+
+         if (data == null) {
+             throw new Exception("Response data is null");
+         }
+
+         Log.d("CreateOrder", "Response data: " + data.toString());
+
         return data;
     }
 }
