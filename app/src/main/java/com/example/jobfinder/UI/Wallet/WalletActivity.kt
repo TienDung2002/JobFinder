@@ -78,10 +78,10 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
         }
 
         binding.confirmNum.setOnClickListener {
-            val inputNum = binding.inputNum.text
-            val inputNumDouble = inputNum.toString().toDoubleOrNull()
+            val inputNum = binding.inputNum.text.toString()
+            val inputNumDouble = inputNum.toDoubleOrNull()
 
-            if (inputNum.isNullOrEmpty()) {
+            if (inputNum.isEmpty() || inputNum.toInt() <= 0) {
                 Toast.makeText(this, "Nhập số tiền muốn nạp!", Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, ZaloPaymentOrderActivity::class.java)
