@@ -49,6 +49,11 @@ dependencies {
     implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.fragment:fragment-ktx:1.5.6")
+    implementation(fileTree(mapOf(
+        "dir" to "E:\\zalopay",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
 
     val retrofitVersion = "2.9.0";
     val lifecycleVersion = "2.7.0";

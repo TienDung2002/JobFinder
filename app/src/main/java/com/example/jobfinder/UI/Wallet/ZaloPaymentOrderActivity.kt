@@ -8,23 +8,18 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Api.CreateOrder
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.Home.HomeActivity
 import com.example.jobfinder.UI.Notifications.NotificationViewModel
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
-import com.example.jobfinder.UI.WorkingJob.WorkingJobActivity
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.PreventDoubleClick
 import com.example.jobfinder.databinding.ActivityZaloPaymentOrderBinding
-import com.google.firebase.auth.FirebaseAuth
 import vn.zalopay.sdk.Environment
 import vn.zalopay.sdk.ZaloPayError
 import vn.zalopay.sdk.ZaloPaySDK
@@ -78,35 +73,42 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
                 try {
                     val data = orderApi.createOrder(amountString)
                     val code = data.getString("return_code")
-                    Log.d("return_code", code)
                     val message: String = data.optString("return_message", "Không xác định")
+
 
                     if (code == "1") {
                         val token: String = data.getString("zp_trans_token")
 
                         ZaloPaySDK.getInstance().payOrder(this@ZaloPaymentOrderActivity, token, "demozpdk://app", object : PayOrderListener {
                             override fun onPaymentSucceeded(var1: String, var2: String, var3: String) {
-                                val detailNotify = getString(R.string.deposit) + format.format(amountString)
+                                val detailNotify = "${getString(R.string.deposit)} ${format.format(amountString.toInt())}"
                                 val today = GetData.getCurrentDateTime()
 
-                                if (uid != null) {
-                                    postJobVm.addWalletAmount(uid, amountString.toFloat())
-                                    notifyVM.addNotiForCurrUser("Admin", detailNotify, today)
-                                }
+                                val intent = Intent(this@ZaloPaymentOrderActivity, WalletActivity::class.java )
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                postJobVm.addWalletAmount(uid.toString(), amountString.toFloat())
+                                notifyVM.addNotificationForUser(uid.toString(),"Admin", detailNotify, today)
+
+                                startActivity(intent)
 
                                 showPaymentResultDialog("Thanh toán thành công: $var1, $var2, $var3", R.drawable.ic_payment_success)
                             }
-
+//
                             override fun onPaymentCanceled(var1: String, var2: String) {
                                 showPaymentResultDialog("Thanh toán bị hủy: $var1, $var2", R.drawable.ic_payment_failed)
+                                val intent = Intent(this@ZaloPaymentOrderActivity, WalletActivity::class.java )
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                startActivity(intent)
                             }
-
+//
                             override fun onPaymentError(var1: ZaloPayError, var2: String, var3: String) {
                                 showPaymentResultDialog("Lỗi thanh toán: $var1, $var2, $var3", R.drawable.ic_payment_failed)
+                                val intent = Intent(this@ZaloPaymentOrderActivity, WalletActivity::class.java )
+                                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                                startActivity(intent)
                             }
                         })
                     } else {
-                        showPaymentResultDialog("Tạo đơn hàng thất bại: $message", R.drawable.ic_payment_failed)
                         Log.d("createOrderFailed", message)
                     }
                 } catch (e: Exception) {
@@ -118,7 +120,7 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
     }
 
     // Nếu thanh toán xong thành công sẽ trả về kết quả
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         ZaloPaySDK.getInstance().onResult(intent)
     }
