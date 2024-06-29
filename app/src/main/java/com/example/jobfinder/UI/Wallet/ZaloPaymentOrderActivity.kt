@@ -85,13 +85,14 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
                                 val today = GetData.getCurrentDateTime()
 
                                 val intent = Intent(this@ZaloPaymentOrderActivity, WalletActivity::class.java )
+                                intent.putExtra("var1", var1)
+                                intent.putExtra("var2", var2)
+                                intent.putExtra("var3", var3)
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                                 postJobVm.addWalletAmount(uid.toString(), amountString.toFloat())
                                 notifyVM.addNotificationForUser(uid.toString(),"Admin", detailNotify, today)
-
                                 startActivity(intent)
 
-                                showPaymentResultDialog("Thanh toán thành công: $var1, $var2, $var3", R.drawable.ic_payment_success)
                             }
 //
                             override fun onPaymentCanceled(var1: String, var2: String) {

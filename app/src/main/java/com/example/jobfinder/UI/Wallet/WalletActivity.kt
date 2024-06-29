@@ -1,6 +1,7 @@
 package com.example.jobfinder.UI.Wallet
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.example.jobfinder.Datas.Api.CreateOrder
 import com.example.jobfinder.R
@@ -36,6 +39,15 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             // Đảo ngược trạng thái mở rộng và cập nhật giao diện
             isExpanded = !isExpanded
             updateFABVisibility()
+        }
+
+        val var1 = intent.getStringExtra("var1")
+        val var2 = intent.getStringExtra("var2")
+        val var3 = intent.getStringExtra("var3")
+
+        if(var1 != null && var2 != null && var3 != null){
+            
+            showPaymentResultDialog("Thanh toán thành công: $var1, $var2", R.drawable.ic_payment_success)
         }
 
         // add fragment mặc định khi mới mở
@@ -135,6 +147,24 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             binding.walletHistoryFtTxt.isClickable = true
             binding.addWalletFtTxt.isClickable = true
         }
+    }
+
+    private fun showPaymentResultDialog(message: String, imageResId: Int) {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.zalo_dialog_payment_result)
+
+        val resultImage = dialog.findViewById<ImageView>(R.id.result_image)
+        val resultText = dialog.findViewById<TextView>(R.id.result_text)
+        val closeButton = dialog.findViewById<TextView>(R.id.close_button)
+
+        resultImage.setImageResource(imageResId)
+        resultText.text = message
+
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
 }
