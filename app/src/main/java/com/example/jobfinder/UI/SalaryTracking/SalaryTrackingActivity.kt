@@ -138,7 +138,6 @@ class SalaryTrackingActivity : AppCompatActivity() {
         if (list.isEmpty()) {
             binding.noSalaryTracking.visibility = View.VISIBLE
             binding.animationView.visibility = View.GONE
-            binding.titleHolder.visibility = View.GONE
         } else {
             binding.noSalaryTracking.visibility = View.GONE
             binding.animationView.visibility = View.GONE
