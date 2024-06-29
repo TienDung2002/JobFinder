@@ -64,13 +64,6 @@ class BUserStatisticalActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.statisticalSwipe.setOnRefreshListener {
-            Handler(Looper.getMainLooper()).postDelayed({
-                drawChartBuser()
-                binding.statisticalSwipe.isRefreshing = false
-            }, 1000)
-        }
-
         binding.PiechatTitle.setText(R.string.Sta_expense_each_typeJob)
 
 
@@ -451,7 +444,6 @@ class BUserStatisticalActivity : AppCompatActivity() {
         workHourViewModel.amountJobPostList.observe(this){AmountJobPostList ->
             val workHourMap = IncomeHandle.calculateWorkHoursByMonth(AmountJobPostList, todayDate.year)
             workHourMap.forEach { (weekNumber, total) ->
-                Log.d("dkjbfkjds","Tuần $weekNumber: Tổng thu nhập = $total")
             }
             drawLineChart(legend, lineChart, workHourMap)
         }

@@ -58,13 +58,6 @@ class AdminStatisticalActivity : AppCompatActivity() {
 
         binding.pieChartWrap.visibility = View.GONE
 
-        binding.statisticalSwipe.setOnRefreshListener {
-            Handler(Looper.getMainLooper()).postDelayed({
-                drawChartNuser()
-                binding.statisticalSwipe.isRefreshing = false
-            }, 1000)
-        }
-
         drawChartNuser()
 
         // Dialog Barchart
