@@ -6,6 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -60,6 +62,13 @@ class StatisticalActivity : AppCompatActivity() {
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
+        }
+
+        binding.statisticalSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                drawChartNuser()
+                binding.statisticalSwipe.isRefreshing = false
+            }, 1000)
         }
 
         drawChartNuser()

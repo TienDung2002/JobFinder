@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
@@ -55,6 +57,13 @@ class AdminStatisticalActivity : AppCompatActivity() {
         }
 
         binding.pieChartWrap.visibility = View.GONE
+
+        binding.statisticalSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                drawChartNuser()
+                binding.statisticalSwipe.isRefreshing = false
+            }, 1000)
+        }
 
         drawChartNuser()
 
