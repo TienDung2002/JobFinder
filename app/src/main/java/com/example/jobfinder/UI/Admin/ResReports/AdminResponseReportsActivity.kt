@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -38,6 +40,14 @@ class AdminResponseReportsActivity : AppCompatActivity() {
 
         setupViewPager()
         removeTabMargins(tabLayout)
+
+        binding.RRSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                setupViewPager()
+                removeTabMargins(tabLayout)
+                binding.RRSwipe.isRefreshing = false
+            }, 1000)
+        }
 
     }
 

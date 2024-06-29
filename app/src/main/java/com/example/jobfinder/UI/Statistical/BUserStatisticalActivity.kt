@@ -6,6 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -442,7 +444,6 @@ class BUserStatisticalActivity : AppCompatActivity() {
         workHourViewModel.amountJobPostList.observe(this){AmountJobPostList ->
             val workHourMap = IncomeHandle.calculateWorkHoursByMonth(AmountJobPostList, todayDate.year)
             workHourMap.forEach { (weekNumber, total) ->
-                Log.d("dkjbfkjds","Tuần $weekNumber: Tổng thu nhập = $total")
             }
             drawLineChart(legend, lineChart, workHourMap)
         }

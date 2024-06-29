@@ -7,15 +7,15 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.PopupMenu
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
@@ -88,6 +88,29 @@ class NewJobActivity : AppCompatActivity() {
             }
         })
 
+        //refresh activity
+        binding.findJobSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.refreshFetchJobs()
+                //reset filter
+                defaultSelectionUIFilter()
+                saveButtonUIState()
+                ftJobTitle =0
+                ftRecTitle =0
+                ftPostTime =1
+                ftShift =0
+                ftMinSalary = 0.0f
+                ftMaxSalary = 50000.0f
+                ftStartHr = 0
+                ftEndHr = 24
+                jobTypeId = 0
+                //reset search
+                binding.searchView.clearFocus()
+                binding.searchView.setQuery("", false)
+                binding.findJobSwipe.isRefreshing = false
+            }, 1000)
+        }
+
 
         isLoadingData = true
         // Cập nhật adapter khi có dữ liệu mới từ ViewModel
@@ -96,26 +119,6 @@ class NewJobActivity : AppCompatActivity() {
             adapter.updateData(newItem)
             isLoadingData = false
             checkEmptyAdapter(newItem)
-        }
-
-
-        // Cập nhật adapter khi sử dụng filter để sắp xếp
-//        viewModel.sortedJobsLiveData.observe(this) { sortedList ->
-//            adapter.updateData(sortedList)
-//            checkEmptyAdapter(sortedList)
-//        }
-
-        // Hiển thị hoặc ẩn animationView dựa vào trạng thái loading
-//        viewModel._isLoading.observe(this) { isLoading ->
-//            binding.animationView.visibility = if (isLoading) View.VISIBLE else View.GONE
-//        }
-
-        // lắng nghe event được gửi về từ activity đích (activity jobDetail của nhà tuyển dụng)
-        val startJobDetails = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                // Xử lí dữ liệu nhận về nếu cần thiết
-            }
-            isJobDetailActivityOpen = false
         }
 
         // Click vào từng item trong recycler

@@ -1,6 +1,8 @@
 package com.example.jobfinder.UI.Notifications
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +38,13 @@ class NotificationsFragment : Fragment() {
         binding.deleteAll.setOnClickListener{
             viewModel.deleteAllNoti()
             viewModel.fetchNotificationsFromFirebase()
+        }
+
+        binding.notiSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.fetchNotificationsFromFirebase()
+                binding.notiSwipe.isRefreshing = false
+            }, 1000)
         }
 
         // Quan sát dữ liệu trong ViewModel và cập nhật giao diện khi có thay đổi

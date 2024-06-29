@@ -3,6 +3,8 @@ package com.example.jobfinder.UI.PostedJob
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +34,13 @@ class PostedJobActivity : AppCompatActivity() {
         adapter = PostedJobAdapter(this, listOf())
         binding.recyclerPostedJob.adapter = adapter
         binding.recyclerPostedJob.layoutManager = LinearLayoutManager(this)
+
+        binding.swipeLayout.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.fetchPostedJobs(binding.root.context)
+                binding.swipeLayout.isRefreshing = false
+            }, 1000)
+        }
 
         adapter.setOnItemClickListener(object : PostedJobAdapter.OnItemClickListener {
             override fun onItemClick(job: JobModel) {

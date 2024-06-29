@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -31,6 +33,14 @@ class NUserWorkingJobActivity : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             sendResultAndFinish()
+        }
+
+        binding.nuserJobManagementSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                setupViewPager()
+                removeTabMargins(tabLayout)
+                binding.nuserJobManagementSwipe.isRefreshing = false
+            }, 1000)
         }
 
         viewPager = binding.viewPager

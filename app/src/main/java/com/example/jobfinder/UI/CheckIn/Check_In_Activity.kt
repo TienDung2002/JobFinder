@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +46,13 @@ class Check_In_Activity : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             sendResultAndFinish()
+        }
+
+        binding.checkInSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.fetchApprovedJobForCheckIn()
+                binding.checkInSwipe.isRefreshing = false
+            }, 1000)
         }
 
 

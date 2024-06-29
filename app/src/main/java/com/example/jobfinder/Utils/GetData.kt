@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.example.jobfinder.Datas.Model.idAndRole
 import com.example.jobfinder.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -28,18 +27,6 @@ import java.util.Date
 
 object GetData {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    fun getUserRole(callback: (String?) -> Unit) {
-        val uid = auth.currentUser?.uid
-        FirebaseDatabase.getInstance().getReference("UserRole").child(uid.toString()).get()
-            .addOnSuccessListener { snapshot ->
-                val data: idAndRole? = snapshot.getValue(idAndRole::class.java)
-                val userRole = data?.role
-                callback(userRole)
-            }
-            .addOnFailureListener {
-                callback("null string") // Trả về null trong trường hợp có lỗi
-            }
-    }
 
     fun getCurrentDateTime(): String {
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())

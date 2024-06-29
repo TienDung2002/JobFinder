@@ -47,10 +47,6 @@
             android:exported="false"
             android:theme="@style/FullScreenTheme" />
         <activity
-            android:name=".UI.Admin.Finance.AdminFinanceActivity"
-            android:exported="false"
-            android:theme="@style/FullScreenTheme" />
-        <activity
             android:name=".UI.Admin.Statistical.AdminStatisticalActivity"
             android:exported="false"
             android:theme="@style/FullScreenTheme" />

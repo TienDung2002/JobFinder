@@ -6,6 +6,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -48,6 +50,11 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
         if(var1 != null && var2 != null && var3 != null){
             
             showPaymentResultDialog("Thanh toán thành công: $var1, $var2", R.drawable.ic_payment_success)
+        binding.walletSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
+                binding.walletSwipe.isRefreshing = false
+            }, 1000)
         }
 
         // add fragment mặc định khi mới mở
