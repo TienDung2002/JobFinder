@@ -1,6 +1,8 @@
 package com.example.jobfinder.UI.JobHistory
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -36,6 +38,13 @@ class BUserJobHistoryActivity : AppCompatActivity() {
         }
 
         viewModel.fetchBUserJobHistoryId()
+
+        binding.buserJobHistorySwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.fetchBUserJobHistoryId()
+                binding.buserJobHistorySwipe.isRefreshing = false
+            }, 1000)
+        }
 
     }
 

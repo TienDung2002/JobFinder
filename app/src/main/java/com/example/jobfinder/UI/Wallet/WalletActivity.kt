@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -32,6 +34,13 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             // Đảo ngược trạng thái mở rộng và cập nhật giao diện
             isExpanded = !isExpanded
             updateFABVisibility()
+        }
+
+        binding.walletSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
+                binding.walletSwipe.isRefreshing = false
+            }, 1000)
         }
 
         // add fragment mặc định khi mới mở

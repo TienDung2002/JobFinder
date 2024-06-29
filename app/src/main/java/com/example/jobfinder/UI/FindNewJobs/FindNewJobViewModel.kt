@@ -75,6 +75,53 @@ class FindNewJobViewModel : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun refreshFetchJobs() {
+        val uid = GetData.getCurrentUserId()
+        if(uid!= null) {
+            //lấy danh sách Việc đã trúng tuyển
+            approvedJobDb.child(uid).get().addOnSuccessListener { approvedJobSnapshot->
+                val approvedJobIdList: MutableList<String> = mutableListOf()
+                approvedJobSnapshot.children.forEach{
+                    val approvedJobId = it.key.toString()
+                    approvedJobIdList.add(approvedJobId)
+                }
+                database.get().addOnSuccessListener { dataSnapshot ->
+                    dataSnapshot.children.forEach {userSnapshot->
+                        val buserId = userSnapshot.key.toString()
+                        val tempList: MutableList<JobModel> = mutableListOf()
+                        val recruitingJobList: MutableList<JobModel> = mutableListOf()
+                        userSnapshot.children.forEach { jobSnapshot ->
+                            val jobModel = jobSnapshot.getValue(JobModel::class.java)
+                            jobModel?.let {
+                                it.status = GetData.setStatus(
+                                    it.startTime.toString(),
+                                    it.endTime.toString(),
+                                    it.empAmount.toString(),
+                                    it.numOfRecruited.toString()
+                                )
+
+                                if (it.status == "closed") {
+                                    deleteAppliedJob(it.jobId.toString())
+                                }
+                                tempList.add(it)
+                                // kiểm tra nếu công việc có trạng thái đang tuyển và không nằm trong danh sách đã trúng tuyển
+                                if (it.status == "recruiting" && !approvedJobIdList.contains(it.jobId.toString())) { // check trạng thái công việc cho vào viewmodel để hiển thị
+                                    recruitingJobList.add(it)
+                                }
+                            }
+                        }
+                        _jobsListLiveData.value = recruitingJobList
+                        sortFilter(0, 0, 1, 0.0f, 50000.0f, 0, 24, 0)
+
+                        updateStatusToFirebase(buserId, tempList)
+
+                    }
+                }
+            }
+        }
+    }
+
 
     fun getJobsList(): List<JobModel> {
         return OriginJobsList

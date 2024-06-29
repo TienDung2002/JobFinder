@@ -3,6 +3,8 @@ package com.example.jobfinder.UI.Applicants
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -54,6 +56,13 @@ class ActivityApplicantsList : AppCompatActivity() {
 
             binding.backButton.setOnClickListener {
                 sendResultAndFinish(job)
+            }
+
+            binding.applicantSwipe.setOnRefreshListener {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    viewModel.fetchApplicant(job.jobId.toString())
+                    binding.applicantSwipe.isRefreshing = false
+                }, 1000)
             }
 
         }

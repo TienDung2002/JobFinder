@@ -66,19 +66,6 @@ class WalletFragment : Fragment() {
                         format.maximumFractionDigits = 0
                         format.currency = Currency.getInstance("VND")
                         binding.amountInWalletAmount.setText(format.format(amount?.toDouble()))
-                } else {
-                    val walletAmount = walletAmountModel("0.0đ")
-                    FirebaseDatabase.getInstance()
-                        .getReference("WalletAmount")
-                        .child(uid.toString())
-                        .setValue(walletAmount)
-                        .addOnSuccessListener {
-                            // Xử lý khi tạo giá trị mới thành công
-                            binding.amountInWalletAmount.text= "0.0đ"
-                        }
-                        .addOnFailureListener {
-                            // Xử lý khi tạo giá trị mới không thành công
-                        }
                 }
                 dataLoadListener.onDataLoaded()
             }

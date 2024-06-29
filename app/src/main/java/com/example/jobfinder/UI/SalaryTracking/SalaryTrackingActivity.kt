@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -107,6 +109,17 @@ class SalaryTrackingActivity : AppCompatActivity() {
             viewModel.fetchSalary(approved_job.jobId.toString())
 
             viewModel.fetchJob(approved_job.jobId.toString(), approved_job.buserId.toString())
+
+            binding.salaryTrackingSwipe.setOnRefreshListener {
+                Handler(Looper.getMainLooper()).postDelayed({
+
+                    viewModel.fetchCheckIn(approved_job.jobId.toString())
+                    viewModel.fetchSalary(approved_job.jobId.toString())
+                    viewModel.fetchJob(approved_job.jobId.toString(), approved_job.buserId.toString())
+
+                    binding.salaryTrackingSwipe.isRefreshing = false
+                }, 1000)
+            }
 
         }
     }

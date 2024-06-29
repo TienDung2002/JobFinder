@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -34,6 +36,15 @@ class AdminUserManagActivity : AppCompatActivity() {
             val resultIntent = Intent()
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
+        }
+
+        binding.UMSwipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewModel.fetchUserList()
+                binding.searchView.clearFocus()
+                binding.searchView.setQuery("", false)
+                binding.UMSwipe.isRefreshing = false
+            }, 1000)
         }
 
         adapter = AdminUserManagementAdapter(mutableListOf())
