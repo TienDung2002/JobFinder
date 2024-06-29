@@ -61,17 +61,17 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
                 viewModel.isDataLoaded = false
                 binding.inputNum.setText("")
                 binding.inputNum.clearFocus()
-                FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
                 binding.walletSwipe.isRefreshing = false
             }, 1000)
         }
 
         // add fragment mặc định khi mới mở
-        FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
+        FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
 
         binding.addWalletFtBtn.setOnClickListener {
             // Thay thế com.example.jobfinder.UI.Wallet.WalletFragment bằng AddWalletFragment
-            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
+            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment(binding.ZalopaySection))
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
@@ -79,7 +79,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
 
         binding.addWalletFtTxt.setOnClickListener {
             // Thay thế com.example.jobfinder.UI.Wallet.WalletFragment bằng AddWalletFragment
-            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment())
+            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, AddWalletFragment(binding.ZalopaySection))
             binding.walletTitle.setText(R.string.add_wallet)
             backCheck = true
         }
@@ -95,7 +95,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
         // back bằng nút trên màn hình
         binding.backButton.setOnClickListener{
             if(backCheck){
-                FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
+                FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
                 binding.walletTitle.setText(R.string.wallet_title)
                 backCheck= false
             }else {
@@ -193,7 +193,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             val var3 = data?.getStringExtra("var3")
             val err = data?.getStringExtra("error")
             viewModel.isDataLoaded = false
-            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
+            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
 
             if(var1!= null && var2!= null && var3!= null && err == "none") {
                 showPaymentResultDialog("Thanh toán thành công: $var1, $var2, $var3", R.drawable.ic_payment_success)

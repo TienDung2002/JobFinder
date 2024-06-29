@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import java.text.NumberFormat
 import java.util.Currency
 
-class WalletFragment : Fragment() {
+class WalletFragment(private val zaloPayment: RelativeLayout) : Fragment() {
     private lateinit var binding: FragmentWalletBinding
     private lateinit var walletAdapter: WalletAdapter
     private lateinit var auth: FirebaseAuth
@@ -53,6 +54,8 @@ class WalletFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid
+
+        zaloPayment.visibility= View.VISIBLE
 
         FirebaseDatabase.getInstance()
             .getReference("WalletAmount")

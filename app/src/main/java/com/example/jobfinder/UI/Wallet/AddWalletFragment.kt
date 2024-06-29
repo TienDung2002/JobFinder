@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.PopupMenu
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -24,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class AddWalletFragment : Fragment() {
+class AddWalletFragment(private val zaloPayment: RelativeLayout) : Fragment() {
     private lateinit var binding: FragmentAddWalletBinding
     private var pickedColor = "blue"
     private lateinit var auth: FirebaseAuth
@@ -50,6 +51,8 @@ class AddWalletFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.imageMainAddWalletImage.setImageResource(R.drawable.img_mask_group)
+
+        zaloPayment.visibility= View.GONE
 
         binding.txtBank.isClickable = true
         binding.addCardBtn.isClickable = true
