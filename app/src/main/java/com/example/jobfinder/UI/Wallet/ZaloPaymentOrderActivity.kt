@@ -84,29 +84,39 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
                                 val detailNotify = "${getString(R.string.deposit)} ${format.format(amountString.toInt())}"
                                 val today = GetData.getCurrentDateTime()
 
-                                val intent = Intent(this@ZaloPaymentOrderActivity, WalletActivity::class.java )
-                                intent.putExtra("var1", var1)
-                                intent.putExtra("var2", var2)
-                                intent.putExtra("var3", var3)
+                                Log.d("sdsdfds", "Thanh toán thành công: $var1, $var2, $var3")
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                                 postJobVm.addWalletAmount(uid.toString(), amountString.toFloat())
                                 notifyVM.addNotificationForUser(uid.toString(),"Admin", detailNotify, today)
-                                startActivity(intent)
 
+                                val resultIntent = Intent()
+                                resultIntent.putExtra("var1", var1)
+                                resultIntent.putExtra("var2", var2)
+                                resultIntent.putExtra("var3", var3)
+                                resultIntent.putExtra("error", "none")
+                                setResult(Activity.RESULT_OK, resultIntent)
+                                finish()
                             }
 //
                             override fun onPaymentCanceled(var1: String, var2: String) {
-                                showPaymentResultDialog("Thanh toán bị hủy: $var1, $var2", R.drawable.ic_payment_failed)
-                                val intent = Intent(this@ZaloPaymentOrderActivity, WalletActivity::class.java )
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                startActivity(intent)
+                                val resultIntent = Intent()
+                                resultIntent.putExtra("var1", var1)
+                                resultIntent.putExtra("var2", var2)
+                                resultIntent.putExtra("error", "none")
+                                setResult(Activity.RESULT_OK, resultIntent)
+                                finish()
                             }
 //
                             override fun onPaymentError(var1: ZaloPayError, var2: String, var3: String) {
-                                showPaymentResultDialog("Lỗi thanh toán: $var1, $var2, $var3", R.drawable.ic_payment_failed)
-                                val intent = Intent(this@ZaloPaymentOrderActivity, WalletActivity::class.java )
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                                startActivity(intent)
+                                val resultIntent = Intent()
+                                resultIntent.putExtra("var1", var1)
+                                resultIntent.putExtra("var2", var2)
+                                resultIntent.putExtra("var3", var3)
+                                resultIntent.putExtra("error", var1)
+                                setResult(Activity.RESULT_OK, resultIntent)
+                                finish()
                             }
                         })
                     } else {
