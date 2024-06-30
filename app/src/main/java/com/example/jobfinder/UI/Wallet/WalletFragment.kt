@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobfinder.Datas.Model.WalletRowModel
 import com.example.jobfinder.Datas.Model.walletAmountModel
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.FragmentWalletBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -57,24 +58,30 @@ class WalletFragment(private val zaloPayment: RelativeLayout) : Fragment() {
 
         zaloPayment.visibility= View.VISIBLE
 
-        FirebaseDatabase.getInstance()
-            .getReference("WalletAmount")
-            .child(uid.toString())
-            .get()
-            .addOnSuccessListener { data ->
-                if (data.exists()) {
-                    val amount = data.child("amount").getValue(String::class.java)
-                        // Chuyển sang vnd (chỉ hiển thị còn tính toán như bth)
-                        val format = NumberFormat.getCurrencyInstance()
-                        format.maximumFractionDigits = 0
-                        format.currency = Currency.getInstance("VND")
-                        binding.amountInWalletAmount.setText(format.format(amount?.toDouble()))
-                }
-                dataLoadListener.onDataLoaded()
-            }
-            .addOnFailureListener {
-                // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
-            }
+        viewModel.fetchWalletAmount(uid.toString())
+
+        viewModel.walletAmount.observe(viewLifecycleOwner){ amount->
+            binding.amountInWalletAmount.text =amount
+        }
+
+//        FirebaseDatabase.getInstance()
+//            .getReference("WalletAmount")
+//            .child(uid.toString())
+//            .get()
+//            .addOnSuccessListener { data ->
+//                if (data.exists()) {
+//                    val amount = data.child("amount").getValue(String::class.java)
+//                        // Chuyển sang vnd (chỉ hiển thị còn tính toán như bth)
+//                        val format = NumberFormat.getCurrencyInstance()
+//                        format.maximumFractionDigits = 0
+//                        format.currency = Currency.getInstance("VND")
+//                        binding.amountInWalletAmount.setText(format.format(amount?.toDouble()))
+//                }
+//                dataLoadListener.onDataLoaded()
+//            }
+//            .addOnFailureListener {
+//                // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
+//            }
         if(!viewModel.isDataLoaded) {
             FirebaseDatabase.getInstance()
                 .getReference("Wallet")
@@ -136,6 +143,13 @@ class WalletFragment(private val zaloPayment: RelativeLayout) : Fragment() {
         dataLoadListener.onDataLoadedEmpty(walletCardList.isEmpty())
     }
 
+    fun refreshContent() {
+        val uid = GetData.getCurrentUserId()
+        viewModel.fetchWalletAmount(uid.toString())
+        viewModel.walletAmount.observe(viewLifecycleOwner){ amount->
+            binding.amountInWalletAmount.text =amount
+        }
+    }
 //    fun setDataLoadListener(listener: DataLoadListener) {
 //        dataLoadListener = listener
 //    }

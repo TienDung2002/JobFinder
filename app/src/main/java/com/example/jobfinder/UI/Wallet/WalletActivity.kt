@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.jobfinder.R
 import com.example.jobfinder.Utils.FragmentHelper
+import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.databinding.ActivityWalletBinding
 
 class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
@@ -28,6 +29,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private val PAYMENT_REQUEST_CODE = 1001
     private var backCheck = false
     private val viewModel: WalletCardListViewModel by viewModels()
+    private val uid = GetData.getCurrentUserId()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,19 +48,10 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             updateFABVisibility()
         }
 
-//        val var1 = intent.getStringExtra("var1")
-//        val var2 = intent.getStringExtra("var2")
-//        val var3 = intent.getStringExtra("var3")
-//        Log.d("sdsdfds", "Thanh toán thành công: $var1, $var2, $var3")
-//        if(var1 != null || var2 != null || var3 != null) {
-//            binding.inputNum.setText("")
-//            binding.inputNum.clearFocus()
-//            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment())
-//            showPaymentResultDialog("Thanh toán thành công: $var1, $var2, $var3", R.drawable.ic_payment_success)
-//        }
         binding.walletSwipe.setOnRefreshListener {
             Handler(Looper.getMainLooper()).postDelayed({
                 viewModel.isDataLoaded = false
+
                 binding.inputNum.setText("")
                 binding.inputNum.clearFocus()
                 FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
@@ -178,6 +171,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
 
         closeButton.setOnClickListener {
             dialog.dismiss()
+            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
         }
 
         dialog.show()
@@ -192,8 +186,8 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             val var2 = data?.getStringExtra("var2")
             val var3 = data?.getStringExtra("var3")
             val err = data?.getStringExtra("error")
+            viewModel.fetchWalletAmount(uid.toString())
             viewModel.isDataLoaded = false
-            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
 
             if(var1!= null && var2!= null && var3!= null && err == "none") {
                 showPaymentResultDialog("Thanh toán thành công: $var1, $var2, $var3", R.drawable.ic_payment_success)
