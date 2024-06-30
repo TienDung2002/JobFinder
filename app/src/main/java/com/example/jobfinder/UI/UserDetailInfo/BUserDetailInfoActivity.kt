@@ -13,6 +13,7 @@ import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
+import com.example.jobfinder.UI.Wallet.WalletCardListViewModel
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.Utils.VerifyField
@@ -30,6 +31,7 @@ class BUserDetailInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBuserDetailInfoBinding
     private val  viewModel: ProfileViewModel by viewModels()
     private val walletViewModel : PostedJobViewModel by viewModels()
+    private val amountVM: WalletCardListViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBuserDetailInfoBinding.inflate(layoutInflater)
@@ -44,6 +46,7 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
         if (accStatus != null){
             binding.recuitterInfoBtnHolder.visibility = View.VISIBLE
+            binding.amountWrapper.visibility = View.VISIBLE
             if (accStatus == "active"){
                 binding.disableBtn.text = getString(R.string.disable_acc)
             }else{

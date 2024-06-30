@@ -72,6 +72,49 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/amountWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/amount_in_wallet_title"
+                        android:text="@string/wallet_amount_title"
+                        android:textSize="20sp"
+                        android:textColor="@color/primary_color1"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/amount_in_wallet_amount"
+                        android:text="@string/wallet_amount"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:textAlignment="viewEnd"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
