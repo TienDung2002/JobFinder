@@ -63,25 +63,7 @@ class WalletFragment(private val zaloPayment: RelativeLayout) : Fragment() {
         viewModel.walletAmount.observe(viewLifecycleOwner){ amount->
             binding.amountInWalletAmount.text =amount
         }
-
-//        FirebaseDatabase.getInstance()
-//            .getReference("WalletAmount")
-//            .child(uid.toString())
-//            .get()
-//            .addOnSuccessListener { data ->
-//                if (data.exists()) {
-//                    val amount = data.child("amount").getValue(String::class.java)
-//                        // Chuyển sang vnd (chỉ hiển thị còn tính toán như bth)
-//                        val format = NumberFormat.getCurrencyInstance()
-//                        format.maximumFractionDigits = 0
-//                        format.currency = Currency.getInstance("VND")
-//                        binding.amountInWalletAmount.setText(format.format(amount?.toDouble()))
-//                }
-//                dataLoadListener.onDataLoaded()
-//            }
-//            .addOnFailureListener {
-//                // Xử lý khi có lỗi xảy ra khi truy vấn dữ liệu từ Firebase
-//            }
+        
         if(!viewModel.isDataLoaded) {
             FirebaseDatabase.getInstance()
                 .getReference("Wallet")

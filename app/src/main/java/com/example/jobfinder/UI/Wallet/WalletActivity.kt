@@ -28,8 +28,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private lateinit var fadeOutAnimation: Animation
     private val PAYMENT_REQUEST_CODE = 1001
     private var backCheck = false
-    private val viewModel: WalletCardListViewModel by viewModels()
-    private val uid = GetData.getCurrentUserId()
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +48,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
 
         binding.walletSwipe.setOnRefreshListener {
             Handler(Looper.getMainLooper()).postDelayed({
-                viewModel.isDataLoaded = false
-
                 binding.inputNum.setText("")
                 binding.inputNum.clearFocus()
                 FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
@@ -161,6 +157,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
     private fun showPaymentResultDialog(message: String, imageResId: Int) {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.zalo_dialog_payment_result)
+        dialog.setCanceledOnTouchOutside(true)
 
         val resultImage = dialog.findViewById<ImageView>(R.id.result_image)
         val resultText = dialog.findViewById<TextView>(R.id.result_text)
@@ -171,6 +168,10 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
 
         closeButton.setOnClickListener {
             dialog.dismiss()
+            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
+        }
+
+        dialog.setOnDismissListener {
             FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
         }
 
@@ -186,8 +187,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             val var2 = data?.getStringExtra("var2")
             val var3 = data?.getStringExtra("var3")
             val err = data?.getStringExtra("error")
-            viewModel.fetchWalletAmount(uid.toString())
-            viewModel.isDataLoaded = false
 
             if(var1!= null && var2!= null && var3!= null && err == "none") {
                 showPaymentResultDialog("Thanh toán thành công: $var1, $var2, $var3", R.drawable.ic_payment_success)
