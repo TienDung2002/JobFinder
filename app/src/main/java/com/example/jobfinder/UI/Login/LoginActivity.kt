@@ -68,11 +68,6 @@ class LoginActivity : AppCompatActivity() {
         val savedPass = sharedPreferences.getString("last_login_password", "").toString()
         binding.userEmailLogin.setText(savedEmail)
 
-        if(savedEmail!="" && savedPass !=""){
-            binding.btnFingerprintLogin.visibility = View.VISIBLE
-        }else{
-            binding.btnFingerprintLogin.visibility = View.GONE
-        }
 
         // Biometric Authentication
         setupBiometricPrompt(savedEmail, savedPass)
