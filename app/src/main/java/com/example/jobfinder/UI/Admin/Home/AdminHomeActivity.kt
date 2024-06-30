@@ -8,12 +8,10 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.R
-import com.example.jobfinder.UI.Admin.Finance.AdminFinanceActivity
 import com.example.jobfinder.UI.Admin.ResReports.AdminResponseReportsActivity
 import com.example.jobfinder.UI.Admin.Statistical.AdminStatisticalActivity
 import com.example.jobfinder.UI.Admin.UserManagement.AdminUserManagActivity
 import com.example.jobfinder.UI.SplashScreen.SelectRoleActivity
-import com.example.jobfinder.UI.UsersProfile.UserDetailActivity
 import com.example.jobfinder.databinding.ActivityAdminHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -37,12 +35,6 @@ class AdminHomeActivity : AppCompatActivity() {
         // Quản lý tài khoản người dùng
         binding.accManagerBtn.setOnClickListener {
             startActivity(Intent(this, AdminUserManagActivity::class.java))
-        }
-
-
-        // Add tiền cho người dùng
-        binding.financeBtn.setOnClickListener {
-            startActivity(Intent(this, AdminFinanceActivity::class.java))
         }
 
 

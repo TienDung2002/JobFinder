@@ -10,7 +10,7 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/wallet_swipe">
+        android:id="@+id/walletSwipe">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,21 +40,155 @@
                     android:text="@string/wallet_title"
                     android:textColor="@color/primary_color1"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    />
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Zalopay_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="15dp"
+                android:layout_alignParentBottom="true">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <RelativeLayout
+                            android:id="@+id/top_section_zalo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/title_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nạp tiền vào ví qua"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"/>
+
+                            <ImageView
+                                android:id="@+id/Dialog_img"
+                                android:layout_width="80dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/zalopay_logo_ngang"
+                                android:layout_marginStart="8dp"
+                                android:layout_toEndOf="@+id/title_1"
+                                android:layout_centerVertical="true" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/sec_section_zalo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_below="@+id/top_section_zalo">
+
+                            <TextView
+                                android:id="@+id/title_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nhập số tiền muốn nạp (VND): "
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginBottom="15dp"/>
+
+                            <RelativeLayout
+                                android:id="@+id/input_wrap"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/title_2"
+                                android:layout_marginBottom="20dp"
+                                android:background="@drawable/input_box">
+
+                                <ImageView
+                                    android:id="@+id/money_icon"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:background="@drawable/ic_payment_money"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="15dp" />
+
+                                <EditText
+                                    android:id="@+id/inputNum"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/black"
+                                    android:inputType="number"
+                                    android:hint="Số tiền"
+                                    android:padding="8dp"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_toEndOf="@+id/money_icon"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/edit_text_blank" />
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardElevation="0dp"
+                            app:cardCornerRadius="10dp"
+                            android:layout_below="@+id/sec_section_zalo"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginBottom="10dp">
+
+                            <Button
+                                android:id="@+id/confirmNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Xác nhận"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:textColor="@color/white"
+                                android:background="@color/blue_zalo_color"
+                                android:foreground="?android:attr/selectableItemBackground" />
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+                </LinearLayout>
 
             </RelativeLayout>
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/walletFrame_wrap"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/activity_wallet_top_nav">
+                android:layout_gravity="top"
+                android:layout_above="@id/Zalopay_section"
+                android:layout_below="@id/activity_wallet_top_nav">
 
-                <FrameLayout
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/wallet_activity_framelayout">
-                </FrameLayout>
+                    android:scrollbars="none">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/wallet_activity_framelayout">
+                    </FrameLayout>
+                </ScrollView>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -147,6 +281,7 @@
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationView"
                 android:layout_width="match_parent"
@@ -154,8 +289,9 @@
                 android:elevation="10dp"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                android:layout_centerInParent="true"
-                app:lottie_rawRes="@raw/loading" />
+                android:layout_marginBottom="220dp"
+                app:lottie_rawRes="@raw/loading"
+                android:layout_centerInParent="true"/>
 
         </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
