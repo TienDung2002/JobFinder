@@ -47,6 +47,11 @@ class BUserDetailInfoActivity : AppCompatActivity() {
         if (accStatus != null){
             binding.recuitterInfoBtnHolder.visibility = View.VISIBLE
             binding.amountWrapper.visibility = View.VISIBLE
+            amountVM.fetchWalletAmount(userId.toString())
+
+            amountVM.walletAmount.observe(this){ amount->
+                binding.amountInWalletAmount.text =amount
+            }
             if (accStatus == "active"){
                 binding.disableBtn.text = getString(R.string.disable_acc)
             }else{
@@ -167,7 +172,7 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
                 if (isValidAmountTxt) {
                     walletViewModel.addWalletAmount(uid,amountTxt.toFloat() )
-
+                    amountVM.fetchWalletAmount(uid)
                     // noti
                     val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(uid)
                     val notiId = notiRef.push().key.toString()

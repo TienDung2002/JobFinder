@@ -14,6 +14,7 @@ import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
+import com.example.jobfinder.UI.Wallet.WalletCardListViewModel
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.Utils.VerifyField
@@ -33,6 +34,7 @@ class AdminUMNUserDetail : AppCompatActivity() {
     private val viewModel: ProfileViewModel by viewModels()
     private val walletViewModel : PostedJobViewModel by viewModels()
     private val UMViewModel:AdminUserManagementViewModel by viewModels()
+    private val amountVM: WalletCardListViewModel by viewModels()
     private var clicked = false
 
     @SuppressLint("NotifyDataSetChanged")
@@ -47,6 +49,12 @@ class AdminUMNUserDetail : AppCompatActivity() {
         val accStatus = intent.getStringExtra("accStatus")
 
         if (accStatus != null){
+            binding.amountWrapper.visibility = View.VISIBLE
+            amountVM.fetchWalletAmount(userId.toString())
+
+            amountVM.walletAmount.observe(this){ amount->
+                binding.amountInWalletAmount.text =amount
+            }
             if (accStatus == "active"){
                 binding.approveBtn.text = getString(R.string.disable_acc)
                 clicked = false
@@ -180,6 +188,7 @@ class AdminUMNUserDetail : AppCompatActivity() {
                 val amountTxt = amountEditTxt.text.toString().trim()
                 val isValidAmountTxt = VerifyField.isValidMinCash(amountTxt)
                 amountEditTxt.error = if (isValidAmountTxt) null else getString(R.string.no_amount)
+                amountVM.fetchWalletAmount(uid)
 
                 if (isValidAmountTxt) {
                     walletViewModel.addWalletAmount(uid,amountTxt.toFloat() )

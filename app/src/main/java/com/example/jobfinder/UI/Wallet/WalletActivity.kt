@@ -168,7 +168,6 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
 
         closeButton.setOnClickListener {
             dialog.dismiss()
-            FragmentHelper.replaceFragment(supportFragmentManager, binding.walletActivityFramelayout, WalletFragment(binding.ZalopaySection))
         }
 
         dialog.setOnDismissListener {
