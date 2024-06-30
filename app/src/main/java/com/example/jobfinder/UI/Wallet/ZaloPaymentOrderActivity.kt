@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -41,6 +42,9 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
         binding = ActivityZaloPaymentOrderBinding.inflate(layoutInflater)
         setContentView(binding.root )
 
+        binding.animationView.visibility = View.GONE
+
+
         // nút back về
         binding.backbtn.setOnClickListener {
             val resultIntent = Intent()
@@ -68,13 +72,13 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
 
 
         binding.confirmOrder.setOnClickListener {
+            binding.animationView.visibility = View.VISIBLE
             if (PreventDoubleClick.checkClick()) {
                 val orderApi = CreateOrder()
                 try {
                     val data = orderApi.createOrder(amountString)
                     val code = data.getString("return_code")
                     val message: String = data.optString("return_message", "Không xác định")
-
 
                     if (code == "1") {
                         val token: String = data.getString("zp_trans_token")
@@ -97,7 +101,7 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
                                 setResult(Activity.RESULT_OK, resultIntent)
                                 finish()
                             }
-//
+
                             override fun onPaymentCanceled(var1: String, var2: String) {
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                                 val resultIntent = Intent()
@@ -107,7 +111,7 @@ class ZaloPaymentOrderActivity : AppCompatActivity() {
                                 setResult(Activity.RESULT_OK, resultIntent)
                                 finish()
                             }
-//
+
                             override fun onPaymentError(var1: ZaloPayError, var2: String, var3: String) {
                                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                                 val resultIntent = Intent()

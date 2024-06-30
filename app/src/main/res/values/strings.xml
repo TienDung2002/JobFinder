@@ -177,6 +177,15 @@
     <string name="not_enough_money">Insufficient balance</string>
     <string name="amount">Amount</string>
     <string name="wallet_amount_title">Wallet amount:</string>
+    <string name="wallet_deposit_amount">Enter deposit amount!</string>
+    <string name="wallet_deposit_success">Payment successfully!</string>
+    <string name="wallet_deposit_failed">Payment failed!</string>
+    <string name="wallet_deposit_error">Payment error!</string>
+    <string name="wallet_deposit_input_confirmBTN">Confirm</string>
+    <string name="wallet_deposit_orderPayment_title">Payment confirmation</string>
+    <string name="wallet_deposit_orderPayment_total">Total payment:</string>
+    <string name="wallet_deposit_payment">Pay by ZaloPay</string>
+
 
     <!--    Button-->
     <string name="delete">Delete card</string>

@@ -16,6 +16,7 @@
             android:id="@+id/Dialog_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/zalopay_logo" />
 
