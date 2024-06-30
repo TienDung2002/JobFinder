@@ -99,7 +99,7 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             val inputNumDouble = inputNum.toDoubleOrNull()
 
             if (inputNum.isEmpty() || inputNum.toInt() <= 0) {
-                Toast.makeText(this, "Nhập số tiền muốn nạp!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.wallet_deposit_amount), Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(this, ZaloPaymentOrderActivity::class.java)
                 intent.putExtra("amount", inputNumDouble)
@@ -188,14 +188,13 @@ class WalletActivity : AppCompatActivity() , WalletFragment.DataLoadListener {
             val err = data?.getStringExtra("error")
 
             if(var1!= null && var2!= null && var3!= null && err == "none") {
-                showPaymentResultDialog("Thanh toán thành công: $var1, $var2, $var3", R.drawable.ic_payment_success)
+                showPaymentResultDialog(getString(R.string.wallet_deposit_success), R.drawable.ic_payment_success)
             }
             if(var3 == null &&var1!= null && var2!= null && err == "none"){
-                showPaymentResultDialog("Thanh toán bị hủy: $var1, $var2", R.drawable.ic_payment_failed)
+                showPaymentResultDialog(getString(R.string.wallet_deposit_failed), R.drawable.ic_payment_failed)
             }
-
             if(var1!= null && var2!= null && var3!= null && err != "none") {
-                showPaymentResultDialog("Lỗi thanh toán: $var1, $var2, $var3", R.drawable.ic_payment_failed)
+                showPaymentResultDialog(getString(R.string.wallet_deposit_error), R.drawable.ic_payment_failed)
             }
             binding.inputNum.setText("")
             binding.inputNum.clearFocus()

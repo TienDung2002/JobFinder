@@ -175,7 +175,14 @@
     <string name="amount">Số tiền</string>
     <string name="wallet_amount_title">Số dư:</string>
     <string name="from_wallet">từ ví</string>
-
+    <string name="wallet_deposit_amount">Nhập số tiền nạp!</string>
+    <string name="wallet_deposit_success">Thanh toán thành công!</string>
+    <string name="wallet_deposit_failed">Thanh toán thất bại!</string>
+    <string name="wallet_deposit_error">Lỗi thanh toán!</string>
+    <string name="wallet_deposit_input_confirmBTN">Xác nhận</string>
+    <string name="wallet_deposit_orderPayment_title">Xác nhận thanh toán</string>
+    <string name="wallet_deposit_orderPayment_total">Tổng thanh toán:</string>
+    <string name="wallet_deposit_payment">Thanh toán bằng ZaloPay</string>
 
     <!--    Button-->
     <string name="delete">Xóa thẻ</string>

@@ -157,7 +157,7 @@
                                 android:id="@+id/confirmNum"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Xác nhận"
+                                android:text="@string/wallet_deposit_input_confirmBTN"
                                 android:paddingStart="15dp"
                                 android:paddingEnd="15dp"
                                 android:textColor="@color/white"
@@ -178,16 +178,12 @@
                 android:layout_above="@id/Zalopay_section"
                 android:layout_below="@id/activity_wallet_top_nav">
 
-                <ScrollView
+
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scrollbars="none">
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/wallet_activity_framelayout">
-                    </FrameLayout>
-                </ScrollView>
+                    android:id="@+id/wallet_activity_framelayout">
+                </FrameLayout>
 
 
                 <LinearLayout

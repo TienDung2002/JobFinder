@@ -61,7 +61,8 @@ android:background="@color/white">
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <Button
                         android:layout_width="match_parent"
@@ -79,7 +80,8 @@ android:background="@color/white">
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
                     android:gravity="center"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/add_cash_to_card"
