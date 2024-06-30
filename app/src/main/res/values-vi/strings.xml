@@ -177,7 +177,7 @@
     <string name="from_wallet">từ ví</string>
     <string name="wallet_deposit_amount">Nhập số tiền nạp!</string>
     <string name="wallet_deposit_success">Thanh toán thành công!</string>
-    <string name="wallet_deposit_failed">Thanh toán thất bại!</string>
+    <string name="wallet_deposit_failed">Thanh toán bị hủy!</string>
     <string name="wallet_deposit_error">Lỗi thanh toán!</string>
     <string name="wallet_deposit_input_confirmBTN">Xác nhận</string>
     <string name="wallet_deposit_orderPayment_title">Xác nhận thanh toán</string>
