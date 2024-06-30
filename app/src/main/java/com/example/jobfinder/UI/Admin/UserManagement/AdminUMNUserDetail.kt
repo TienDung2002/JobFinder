@@ -15,6 +15,8 @@ import com.example.jobfinder.R
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.UI.Wallet.WalletCardListViewModel
+import com.example.jobfinder.UI.Wallet.WalletFragment
+import com.example.jobfinder.Utils.FragmentHelper
 import com.example.jobfinder.Utils.GetData
 import com.example.jobfinder.Utils.RetriveImg
 import com.example.jobfinder.Utils.VerifyField
@@ -188,10 +190,9 @@ class AdminUMNUserDetail : AppCompatActivity() {
                 val amountTxt = amountEditTxt.text.toString().trim()
                 val isValidAmountTxt = VerifyField.isValidMinCash(amountTxt)
                 amountEditTxt.error = if (isValidAmountTxt) null else getString(R.string.no_amount)
-                amountVM.fetchWalletAmount(uid)
 
                 if (isValidAmountTxt) {
-                    walletViewModel.addWalletAmount(uid,amountTxt.toFloat() )
+                    walletViewModel.addWalletAmount(uid,amountTxt.toFloat())
 
                     // noti
                     val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(uid)
@@ -209,6 +210,13 @@ class AdminUMNUserDetail : AppCompatActivity() {
 
             cancelButton.setOnClickListener {
                 dialog.dismiss() // Đóng dialog
+            }
+
+            dialog.setOnDismissListener {
+                amountVM.fetchWalletAmount(uid)
+                amountVM.walletAmount.observe(this){ amount->
+                    binding.amountInWalletAmount.text =amount
+                }
             }
 
             dialog.show()

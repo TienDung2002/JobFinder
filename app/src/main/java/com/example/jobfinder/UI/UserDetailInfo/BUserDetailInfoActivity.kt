@@ -172,7 +172,6 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
                 if (isValidAmountTxt) {
                     walletViewModel.addWalletAmount(uid,amountTxt.toFloat() )
-                    amountVM.fetchWalletAmount(uid)
                     // noti
                     val notiRef = FirebaseDatabase.getInstance().getReference("Notifications").child(uid)
                     val notiId = notiRef.push().key.toString()
@@ -189,6 +188,13 @@ class BUserDetailInfoActivity : AppCompatActivity() {
 
             cancelButton.setOnClickListener {
                 dialog.dismiss() // Đóng dialog
+            }
+
+            dialog.setOnDismissListener {
+                amountVM.fetchWalletAmount(uid)
+                amountVM.walletAmount.observe(this){ amount->
+                    binding.amountInWalletAmount.text =amount
+                }
             }
 
             dialog.show()
