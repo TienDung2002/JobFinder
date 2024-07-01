@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
@@ -204,7 +205,9 @@ class AdminUMNUserDetail : AppCompatActivity() {
                     notiRef
                         .child(notiId)
                         .setValue(newNoti)
-                    dialog.dismiss() // Đóng dialog
+                    amountEditTxt.setText("")
+                    amountEditTxt.clearFocus()
+                    Toast.makeText(applicationContext, getString(R.string.deposit_success), Toast.LENGTH_SHORT).show()
                 }
             }
 
