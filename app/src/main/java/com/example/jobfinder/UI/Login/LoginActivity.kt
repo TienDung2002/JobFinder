@@ -206,7 +206,7 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {   // Kiểm tra phiên bản SDK
                         setupBiometricPrompt(savedEmail, savedPass)
-                        biometricPrompt.authenticate(promptInfo)
+                        biometricPrompt.authenticate(promptInfo)    // Hiện hộp xác thực
                     }
                 }
             }
