@@ -184,6 +184,7 @@ class NewJobActivity : AppCompatActivity() {
         // nút mở filter drawer
         binding.filterIcon.setOnClickListener {
             binding.rootNewJob.openDrawer(GravityCompat.END)
+            binding.searchView.clearFocus()
         }
         binding.rootNewJob.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerOpened(drawerView: View) {
@@ -298,6 +299,8 @@ class NewJobActivity : AppCompatActivity() {
         cusBindingFilter.resetBtn.setOnClickListener {
             defaultSelectionUIFilter()
             saveButtonUIState()
+            binding.searchView.clearFocus()
+            binding.searchView.setQuery("", false)
             ftJobTitle =0
             ftRecTitle =0
             ftPostTime =1
