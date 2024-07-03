@@ -86,7 +86,7 @@
     <string name="register_title_seek2">công việc mơ ước</string>
     <string name="seek_age">Tuổi</string>
     <string name="seek_phone">Số điện thoại</string>
-    <string name="seek_name">Tên nhà người dùng</string>
+    <string name="seek_name">Tên người dùng</string>
 
     <!--    Forgot password-->
     <string name="FP_Title1">Kiểm tra email của bạn</string>
