@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobfinder.Datas.Model.NotificationsRowModel
 import com.example.jobfinder.R
+import com.example.jobfinder.UI.Admin.UserManagement.AdminUserManagementViewModel
 import com.example.jobfinder.UI.PostedJob.PostedJobViewModel
 import com.example.jobfinder.UI.UsersProfile.ProfileViewModel
 import com.example.jobfinder.UI.Wallet.WalletCardListViewModel
@@ -33,6 +34,8 @@ class BUserDetailInfoActivity : AppCompatActivity() {
     private val  viewModel: ProfileViewModel by viewModels()
     private val walletViewModel : PostedJobViewModel by viewModels()
     private val amountVM: WalletCardListViewModel by viewModels()
+    private val UMViewModel: AdminUserManagementViewModel by viewModels()
+    private var clicked = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBuserDetailInfoBinding.inflate(layoutInflater)
@@ -55,8 +58,10 @@ class BUserDetailInfoActivity : AppCompatActivity() {
             }
             if (accStatus == "active"){
                 binding.disableBtn.text = getString(R.string.disable_acc)
+                clicked = false
             }else{
                 binding.disableBtn.text = getString(R.string.enable_acc)
+                clicked = true
             }
         }
         userId?.let {
@@ -204,6 +209,15 @@ class BUserDetailInfoActivity : AppCompatActivity() {
         }
 
         binding.disableBtn.setOnClickListener {
+            if(!clicked) {
+                binding.disableBtn.text = getString(R.string.enable_acc)
+                clicked = true
+                UMViewModel.updateAccountStatus(uid, false)
+            }else{
+                binding.disableBtn.text = getString(R.string.disable_acc)
+                clicked = false
+                UMViewModel.updateAccountStatus(uid, true)
+            }
         }
     }
 }
