@@ -75,7 +75,7 @@ class SeekerEditProfileFragment : Fragment() {
                     age?.let {
                         viewModel.age = it
                         if (it == "") {
-                            binding.editProfileAge.setText(R.string.blank_age)
+                            binding.editProfileAge.setHint(R.string.blank_age)
                         } else {
                             binding.editProfileAge.setText(viewModel.age)
                         }
@@ -84,7 +84,7 @@ class SeekerEditProfileFragment : Fragment() {
                     gender?.let {
                         viewModel.gender = it
                         if (it == "") {
-                            binding.editProfileGender.setText(R.string.error_invalid_Gender)
+                            binding.editProfileGender.setHint(R.string.error_invalid_Gender)
                         } else {
                             binding.editProfileGender.setText(viewModel.gender)
                         }

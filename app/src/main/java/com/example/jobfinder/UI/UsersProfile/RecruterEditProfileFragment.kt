@@ -79,7 +79,7 @@ class RecruterEditProfileFragment : Fragment() {
                     tax?.let {
                         viewModel.tax = it
                         if(it == ""){
-                            binding.editProfileTaxnum.setText(R.string.blank_tax_code)
+                            binding.editProfileTaxnum.setHint(R.string.blank_tax_code)
                         }else {
                             binding.editProfileTaxnum.setText(viewModel.tax)
                         }
@@ -88,7 +88,7 @@ class RecruterEditProfileFragment : Fragment() {
                     description?.let {
                         viewModel.des = it
                         if(it == ""){
-                            binding.editProfileDescription.setText(R.string.no_job_des2)
+                            binding.editProfileDescription.setHint(R.string.no_job_des2)
                         }else {
                             binding.editProfileDescription.setText(viewModel.des)
                         }
@@ -97,7 +97,7 @@ class RecruterEditProfileFragment : Fragment() {
                     busType?.let {
                         viewModel.busType = it
                         if(it == ""){
-                            binding.editProfileBustype.setText(R.string.error_invalid_BusSec)
+                            binding.editProfileBustype.setHint(R.string.error_invalid_BusSec)
                         }else {
                             binding.editProfileBustype.setText(viewModel.busType)
                         }
@@ -106,7 +106,7 @@ class RecruterEditProfileFragment : Fragment() {
                     busSec?.let {
                         viewModel.busSec = it
                         if(it == ""){
-                            binding.editProfileBusSec.text = getString(R.string.blank_sector)
+                            binding.editProfileBusSec.hint = getString(R.string.blank_sector)
                         }else {
                             binding.editProfileBusSec.text = viewModel.busSec
                         }
