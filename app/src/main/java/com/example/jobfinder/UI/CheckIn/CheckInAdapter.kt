@@ -27,7 +27,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                         private val workHourViewModel: WorkHoursViewModel
 ) :
     RecyclerView.Adapter<CheckInAdapter.CheckInViewHolder>() {
-    private val LATEST_TIME = 45
+    private val LATEST_TIME = 60
     private val LATE_MINUS_PERCENT = 85f/100
 
     class CheckInViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -80,7 +80,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                             dataSnapshot.child("checkInTime").getValue(String::class.java).toString()
                         // kiểm tra buser đã xác nhận check in chưa
                         if(checkInStatus != "uncomfirmed checked in") {
-                            // hiện tại sau endTime thì sẽ mở check out trong vòng 30 phút
+                            // hiện tại sau endTime thì sẽ mở check out trong vòng 60 phút
                             if(CheckTime.calculateMinuteDiff(currentItem.endHr.toString(), todayTime) in 0..LATEST_TIME) {
 
                                 val checkOutTime =
@@ -182,7 +182,7 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                         }
 
                     } else {
-                        // kiểm tra giờ hiện tại nêú trong khoảng trước startTime 15' đến sau startTime 30' thì sẽ hiên nút check in
+                        // kiểm tra giờ hiện tại nêú trong khoảng trước startTime 15' đến sau startTime 60' thì sẽ hiên nút check in
                         if(CheckTime.calculateMinuteDiff(currentItem.startHr.toString(), todayTime) in -15.. LATEST_TIME) {
                             // khi không có dữ liệu sẽ cho phép ấn nút hoạt động
                             holder.checkBtn.visibility = View.VISIBLE
