@@ -209,8 +209,10 @@ class CheckInAdapter(private var approvedJobList: MutableList<AppliedJobModel>,
                 }
 
             }else{
-                holder.checkInTime.setText(R.string.not_working_yet)
-                holder.checkInTime.visibility= View.VISIBLE
+                if(jobStatus != "closed") {
+                    holder.checkInTime.setText(R.string.not_working_yet)
+                    holder.checkInTime.visibility = View.VISIBLE
+                }
             }
         }
     }
