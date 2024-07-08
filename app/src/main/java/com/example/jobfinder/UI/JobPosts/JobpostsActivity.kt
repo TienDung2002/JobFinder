@@ -223,7 +223,7 @@ class JobpostsActivity : AppCompatActivity() {
 
                         if(GetData.compareFloatStrings(walletAmount, userPayStr)) {
                             val newJob = JobModel(jobId, title, startTime, endTime, empAmount, salary, address,
-                                jobDes, userPayStr, date,"0", bUserName, jobType, uid,"recruiting",
+                                jobDes, totalSalary, date,"0", bUserName, jobType, uid,"recruiting",
                                 workStartTime,workEndTime)
 
                             //add to firebase
