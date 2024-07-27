@@ -7,7 +7,6 @@
 ## Contributors
 
 - [Mai Văn Mạnh](https://github.com/MaiManh15)
-- [Phạm Trung Nguyên](https://github.com/Oriz1206)
 - [Vũ Tiến Dũng](https://github.com/TienDung2002)
 
 ## About
