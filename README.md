@@ -9,14 +9,13 @@
 </div>
 
 
-### Quản lý ứng tuyển:
-<div style="display: flex; justify-content: space-around;">
-  <p>
+### Quản lý ứng tuyển 
+#### Người tìm việc:
+<div style="display: flex; justify-content: center; gap: 20px;">
     <img src="https://github.com/user-attachments/assets/a49e6d20-76c4-4788-90b3-12d2debcc755" alt="Ảnh 3" width="300" style="display: block; margin: 0 auto;" />
-  </p>
-  <p>
     <img src="https://github.com/user-attachments/assets/b8300672-be27-4af0-a1e3-7c58f63efefd" alt="Ảnh 4" width="300" style="display: block; margin: 0 auto;" />
-  </p>
+    <img src="https://github.com/user-attachments/assets/b213c323-e569-4f67-bde3-1b4a5ffd9af4" alt="Ảnh 5" width="300" style="display: block; margin: 0 auto;" />
+    <img src="https://github.com/user-attachments/assets/ac3328d0-c831-413e-87b4-cfcb0c3774c4" alt="Ảnh 6" width="300" style="display: block; margin: 0 auto;" />
 </div>
 
 
