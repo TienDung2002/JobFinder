@@ -4,8 +4,8 @@
 ## Một số chức năng chính:
 ### Đăng tải công việc:
 <div style="display: flex; justify-content: center; gap: 20px;">
-  <img src="https://github.com/user-attachments/assets/b3adb57a-a4b8-48c1-a0de-6676d540d355" alt="Ảnh 1" width="300" />
-  <img src="https://github.com/user-attachments/assets/2ee7bbbf-b6bf-424b-a38a-6414c3328875" alt="Ảnh 2" width="300" />
+  <img src="https://github.com/user-attachments/assets/b3adb57a-a4b8-48c1-a0de-6676d540d355" alt="Ảnh 1" width="250" />
+  <img src="https://github.com/user-attachments/assets/2ee7bbbf-b6bf-424b-a38a-6414c3328875" alt="Ảnh 2" width="200" />
 </div>
 
 
